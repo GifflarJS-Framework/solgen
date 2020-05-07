@@ -4,7 +4,7 @@
   "description": "A smart contract generator framework for IoT.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/mocha/bin/mocha"
   },
   "repository": {
     "type": "git",
@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://gitlab.com/lif-uesc/gifflar.git/issues"
   },
-  "homepage": "https://gitlab.com/lif-uesc/gifflar.git#readme"
+  "homepage": "https://gitlab.com/lif-uesc/gifflar.git#readme",
+  "devDependencies": {
+    "mocha": "^7.1.2"
+  }
 }
