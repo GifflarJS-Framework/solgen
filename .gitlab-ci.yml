@@ -7,4 +7,5 @@ stages:
 quality:
   stage: test
   script:
+    - npm install
     - npm test
