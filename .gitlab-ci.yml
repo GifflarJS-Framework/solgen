@@ -1,13 +1,7 @@
 stages:
-    - build
-    - test
+  - test
 
-build:
-    stage: build
-    script:
-        - echo "Building test"
-
-test:
-    stage: test
-    script:
-        - echo "Testing"
+quality:
+  stage: test
+  script:
+    - npm test
