@@ -1,5 +1,5 @@
 {
-  "name": "scmaker-iot",
+  "name": "gifflar",
   "version": "1.0.0",
   "description": "A smart contract generator framework for IoT.",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Levysantiago/scmaker-iot.git"
+    "url": "git+https://gitlab.com/lif-uesc/gifflar.git"
   },
   "keywords": [
     "blockchain",
@@ -21,7 +21,7 @@
   "author": "Levy Santiago",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Levysantiago/scmaker-iot/issues"
+    "url": "https://gitlab.com/lif-uesc/gifflar.git/issues"
   },
-  "homepage": "https://github.com/Levysantiago/scmaker-iot#readme"
+  "homepage": "https://gitlab.com/lif-uesc/gifflar.git#readme"
 }
