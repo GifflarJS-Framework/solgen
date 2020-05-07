@@ -1,6 +1,6 @@
-<p style="text-align:center">
+<div align="center">
     <img src="https://i.imgur.com/mwbuYqE.png" alt="gifflar banner"/>
-</p>
+</div>
 
 # Gifflar.js
 
