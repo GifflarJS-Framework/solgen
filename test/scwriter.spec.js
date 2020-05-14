@@ -4,7 +4,7 @@ const helpers = require("../src/lib/helpers");
 
 const json = {
   name: "MyContract",
-  content: {
+  contract: {
     variables: [
       {
         type: "string",
@@ -12,9 +12,41 @@ const json = {
         name: "message",
       },
     ],
+    events: [
+      {
+        name: "temperatureOverflow",
+        inputs: [
+          {
+            name: "_message",
+            type: "string",
+          },
+          {
+            name: "_val",
+            type: "uint",
+          },
+        ],
+      },
+    ],
     functions: [
       {
+        name: "",
+        isConstructor: true,
+        inputs: [
+          {
+            name: "_message",
+            type: "string",
+          },
+        ],
+        content: {
+          assignment: {
+            variable: "message",
+            value: "_message",
+          },
+        },
+      },
+      {
         name: "setMessage",
+        isConstructor: false,
         inputs: [
           {
             name: "_message",
@@ -34,6 +66,10 @@ const json = {
           myif: {
             condition: "_val == 1",
             content: {
+              callevent: {
+                name: "temperatureOverflow",
+                args: ["_message, _val"],
+              },
               assignment: {
                 variable: "message",
                 value: "_message",
