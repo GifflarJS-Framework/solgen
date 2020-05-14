@@ -1,68 +1,74 @@
-const createContentWriter = require("../helpers/contentWriter");
+const createStatementWriter = require("../helpers/statementWriter");
 
 /**
- * A Factory that creates a new writer of contract functions
+ * @name createFunctionWriter
+ * @description A **Factory** that creates a new writer of contract functions
  */
 function createFunctionWriter() {
-  contentWriter = createContentWriter();
-
-  /**
-   * Writes the inputs of a Solidity code.
-   * @param {Object[]} inputs - The JSON list of the inputs to be wrote.
-   * @returns {string} The inputs parsed to Solidity code as string.
-   * @private
-   * @example
-   * [
-   *   {
-   *     name:"_message",
-   *     type: "string"
-   *   },
-   *   {
-   *     name: "_number",
-   *     type: "uint"
-   *   }
-   * ]
-   */
-  function _writeInputs(inputs) {
-    let text = "";
-
-    // Defining the first input
-    if (inputs.length) {
-      text += inputs[0].type + " " + inputs[0].name;
-    }
-
-    // Removing the first element
-    inputs.shift();
-
-    // Defining the other inputs
-    inputs.map((input) => {
-      text += ", " + input.type + " " + input.name;
-    });
-
-    return text;
-  }
+  statementWriter = createStatementWriter();
 
   /**
    * Define all functions of the contract
    * @param {Object[]} functions - The Object list of functions to be wrote in Solidity code.
+   * @returns {string} **String** of all functions in Solidity format.
+   * @example
+   * Json
+   * [
+   *   {
+   *     name: "myFunction",
+   *     isConstructor: false,
+   *     inputs: [
+   *       {
+   *         name: "_input1",
+   *         type: "string"
+   *       }
+   *     ],
+   *     outputs: [],
+   *     content: {
+   *       assignment: {
+   *         variable: "input1",
+   *         value: "_input1"
+   *       }
+   *     }
+   *   }
+   * ]
+   *
+   * Return
+   * function myFunction(string _input1){
+   *   input1 = _input1;
+   * }
+   *
+   * // If isConstructor is true, the name of the function
+   * // will be desconsidered, and the return will be
+   * Return
+   * constructor(string _input1){
+   *   input1 = _input1;
+   * }
    */
   function write(functions) {
     let text = "//FUNCTIONS\n";
 
     functions.map((f) => {
+      // Verifying whether is a constructor or not
       // Opening the inputs clousure
-      text += "function " + f.name + "(";
+      if (f.isConstructor) {
+        text += "constructor(";
+      } else {
+        text += "function " + f.name + "(";
+      }
 
-      text += _writeInputs(f.inputs);
+      // Writing the inputs
+      text += statementWriter.writeInputs(f.inputs);
 
-      // Opening the content clousure
+      // Closing inputs and opening the content clousure
       text += "){\n";
 
-      text += contentWriter.content(f.content);
-    });
+      // Writing function content
+      text += statementWriter.writeContent(f.content);
 
-    // Closing the function
-    text += "}\n\n";
+      // Closing the function
+      text += "}\n\n";
+    });
 
     return text;
   }
