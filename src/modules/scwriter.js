@@ -1,8 +1,11 @@
-const createFunctionWriter = require("./writers/functionWriter");
 const createVariableWriter = require("./writers/variableWriter");
+const createEventWriter = require("./writers/eventWriter");
+const createFunctionWriter = require("./writers/functionWriter");
 
 /**
- * Creates the contract writer object to write the contract Solidity code.
+ * @name createWriter
+ * @description A **Factory** that creates the contract writer object to write
+ * the contract Solidity code.
  */
 function createWriter() {
   /**
@@ -41,12 +44,14 @@ function createWriter() {
 
     let text = "";
 
-    const functionWriter = createFunctionWriter();
     const variableWriter = createVariableWriter();
+    const eventWriter = createEventWriter();
+    const functionWriter = createFunctionWriter();
 
     text = _start(json.name);
-    text += variableWriter.write(json.content.variables);
-    text += functionWriter.write(json.content.functions);
+    text += variableWriter.write(json.contract.variables);
+    text += eventWriter.write(json.contract.events);
+    text += functionWriter.write(json.contract.functions);
     text += _close();
 
     return text;
