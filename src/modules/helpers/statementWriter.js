@@ -1,4 +1,5 @@
-const createRequest = require("../helpers/request");
+const createRequest = require("./request");
+const createStatements = require("./statements");
 
 /**
  * @name createStatementWriter
@@ -17,7 +18,7 @@ const createRequest = require("../helpers/request");
 function createStatementWriter() {
   let request = createRequest();
 
-  internal = {
+  _statements = {
     /**
      * Creates a Solidity assignment statement
      * @param {string} variable - The variable to assign the value to.
@@ -218,7 +219,7 @@ function createStatementWriter() {
 
     // Defining the statement content
     content.map((item) => {
-      let handler = internal[item.statement];
+      let handler = _statements[item.statement];
       if (handler) {
         text += handler(item);
       }
