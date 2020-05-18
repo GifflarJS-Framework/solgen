@@ -12,6 +12,12 @@ const json = {
         name: "message",
         setMethod: true,
       },
+      {
+        type: "string[]",
+        scope: "public",
+        name: "messages",
+        setMethod: true,
+      },
     ],
     functions: [
       {
@@ -27,6 +33,16 @@ const json = {
           {
             statement: "assignment",
             variable: "message",
+            value: "_message",
+          },
+          {
+            statement: "assignment",
+            variable: "messages",
+            value: "[]",
+          },
+          {
+            statement: "push",
+            variable: "messages",
             value: "_message",
           },
         ],
