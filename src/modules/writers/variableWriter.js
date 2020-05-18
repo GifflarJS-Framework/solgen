@@ -23,7 +23,7 @@ function createVariableWriter() {
         ],
         content: [
           {
-            name: "assignment",
+            statement: "assignment",
             variable: variable.name,
             value: "_" + variable.name,
           },
