@@ -65,41 +65,6 @@ function createStatementWriter() {
       return text;
     },
 
-    /**
-     * @name args
-     * @description Writes the arguments of a calling statement.
-     * @param {Object[]} _arguments - The arguments to be wrote in Solidity code.
-     * @returns {string} The arguments organized as a **string**.
-     * @example
-     * Input
-     * ["arg1", "arg2"]
-     *
-     * Return
-     * arg1, arg2
-     *
-     * Usage
-     * "(" + statementWriter.args(["arg1", "arg2"]) + ")"
-     * => "(arg1, arg2)"
-     */
-    args: (_arguments) => {
-      let text = "";
-
-      // If there are no arguments
-      if (!_arguments[0]) {
-        return text;
-      }
-
-      // Setting the first argument
-      text += _arguments[0].name;
-
-      // Setting all the other arguments
-      _arguments.map((arg) => {
-        text += ", " + arg.name;
-      });
-
-      return text;
-    },
-
     //CALLS
     /**
      * @name callevent
@@ -118,11 +83,53 @@ function createStatementWriter() {
      */
     callevent: (event) => {
       request.events.push(event);
-      const text =
-        "emit " + event.name + "(" + internal.args(event.inputs) + ");\n";
+      const inputs_copy = [];
+      // Copying the object or else the args function
+      // shifts the first element of the original object
+      // We need the object later for creating the events
+      Object.assign(inputs_copy, event.inputs);
+      const text = "emit " + event.name + "(" + args(inputs_copy) + ");\n";
       return text;
     },
   };
+
+  /**
+   * @name args
+   * @description Writes the arguments of a calling statement.
+   * @param {Object[]} _arguments - The arguments to be wrote in Solidity code.
+   * @returns {string} The arguments organized as a **string**.
+   * @example
+   * Input
+   * ["arg1", "arg2"]
+   *
+   * Return
+   * arg1, arg2
+   *
+   * Usage
+   * "(" + statementWriter.args(["arg1", "arg2"]) + ")"
+   * => "(arg1, arg2)"
+   */
+  function args(_arguments) {
+    let text = "";
+
+    // If there are no arguments
+    if (!_arguments[0]) {
+      return text;
+    }
+
+    // Setting the first argument
+    text += _arguments[0].name;
+
+    // Removing first element
+    _arguments.shift();
+
+    // Setting all the other arguments
+    _arguments.map((arg) => {
+      text += ", " + arg.name;
+    });
+
+    return text;
+  }
 
   /**
    * @name writeInputs
@@ -207,6 +214,7 @@ function createStatementWriter() {
    */
   function writeContent(content, cb) {
     let text = "";
+    console.log(content);
 
     // Defining the statement content
     content.map((item) => {
