@@ -20,8 +20,19 @@ function createStatementWriter() {
   _statements = {
     /**
      * Creates a Solidity assignment statement
-     * @param {string} variable - The variable to assign the value to.
-     * @param {string} value - The value to be assigned to the variable.
+     * @param {string} json The json with the variable and value to be assigned to.
+     * @returns {string} The Solidity code in string format.
+     * @private
+     * @example
+     * Json
+     * {
+     *   statement: "assignment",
+     *   variable: "message",
+     *   value: "_message"
+     * }
+     *
+     * Return
+     * "message = _message;"
      */
     assignment: (json) => {
       const text = json.variable + " = " + json.value + ";\n";
@@ -29,27 +40,29 @@ function createStatementWriter() {
     },
 
     /**
-     * @name myif
+     * @name if
      * @description Writes an if statement in Solidity code.
      * @param {Object} json The if statement in json format.
      * @returns {string} The if statement in Solidity code as string.
      * @example
      * Input
-     * if: {
-        else: true 
-        condition: "_val == 1",
-         content: {
-           assignment: {
-             variable: "message",
-             value: "_message",
-           }
-         }
-       }
-
-       Result
-       "if(_val == 1){\n
-        message = _message;\n
-        }"
+     * {
+     *  statement: "if",
+     *   else: true,
+     *   condition: "_val == 1",
+     *    content: [
+     *      {
+     *        statement: "assignment"
+     *        variable: "message",
+     *        value: "_message",
+     *      }
+     *   ]
+     *  }
+     *
+     *  Result
+     *  "if(_val == 1){\n
+     *   message = _message;\n
+     *   }"
      */
     if: (json) => {
       let text = "if(" + json.condition + ")";
@@ -65,6 +78,22 @@ function createStatementWriter() {
       return text;
     },
 
+    /**
+     * Creates a Solidity array push statement
+     * @param {string} json The json with the variable and value to be pushed to.
+     * @returns {string} The Solidity code in string format.
+     * @private
+     * @example
+     * Json
+     * {
+     *   statement: "push",
+     *   variable: "messages",
+     *   value: "_message"
+     * }
+     *
+     * Return
+     * "messages.push(_message);"
+     */
     push: (json) => {
       return json.variable + ".push(" + json.value + ");\n";
     },
@@ -72,18 +101,27 @@ function createStatementWriter() {
     //CALLS
     /**
      * @name callevent
-     * @description Writes a Solidity event call
-     * @param {Object} event - The event object to be wrote in Solidity code.
+     * @description Writes a Solidity event call. **This method updates the request
+     * object to send the events to be created by the eventWriter**.
+     * @param {Object} event The event object to be wrote in Solidity code.
      * @returns {string} The event Solidity code as **string**.
      * @example
      * Input
      * {
+     *   statement: "callevent",
      *   name: "myEvent",
-     *   args: ["_input"],
+     *   inputs: {
+     *      name: "_message",
+     *      type: "string"
+     *   },
+     *   {
+     *      name: "_val",
+     *      type: "uint"
+     *   }
      * }
      *
      * Return
-     * "emit myEvent(_input);"
+     * "emit myEvent(_message, _val);"
      */
     callevent: (event) => {
       request.events.push(event);
@@ -92,56 +130,26 @@ function createStatementWriter() {
       // shifts the first element of the original object
       // We need the object later for creating the events
       Object.assign(inputs_copy, event.inputs);
-      const text = "emit " + event.name + "(" + args(inputs_copy) + ");\n";
+      const text =
+        "emit " + event.name + "(" + writeInputs(inputs_copy, false) + ");\n";
       return text;
     },
   };
 
   /**
-   * @name args
-   * @description Writes the arguments of a calling statement.
-   * @param {Object[]} _arguments - The arguments to be wrote in Solidity code.
-   * @returns {string} The arguments organized as a **string**.
-   * @example
-   * Input
-   * ["arg1", "arg2"]
-   *
-   * Return
-   * arg1, arg2
-   *
-   * Usage
-   * "(" + statementWriter.args(["arg1", "arg2"]) + ")"
-   * => "(arg1, arg2)"
-   */
-  function args(_arguments) {
-    let text = "";
-
-    // If there are no arguments
-    if (!_arguments[0]) {
-      return text;
-    }
-
-    // Setting the first argument
-    text += _arguments[0].name;
-
-    // Removing first element
-    _arguments.shift();
-
-    // Setting all the other arguments
-    _arguments.map((arg) => {
-      text += ", " + arg.name;
-    });
-
-    return text;
-  }
-
-  /**
    * @name writeInputs
    * @description Writes the inputs of a Solidity code.
-   * @param {Object[]} inputs - The JSON list of the inputs to be wrote.
+   * @param {Object[]} inputs The JSON list of the inputs to be wrote.
+   * @param {Boolean} typeon The value to turn on or off the type names before the
+   * variable. **Default is true**
    * @returns {string} The inputs parsed to Solidity code as string.
    * @private
    * @example
+   * Prototype
+   * function writeInputs(inputs, typeon = true) {
+   * //[...]
+   * }
+   *
    * Input
    * [
    *   {
@@ -154,14 +162,16 @@ function createStatementWriter() {
    *   }
    * ]
    *
-   * Return
-   * string _message, uint _number
-   *
    * Usage
    * "(" + statementWriter.writeInputs(inputs) + ")"
    * => "(string _message, uint _number)"
+   *
+   * Usage
+   * "(" + statementWriter.writeInputs(inputs, false) + ")"
+   * => "(_message, _number)"
+   *
    */
-  function writeInputs(inputs) {
+  function writeInputs(inputs, typeon = true) {
     let text = "";
 
     // If there are no inputs
@@ -170,14 +180,21 @@ function createStatementWriter() {
     }
 
     // Defining the first input
-    text += inputs[0].type + " " + inputs[0].name;
+    if (typeon) {
+      text += inputs[0].type + " ";
+    }
+    text += inputs[0].name;
 
     // Removing the first element
     inputs.shift();
 
     // Defining the other inputs
     inputs.map((input) => {
-      text += ", " + input.type + " " + input.name;
+      text += ", ";
+      if (typeon) {
+        text += input.type + " ";
+      }
+      text += input.name;
     });
 
     return text;
@@ -186,39 +203,54 @@ function createStatementWriter() {
   /**
    * @name writeContent
    * @description Writes the content of another statement.
-   * @param {Object} content - The Object content of the statement.
+   * @param {Object} content The Object content of the statement.
+   * @param {Function} cb The callback function to handle any request to create an event.
    * @returns {string} The content parsed to Solidity code as a string.
    * @example
-   * {
-        assignment: {
-          variable: "message",
-          value: "_message",
-        },
-        myif: {
-          condition: "_val == 1",
-          content: {
-            callevent: {
-              name: "temperatureOverflow",
-              args: ["_message, _val"],
-            },
-            assignment: {
-              variable: "message",
-              value: "_message",
-            }
-          }
-        }
-     }
-    
-     Return
-     "message = _message;\n
-     if(_val == 1){\n
-     emit temperatureOverflow(_message, _val);\n
-     message = _message;\n
-     }"
+   * Prototype
+   * function writeContent(content, cb) {
+   * //[...]
+   * }
+   *
+   * Json
+   * [
+   *     {
+   *       statement: "assignment",
+   *       variable: "message",
+   *       value: "_message",
+   *     },
+   *     {
+   *       statement: "if",
+   *       condition: "_val == 1",
+   *       content: [
+   *         {
+   *           statement: "callevent",
+   *           name: "temperatureOverflow",
+   *           args: ["_message, _val"],
+   *         },
+   *         {
+   *           statement: "assignment",
+   *           variable: "message",
+   *           value: "_message",
+   *         }
+   *       ]
+   *     }
+   *  ]
+   *
+   * Usage
+   * code += statementWriter.writeContent(f.content, (_request) => {
+   *    console.log(_request);
+   * });
+   *
+   * Return
+   * "message = _message;\n
+   * if(_val == 1){\n
+   * emit temperatureOverflow(_message, _val);\n
+   * message = _message;\n
+   * }"
    */
   function writeContent(content, cb) {
     let text = "";
-    console.log(content);
 
     // Defining the statement content
     content.map((item) => {
