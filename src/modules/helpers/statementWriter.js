@@ -65,6 +65,10 @@ function createStatementWriter() {
       return text;
     },
 
+    push: (json) => {
+      return json.variable + ".push(" + json.value + ");\n";
+    },
+
     //CALLS
     /**
      * @name callevent
