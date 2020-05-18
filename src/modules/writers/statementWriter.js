@@ -1,4 +1,4 @@
-const createRequest = require("../helpers/request");
+const createRequest = require("../models/request");
 
 /**
  * @name createStatementWriter

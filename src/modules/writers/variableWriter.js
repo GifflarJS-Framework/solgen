@@ -1,5 +1,5 @@
 const helpers = require("../../lib/helpers");
-const createRequest = require("../helpers/request");
+const createRequest = require("../models/request");
 
 function createVariableWriter() {
   const request = createRequest();
