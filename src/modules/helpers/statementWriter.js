@@ -1,3 +1,5 @@
+const createRequest = require("../helpers/request");
+
 /**
  * @name createStatementWriter
  * @description A **Factory** that creates a statementWriter that is resposible
@@ -13,6 +15,8 @@
  * }
  */
 function createStatementWriter() {
+  let request = createRequest();
+
   internal = {
     /**
      * Creates a Solidity assignment statement
@@ -20,7 +24,8 @@ function createStatementWriter() {
      * @param {string} value - The value to be assigned to the variable.
      */
     assignment: (json) => {
-      return json.variable + " = " + json.value + ";\n";
+      const text = json.variable + " = " + json.value + ";\n";
+      return text;
     },
 
     /**
@@ -30,8 +35,9 @@ function createStatementWriter() {
      * @returns {string} The if statement in Solidity code as string.
      * @example
      * Input
-     * myif: {
-         condition: "_val == 1",
+     * if: {
+        else: true 
+        condition: "_val == 1",
          content: {
            assignment: {
              variable: "message",
@@ -45,8 +51,14 @@ function createStatementWriter() {
         message = _message;\n
         }"
      */
-    myif: (json) => {
-      let text = "if(" + json.condition + "){\n";
+    if: (json) => {
+      let text = "if(" + json.condition + ")";
+      // if else is turned on
+      if (json.else) {
+        // if there is a condition (else if), if there isn't (else)
+        json.condition ? (text = "else " + text) : (text = "else");
+      }
+      text = text + "{\n";
       text += writeContent(json.content);
       text += "}\n";
 
@@ -73,19 +85,16 @@ function createStatementWriter() {
       let text = "";
 
       // If there are no arguments
-      if (!_arguments.length) {
+      if (!_arguments[0]) {
         return text;
       }
 
       // Setting the first argument
-      text += _arguments[0];
-
-      // Removing first element
-      _arguments.shift();
+      text += _arguments[0].name;
 
       // Setting all the other arguments
       _arguments.map((arg) => {
-        text += ", " + arg;
+        text += ", " + arg.name;
       });
 
       return text;
@@ -108,7 +117,10 @@ function createStatementWriter() {
      * "emit myEvent(_input);"
      */
     callevent: (event) => {
-      return "emit " + event.name + "(" + internal.args(event.args) + ");\n";
+      request.events.push(event);
+      const text =
+        "emit " + event.name + "(" + internal.args(event.inputs) + ");\n";
+      return text;
     },
   };
 
@@ -193,15 +205,19 @@ function createStatementWriter() {
      message = _message;\n
      }"
    */
-  function writeContent(jsoncontent) {
+  function writeContent(content, cb) {
     let text = "";
 
     // Defining the statement content
-    for (item in jsoncontent) {
-      let handler = internal[item];
+    content.map((item) => {
+      let handler = internal[item.statement];
       if (handler) {
-        text += handler(jsoncontent[item]);
+        text += handler(item);
       }
+    });
+
+    if (cb && typeof cb === "function") {
+      cb(request);
     }
 
     return text;

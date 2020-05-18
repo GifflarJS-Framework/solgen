@@ -1,11 +1,12 @@
 const createStatementWriter = require("../helpers/statementWriter");
+const createRequest = require("../helpers/request");
 
 /**
  * @name createFunctionWriter
  * @description A **Factory** that creates a new writer of contract functions
  */
 function createFunctionWriter() {
-  statementWriter = createStatementWriter();
+  const statementWriter = createStatementWriter();
 
   /**
    * Define all functions of the contract
@@ -45,8 +46,9 @@ function createFunctionWriter() {
    *   input1 = _input1;
    * }
    */
-  function write(functions) {
+  function write(functions, cb) {
     let text = "//FUNCTIONS\n";
+    let request = createRequest();
 
     functions.map((f) => {
       // Verifying whether is a constructor or not
@@ -64,11 +66,17 @@ function createFunctionWriter() {
       text += "){\n";
 
       // Writing function content
-      text += statementWriter.writeContent(f.content);
+      text += statementWriter.writeContent(f.content, (_request) => {
+        request = _request;
+      });
 
       // Closing the function
       text += "}\n\n";
     });
+
+    if (cb && typeof cb === "function") {
+      cb(request);
+    }
 
     return text;
   }

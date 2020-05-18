@@ -5,7 +5,7 @@ const createStatementWriter = require("../helpers/statementWriter");
  * @description A **Factory** that creates the event writer object
  */
 function createEventWriter() {
-  statementWriter = createStatementWriter();
+  const statementWriter = createStatementWriter();
 
   /**
    *

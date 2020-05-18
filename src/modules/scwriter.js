@@ -48,11 +48,26 @@ function createWriter() {
     const eventWriter = createEventWriter();
     const functionWriter = createFunctionWriter();
 
-    text = _start(json.name);
-    text += variableWriter.write(json.contract.variables);
-    text += eventWriter.write(json.contract.events);
-    text += functionWriter.write(json.contract.functions);
-    text += _close();
+    const txt_start = _start(json.name);
+    const txt_variables = variableWriter.write(
+      json.contract.variables,
+      (request) => {
+        json.contract.functions = json.contract.functions.concat(
+          request.functions
+        );
+      }
+    );
+
+    const txt_functions = functionWriter.write(
+      json.contract.functions,
+      (request) => {
+        json.contract.events = request.events;
+      }
+    );
+    const txt_events = eventWriter.write(json.contract.events);
+    const txt_close = _close();
+
+    text = txt_start + txt_variables + txt_events + txt_functions + txt_close;
 
     return text;
   }

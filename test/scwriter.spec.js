@@ -10,21 +10,7 @@ const json = {
         type: "string",
         scope: "public",
         name: "message",
-      },
-    ],
-    events: [
-      {
-        name: "temperatureOverflow",
-        inputs: [
-          {
-            name: "_message",
-            type: "string",
-          },
-          {
-            name: "_val",
-            type: "uint",
-          },
-        ],
+        setMethod: true,
       },
     ],
     functions: [
@@ -37,12 +23,13 @@ const json = {
             type: "string",
           },
         ],
-        content: {
-          assignment: {
+        content: [
+          {
+            statement: "assignment",
             variable: "message",
             value: "_message",
           },
-        },
+        ],
       },
       {
         name: "setMessage",
@@ -58,25 +45,53 @@ const json = {
           },
         ],
         outputs: [],
-        content: {
-          assignment: {
+        content: [
+          {
+            statement: "assignment",
             variable: "message",
             value: "_message",
           },
-          myif: {
+          {
+            statement: "if",
+            else: false,
             condition: "_val == 1",
-            content: {
-              callevent: {
+            content: [
+              {
+                statement: "callevent",
                 name: "temperatureOverflow",
-                args: ["_message, _val"],
+                inputs: [
+                  {
+                    name: "_message",
+                    type: "string",
+                  },
+                  {
+                    name: "_val",
+                    type: "uint",
+                  },
+                ],
               },
-              assignment: {
+              {
+                statement: "callevent",
+                name: "temperatureOverflow2",
+                inputs: [
+                  {
+                    name: "_message",
+                    type: "string",
+                  },
+                  {
+                    name: "_val",
+                    type: "uint",
+                  },
+                ],
+              },
+              {
+                statement: "assignment",
                 variable: "message",
                 value: "_message",
               },
-            },
+            ],
           },
-        },
+        ],
       },
     ],
   },
