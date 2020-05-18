@@ -1,5 +1,4 @@
 const createRequest = require("./request");
-const createStatements = require("./statements");
 
 /**
  * @name createStatementWriter
