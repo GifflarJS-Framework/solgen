@@ -1,4 +1,4 @@
-const createStatementWriter = require("../helpers/statementWriter");
+const createStatementWriter = require("./statementWriter");
 const createRequest = require("../helpers/request");
 
 /**

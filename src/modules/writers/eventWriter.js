@@ -1,4 +1,4 @@
-const createStatementWriter = require("../helpers/statementWriter");
+const createStatementWriter = require("./statementWriter");
 
 /**
  * @name createEventWriter
