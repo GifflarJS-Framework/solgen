@@ -1,6 +1,6 @@
 const createWriter = require("../src/modules/scwriter");
 const assert = require("assert");
-const helpers = require("../src/lib/helpers");
+const helpers = require("../src/modules/utils/helpers");
 
 const json = {
   name: "MyContract",
@@ -44,6 +44,12 @@ const json = {
             statement: "push",
             variable: "messages",
             value: "_message",
+          },
+          {
+            statement: "expression",
+            variable: "val",
+            operator: "",
+            value: "1",
           },
         ],
       },
