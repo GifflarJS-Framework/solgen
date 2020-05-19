@@ -22,6 +22,7 @@ const json = {
     functions: [
       {
         name: "",
+        scope: "public",
         isConstructor: true,
         inputs: [
           {
@@ -58,6 +59,7 @@ const json = {
       },
       {
         name: "setMessage",
+        scope: "public",
         isConstructor: false,
         inputs: [
           {

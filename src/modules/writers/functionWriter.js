@@ -51,11 +51,13 @@ function createFunctionWriter() {
     let request = createRequest();
 
     functions.map((f) => {
+      let scope = "";
       // Verifying whether is a constructor or not
       // Opening the inputs clousure
       if (f.isConstructor) {
         text += "constructor(";
       } else {
+        scope = " " + f.scope + " ";
         text += "function " + f.name + "(";
       }
 
@@ -63,7 +65,7 @@ function createFunctionWriter() {
       text += statementWriter.writeInputs(f.inputs);
 
       // Closing inputs and opening the content clousure
-      text += "){\n";
+      text += ")" + scope + "{\n";
 
       // Writing function content
       text += statementWriter.writeContent(f.content, (_request) => {

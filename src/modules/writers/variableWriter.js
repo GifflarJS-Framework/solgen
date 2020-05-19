@@ -14,6 +14,7 @@ function createVariableWriter() {
     if (variable.setMethod) {
       const _function = {
         name: "set" + helpers.capitalize(variable.name),
+        scope: "public",
         isConstructor: false,
         inputs: [
           {
