@@ -1,12 +1,14 @@
-const createStatementWriter = require("./statementWriter");
+const createContentWriter = require("./statements/contentWriter");
 const createRequest = require("../utils/request");
+const createInputWriter = require("./statements/inputWriter");
 
 /**
  * @name createFunctionWriter
  * @description A **Factory** that creates a new writer of contract functions
  */
 function createFunctionWriter() {
-  const statementWriter = createStatementWriter();
+  const inputWriter = createInputWriter();
+  const contentWriter = createContentWriter();
 
   /**
    * Define all functions of the contract
@@ -62,13 +64,13 @@ function createFunctionWriter() {
       }
 
       // Writing the inputs
-      text += statementWriter.writeInputs(f.inputs);
+      text += inputWriter.write(f.inputs);
 
       // Closing inputs and opening the content clousure
       text += ")" + scope + "{\n";
 
       // Writing function content
-      text += statementWriter.writeContent(f.content, (_request) => {
+      text += contentWriter.write(f.content, (_request) => {
         request = _request;
       });
 

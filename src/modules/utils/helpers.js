@@ -1,18 +1,22 @@
 const exec = require("child_process").exec;
 
 module.exports = {
-  sleep: ms => {
-    return new Promise(resolve => {
+  sleep: (ms) => {
+    return new Promise((resolve) => {
       setTimeout(resolve, ms);
     });
   },
 
-  capitalize: str => {
+  capitalize: (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   },
 
-  isObjEmpty: obj => {
+  isObjEmpty: (obj) => {
     return !Object.keys(obj).length;
+  },
+
+  isObject: (obj) => {
+    return typeof obj === "object";
   },
 
   runShellCommand: (command, callback) => {
@@ -27,12 +31,12 @@ module.exports = {
     });
   },
 
-  getKeysValuesFrom: obj => {
+  getKeysValuesFrom: (obj) => {
     // Getting variables types
     const keys = Object.keys(obj);
     // Getting variables identifiers
     const values = Object.values(obj);
 
     return { keys, values };
-  }
+  },
 };

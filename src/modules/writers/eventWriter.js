@@ -1,11 +1,11 @@
-const createStatementWriter = require("./statementWriter");
+const createInputWriter = require("./statements/inputWriter");
 
 /**
  * @name createEventWriter
  * @description A **Factory** that creates the event writer object
  */
 function createEventWriter() {
-  const statementWriter = createStatementWriter();
+  const inputWriter = createInputWriter();
 
   /**
    *
@@ -32,11 +32,7 @@ function createEventWriter() {
 
     events.map((event) => {
       text +=
-        "event " +
-        event.name +
-        "(" +
-        statementWriter.writeInputs(event.inputs) +
-        ");\n";
+        "event " + event.name + "(" + inputWriter.write(event.inputs) + ");\n";
     });
 
     text += "\n\n";
