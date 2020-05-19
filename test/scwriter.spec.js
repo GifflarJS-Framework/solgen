@@ -46,10 +46,13 @@ const json = {
             value: "_message",
           },
           {
-            statement: "expression",
-            variable: "val",
-            operator: "",
-            value: "1",
+            statement: "assignment",
+            variable: "message",
+            value: {
+              statement: "expression",
+              value1: "val",
+              operator: "++",
+            },
           },
         ],
       },

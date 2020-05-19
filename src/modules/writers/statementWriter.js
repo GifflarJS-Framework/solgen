@@ -1,4 +1,5 @@
 const createRequest = require("../utils/request");
+const createExpressionWriter = require("./expressionWriter");
 
 /**
  * @name createStatementWriter
@@ -16,6 +17,7 @@ const createRequest = require("../utils/request");
  */
 function createStatementWriter() {
   let request = createRequest();
+  const expressionWriter = createExpressionWriter();
 
   _statements = {
     /**
@@ -35,7 +37,11 @@ function createStatementWriter() {
      * "message = _message;"
      */
     assignment: (json) => {
-      const text = json.variable + " = " + json.value + ";\n";
+      let expression = json.value;
+      if (typeof expression === "object") {
+        expression = expressionWriter.write(json.value);
+      }
+      const text = json.variable + " = " + expression + ";\n";
       return text;
     },
 
