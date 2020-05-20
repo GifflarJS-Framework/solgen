@@ -46,7 +46,7 @@ function createWriter() {
 
     const variableWriter = createVariableWriter();
     const eventWriter = createEventWriter();
-    const functionWriter = createFunctionWriter();
+    const functionWriter = createFunctionWriter(json.contract.variables);
 
     const txt_start = _start(json.name);
     const txt_variables = variableWriter.write(

@@ -24,6 +24,13 @@ const json = {
         name: "",
         scope: "public",
         isConstructor: true,
+        variables: [
+          {
+            type: "string",
+            scope: "public",
+            name: "tmp",
+          },
+        ],
         inputs: [
           {
             name: "_message",
@@ -71,7 +78,7 @@ const json = {
             type: "uint",
           },
         ],
-        outputs: [],
+        outputs: ["message"],
         content: [
           {
             statement: "assignment",

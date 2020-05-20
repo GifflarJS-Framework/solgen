@@ -1,18 +1,36 @@
 const createContentWriter = require("./statements/contentWriter");
 const createRequest = require("../utils/request");
 const createInputWriter = require("./statements/inputWriter");
+const createOutputWriter = require("./statements/outputWriter");
 
 /**
  * @name createFunctionWriter
- * @description A **Factory** that creates a new writer of contract functions
+ * @description A **Factory** that creates a new writer of contract functions.
+ * @param {Object[]} variables The contract variables defined.
+ * @example
+ * {
+ *     type: "string",
+ *     scope: "public",
+ *     name: "message",
+ *     setMethod: true,
+ *   },
+ *   {
+ *     type: "string[]",
+ *     scope: "public",
+ *     name: "messages",
+ *     setMethod: true,
+ *   }
  */
-function createFunctionWriter() {
+function createFunctionWriter(variables) {
   const inputWriter = createInputWriter();
   const contentWriter = createContentWriter();
+  const outputWriter = createOutputWriter(variables);
 
   /**
-   * Define all functions of the contract
-   * @param {Object[]} functions - The Object list of functions to be wrote in Solidity code.
+   * @name write
+   * @description Define all functions of the contract
+   * @param {Object[]} functions The Object list of functions to be wrote in Solidity code.
+   * @param {Function} cb A callback function to handle the request values.
    * @returns {string} **String** of all functions in Solidity format.
    * @example
    * Json
@@ -51,6 +69,8 @@ function createFunctionWriter() {
   function write(functions, cb) {
     let text = "//FUNCTIONS\n";
     let request = createRequest();
+    let text_return = "";
+    let text_returns = "";
 
     functions.map((f) => {
       let scope = "";
@@ -66,13 +86,29 @@ function createFunctionWriter() {
       // Writing the inputs
       text += inputWriter.write(f.inputs);
 
-      // Closing inputs and opening the content clousure
-      text += ")" + scope + "{\n";
+      // Requiring outputs
+      text_return += outputWriter.write(f.outputs, (request) => {
+        text_returns = request.text_returns;
+      });
+
+      // Closing inputs and setting scope
+      text += ")" + scope;
+
+      // Setting the returns text
+      if (text_returns) {
+        text += " " + text_returns + " ";
+      }
+
+      // Opening the content clousure
+      text += "{\n";
 
       // Writing function content
       text += contentWriter.write(f.content, (_request) => {
         request = _request;
       });
+
+      // Setting the return values
+      text += text_return;
 
       // Closing the function
       text += "}\n\n";

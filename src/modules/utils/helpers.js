@@ -19,6 +19,19 @@ module.exports = {
     return typeof obj === "object";
   },
 
+  getCommaExpression(list) {
+    let str = "";
+    list.map((item) => {
+      str += ", " + item;
+    });
+
+    if (str) {
+      str = str.substr(2);
+    }
+
+    return str;
+  },
+
   runShellCommand: (command, callback) => {
     exec(command, (err, stdout, stderr) => {
       if (err) {
