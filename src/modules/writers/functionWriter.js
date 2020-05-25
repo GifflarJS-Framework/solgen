@@ -79,7 +79,7 @@ function createFunctionWriter(variables) {
       if (f.isConstructor) {
         text += "constructor(";
       } else {
-        scope = " " + f.scope + " ";
+        scope = " " + f.scope;
         text += "function " + f.name + "(";
       }
 
@@ -91,8 +91,16 @@ function createFunctionWriter(variables) {
         text_returns = request.text_returns;
       });
 
+      // Organizing all modifiers
+      let modifiers = "";
+      if (f.modifiers) {
+        f.modifiers.map((modifier) => {
+          modifiers += " " + modifier;
+        });
+      }
+
       // Closing inputs and setting scope
-      text += ")" + scope;
+      text += ")" + scope + modifiers;
 
       // Setting the returns text
       if (text_returns) {
