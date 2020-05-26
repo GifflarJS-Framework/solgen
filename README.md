@@ -23,3 +23,7 @@ Um framework para gerar, compilar e implementar contratos inteligentes em tempo 
 | Estrutura IF            | :heavy_check_mark: | `if(count == 1){...}`                                 |
 | IFs aninhados           | :heavy_check_mark: | `if(){if(){...}}`                                     |
 | Loops                   |        :x:         | `for(i=0;i<count;i++){...}`                           |
+
+## Documentation
+
+The JSDocs is being built [here](https://lif-uesc.gitlab.io/gifflar/out/index.html)
