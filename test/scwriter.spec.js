@@ -58,8 +58,7 @@ const json = {
             variable: "message",
             value: {
               statement: "expression",
-              value1: "val",
-              operator: "++",
+              value: "val++",
             },
           },
         ],

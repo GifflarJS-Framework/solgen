@@ -3,24 +3,7 @@ const assert = require("assert");
 
 const json = {
   statement: "expression",
-  operator: "!",
-  value1: {
-    statement: "expression",
-    value1: {
-      statement: "expression",
-      value1: "val",
-      operator: "+",
-      value2: "1",
-    },
-    operator: "+",
-    value2: {
-      statement: "expression",
-      value1: "val",
-      operator: "+",
-      value2: "1",
-    },
-  },
-  before: true,
+  value: "!((val+1)+(val+1))",
 };
 
 describe("Expression Writer", () => {
