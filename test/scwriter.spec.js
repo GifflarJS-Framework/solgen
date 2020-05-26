@@ -24,13 +24,6 @@ const json = {
         name: "",
         scope: "public",
         isConstructor: true,
-        variables: [
-          {
-            type: "string",
-            scope: "public",
-            name: "tmp",
-          },
-        ],
         inputs: [
           {
             name: "_message",
@@ -64,7 +57,7 @@ const json = {
         ],
       },
       {
-        name: "setMessage",
+        name: "myFunction",
         scope: "public",
         isConstructor: false,
         inputs: [
@@ -79,6 +72,12 @@ const json = {
         ],
         outputs: ["message"],
         content: [
+          {
+            statement: "variable",
+            type: "string",
+            name: "tmp",
+            value: '"asd"',
+          },
           {
             statement: "assignment",
             variable: "message",

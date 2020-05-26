@@ -16,8 +16,14 @@ function createContractModel(_name) {
     return newCallEvent;
   }
 
-  function createVariable(_type, _name) {
-    const variable = createVariableModel(_type, _name);
+  function createVariable(_type, _name, _scope, _setMethod, _value) {
+    const variable = createVariableModel(
+      _type,
+      _name,
+      _scope,
+      _setMethod,
+      _value
+    );
     contract.contract.variables.push(variable);
 
     return variable;

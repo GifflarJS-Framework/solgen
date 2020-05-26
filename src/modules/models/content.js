@@ -1,4 +1,5 @@
 const createAssignmentModel = require("./assignment");
+const createVariableModel = require("./variable");
 const createIfModel = require("./if");
 
 /**
@@ -32,15 +33,20 @@ function createContentModel() {
     obj.endElseIf = endIf;
     obj.setCallEvent = setCallEvent;
     obj.setAssignment = setAssignment;
+    obj.setVariable = setVariable;
 
     return obj;
   }
 
+  function setVariable(_type, _name, _value) {
+    const newVariable = createVariableModel(_type, _name, "", false, _value);
+    stack[top].content.push(newVariable);
+    return stack[top];
+  }
+
   function setAssignment(variable, expression = undefined) {
     const newAssignment = createAssignmentModel(variable, expression);
-
     stack[top].content.push(newAssignment);
-
     return stack[top];
   }
 

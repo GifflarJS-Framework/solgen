@@ -1,7 +1,7 @@
 const createContentWriter = require("./statements/contentWriter");
-const createRequest = require("../utils/request");
 const createInputWriter = require("./statements/inputWriter");
 const createOutputWriter = require("./statements/outputWriter");
+const createRequest = require("../utils/request");
 
 /**
  * @name createFunctionWriter

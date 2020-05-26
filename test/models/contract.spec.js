@@ -1,12 +1,20 @@
 const createContractModel = require("../../src/modules/models/contract");
 const assert = require("assert");
 
-describe.only("Contract Model", () => {
+describe("Contract Model", () => {
   it("Creating", () => {
     let expected = {
       name: "MyContract",
       contract: {
-        variables: [],
+        variables: [
+          {
+            type: "string",
+            name: "tmp",
+            scope: "public",
+            value: "",
+            setMethod: false,
+          },
+        ],
         functions: [
           {
             name: "myFunction",
@@ -14,6 +22,12 @@ describe.only("Contract Model", () => {
             inputs: [{ name: "_message", type: "string" }],
             outputs: ["message"],
             content: [
+              {
+                statement: "variable",
+                type: "string",
+                name: "tmp",
+                value: "",
+              },
               {
                 statement: "callevent",
                 name: "temperatureOverflow",
@@ -52,10 +66,13 @@ describe.only("Contract Model", () => {
       .createEvent("temperatureOverflow")
       .addInput("string", "_message");
 
+    contractModel.createVariable("string", "tmp", "public");
+
     contractModel
       .createFunction("myFunction")
       .setInput("string", "_message")
       .setOutput("message")
+      .setVariable("string", "tmp")
       .setCallEvent(event)
       .setAssignment("message", "_message")
       .beginIf("val == 1")

@@ -3,6 +3,7 @@ const createIfWriter = require("./ifWriter");
 const createAssignmentWriter = require("./assignmentWriter");
 const createCalleventWriter = require("./callEventWriter");
 const createCallMethodWriter = require("./callMethodWriter");
+const createVariableWriter = require("../variableWriter");
 
 /**
  * @name createContentWriter
@@ -23,11 +24,13 @@ function createContentWriter() {
   const assignmentWriter = createAssignmentWriter();
   const callEventWriter = createCalleventWriter();
   const callMethodWriter = createCallMethodWriter();
+  const variableWriter = createVariableWriter();
 
   _statements = {
     assignment: assignmentWriter.write,
     if: ifWriter.write,
     callevent: callEventWriter.write,
+    variable: variableWriter.write,
     push: callMethodWriter.write,
   };
 
