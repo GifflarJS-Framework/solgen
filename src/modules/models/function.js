@@ -1,6 +1,8 @@
 const createContentModel = require("./content");
 
 /**
+ * @todo Write documentation
+ * @module
  * @example
  * {
  *  name: "_name",
@@ -17,6 +19,9 @@ function createFunctionModel(
   _outputs
 ) {
   const content_json = createContentModel();
+  /**
+   * @todo Write documentation
+   */
   let myFunction = {
     name: _name,
     scope: _scope,
@@ -26,15 +31,24 @@ function createFunctionModel(
     ...content_json,
   };
 
+  /**
+   * @todo Write documentation
+   */
   function json() {
     const jsonfunction = JSON.stringify(myFunction);
     return JSON.parse(jsonfunction);
   }
 
+  /**
+   * @todo Write documentation
+   */
   function toString() {
     return JSON.stringify(myFunction);
   }
 
+  /**
+   * @todo Write documentation
+   */
   function setInput(type, variable) {
     const newInput = {
       name: variable,
@@ -46,6 +60,9 @@ function createFunctionModel(
     return myFunction;
   }
 
+  /**
+   * @todo Write documentation
+   */
   function setOutput(variable) {
     myFunction.outputs.push(variable);
 

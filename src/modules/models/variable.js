@@ -1,3 +1,7 @@
+/**
+ * @todo Write documentation
+ * @module
+ */
 function createVariableModel(
   _type,
   _name,

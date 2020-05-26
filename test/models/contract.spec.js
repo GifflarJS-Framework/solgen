@@ -64,7 +64,7 @@ describe("Contract Model", () => {
     const contractModel = createContractModel("MyContract");
     const event = contractModel
       .createEvent("temperatureOverflow")
-      .addInput("string", "_message");
+      .setInput("string", "_message");
 
     contractModel.createVariable("string", "tmp", "public");
 

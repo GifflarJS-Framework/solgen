@@ -1,3 +1,7 @@
+/**
+ * @todo Write documentation
+ * @ignore
+ */
 function createExpressionModel(_expression) {
   const expression = {
     statement: "expression",
