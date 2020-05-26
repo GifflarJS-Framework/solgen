@@ -1,16 +1,53 @@
-const createFunction = require("../../src/modules/models/function");
+const createFunctionModel = require("../../src/modules/models/function");
+const assert = require("assert");
 
 describe("Function Model", () => {
-  myFunction = createFunction();
   it("Creating", () => {
-    // myFunction.addInput("string", "message");
-    // myFunction.addOutput("message");
-    // myFunction
-    //   .addCallEvent("temperatureOverflow")
-    //   .addInput("string", "message");
-    // myFunction.addAssignment("message", "_message");
-    // myFunction.addIf("val == 1").addAssignment("message", "_message");
-    // myFunction.addElseIf("val== 2");
-    // console.log(JSON.stringify(myFunction));
+    let expected = {
+      name: "myFunction",
+      isConstructor: false,
+      inputs: [
+        {
+          name: "message",
+          type: "string",
+        },
+      ],
+      outputs: ["message"],
+      content: [
+        {
+          statement: "assignment",
+          variable: "message",
+          value: "_message",
+        },
+        {
+          statement: "if",
+          condition: "val == 1",
+          content: [
+            {
+              statement: "assignment",
+              variable: "message",
+              value: "_message",
+            },
+          ],
+        },
+      ],
+    };
+
+    // Creating function
+    myFunction = createFunctionModel("myFunction");
+
+    // Setting up properties
+    myFunction
+      .setInput("string", "message")
+      .setOutput("message")
+      .setAssignment("message", "_message")
+      .beginIf("val == 1")
+      .setAssignment("message", "_message")
+      .endIf();
+
+    // Asserting result
+    const result = myFunction.toString();
+    expected = JSON.stringify(expected);
+    assert.equal(result, expected);
   });
 });

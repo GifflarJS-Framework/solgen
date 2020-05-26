@@ -27,15 +27,12 @@ function createFunctionModel(
   };
 
   function json() {
-    const json = {};
-    json.name = myFunction.name;
-    json.scope = myFunction.scope;
-    json.isConstructor = myFunction.isConstructor;
-    json.inputs = myFunction.inputs;
-    json.outputs = myFunction.outputs;
-    json.content = myFunction.content;
+    const jsonfunction = JSON.stringify(myFunction);
+    return JSON.parse(jsonfunction);
+  }
 
-    return json;
+  function toString() {
+    return JSON.stringify(myFunction);
   }
 
   function setInput(type, variable) {
@@ -58,6 +55,7 @@ function createFunctionModel(
   // Matching the internal functions
   myFunction.setInput = setInput;
   myFunction.setOutput = setOutput;
+  myFunction.toString = toString;
   myFunction.json = json;
 
   return myFunction;
