@@ -10,15 +10,15 @@ Um framework para gerar, compilar e implementar contratos inteligentes em tempo 
 
 ## Propriedades suportadas
 
-| Propriedade             | Suporta            |
-| ----------------------- | ------------------ |
-| Declaração de Variáveis | :heavy_check_mark: |
-| Atribuição              | :heavy_check_mark: |
-| Estruturas              | :x:                |
-| Modificadores           | :x:                |
-| Criação de eventos      | :heavy_check_mark: |
-| Chamada de eventos      | :heavy_check_mark: |
-| Criação de Funções      | :heavy_check_mark: |
-| Estrutura IF            | :heavy_check_mark: |
-| Estrutura FOR           | :x:                |
-| Loops                   | :x:                |
+| Propriedade             | Suporta            | Exemplo                             |
+| ----------------------- | ------------------ | ----------------------------------- |
+| Declaração de Variáveis | :heavy_check_mark: | `string name = "Bob";`              |
+| Atribuição              | :heavy_check_mark: | `name = "Bob"`                      |
+| Estruturas              | :x:                | `struct Person {string name;}`      |
+| Modificadores           | :x:                | `modifier onlyOwner(){[...]; \_;}`  |
+| Criação de eventos      | :heavy_check_mark: | `event myEvent(string name);`       |
+| Chamada de eventos      | :heavy_check_mark: | `emit myEvent(\_name);`             |
+| Criação de Funções      | :heavy_check_mark: | `function myFuntion() public {...}` |
+| Estrutura IF            | :heavy_check_mark: | `if(count == 1){...}`               |
+| IF em cascata           | :heavy_check_mark: | `if(){if(){...}}`                   |
+| Loops                   | :x:                | `for(i=0;i<count;i++){}`            |
