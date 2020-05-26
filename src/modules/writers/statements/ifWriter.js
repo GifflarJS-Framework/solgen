@@ -43,9 +43,12 @@ function createIfWriter(writeContent) {
   function write(json) {
     let text = "if(" + json.condition + ")";
     // if else is turned on
-    if (json.else) {
-      // if there is a condition (else if), if there isn't (else)
-      json.condition ? (text = "else " + text) : (text = "else");
+    if (!json.condition) {
+      // If no condition setted
+      text = "else";
+    } else if (json.else) {
+      // if there is a condition and else = true (else if), if there isn't (else)
+      text = "else " + text;
     }
     text = text + "{\n";
     text += writeContent(json.content);
