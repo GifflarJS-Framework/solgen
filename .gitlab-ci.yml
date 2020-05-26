@@ -11,7 +11,7 @@ quality:
     - npm test
     
 pages:
-  stage: deploy
+  stage: test
   script:
     - mkdir .public
     - cp -r * .public
