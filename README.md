@@ -22,4 +22,4 @@ Um framework para gerar, compilar e implementar contratos inteligentes em tempo 
 | Criação de Construtor   | :heavy_check_mark: | `function constructor() public {...}`                 |
 | Estrutura IF            | :heavy_check_mark: | `if(count == 1){...}`                                 |
 | IFs aninhados           | :heavy_check_mark: | `if(){if(){...}}`                                     |
-| Loops                   | :x:                | `for(i=0;i<count;i++){}`                              |
+| Loops                   | :x:                | `for(i=0;i<count;i++){...}`                           |
