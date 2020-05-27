@@ -1,4 +1,4 @@
-const createRequest = require("../../utils/request");
+const createRequest = require("../../models/request");
 const createInputWriter = require("./inputWriter");
 
 function createCalleventWriter() {

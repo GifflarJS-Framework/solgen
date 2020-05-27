@@ -1,11 +1,9 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: writers/statements/callEventWriter.js</title>
+    <title>JSDoc: Contract Model</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -58,75 +56,100 @@
             <div class="column is-9-desktop">
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
-                        <p>Source</p>
-                        <h1>writers/statements/callEventWriter.js</h1>
+                        <p>Tutorial</p>
+                        <h1>Contract Model</h1>
                     </header>
 
-                    
+                    <section>
 
-
-
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>const createRequest = require("../../utils/request");
-const createInputWriter = require("./inputWriter");
+</header>
 
-function createCalleventWriter() {
-  const inputWriter = createInputWriter();
-  const request = createRequest();
-  /**
-   * @name write
-   * @description Writes a Solidity event call. **This method updates the request
-   * object to send the events to be created by the eventWriter**.
-   * @param {Object} event The event object to be wrote in Solidity code.
-   * @returns {string} The event Solidity code as **string**.
-   * @example
-   * Input
-   * {
-   *   statement: "callevent",
-   *   name: "myEvent",
-   *   inputs: {
-   *      name: "_message",
-   *      type: "string"
-   *   },
-   *   {
-   *      name: "_val",
-   *      type: "uint"
-   *   }
-   * }
-   *
-   * Return
-   * "emit myEvent(_message, _val);"
-   */
-  function write(event, cb) {
-    request.events.push(event);
-    const inputs_copy = [];
-    // Copying the object or else the args function
-    // shifts the first element of the original object
-    // We need the object later for creating the events
-    Object.assign(inputs_copy, event.inputs);
-    const text =
-      "emit " +
-      event.name +
-      "(" +
-      inputWriter.write(inputs_copy, false) +
-      ");\n";
+<article>
+    <h1>Usage</h1>
+<pre class="prettyprint source lang-js"><code>const contractModel = createContractModel(&quot;MyContract&quot;);
+const event = contractModel
+  .createEvent(&quot;temperatureOverflow&quot;)
+  .setInput(&quot;string&quot;, &quot;_message&quot;);
 
-    cb(request);
-    return text;
-  }
+contractModel.createVariable(&quot;string&quot;, &quot;tmp&quot;, &quot;public&quot;);
 
-  return { write };
-}
-
-module.exports = createCalleventWriter;
+contractModel
+  .createFunction(&quot;myFunction&quot;)
+  .setInput(&quot;string&quot;, &quot;_message&quot;)
+  .setOutput(&quot;message&quot;)
+  .setVariable(&quot;string&quot;, &quot;tmp&quot;)
+  .setCallEvent(event)
+  .setAssignment(&quot;message&quot;, &quot;_message&quot;)
+  .beginIf(&quot;val == 1&quot;)
+  .beginIf(&quot;val == 1&quot;)
+  .setAssignment(&quot;message&quot;, &quot;_message&quot;)
+  .endIf()
+  .endIf();
 </code></pre>
-        </article>
-    </section>
+<h1>Result</h1>
+<pre class="prettyprint source lang-js"><code>{
+      name: &quot;MyContract&quot;,
+      contract: {
+        variables: [
+          {
+            type: &quot;string&quot;,
+            name: &quot;tmp&quot;,
+            scope: &quot;public&quot;,
+            value: &quot;&quot;,
+            setMethod: false,
+          },
+        ],
+        functions: [
+          {
+            name: &quot;myFunction&quot;,
+            isConstructor: false,
+            inputs: [{ name: &quot;_message&quot;, type: &quot;string&quot; }],
+            outputs: [&quot;message&quot;],
+            content: [
+              {
+                statement: &quot;variable&quot;,
+                type: &quot;string&quot;,
+                name: &quot;tmp&quot;,
+                value: &quot;&quot;,
+              },
+              {
+                statement: &quot;callevent&quot;,
+                name: &quot;temperatureOverflow&quot;,
+                inputs: [{ name: &quot;_message&quot;, type: &quot;string&quot; }],
+              },
+              {
+                statement: &quot;assignment&quot;,
+                variable: &quot;message&quot;,
+                value: &quot;_message&quot;,
+              },
+              {
+                statement: &quot;if&quot;,
+                condition: &quot;val == 1&quot;,
+                content: [
+                  {
+                    statement: &quot;if&quot;,
+                    condition: &quot;val == 1&quot;,
+                    content: [
+                      {
+                        statement: &quot;assignment&quot;,
+                        variable: &quot;message&quot;,
+                        value: &quot;_message&quot;,
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    };
+</code></pre>
+</article>
 
-
-
+</section>
 
                 </div>
             </div>
@@ -136,7 +159,7 @@ module.exports = createCalleventWriter;
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Wed May 27 2020 14:43:26 GMT-0300 (GMT-03:00)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Wed May 27 2020 14:43:27 GMT-0300 (GMT-03:00)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
             <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>

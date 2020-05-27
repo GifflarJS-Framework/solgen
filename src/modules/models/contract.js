@@ -3,8 +3,28 @@ const createFunctionModel = require("./function");
 const createEventModel = require("./callevent");
 
 /**
- * @todo Write documentation
+ * @todo Finish documentation
+ * @author Levy Santiago
  * @module
+ * @category Model
+ * @name createContractModel
+ * @description A <b>Factory</b> for creating an contract object model (json).
+ * @returns {Object} The contract object model.
+ * @requires createFunctionModel
+ * @requires createVariableModel
+ * @requires createEventModel
+ * @example
+ * Usage
+ * const contractModel = createContractModel("MyContract");
+ *
+ * Return
+ * {
+ *  name: "MyContract",
+ *   contract: {
+ *     variables: [],
+ *     functions: [],
+ *   }
+ * }
  */
 function createContractModel(_name) {
   /**

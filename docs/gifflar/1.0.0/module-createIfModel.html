@@ -1,11 +1,9 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: writers/statements/callEventWriter.js</title>
+    <title>JSDoc: createIfModel</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -58,72 +56,268 @@
             <div class="column is-9-desktop">
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
-                        <p>Source</p>
-                        <h1>writers/statements/callEventWriter.js</h1>
+                        <p>Module</p>
+                        <h1>createIfModel</h1>
                     </header>
 
                     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>const createRequest = require("../../utils/request");
-const createInputWriter = require("./inputWriter");
+        
+            
+        
+    
+</header>
 
-function createCalleventWriter() {
-  const inputWriter = createInputWriter();
-  const request = createRequest();
-  /**
-   * @name write
-   * @description Writes a Solidity event call. **This method updates the request
-   * object to send the events to be created by the eventWriter**.
-   * @param {Object} event The event object to be wrote in Solidity code.
-   * @returns {string} The event Solidity code as **string**.
-   * @example
-   * Input
-   * {
-   *   statement: "callevent",
-   *   name: "myEvent",
-   *   inputs: {
-   *      name: "_message",
-   *      type: "string"
-   *   },
-   *   {
-   *      name: "_val",
-   *      type: "uint"
-   *   }
-   * }
-   *
-   * Return
-   * "emit myEvent(_message, _val);"
-   */
-  function write(event, cb) {
-    request.events.push(event);
-    const inputs_copy = [];
-    // Copying the object or else the args function
-    // shifts the first element of the original object
-    // We need the object later for creating the events
-    Object.assign(inputs_copy, event.inputs);
-    const text =
-      "emit " +
-      event.name +
-      "(" +
-      inputWriter.write(inputs_copy, false) +
-      ");\n";
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><p>A <b>Factory</b> for creating an if statement object model (json). In the
+<b>Content Model</b>, the If Model receives all the content functions, because it's a statement
+that can implements other statements.</p></div>
+        
 
-    cb(request);
-    return text;
-  }
+        
+            
 
-  return { write };
-}
 
-module.exports = createCalleventWriter;
-</code></pre>
-        </article>
-    </section>
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>_condition</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>The condition to be satisfied in if statement.</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>_else</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">boolean</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>If the else statement is enabled or not</p></td>
+</tr>
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Levy Santiago</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>Finish documentation</li>
+        </ul>
+    </dd>
+    
+
+    
+        <p class="tag-source">
+            <a href="models_if.js.html" class="button">View Source</a>
+            <span>
+                <a href="models_if.js.html">models/if.js</a>, <a href="models_if.js.html#line1">line 1</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'><p>The if statement object model.</p></div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Object</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>Usage
+const newIf = createIfModel("1 == 1");
+
+Return
+{
+  statement: "if",
+  else: false,
+  condition: "1 == 1",
+  content: [],
+}</code></pre>
+    
+
+
+
+        
+    
+    </div>
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
@@ -136,7 +330,7 @@ module.exports = createCalleventWriter;
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Wed May 27 2020 14:43:26 GMT-0300 (GMT-03:00)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Wed May 27 2020 14:43:27 GMT-0300 (GMT-03:00)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
             <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>

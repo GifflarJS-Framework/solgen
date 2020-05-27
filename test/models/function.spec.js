@@ -5,6 +5,7 @@ describe("Function Model", () => {
   it("Creating", () => {
     let expected = {
       name: "myFunction",
+      scope: "public",
       isConstructor: false,
       inputs: [
         {
@@ -34,7 +35,7 @@ describe("Function Model", () => {
     };
 
     // Creating function
-    myFunction = createFunctionModel("myFunction");
+    myFunction = createFunctionModel("myFunction", "public");
 
     // Setting up properties
     myFunction

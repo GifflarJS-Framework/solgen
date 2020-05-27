@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: createContentModel</title>
+    <title>JSDoc: createVariableModel</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -57,7 +57,7 @@
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
                         <p>Module</p>
-                        <h1>createContentModel</h1>
+                        <h1>createVariableModel</h1>
                     </header>
 
                     
@@ -79,9 +79,7 @@
     <div class="container-overview">
     
         
-            <div class="description"><p>A <b>Factory</b> for creating an content object model (json).
-This object is used for creating all content statements like ifs, assignments...
-It is most used only for components which has a content (function, if, ...).</p></div>
+            <div class="description"><p>A <b>Factory</b> for creating a variable statement object model (json).</p></div>
         
 
         
@@ -95,6 +93,232 @@ It is most used only for components which has a content (function, if, ...).</p>
 
 
 
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>_type</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last"><p>The type of the variable (string, uint, ...).</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>_name</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last"><p>The name of the variable.</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>_scope</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          ""
+      
+      </td>
+  
+
+  <td class="description last"><p>The scope of the varible (public, private).</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>_setMethod</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          false
+      
+      </td>
+  
+
+  <td class="description last"><p>If you want to generate automatically the variable set function.</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>_value</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          ""
+      
+      </td>
+  
+
+  <td class="description last"><p>The value to be assigned to the variable after the creation.</p></td>
+</tr>
+
+
+    
+    </tbody>
+</table>
 
 
 
@@ -137,12 +361,19 @@ It is most used only for components which has a content (function, if, ...).</p>
     
 
     
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>Finish documentation</li>
+        </ul>
+    </dd>
+    
 
     
         <p class="tag-source">
-            <a href="models_content.js.html" class="button">View Source</a>
+            <a href="models_variable.js.html" class="button">View Source</a>
             <span>
-                <a href="models_content.js.html">models/content.js</a>, <a href="models_content.js.html#line5">line 5</a>
+                <a href="models_variable.js.html">models/variable.js</a>, <a href="models_variable.js.html#line1">line 1</a>
             </span>
         </p>
     
@@ -173,7 +404,7 @@ It is most used only for components which has a content (function, if, ...).</p>
 
 <div class="columns">
     
-    <div class='param-desc column is-7'><p>The content object model.</p></div>
+    <div class='param-desc column is-7'><p>The if statement object model.</p></div>
     
     
     <div class='column is-5 has-text-left'>
@@ -197,20 +428,14 @@ It is most used only for components which has a content (function, if, ...).</p>
     
     
         <pre class="prettyprint"><code>Usage
-const contentModel = createContentModel();
+const newVariable = createVariableModel("string", "name", "public", false, _value);
 
 Return
 {
-  content: []
-  beginIf: [Function],
-  beginElseIf: [Function],
-  beginElse: [Function],
-  endIf: [Function],
-  endElse: [Function],
-  endElseIf: [Function]
-  setCallEvent: [Function]
-  setAssignment: [Function],
-  setVariable: [Function]
+  statement: "if",
+  else: false,
+  condition: "1 == 1",
+  content: [],
 }</code></pre>
     
 
@@ -223,16 +448,6 @@ Return
     
 
     
-        <h3 class="subsection-title">Requires</h3>
-
-        <ul>
-            <li><a href="module-createAssignmentModel.html">module:createAssignmentModel</a></li>
-        
-            <li><a href="module-createVariableModel.html">module:createVariableModel</a></li>
-        
-            <li><a href="module-createIfModel.html">module:createIfModel</a></li>
-        </ul>
-    
 
     
 
@@ -242,218 +457,6 @@ Return
 
     
 
-    
-        <div class='vertical-section'>
-            <h3 class="title"><span>Members</span></h3>
-            <div class="members">
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<span class="param-type">function</span>
-
-
-    </span>
-
-<h4 class="name" id="~_assignFunctions">
-    <a class="href-link" href="#~_assignFunctions">#</a>
-    
-        
-            <span class='tag'>private</span>
-        
-            <span class='tag'>inner</span>
-        
-    
-    <span class="code-name">
-        _assignFunctions
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <p>Assign the statements functions needed to build the content.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li>Levy Santiago</li>
-        </ul>
-    </dd>
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="models_content.js.html" class="button">View Source</a>
-            <span>
-                <a href="models_content.js.html">models/content.js</a>, <a href="models_content.js.html#line44">line 44</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-    <h5>Example</h5>
-    
-    
-        <pre class="prettyprint"><code>const json = _assignFunctions(obj);</code></pre>
-    
-
-
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<span class="param-type">function</span>
-
-
-    </span>
-
-<h4 class="name" id="~setVariable">
-    <a class="href-link" href="#~setVariable">#</a>
-    
-        
-            <span class='tag'>inner</span>
-        
-    
-    <span class="code-name">
-        setVariable
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <p>Sets a new variable declaration inside the content.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li>Levy Santiago</li>
-        </ul>
-    </dd>
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="models_content.js.html" class="button">View Source</a>
-            <span>
-                <a href="models_content.js.html">models/content.js</a>, <a href="models_content.js.html#line70">line 70</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-    <h5>Example</h5>
-    
-    
-        <pre class="prettyprint"><code>Usage
-contentModel.setVariable("string", "name", "bob");
-
-Return
-{
-  content: [
-    {
-      statement: "variable",
-      type: "string",
-      name: "name",
-      value: "bob"
-    }
-  ]
-}</code></pre>
-    
-
-
-</div>
-            
-            </div>
-        </div>
     
 
     

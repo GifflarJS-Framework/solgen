@@ -1,14 +1,30 @@
 const createContentModel = require("./content");
 
 /**
- * @todo Write documentation
+ * @todo Finish documentation
+ * @author Levy Santiago
  * @module
+ * @category Model
+ * @name createFunctionModel
+ * @description A <b>Factory</b> for creating a function object model (json).
+ * @param {string} _name The name of the function.
+ * @param {string} _scope The scope of the function (public, private).
+ * @param {boolean} [_is_constructor = false] If the function is a constructor.
+ * @param {Object[]} [_inputs = []] The inputs of the function.
+ * @param {Object[]} [_outputs = []] The values that the function will return.
+ * @returns {Object} The function object model.
+ * @requires createContentModel
  * @example
+ * Usage
+ * const myFunction = createFunctionModel("myFunction", "public");
+ *
+ * Return
  * {
- *  name: "_name",
- *  scope: "_scope",
- *  inputs = [],
- *  _isConstructor: false
+ *  name: "myFunction",
+ *  scope: "public",
+ *  _isConstructor: false,
+ *  inputs: [],
+ *  outputs: []
  * }
  */
 function createFunctionModel(
