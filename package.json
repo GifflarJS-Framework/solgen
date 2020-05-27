@@ -27,6 +27,7 @@
   "homepage": "https://gitlab.com/lif-uesc/gifflar.git#readme",
   "devDependencies": {
     "better-docs": "^1.4.13",
+    "jsdoc-mermaid": "^1.0.0",
     "mocha": "^7.1.2"
   }
 }

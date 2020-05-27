@@ -4,11 +4,15 @@
     "dictionaries": ["jsdoc"]
   },
   "source": {
-    "include": ["package.json", "./src"],
+    "include": ["package.json", "./src", "./doc"],
     "includePattern": ".js$",
     "excludePattern": "(node_modules/|docs)"
   },
-  "plugins": ["plugins/markdown", "node_modules/better-docs/category"],
+  "plugins": [
+    "plugins/markdown",
+    "node_modules/better-docs/category",
+    "node_modules/jsdoc-mermaid"
+  ],
   "opts": {
     "destination": "./docs/",
     "encoding": "utf8",
@@ -17,5 +21,15 @@
     "recurse": true,
     "tutorials": "./doc/tutorials",
     "template": "node_modules/better-docs/"
+  },
+  "templates": {
+    "better-docs": {
+      "name": "Gifflar Documentation",
+      "logo": "",
+      "title": "Gifflar Docs",
+      "css": "",
+      "trackingCode": "",
+      "hideGenerator": false
+    }
   }
 }
