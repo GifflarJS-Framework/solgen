@@ -1,0 +1,30 @@
+{
+  "name": "myFunction",
+  "scope": "public",
+  "isConstructor": false,
+  "inputs": [
+    {
+      "name": "_message",
+      "type": "string"
+    }
+  ],
+  "outputs": ["_message"],
+  "content": [
+    {
+      "statement": "assignment",
+      "variable": "message",
+      "value": "_message"
+    },
+    {
+      "statement": "if",
+      "condition": "val == 1",
+      "content": [
+        {
+          "statement": "assignment",
+          "variable": "message",
+          "value": "_message"
+        }
+      ]
+    }
+  ]
+}

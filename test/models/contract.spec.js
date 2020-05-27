@@ -1,66 +1,9 @@
 const createContractModel = require("../../src/modules/models/contract");
 const assert = require("assert");
+const expected = JSON.stringify(require("../examples/contract-1.json"));
 
 describe("Contract Model", () => {
   it("Creating", () => {
-    let expected = {
-      name: "MyContract",
-      contract: {
-        variables: [
-          {
-            type: "string",
-            name: "tmp",
-            scope: "public",
-            value: "",
-            setMethod: false,
-          },
-        ],
-        functions: [
-          {
-            name: "myFunction",
-            isConstructor: false,
-            inputs: [{ name: "_message", type: "string" }],
-            outputs: ["message"],
-            content: [
-              {
-                statement: "variable",
-                type: "string",
-                name: "tmp",
-                value: "",
-              },
-              {
-                statement: "callevent",
-                name: "temperatureOverflow",
-                inputs: [{ name: "_message", type: "string" }],
-              },
-              {
-                statement: "assignment",
-                variable: "message",
-                value: "_message",
-              },
-              {
-                statement: "if",
-                condition: "val == 1",
-                content: [
-                  {
-                    statement: "if",
-                    condition: "val == 1",
-                    content: [
-                      {
-                        statement: "assignment",
-                        variable: "message",
-                        value: "_message",
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
-        ],
-      },
-    };
-
     const contractModel = createContractModel("MyContract");
     const event = contractModel
       .createEvent("temperatureOverflow")
@@ -69,7 +12,7 @@ describe("Contract Model", () => {
     contractModel.createVariable("string", "tmp", "public");
 
     contractModel
-      .createFunction("myFunction")
+      .createFunction("myFunction", "public")
       .setInput("string", "_message")
       .setOutput("message")
       .setVariable("string", "tmp")
@@ -82,7 +25,6 @@ describe("Contract Model", () => {
       .endIf();
 
     const actual = JSON.stringify(contractModel);
-    expected = JSON.stringify(expected);
     assert.equal(actual, expected);
   });
 });
