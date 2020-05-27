@@ -1,4 +1,4 @@
-const helpers = require("../utils/helpers");
+const helpers = require("../../utils/helpers");
 const createRequest = require("../models/request");
 const createFunctionModel = require("../models/function");
 

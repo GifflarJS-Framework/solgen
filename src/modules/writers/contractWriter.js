@@ -1,13 +1,13 @@
-const createVariableWriter = require("./writers/variableWriter");
-const createEventWriter = require("./writers/eventWriter");
-const createFunctionWriter = require("./writers/functionWriter");
+const createVariableWriter = require("./variableWriter");
+const createEventWriter = require("./eventWriter");
+const createFunctionWriter = require("./functionWriter");
 
 /**
- * @name createWriter
+ * @name createContractWriter
  * @description A **Factory** that creates the contract writer object to write
  * the contract Solidity code.
  */
-function createWriter() {
+function createContractWriter() {
   /**
    * Write the initial clousures of the contract Solidity code.
    * @private
@@ -75,4 +75,4 @@ function createWriter() {
   return { write };
 }
 
-module.exports = createWriter;
+module.exports = createContractWriter;

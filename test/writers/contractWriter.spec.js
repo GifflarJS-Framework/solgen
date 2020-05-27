@@ -1,19 +1,19 @@
-const createWriter = require("../../src/modules/scwriter");
+const createContractWriter = require("../../src/modules/writers/contractWriter");
 const assert = require("assert");
-const helpers = require("../../src/modules/utils/helpers");
+const helpers = require("../../src/utils/helpers");
 const json = require("../examples/contract-2.json");
 
-describe("Test smcwriter", () => {
+describe("Test Contract Writer", () => {
   let writer = null;
   it("Object creation", () => {
-    writer = createWriter();
+    writer = createContractWriter();
     assert.ok(!helpers.isObjEmpty(writer), "Error while creating writer");
   });
 
-  it("writer.write()", () => {
+  it("Writing Contract", () => {
     assert.ok(writer, "Writer not defined");
     const contract_text = writer.write(json);
-    console.log(contract_text);
+    //console.log(contract_text);
     assert.ok(contract_text, "No contract wrote");
   });
 });

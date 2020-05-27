@@ -1,4 +1,4 @@
-const { isObject } = require("../../utils/helpers");
+const { isObject } = require("../../../utils/helpers");
 
 function createExpressionWriter() {
   /**

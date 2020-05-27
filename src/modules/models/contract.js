@@ -88,10 +88,15 @@ function createContractModel(_name) {
     return _function;
   }
 
+  function toString() {
+    return JSON.stringify(contract);
+  }
+
   contract.createVariable = createVariable;
   contract.createFunction = createFunction;
   contract.createConstructor = createConstructor;
   contract.createEvent = createEvent;
+  contract.toString = toString;
 
   return contract;
 }
