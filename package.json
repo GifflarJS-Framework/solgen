@@ -29,5 +29,8 @@
     "better-docs": "^1.4.13",
     "jsdoc-mermaid": "^1.0.0",
     "mocha": "^7.1.2"
+  },
+  "dependencies": {
+    "solc": "^0.4.23"
   }
 }
