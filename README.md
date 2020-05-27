@@ -26,4 +26,4 @@ Um framework para gerar, compilar e implementar contratos inteligentes em tempo 
 
 ## Documentation
 
-The JSDocs is being built [here](https://lif-uesc.gitlab.io/gifflar/out/index.html)
+The JSDocs is being built [here](https://lif-uesc.gitlab.io/gifflar/docs/gifflar/1.0.0/index.html)
