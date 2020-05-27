@@ -3,6 +3,7 @@ default:
 
 stages:
   - test
+  - deploy
 
 quality:
   stage: test
@@ -11,7 +12,7 @@ quality:
     - npm test
     
 pages:
-  stage: test
+  stage: deploy
   script:
     - mkdir .public
     - cp -r * .public
