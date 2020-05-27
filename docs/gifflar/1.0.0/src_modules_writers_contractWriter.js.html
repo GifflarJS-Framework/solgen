@@ -59,7 +59,7 @@
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
                         <p>Source</p>
-                        <h1>src/modules/models/contract.js</h1>
+                        <h1>src/modules/writers/contractWriter.js</h1>
                     </header>
 
                     
@@ -69,110 +69,84 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const createVariableModel = require("./variable");
-const createFunctionModel = require("./function");
-const createEventModel = require("./callevent");
+            <pre class="prettyprint source linenums"><code>const createVariableWriter = require("./variableWriter");
+const createEventWriter = require("./eventWriter");
+const createFunctionWriter = require("./functionWriter");
 
 /**
- * @todo Finish documentation
- * @author Levy Santiago
- * @module
- * @category Model
- * @name createContractModel
- * @description A &lt;b>Factory&lt;/b> for creating an contract object model (json).
- * @returns {Object} The contract object model.
- * @requires createFunctionModel
- * @requires createVariableModel
- * @requires createEventModel
- * @example
- * Usage
- * const contractModel = createContractModel("MyContract");
- *
- * Return
- * {
- *  name: "MyContract",
- *   contract: {
- *     variables: [],
- *     functions: [],
- *   }
- * }
+ * @name createContractWriter
+ * @description A **Factory** that creates the contract writer object to write
+ * the contract Solidity code.
  */
-function createContractModel(_name) {
+function createContractWriter() {
   /**
-   * @todo Write documentation
+   * Write the initial clousures of the contract Solidity code.
+   * @private
    */
-  const contract = {
-    name: _name,
-    contract: {
-      variables: [],
-      functions: [],
-    },
-  };
+  function _start(contract_name) {
+    // Writing the compiler version
+    text = "pragma solidity ^0.4.23;\n\n";
 
-  /**
-   * @todo Write documentation
-   */
-  function createEvent(_name, _inputs = []) {
-    const newCallEvent = createEventModel(_name, _inputs);
-    return newCallEvent;
+    // Initing the contract
+    text += "contract " + contract_name + "{\n";
+
+    return text;
   }
 
   /**
-   * @todo Write documentation
+   * Write the final clousures of the contract Solidity code.
+   * @private
    */
-  function createVariable(_type, _name, _scope, _setMethod, _value) {
-    const variable = createVariableModel(
-      _type,
-      _name,
-      _scope,
-      _setMethod,
-      _value
+  function _close() {
+    // Closing contract definition
+    text = "}";
+
+    return text;
+  }
+
+  /**
+   * Writes the contract Solidity code.
+   * @param {Object} json - The JSON of the contract to be wrote.
+   */
+  function write(json) {
+    if (!json) {
+      return false;
+    }
+
+    let text = "";
+
+    const variableWriter = createVariableWriter();
+    const eventWriter = createEventWriter();
+    const functionWriter = createFunctionWriter(json.contract.variables);
+
+    const txt_start = _start(json.name);
+    const txt_variables = variableWriter.write(
+      json.contract.variables,
+      (request) => {
+        json.contract.functions = json.contract.functions.concat(
+          request.functions
+        );
+      }
     );
-    contract.contract.variables.push(variable);
 
-    return variable;
-  }
-
-  /**
-   * @todo Write documentation
-   */
-  function createConstructor(_scope, _inputs, _outputs) {
-    const _function = createFunctionModel(_scope, true, _inputs, _outputs);
-    contract.contract.functions.push(_function);
-
-    return _function;
-  }
-
-  /**
-   * @todo Write documentation
-   */
-  function createFunction(_name, _scope, _inputs, _outputs) {
-    const _function = createFunctionModel(
-      _name,
-      _scope,
-      false,
-      _inputs,
-      _outputs
+    const txt_functions = functionWriter.write(
+      json.contract.functions,
+      (request) => {
+        json.contract.events = request.events;
+      }
     );
-    contract.contract.functions.push(_function);
+    const txt_events = eventWriter.write(json.contract.events);
+    const txt_close = _close();
 
-    return _function;
+    text = txt_start + txt_variables + txt_events + txt_functions + txt_close;
+
+    return text;
   }
 
-  function toString() {
-    return JSON.stringify(contract);
-  }
-
-  contract.createVariable = createVariable;
-  contract.createFunction = createFunction;
-  contract.createConstructor = createConstructor;
-  contract.createEvent = createEvent;
-  contract.toString = toString;
-
-  return contract;
+  return { write };
 }
 
-module.exports = createContractModel;
+module.exports = createContractWriter;
 </code></pre>
         </article>
     </section>

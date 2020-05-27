@@ -59,7 +59,7 @@
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
                         <p>Source</p>
-                        <h1>src/modules/models/contract.js</h1>
+                        <h1>src/modules/compiler.js</h1>
                     </header>
 
                     
@@ -69,110 +69,22 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const createVariableModel = require("./variable");
-const createFunctionModel = require("./function");
-const createEventModel = require("./callevent");
+            <pre class="prettyprint source linenums"><code>const solc = require("solc");
 
-/**
- * @todo Finish documentation
- * @author Levy Santiago
- * @module
- * @category Model
- * @name createContractModel
- * @description A &lt;b>Factory&lt;/b> for creating an contract object model (json).
- * @returns {Object} The contract object model.
- * @requires createFunctionModel
- * @requires createVariableModel
- * @requires createEventModel
- * @example
- * Usage
- * const contractModel = createContractModel("MyContract");
- *
- * Return
- * {
- *  name: "MyContract",
- *   contract: {
- *     variables: [],
- *     functions: [],
- *   }
- * }
- */
-function createContractModel(_name) {
+function createCompiler() {
   /**
-   * @todo Write documentation
+   * Compiles a Solidity code
+   * @param {string} code
    */
-  const contract = {
-    name: _name,
-    contract: {
-      variables: [],
-      functions: [],
-    },
-  };
-
-  /**
-   * @todo Write documentation
-   */
-  function createEvent(_name, _inputs = []) {
-    const newCallEvent = createEventModel(_name, _inputs);
-    return newCallEvent;
+  function compile(code) {
+    const output = solc.compile(code, 1);
+    return output;
   }
 
-  /**
-   * @todo Write documentation
-   */
-  function createVariable(_type, _name, _scope, _setMethod, _value) {
-    const variable = createVariableModel(
-      _type,
-      _name,
-      _scope,
-      _setMethod,
-      _value
-    );
-    contract.contract.variables.push(variable);
-
-    return variable;
-  }
-
-  /**
-   * @todo Write documentation
-   */
-  function createConstructor(_scope, _inputs, _outputs) {
-    const _function = createFunctionModel(_scope, true, _inputs, _outputs);
-    contract.contract.functions.push(_function);
-
-    return _function;
-  }
-
-  /**
-   * @todo Write documentation
-   */
-  function createFunction(_name, _scope, _inputs, _outputs) {
-    const _function = createFunctionModel(
-      _name,
-      _scope,
-      false,
-      _inputs,
-      _outputs
-    );
-    contract.contract.functions.push(_function);
-
-    return _function;
-  }
-
-  function toString() {
-    return JSON.stringify(contract);
-  }
-
-  contract.createVariable = createVariable;
-  contract.createFunction = createFunction;
-  contract.createConstructor = createConstructor;
-  contract.createEvent = createEvent;
-  contract.toString = toString;
-
-  return contract;
+  return { compile };
 }
 
-module.exports = createContractModel;
+module.exports = createCompiler;
 </code></pre>
         </article>
     </section>
