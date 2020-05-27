@@ -1,6 +1,7 @@
 /**
  * @author Levy Santiago
  * @module
+ * @category Model
  * @name createAssignmentModel
  * @description A <b>Factory</b> for creating an assignment object model (json).
  * @param {string} _variable The variable where the value will be inserted.

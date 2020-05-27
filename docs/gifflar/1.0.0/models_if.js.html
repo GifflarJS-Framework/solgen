@@ -1,9 +1,11 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: models/if.js</title>
 
     <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -52,8 +54,8 @@
             <div class="column is-9-desktop">
                 <div class="content" id="main-content-wrapper">
                     <header class="page-title">
-                        <p>Title</p>
-                        <h1>Home</h1>
+                        <p>Source</p>
+                        <h1>models/if.js</h1>
                     </header>
 
                     
@@ -61,103 +63,30 @@
 
 
     
-
-
-    <h3>gifflar 1.0.0</h3>
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
     <section>
-        <article><div align="center">
-    <img src="https://i.imgur.com/mwbuYqE.png" alt="gifflar banner"/>
-</div>
-<p><a href="https://gitlab.com/lif-uesc/gifflar/-/commits/master"><img src="https://gitlab.com/lif-uesc/gifflar/badges/master/pipeline.svg" alt="pipeline status"></a></p>
-<h1>Gifflar.js</h1>
-<p>Um framework para gerar, compilar e implementar contratos inteligentes em tempo de execução.</p>
-<h2>Propriedades suportadas</h2>
-<table>
-<thead>
-<tr>
-<th>Propriedade</th>
-<th style="text-align:center">Suporta</th>
-<th>Exemplo</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Declaração de Variáveis</td>
-<td style="text-align:center"><b>sim</b></td>
-<td><code>string name;</code><br/> <code>string name = &quot;Bob&quot;;</code></td>
-</tr>
-<tr>
-<td>Atribuição</td>
-<td style="text-align:center"><b>sim</b></td>
-<td><code>name = &quot;Bob&quot;</code><br/> <code>name = _name</code><br/> <code>val++</code></td>
-</tr>
-<tr>
-<td>Estruturas</td>
-<td style="text-align:center"><b>Não</b></td>
-<td><code>struct Person {string name;}</code></td>
-</tr>
-<tr>
-<td>Modificadores</td>
-<td style="text-align:center"><b>Não</b></td>
-<td><code>modifier onlyOwner(){</code><br/><code>[...];</code><br/><code>_;</code><br/><code>}</code></td>
-</tr>
-<tr>
-<td>Criação de eventos</td>
-<td style="text-align:center"><b>sim</b></td>
-<td><code>event myEvent(string name);</code></td>
-</tr>
-<tr>
-<td>Chamada de eventos</td>
-<td style="text-align:center"><b>sim</b></td>
-<td><code>emit myEvent(_name);</code></td>
-</tr>
-<tr>
-<td>Criação de Funções</td>
-<td style="text-align:center"><b>sim</b></td>
-<td><code>function myFuntion() public {...}</code></td>
-</tr>
-<tr>
-<td>Criação de Construtor</td>
-<td style="text-align:center"><b>sim</b></td>
-<td><code>function constructor() public {...}</code></td>
-</tr>
-<tr>
-<td>Estrutura IF</td>
-<td style="text-align:center"><b>sim</b></td>
-<td><code>if(count == 1){...}</code></td>
-</tr>
-<tr>
-<td>IFs aninhados</td>
-<td style="text-align:center"><b>sim</b></td>
-<td><code>if(){if(){...}}</code></td>
-</tr>
-<tr>
-<td>Loops</td>
-<td style="text-align:center"><b>Não</b></td>
-<td><code>for(i=0;i&lt;count;i++){...}</code></td>
-</tr>
-</tbody>
-</table>
-<h2>Documentation</h2>
-<p>The JSDocs is being built <a href="https://lif-uesc.gitlab.io/gifflar/docs/gifflar/1.0.0/index.html">here</a></p></article>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @todo Write documentation
+ * @module
+ */
+function createIfModel(_condition, _else) {
+  /**
+   * @todo Write documentation
+   */
+  let _if = {
+    statement: "if",
+    else: _else,
+    condition: _condition,
+    content: [],
+  };
+
+  return _if;
+}
+
+module.exports = createIfModel;
+</code></pre>
+        </article>
     </section>
-
-
 
 
 

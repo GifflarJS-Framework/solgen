@@ -13,11 +13,11 @@ module.exports = {
         // Deploy configuration
         .deploy({
           data: bytecode,
-          arguments: args
+          arguments: args,
         })
         .send({
           gas: GAS,
-          from: from
+          from: from,
         });
 
       return this.controller_contract;
@@ -34,7 +34,7 @@ module.exports = {
       // Deploy configuration
       .send({
         gas: GAS,
-        from: from
+        from: from,
       });
 
     return transaction;
@@ -43,7 +43,7 @@ module.exports = {
   /**
    * Gets a contract instance by the blockchain address and ABI
    * @param {string} contract_address
-   * @param {json stringifyed} abi
+   * @param {Object} abi
    */
   retrieveContract: async (contract_address, abi) => {
     try {
@@ -57,5 +57,5 @@ module.exports = {
       console.log(e);
       return false;
     }
-  }
+  },
 };

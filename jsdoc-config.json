@@ -4,15 +4,18 @@
     "dictionaries": ["jsdoc"]
   },
   "source": {
-    "include": ["package.json", "README.md"],
+    "include": ["package.json", "./src"],
     "includePattern": ".js$",
     "excludePattern": "(node_modules/|docs)"
   },
-  "plugins": ["plugins/markdown"],
+  "plugins": ["plugins/markdown", "node_modules/better-docs/category"],
   "opts": {
     "destination": "./docs/",
     "encoding": "utf8",
+    "readme": "./doc/readme.md",
     "private": true,
-    "recurse": true
+    "recurse": true,
+    "tutorials": "./doc/tutorials",
+    "template": "node_modules/better-docs/"
   }
 }

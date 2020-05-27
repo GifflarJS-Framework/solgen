@@ -5,6 +5,7 @@ const createIfModel = require("./if");
 /**
  * @author Levy Santiago
  * @module
+ * @category Model
  * @name createContentModel
  * @description A <b>Factory</b> for creating an content object model (json).
  * This object is used for creating all content statements like ifs, assignments...

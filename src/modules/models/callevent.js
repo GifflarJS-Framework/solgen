@@ -1,6 +1,7 @@
 /**
  * @author Levy Santiago
  * @module
+ * @category Model
  * @name createEventModel
  * @description A <b>Factory</b> for creating an event object model (json).
  * This object later is used as a call for the event, so the event is created
