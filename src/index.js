@@ -28,6 +28,10 @@ function createContract(_name) {
     return contract.json;
   }
 
+  function deploy() {
+    return "";
+  }
+
   contract.json = json;
   contract.write = write;
   contract.compile = compile;

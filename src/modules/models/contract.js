@@ -66,7 +66,7 @@ function createContractModel(_name) {
    * @todo Write documentation
    */
   function createConstructor(_scope, _inputs, _outputs) {
-    const _function = createFunctionModel(_scope, true, _inputs, _outputs);
+    const _function = createFunctionModel("", _scope, true, _inputs, _outputs);
     contract.contract.functions.push(_function);
 
     return _function;

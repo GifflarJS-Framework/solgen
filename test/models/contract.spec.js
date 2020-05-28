@@ -1,6 +1,8 @@
 const createContractModel = require("../../src/modules/models/contract");
 const assert = require("assert");
-const expected = JSON.stringify(require("../examples/contract-1.json"));
+const expected = JSON.stringify(
+  require("../examples/modeling/contract-1.json")
+);
 
 describe("Contract Model", () => {
   it("Creating", () => {

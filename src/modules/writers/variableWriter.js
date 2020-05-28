@@ -44,7 +44,7 @@ function createVariableWriter() {
         text += variables.type + " " + variables.name + ";\n";
       }
     } else {
-      text = "// VARIABLES\n";
+      text = "//VARIABLES\n";
       variables.map((v) => {
         if (v.scope) {
           text += v.type + " " + v.scope + " " + v.name;

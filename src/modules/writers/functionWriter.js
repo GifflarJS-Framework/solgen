@@ -73,13 +73,12 @@ function createFunctionWriter(variables) {
     let text_returns = "";
 
     functions.map((f) => {
-      let scope = "";
+      let scope = " " + f.scope;
       // Verifying whether is a constructor or not
       // Opening the inputs clousure
       if (f.isConstructor) {
         text += "constructor(";
       } else {
-        scope = " " + f.scope;
         text += "function " + f.name + "(";
       }
 

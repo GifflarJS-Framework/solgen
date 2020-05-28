@@ -28,14 +28,16 @@ function createEventWriter() {
    * event myEvent(uint _input1);
    */
   function write(events) {
-    let text = "//EVENTS\n";
+    let text = "";
 
     events.map((event) => {
       text +=
         "event " + event.name + "(" + inputWriter.write(event.inputs) + ");\n";
     });
 
-    text += "\n\n";
+    if (text) {
+      text = "//EVENTS\n" + text + "\n\n";
+    }
 
     return text;
   }
