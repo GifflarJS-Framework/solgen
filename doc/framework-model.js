@@ -5,7 +5,7 @@
  *
  * @mermaid
  * graph TD;
- * contractWriter-->|uses|json((JSON))
+ * contractWriter-->|writes|json((JSON))
  * deployer-->|deploys|abi
  * compiler-->|compiles|sol_code
  *
@@ -20,7 +20,7 @@
  *
  * subgraph writing
  * contractWriter-->Writers
- * contractWriter-->|generates|sol_code((.sol code))
+ * contractWriter-->|generates|sol_code(("code.sol"))
  * end
  *
  * subgraph modeling

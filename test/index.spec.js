@@ -28,7 +28,7 @@ describe("Test Contract", () => {
       .endIf()
       .endIf();
 
-    assert.equal(expected_model, gContract.toString());
+    assert.equal(expected_model, gContract.json());
 
     //console.log(gContract.write());
     //console.log(gContract.compile());

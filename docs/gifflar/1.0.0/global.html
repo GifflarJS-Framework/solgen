@@ -49,7 +49,7 @@
             <div class="column is-3" id="sidebarNav">
                 <div class="sidebar">
                     <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-contract-model.html">Contract Model</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createContentWriter">createContentWriter</a></li><li><a href="global.html#createContractWriter">createContractWriter</a></li><li><a href="global.html#createEventWriter">createEventWriter</a></li><li><a href="global.html#createFunctionWriter">createFunctionWriter</a></li><li><a href="global.html#createIfWriter">createIfWriter</a></li><li><a href="global.html#createOutputWriter">createOutputWriter</a></li><li><a href="global.html#write">write</a></li></ul></div><div class="category"><h2>Diagrams</h2><h3>Modules</h3><ul><li><a href="module-Framework%2520model.html">Framework model</a></li><li><a href="module-Modeling%2520Sequence%2520Diagram.html">Modeling Sequence Diagram</a></li><li><a href="module-Writing%2520Sequence%2520Diagram.html">Writing Sequence Diagram</a></li></ul></div><div class="category"><h2>Model</h2><h3>Modules</h3><ul><li><a href="module-createAssignmentModel.html">createAssignmentModel</a></li><li><a href="module-createContentModel.html">createContentModel</a></li><li><a href="module-createContractModel.html">createContractModel</a></li><li><a href="module-createEventModel.html">createEventModel</a></li><li><a href="module-createFunctionModel.html">createFunctionModel</a></li><li><a href="module-createIfModel.html">createIfModel</a></li><li><a href="module-createVariableModel.html">createVariableModel</a></li></ul></div>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Tutorials</h3><ul><li><a href="tutorial-contract-model.html">Contract Model</a></li></ul><h3>Global</h3><ul><li><a href="global.html#createContentWriter">createContentWriter</a></li><li><a href="global.html#createContractWriter">createContractWriter</a></li><li><a href="global.html#createEventWriter">createEventWriter</a></li><li><a href="global.html#createFunctionWriter">createFunctionWriter</a></li><li><a href="global.html#createIfWriter">createIfWriter</a></li><li><a href="global.html#createOutputWriter">createOutputWriter</a></li><li><a href="global.html#write">write</a></li></ul></div><div class="category"><h2>Diagrams</h2><h3>Modules</h3><ul><li><a href="module-Complete%2520Sequence%2520Diagram.html">Complete Sequence Diagram</a></li><li><a href="module-Framework%2520model.html">Framework model</a></li><li><a href="module-Modeling%2520Sequence%2520Diagram.html">Modeling Sequence Diagram</a></li><li><a href="module-Writing%2520Sequence%2520Diagram.html">Writing Sequence Diagram</a></li></ul></div><div class="category"><h2>Model</h2><h3>Modules</h3><ul><li><a href="module-createAssignmentModel.html">createAssignmentModel</a></li><li><a href="module-createContentModel.html">createContentModel</a></li><li><a href="module-createContractModel.html">createContractModel</a></li><li><a href="module-createEventModel.html">createEventModel</a></li><li><a href="module-createFunctionModel.html">createFunctionModel</a></li><li><a href="module-createIfModel.html">createIfModel</a></li><li><a href="module-createVariableModel.html">createVariableModel</a></li></ul></div>
                     </nav>
                 </div>
             </div>
@@ -622,99 +622,6 @@ Return
 <h4 class="name" id="write">
     <a class="href-link" href="#write">#</a>
     
-    <span class="code-name">
-        write
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Writes an if statement in Solidity code.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="src_modules_writers_statements_ifWriter.js.html" class="button">View Source</a>
-            <span>
-                <a href="src_modules_writers_statements_ifWriter.js.html">src/modules/writers/statements/ifWriter.js</a>, <a href="src_modules_writers_statements_ifWriter.js.html#line18">line 18</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-    <h5>Example</h5>
-    
-    
-        <pre class="prettyprint"><code>Input
-{
- statement: "if",
-  else: true,
-  condition: "_val == 1",
-   content: [
-     {
-       statement: "assignment"
-       variable: "message",
-       value: "_message",
-     }
-  ]
- }
-
- Result
- "if(_val == 1){\n
-  message = _message;\n
-  }"</code></pre>
-    
-
-
-</div>
-            
-                <div class="member">
-
-<h4 class="name" id="write">
-    <a class="href-link" href="#write">#</a>
-    
         
             <span class='tag'>private</span>
         
@@ -818,6 +725,10 @@ Usage
 <h4 class="name" id="write">
     <a class="href-link" href="#write">#</a>
     
+        
+            <span class='tag'>private</span>
+        
+    
     <span class="code-name">
         write
     </span>
@@ -828,8 +739,7 @@ Usage
 
 
 <div class="description">
-    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Writes a Solidity event call. <strong>This method updates the request
-object to send the events to be created by the eventWriter</strong>.</p>
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Creates a Solidity array push statement</p>
 </div>
 
 
@@ -869,9 +779,9 @@ object to send the events to be created by the eventWriter</strong>.</p>
 
     
         <p class="tag-source">
-            <a href="src_modules_writers_statements_callEventWriter.js.html" class="button">View Source</a>
+            <a href="src_modules_writers_statements_callMethodWriter.js.html" class="button">View Source</a>
             <span>
-                <a href="src_modules_writers_statements_callEventWriter.js.html">src/modules/writers/statements/callEventWriter.js</a>, <a href="src_modules_writers_statements_callEventWriter.js.html#line7">line 7</a>
+                <a href="src_modules_writers_statements_callMethodWriter.js.html">src/modules/writers/statements/callMethodWriter.js</a>, <a href="src_modules_writers_statements_callMethodWriter.js.html#line2">line 2</a>
             </span>
         </p>
     
@@ -884,22 +794,101 @@ object to send the events to be created by the eventWriter</strong>.</p>
     <h5>Example</h5>
     
     
-        <pre class="prettyprint"><code>Input
+        <pre class="prettyprint"><code>Json
 {
-  statement: "callevent",
-  name: "myEvent",
-  inputs: {
-     name: "_message",
-     type: "string"
-  },
-  {
-     name: "_val",
-     type: "uint"
-  }
+  statement: "push",
+  variable: "messages",
+  value: "_message"
 }
 
 Return
-"emit myEvent(_message, _val);"</code></pre>
+"messages.push(_message);"</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="write">
+    <a class="href-link" href="#write">#</a>
+    
+    <span class="code-name">
+        write
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Writes the Solidity return and returns string representation.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="src_modules_writers_statements_outputWriter.js.html" class="button">View Source</a>
+            <span>
+                <a href="src_modules_writers_statements_outputWriter.js.html">src/modules/writers/statements/outputWriter.js</a>, <a href="src_modules_writers_statements_outputWriter.js.html#line22">line 22</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>Outputs
+["message", "messages"]
+
+Result
+"return message, messages;"
+"returns (string, string[])" (callback)
+
+Usage
+text_return += outputWriter.write(f.outputs, (request) => {
+  text_returns = request.text_returns;
+});</code></pre>
     
 
 
@@ -960,9 +949,9 @@ Return
 
     
         <p class="tag-source">
-            <a href="src_modules_writers_statements_expressionWriter.js.html" class="button">View Source</a>
+            <a href="src_modules_writers_statements_expressionWriter.old.js.html" class="button">View Source</a>
             <span>
-                <a href="src_modules_writers_statements_expressionWriter.js.html">src/modules/writers/statements/expressionWriter.js</a>, <a href="src_modules_writers_statements_expressionWriter.js.html#line4">line 4</a>
+                <a href="src_modules_writers_statements_expressionWriter.old.js.html">src/modules/writers/statements/expressionWriter.old.js</a>, <a href="src_modules_writers_statements_expressionWriter.old.js.html#line6">line 6</a>
             </span>
         </p>
     
@@ -978,7 +967,24 @@ Return
         <pre class="prettyprint"><code>Input
 {
     statement: "expression",
-    value: "!((val+1)+(val+1))"
+    operator: "!",
+    value1: {
+        statement: "expression",
+        value1: {
+          statement: "expression",
+          value1: "val",
+          operator: "+",
+          value2: "1",
+        },
+        operator: "+",
+        value2: {
+          statement: "expression",
+          value1: "val",
+          operator: "+",
+          value2: "1",
+        },
+    },
+    before: true,
  }
 
  Result
@@ -1198,6 +1204,89 @@ constructor(string _input1){
 
 
 <div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Writes an expression statement in Solidity code.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="src_modules_writers_statements_expressionWriter.js.html" class="button">View Source</a>
+            <span>
+                <a href="src_modules_writers_statements_expressionWriter.js.html">src/modules/writers/statements/expressionWriter.js</a>, <a href="src_modules_writers_statements_expressionWriter.js.html#line4">line 4</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>Input
+{
+    statement: "expression",
+    value: "!((val+1)+(val+1))"
+ }
+
+ Result
+ "!((val+1)+(val+1))"</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="write">
+    <a class="href-link" href="#write">#</a>
+    
+    <span class="code-name">
+        write
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
     <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Writes the content of another statement.</p>
 </div>
 
@@ -1314,7 +1403,7 @@ message = _message;\n
 
 
 <div class="description">
-    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Writes an expression statement in Solidity code.</p>
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Writes an if statement in Solidity code.</p>
 </div>
 
 
@@ -1354,9 +1443,9 @@ message = _message;\n
 
     
         <p class="tag-source">
-            <a href="src_modules_writers_statements_expressionWriter.old.js.html" class="button">View Source</a>
+            <a href="src_modules_writers_statements_ifWriter.js.html" class="button">View Source</a>
             <span>
-                <a href="src_modules_writers_statements_expressionWriter.old.js.html">src/modules/writers/statements/expressionWriter.old.js</a>, <a href="src_modules_writers_statements_expressionWriter.old.js.html#line6">line 6</a>
+                <a href="src_modules_writers_statements_ifWriter.js.html">src/modules/writers/statements/ifWriter.js</a>, <a href="src_modules_writers_statements_ifWriter.js.html#line18">line 18</a>
             </span>
         </p>
     
@@ -1371,29 +1460,22 @@ message = _message;\n
     
         <pre class="prettyprint"><code>Input
 {
-    statement: "expression",
-    operator: "!",
-    value1: {
-        statement: "expression",
-        value1: {
-          statement: "expression",
-          value1: "val",
-          operator: "+",
-          value2: "1",
-        },
-        operator: "+",
-        value2: {
-          statement: "expression",
-          value1: "val",
-          operator: "+",
-          value2: "1",
-        },
-    },
-    before: true,
+ statement: "if",
+  else: true,
+  condition: "_val == 1",
+   content: [
+     {
+       statement: "assignment"
+       variable: "message",
+       value: "_message",
+     }
+  ]
  }
 
  Result
- "!((val+1)+(val+1))"</code></pre>
+ "if(_val == 1){\n
+  message = _message;\n
+  }"</code></pre>
     
 
 
@@ -1403,10 +1485,6 @@ message = _message;\n
 
 <h4 class="name" id="write">
     <a class="href-link" href="#write">#</a>
-    
-        
-            <span class='tag'>private</span>
-        
     
     <span class="code-name">
         write
@@ -1418,7 +1496,8 @@ message = _message;\n
 
 
 <div class="description">
-    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Creates a Solidity array push statement</p>
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Writes a Solidity event call. <strong>This method updates the request
+object to send the events to be created by the eventWriter</strong>.</p>
 </div>
 
 
@@ -1458,9 +1537,9 @@ message = _message;\n
 
     
         <p class="tag-source">
-            <a href="src_modules_writers_statements_callMethodWriter.js.html" class="button">View Source</a>
+            <a href="src_modules_writers_statements_callEventWriter.js.html" class="button">View Source</a>
             <span>
-                <a href="src_modules_writers_statements_callMethodWriter.js.html">src/modules/writers/statements/callMethodWriter.js</a>, <a href="src_modules_writers_statements_callMethodWriter.js.html#line2">line 2</a>
+                <a href="src_modules_writers_statements_callEventWriter.js.html">src/modules/writers/statements/callEventWriter.js</a>, <a href="src_modules_writers_statements_callEventWriter.js.html#line7">line 7</a>
             </span>
         </p>
     
@@ -1473,101 +1552,22 @@ message = _message;\n
     <h5>Example</h5>
     
     
-        <pre class="prettyprint"><code>Json
+        <pre class="prettyprint"><code>Input
 {
-  statement: "push",
-  variable: "messages",
-  value: "_message"
+  statement: "callevent",
+  name: "myEvent",
+  inputs: {
+     name: "_message",
+     type: "string"
+  },
+  {
+     name: "_val",
+     type: "uint"
+  }
 }
 
 Return
-"messages.push(_message);"</code></pre>
-    
-
-
-</div>
-            
-                <div class="member">
-
-<h4 class="name" id="write">
-    <a class="href-link" href="#write">#</a>
-    
-    <span class="code-name">
-        write
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Writes the Solidity return and returns string representation.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="src_modules_writers_statements_outputWriter.js.html" class="button">View Source</a>
-            <span>
-                <a href="src_modules_writers_statements_outputWriter.js.html">src/modules/writers/statements/outputWriter.js</a>, <a href="src_modules_writers_statements_outputWriter.js.html#line22">line 22</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-    <h5>Example</h5>
-    
-    
-        <pre class="prettyprint"><code>Outputs
-["message", "messages"]
-
-Result
-"return message, messages;"
-"returns (string, string[])" (callback)
-
-Usage
-text_return += outputWriter.write(f.outputs, (request) => {
-  text_returns = request.text_returns;
-});</code></pre>
+"emit myEvent(_message, _val);"</code></pre>
     
 
 
@@ -1597,7 +1597,7 @@ text_return += outputWriter.write(f.outputs, (request) => {
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Wed May 27 2020 20:07:27 GMT-0300 (GMT-03:00)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Thu May 28 2020 15:33:47 GMT-0300 (GMT-03:00)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
             <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>

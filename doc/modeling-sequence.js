@@ -6,18 +6,22 @@
  * @description Getting the JSON of the contract to be created.
  * @mermaid
  * sequenceDiagram
- *   User->>gContract: createContract()
+ *   Coder->>gContract: createContract()
  *   activate gContract
+ *   gContract-->>Coder: gContract
  *   gContract->>ContractModel Factory: createContractModel()
  *   activate ContractModel Factory
  *   ContractModel Factory->>ContractModel: create()
  *   activate ContractModel
+ *   ContractModel-->>ContractModel Factory: ContractModel
  *   ContractModel Factory-->>gContract: ContractModel
  *   deactivate ContractModel Factory
- *   User->>gContract: generateJSON()
- *   gContract->>ContractModel: generateJSON()
+ *
+ *   Coder->>gContract: gContract.json()
+ *   gContract->>ContractModel: json()
  *   ContractModel-->>gContract: {json}
- *   gContract-->>User: {json}
+ *   gContract-->>Coder: {json}
+ *
  *   deactivate gContract
  *   deactivate ContractModel
  */

@@ -24,7 +24,7 @@ function createAssignmentModel(_variable, _value) {
    * @name assignment
    * @member {Object}
    * @description The assignment object model to be returned.
-   * @property {string} statemtent The identificator of the statement.
+   * @property {string} statement The identificator of the statement.
    * @property {string} variable The variable where the value will be inserted.
    * @property {string} value The value to be assigned to the variable.
    * @example

@@ -14,6 +14,10 @@ function createContract(_name) {
     address: "",
   };
 
+  function json() {
+    return contract.toString();
+  }
+
   function write() {
     contract.code = contractWriter.write(contract);
     return contract.code;
@@ -24,6 +28,7 @@ function createContract(_name) {
     return contract.json;
   }
 
+  contract.json = json;
   contract.write = write;
   contract.compile = compile;
 
