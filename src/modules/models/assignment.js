@@ -1,3 +1,4 @@
+const createValidator = require("../validation/validator");
 /**
  * @author Levy Santiago
  * @module
@@ -19,6 +20,22 @@
  * }
  */
 function createAssignmentModel(_variable, _value) {
+  const validator = createValidator();
+  const validation = [
+    {
+      arg: "_variable",
+      value: _variable,
+      type: "string",
+      required: true,
+    },
+    {
+      arg: "_value",
+      value: _value,
+      type: "string",
+      required: true,
+    },
+  ];
+
   /**
    * @author Levy Santiago
    * @name assignment
@@ -40,6 +57,7 @@ function createAssignmentModel(_variable, _value) {
     value: _value,
   };
 
+  validator.validate(validation);
   return assignment;
 }
 
