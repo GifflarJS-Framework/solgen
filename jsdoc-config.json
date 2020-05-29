@@ -23,13 +23,27 @@
     "template": "node_modules/better-docs/"
   },
   "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false,
+    "search": true,
+    "default": {
+      "staticFiles": {
+        "include": []
+      }
+    },
     "better-docs": {
       "name": "Gifflar Documentation",
       "logo": "",
       "title": "Gifflar Docs",
       "css": "",
       "trackingCode": "",
-      "hideGenerator": false
+      "hideGenerator": false,
+      "navLinks": [
+        {
+          "label": "Github",
+          "href": "https://gitlab.com/lif-uesc/gifflar"
+        }
+      ]
     }
   }
 }
