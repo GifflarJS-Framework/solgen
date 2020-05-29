@@ -18,7 +18,7 @@ function createValidator() {
         if (item.required && !item.value) {
           _throwRequired(item.arg);
         } // TYPE
-        else if (typeof item.value == item.type) {
+        else if (typeof item.value != item.type) {
           _throwWrongType(item.arg, item.type);
         }
       });
