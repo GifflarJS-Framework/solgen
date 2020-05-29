@@ -2,7 +2,7 @@ const createAssignmentModel = require("../../src/modules/models/assignment");
 const helpers = require("../../src/utils/helpers");
 const assert = require("assert");
 
-describe.only("Assignment Model", () => {
+describe("Assignment Model", () => {
   const statement = "assignment";
   const variable = "val";
   const value = "1";
