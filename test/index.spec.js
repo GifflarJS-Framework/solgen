@@ -30,7 +30,8 @@ describe("Test Contract", () => {
     gContract
       .createConstructor("public")
       .setInput("string", "_message")
-      .setAssignment("message", "_message");
+      .setAssignment("message", "_message")
+      .setCallEvent("myEvent", ["message"]);
 
     // Asserting the result
     assert.equal(expected_model, gContract.json());

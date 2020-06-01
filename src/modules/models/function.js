@@ -32,9 +32,10 @@ function createFunctionModel(
   _scope,
   _is_constructor,
   _inputs,
-  _outputs
+  _outputs,
+  globalVars
 ) {
-  const content_json = createContentModel();
+  const content_json = createContentModel(globalVars);
   /**
    * @todo Write documentation
    */

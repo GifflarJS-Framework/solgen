@@ -30,7 +30,7 @@ function createContractModel(_name) {
   /**
    * @todo Write documentation
    */
-  const contract = {
+  const contract_json = {
     name: _name,
     contract: {
       variables: [],
@@ -57,7 +57,7 @@ function createContractModel(_name) {
       _setMethod,
       _value
     );
-    contract.contract.variables.push(variable);
+    contract_json.contract.variables.push(variable);
 
     return variable;
   }
@@ -66,8 +66,15 @@ function createContractModel(_name) {
    * @todo Write documentation
    */
   function createConstructor(_scope, _inputs, _outputs) {
-    const _function = createFunctionModel("", _scope, true, _inputs, _outputs);
-    contract.contract.functions.push(_function);
+    const _function = createFunctionModel(
+      "",
+      _scope,
+      true,
+      _inputs,
+      _outputs,
+      contract_json.contract.variables
+    );
+    contract_json.contract.functions.push(_function);
 
     return _function;
   }
@@ -81,24 +88,25 @@ function createContractModel(_name) {
       _scope,
       false,
       _inputs,
-      _outputs
+      _outputs,
+      contract_json.contract.variables
     );
-    contract.contract.functions.push(_function);
+    contract_json.contract.functions.push(_function);
 
     return _function;
   }
 
   function toString() {
-    return JSON.stringify(contract);
+    return JSON.stringify(contract_json);
   }
 
-  contract.createVariable = createVariable;
-  contract.createFunction = createFunction;
-  contract.createConstructor = createConstructor;
-  contract.createEvent = createEvent;
-  contract.toString = toString;
+  contract_json.createVariable = createVariable;
+  contract_json.createFunction = createFunction;
+  contract_json.createConstructor = createConstructor;
+  contract_json.createEvent = createEvent;
+  contract_json.toString = toString;
 
-  return contract;
+  return contract_json;
 }
 
 module.exports = createContractModel;

@@ -1,5 +1,6 @@
 const createAssignmentModel = require("./assignment");
 const createVariableModel = require("./variable");
+const createEventModel = require("./callevent");
 const createIfModel = require("./if");
 
 /**
@@ -33,7 +34,8 @@ const createIfModel = require("./if");
  * }
  *
  */
-function createContentModel() {
+function createContentModel(globalVars = []) {
+  const contentVars = globalVars;
   const stack = [
     {
       content: [],
@@ -95,6 +97,7 @@ function createContentModel() {
    */
   function setVariable(_type, _name, _value) {
     const newVariable = createVariableModel(_type, _name, "", false, _value);
+    contentVars.push(newVariable);
     stack[top].content.push(newVariable);
     return stack[top];
   }
@@ -109,10 +112,22 @@ function createContentModel() {
   }
 
   /**
-   * @todo Write documentation
+   * @todo Write documentation, handle error when variable not in contentVars
+   * @param {string} name The name of the event.
+   * @param {string[]} inputNames Array of the variable names to pass for the event call.
    */
-  function setCallEvent(event) {
-    stack[top].content.push(event);
+  function setCallEvent(name, inputNames) {
+    const inputs = [];
+    inputNames.map((input) => {
+      const variable = contentVars.filter((item) => {
+        return item.name == input;
+      })[0];
+      if (variable) {
+        inputs.push({ name: variable.name, type: variable.type });
+      }
+    });
+    const newEvent = createEventModel(name, inputs);
+    stack[top].content.push(newEvent);
     return stack[top];
   }
 

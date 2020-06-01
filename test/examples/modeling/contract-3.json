@@ -27,6 +27,16 @@
             "statement": "assignment",
             "variable": "message",
             "value": "_message"
+          },
+          {
+            "statement": "callevent",
+            "name": "myEvent",
+            "inputs": [
+              {
+                "name": "message",
+                "type": "string"
+              }
+            ]
           }
         ]
       }

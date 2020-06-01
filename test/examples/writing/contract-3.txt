@@ -5,9 +5,14 @@ contract MyContract{
 string public message;
 
 
+//EVENTS
+event myEvent(string message);
+
+
 //FUNCTIONS
 constructor(string _message) public{
 message = _message;
+emit myEvent(message);
 }
 
 function setMessage(string _message) public{
