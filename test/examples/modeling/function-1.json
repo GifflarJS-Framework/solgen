@@ -17,6 +17,7 @@
     },
     {
       "statement": "if",
+      "else": false,
       "condition": "val == 1",
       "content": [
         {

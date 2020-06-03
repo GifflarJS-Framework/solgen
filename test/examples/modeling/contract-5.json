@@ -1,0 +1,235 @@
+[
+  {
+    "name": "DHT11",
+    "contract": {
+      "variables": [
+        {
+          "type": "address",
+          "name": "manager",
+          "scope": "public",
+          "value": "",
+          "setMethod": false
+        },
+        {
+          "type": "string",
+          "name": "name",
+          "scope": "public",
+          "value": "",
+          "setMethod": true
+        },
+        {
+          "type": "uint256",
+          "name": "value1",
+          "scope": "public",
+          "value": "",
+          "setMethod": false
+        },
+        {
+          "type": "uint256",
+          "name": "max_value1",
+          "scope": "public",
+          "value": "",
+          "setMethod": false
+        },
+        {
+          "type": "uint256",
+          "name": "min_value1",
+          "scope": "public",
+          "value": "",
+          "setMethod": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "",
+          "scope": "public",
+          "isConstructor": true,
+          "inputs": [
+            {
+              "name": "_owner",
+              "type": "address"
+            }
+          ],
+          "outputs": [],
+          "content": [
+            {
+              "statement": "assignment",
+              "variable": "manager",
+              "value": "_owner"
+            },
+            {
+              "statement": "assignment",
+              "variable": "name",
+              "value": "\"DHT11\""
+            }
+          ]
+        },
+        {
+          "name": "setValue",
+          "scope": "public",
+          "isConstructor": false,
+          "inputs": [
+            {
+              "name": "_val",
+              "type": "uint256"
+            },
+            {
+              "name": "_valueId",
+              "type": "uint256"
+            }
+          ],
+          "outputs": [],
+          "content": [
+            {
+              "statement": "if",
+              "else": false,
+              "condition": "_valueId == 1",
+              "content": [
+                {
+                  "statement": "assignment",
+                  "variable": "value1",
+                  "value": "_val"
+                },
+                {
+                  "statement": "if",
+                  "else": false,
+                  "condition": "value1 >= max_value1",
+                  "content": [
+                    {
+                      "statement": "callevent",
+                      "name": "temperatureOverflow",
+                      "inputs": [
+                        {
+                          "name": "value1",
+                          "type": "uint256"
+                        },
+                        {
+                          "name": "max_value1",
+                          "type": "uint256"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "statement": "if",
+                  "else": true,
+                  "condition": "value1 <= min_value1",
+                  "content": [
+                    {
+                      "statement": "callevent",
+                      "name": "temperatureUnderflow",
+                      "inputs": [
+                        {
+                          "name": "value1",
+                          "type": "uint256"
+                        },
+                        {
+                          "name": "min_value1",
+                          "type": "uint256"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "name": "Controller",
+    "contract": {
+      "variables": [
+        {
+          "type": "address[]",
+          "name": "contracts",
+          "scope": "public",
+          "value": "",
+          "setMethod": false
+        },
+        {
+          "type": "uint256",
+          "name": "counter",
+          "scope": "private",
+          "value": "0",
+          "setMethod": false
+        }
+      ],
+      "functions": [
+        {
+          "name": "createContract",
+          "scope": "public",
+          "isConstructor": false,
+          "inputs": [
+            {
+              "name": "_owner",
+              "type": "address"
+            }
+          ],
+          "outputs": [],
+          "content": [
+            {
+              "statement": "variable",
+              "type": "address",
+              "name": "newContract",
+              "value": "new DHT11(_owner)"
+            },
+            {
+              "statement": "callmethod",
+              "variable": "contracts",
+              "method": "push",
+              "value": "newContract"
+            },
+            {
+              "statement": "assignment",
+              "variable": "counter",
+              "value": "counter + 1"
+            }
+          ]
+        },
+        {
+          "name": "getLastContract",
+          "scope": "public",
+          "isConstructor": false,
+          "inputs": [],
+          "outputs": ["_contract"],
+          "content": [
+            {
+              "statement": "variable",
+              "type": "address",
+              "name": "_contract",
+              "value": "address(0)"
+            },
+            {
+              "statement": "if",
+              "else": false,
+              "condition": "counter > 0",
+              "content": [
+                {
+                  "statement": "assignment",
+                  "variable": "_contract",
+                  "value": "contracts[counter - 1]"
+                }
+              ]
+            },
+            {
+              "statement": "if",
+              "else": true,
+              "condition": "",
+              "content": [
+                {
+                  "statement": "assignment",
+                  "variable": "_contract",
+                  "value": "contracts[0]"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

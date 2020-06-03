@@ -8,8 +8,9 @@ function createCallMethodWriter() {
    * @example
    * Json
    * {
-   *   statement: "push",
+   *   statement: "callmethod",
    *   variable: "messages",
+   *   method: "push",
    *   value: "_message"
    * }
    *
@@ -17,7 +18,7 @@ function createCallMethodWriter() {
    * "messages.push(_message);"
    */
   function write(json) {
-    return json.variable + "." + json.statement + "(" + json.value + ");\n";
+    return json.variable + "." + json.method + "(" + json.value + ");\n";
   }
 
   return { write };

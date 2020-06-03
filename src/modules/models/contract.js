@@ -81,6 +81,10 @@ function createContractModel(_name) {
 
   /**
    * @todo Write documentation
+   * @param {*} _name
+   * @param {*} _scope
+   * @param {*} _inputs
+   * @param {*} _outputs
    */
   function createFunction(_name, _scope, _inputs, _outputs) {
     const _function = createFunctionModel(

@@ -12,7 +12,7 @@ describe("Test Contract Writer", () => {
 
   it("Writing Contract", () => {
     assert.ok(writer, "Writer not defined");
-    const contract_text = writer.write(json);
+    const contract_text = writer.write([json]);
     //console.log(contract_text);
     assert.ok(contract_text, "No contract wrote");
   });

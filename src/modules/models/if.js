@@ -22,14 +22,14 @@
  *   content: [],
  * }
  */
-function createIfModel(_condition, _else) {
+function createIfModel(_condition = "", _else = false) {
   /**
    * @todo Write documentation
    */
   let _if = {
     statement: "if",
-    else: _else,
-    condition: _condition,
+    else: _else ? _else : false,
+    condition: _condition ? _condition : "",
     content: [],
   };
 

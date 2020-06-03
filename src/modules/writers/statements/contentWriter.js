@@ -31,7 +31,7 @@ function createContentWriter() {
     if: ifWriter.write,
     callevent: callEventWriter.write,
     variable: variableWriter.write,
-    push: callMethodWriter.write,
+    callmethod: callMethodWriter.write,
   };
 
   /**

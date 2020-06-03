@@ -13,11 +13,8 @@ function createContractWriter() {
    * @private
    */
   function _start(contract_name) {
-    // Writing the compiler version
-    text = "pragma solidity ^0.4.23;\n\n";
-
     // Initing the contract
-    text += "contract " + contract_name + "{\n";
+    const text = "contract " + contract_name + "{\n";
 
     return text;
   }
@@ -35,39 +32,48 @@ function createContractWriter() {
 
   /**
    * Writes the contract Solidity code.
-   * @param {Object} json - The JSON of the contract to be wrote.
+   * @param {Object[]} contracts - The list of contracts to be wrote.
    */
-  function write(json) {
-    if (!json) {
+  function write(contracts) {
+    if (!contracts) {
       return false;
     }
 
-    let text = "";
+    // Writing the compiler version
+    let text = "pragma solidity ^0.4.23;\n\n";
 
-    const variableWriter = createVariableWriter();
-    const eventWriter = createEventWriter();
-    const functionWriter = createFunctionWriter(json.contract.variables);
+    contracts.map((json) => {
+      const variableWriter = createVariableWriter();
+      const eventWriter = createEventWriter();
+      const functionWriter = createFunctionWriter(json.contract.variables);
+      const txt_start = _start(json.name);
+      const txt_variables = variableWriter.write(
+        json.contract.variables,
+        (request) => {
+          json.contract.functions = json.contract.functions.concat(
+            request.functions
+          );
+        }
+      );
 
-    const txt_start = _start(json.name);
-    const txt_variables = variableWriter.write(
-      json.contract.variables,
-      (request) => {
-        json.contract.functions = json.contract.functions.concat(
-          request.functions
-        );
-      }
-    );
+      let events = [];
+      const txt_functions = functionWriter.write(
+        json.contract.functions,
+        (request) => {
+          events = request.events;
+        }
+      );
+      const txt_events = eventWriter.write(events);
+      const txt_close = _close();
 
-    const txt_functions = functionWriter.write(
-      json.contract.functions,
-      (request) => {
-        json.contract.events = request.events;
-      }
-    );
-    const txt_events = eventWriter.write(json.contract.events);
-    const txt_close = _close();
-
-    text = txt_start + txt_variables + txt_events + txt_functions + txt_close;
+      text +=
+        txt_start +
+        txt_variables +
+        txt_events +
+        txt_functions +
+        txt_close +
+        "\n\n";
+    });
 
     return text;
   }

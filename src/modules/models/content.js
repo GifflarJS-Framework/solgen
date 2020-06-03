@@ -35,7 +35,8 @@ const createIfModel = require("./if");
  *
  */
 function createContentModel(globalVars = []) {
-  const contentVars = globalVars;
+  //Copying the array
+  const contentVars = [].concat(globalVars);
   const stack = [
     {
       content: [],
@@ -65,6 +66,7 @@ function createContentModel(globalVars = []) {
     obj.setCallEvent = setCallEvent;
     obj.setAssignment = setAssignment;
     obj.setVariable = setVariable;
+    obj.setCallMethod = setCallMethod;
 
     return obj;
   }
@@ -103,7 +105,26 @@ function createContentModel(globalVars = []) {
   }
 
   /**
+   * @todo Finish documentation
+   * @param {*} _variable
+   * @param {*} _method
+   * @param {*} _value
+   */
+  function setCallMethod(_variable, _method, _value) {
+    const newCallMethod = {
+      statement: "callmethod",
+      variable: _variable,
+      method: _method,
+      value: _value,
+    };
+    stack[top].content.push(newCallMethod);
+    return stack[top];
+  }
+
+  /**
    * @todo Write documentation
+   * @param {*} variable
+   * @param {*} expression
    */
   function setAssignment(variable, expression = undefined) {
     const newAssignment = createAssignmentModel(variable, expression);
@@ -155,8 +176,8 @@ function createContentModel(globalVars = []) {
   /**
    * @todo Write documentation
    */
-  function beginElse(_condition) {
-    return beginIf(_condition, true);
+  function beginElse() {
+    return beginIf("", true);
   }
 
   /**

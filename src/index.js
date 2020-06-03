@@ -2,41 +2,56 @@ const createContractModel = require("./modules/models/contract");
 const createContractWriter = require("./modules/writers/contractWriter");
 const createCompiler = require("./modules/compiler");
 
-function createContract(_name) {
-  const contractModel = createContractModel(_name);
+function createContractManager(_name) {
   const contractWriter = createContractWriter();
   const compiler = createCompiler();
 
-  const contract = {
-    ...contractModel,
+  /**
+   * @property {string} code The contracts code after writing.
+   * @property {Object} json The json interface after compiling.
+   * @property {string} address The blockchain address of the contract in the network.
+   */
+  const data = {
+    models: [],
     code: "",
     json: {},
     address: "",
   };
 
-  function json() {
-    return contract.toString();
+  function createContract(name) {
+    const newcontract = createContractModel(name);
+    data.models.push(newcontract);
+
+    return newcontract;
+  }
+
+  function getContract(name) {
+    return data.models.filter((contract) => {
+      return contract.name == name;
+    })[0];
   }
 
   function write() {
-    contract.code = contractWriter.write(contract);
-    return contract.code;
+    data.code = contractWriter.write(data.models);
+    return data.code;
   }
 
   function compile() {
-    contract.json = compiler.compile(contract.code);
-    return contract.json;
+    data.json = compiler.compile(data.code);
+    return data.json;
   }
 
   function deploy() {
     return "";
   }
 
-  contract.json = json;
-  contract.write = write;
-  contract.compile = compile;
+  data.createContract = createContract;
+  data.write = write;
+  data.compile = compile;
+  data.deploy = deploy;
+  data.getContract = getContract;
 
-  return contract;
+  return data;
 }
 
-module.exports = createContract;
+module.exports = createContractManager;

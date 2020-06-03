@@ -1,5 +1,5 @@
 {
-  "name": "MyContract",
+  "name": "DHT11",
   "contract": {
     "variables": [
       {
@@ -43,7 +43,12 @@
         "name": "",
         "scope": "public",
         "isConstructor": true,
-        "inputs": [{ "name": "_owner", "type": "address" }],
+        "inputs": [
+          {
+            "name": "_owner",
+            "type": "address"
+          }
+        ],
         "outputs": [],
         "content": [
           {
@@ -54,7 +59,7 @@
           {
             "statement": "assignment",
             "variable": "name",
-            "value": "DHT11"
+            "value": "\"DHT11\""
           }
         ]
       },
@@ -77,7 +82,7 @@
           {
             "statement": "if",
             "else": false,
-            "condition": "valueId == 1",
+            "condition": "_valueId == 1",
             "content": [
               {
                 "statement": "assignment",
