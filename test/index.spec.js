@@ -105,6 +105,8 @@ describe("Test Contract", () => {
 
   // WRITING
   it("Writing", () => {
+    // Testing if writing two times the code breaks
+    manager.write();
     actual_code = manager.write();
 
     expected_code = fs.readFileSync(writing_path + "contract-5.txt", {
@@ -115,7 +117,7 @@ describe("Test Contract", () => {
   });
 
   // COMPILING
-  it("Compiling", () => {
+  it.skip("Compiling", () => {
     const compiler = createCompiler();
     const expected_interface = JSON.stringify(solc.compile(expected_code, 1));
     const actual_interface = JSON.stringify(compiler.compile(actual_code));

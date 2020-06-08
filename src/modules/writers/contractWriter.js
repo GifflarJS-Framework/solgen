@@ -47,22 +47,18 @@ function createContractWriter() {
       const eventWriter = createEventWriter();
       const functionWriter = createFunctionWriter(json.contract.variables);
       const txt_start = _start(json.name);
+      let functions = json.contract.functions;
       const txt_variables = variableWriter.write(
         json.contract.variables,
         (request) => {
-          json.contract.functions = json.contract.functions.concat(
-            request.functions
-          );
+          functions = functions.concat(request.functions);
         }
       );
 
       let events = [];
-      const txt_functions = functionWriter.write(
-        json.contract.functions,
-        (request) => {
-          events = request.events;
-        }
-      );
+      const txt_functions = functionWriter.write(functions, (request) => {
+        events = request.events;
+      });
       const txt_events = eventWriter.write(events);
       const txt_close = _close();
 

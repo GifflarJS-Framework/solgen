@@ -3,7 +3,7 @@ const createContractWriter = require("./modules/writers/contractWriter");
 const createCompiler = require("./modules/compiler");
 
 function createContractManager(_name) {
-  const contractWriter = createContractWriter();
+  //const contractWriter = createContractWriter();
   const compiler = createCompiler();
 
   /**
@@ -31,8 +31,24 @@ function createContractManager(_name) {
     })[0];
   }
 
-  function write() {
-    data.code = contractWriter.write(data.models);
+  /**
+   *
+   * @param {Object[]} [contracts]
+   */
+  function write(contracts) {
+    const contractWriter = createContractWriter();
+
+    // Copying data models
+    const _contracts = [...data.models];
+
+    // If a list of contracts was passed
+    if (contracts && Array.isArray(contracts) && contracts[0]) {
+      _contracts = contracts;
+    }
+
+    // Call the contract writer to write the code
+    data.code = contractWriter.write(_contracts);
+
     return data.code;
   }
 
