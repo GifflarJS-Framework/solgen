@@ -39,7 +39,7 @@ function createContractManager(_name) {
     const contractWriter = createContractWriter();
 
     // Copying data models
-    const _contracts = [...data.models];
+    let _contracts = [...data.models];
 
     // If a list of contracts was passed
     if (contracts && Array.isArray(contracts) && contracts[0]) {

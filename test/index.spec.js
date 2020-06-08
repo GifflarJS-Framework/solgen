@@ -107,6 +107,7 @@ describe("Test Contract", () => {
   it("Writing", () => {
     // Testing if writing two times the code breaks
     manager.write();
+    // Writing again
     actual_code = manager.write();
 
     expected_code = fs.readFileSync(writing_path + "contract-5.txt", {
