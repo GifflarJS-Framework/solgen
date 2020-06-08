@@ -3,7 +3,7 @@ const createContractWriter = require("./modules/writers/contractWriter");
 const createCompiler = require("./modules/compiler");
 
 function createContractManager(_name) {
-  //const contractWriter = createContractWriter();
+  const contractWriter = createContractWriter();
   const compiler = createCompiler();
 
   /**
@@ -36,8 +36,6 @@ function createContractManager(_name) {
    * @param {Object[]} [contracts]
    */
   function write(contracts) {
-    const contractWriter = createContractWriter();
-
     // Copying data models
     let _contracts = [...data.models];
 

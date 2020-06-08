@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gifflar Docs src/modules/models/if.js</title>
+  <title>Gifflar Docs src/modules/validation/validator.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -109,7 +109,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>src/modules/models/if.js</h1>
+                    <h1>src/modules/validation/validator.js</h1>
                 </header>
                 
 
@@ -118,45 +118,53 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @todo Finish documentation
- * @author Levy Santiago
- * @module
- * @category Model
- * @name createIfModel
- * @description A &lt;b>Factory&lt;/b> for creating an if statement object model (json). In the
- * &lt;b>Content Model&lt;/b>, the If Model receives all the content functions, because it's a statement
- * that can implements other statements.
- * @param {string} _condition The condition to be satisfied in if statement.
- * @param {boolean} _else If the else statement is enabled or not
- * @returns {Object} The if statement object model.
- * @example
- * Usage
- * const newIf = createIfModel("1 == 1");
- *
- * Return
- * {
- *   statement: "if",
- *   else: false,
- *   condition: "1 == 1",
- *   content: [],
- * }
- */
-function createIfModel(_condition = "", _else = false) {
-  /**
-   * @todo Write documentation
-   */
-  let _if = {
-    statement: "if",
-    else: _else ? _else : false,
-    condition: _condition ? _condition : "",
-    content: [],
+            <pre class="prettyprint source linenums"><code>function createValidator() {
+  const messages = {
+    /**
+     * @param {string} arg
+     */
+    required: (arg) => {
+      return "The '" + arg + "' argument is required.";
+    },
+    /**
+     * @param {string} arg
+     * @param {string} type
+     */
+    wrongType: (arg, type) => {
+      return "The '" + arg + "' argument must be of type " + type;
+    },
   };
 
-  return _if;
+  function _throwError(message) {
+    throw new Error(message);
+  }
+
+  function _throwRequired(arg) {
+    _throwError(messages.required(arg));
+  }
+
+  function _throwWrongType(arg, type) {
+    _throwError(messages.wrongType(arg, type));
+  }
+
+  function validate(list) {
+    if (Array.isArray(list)) {
+      list.map((item) => {
+        // REQUIRED
+        if (item.required &amp;&amp; !item.value) {
+          _throwRequired(item.arg);
+        } // TYPE
+        else if (typeof item.value != item.type) {
+          _throwWrongType(item.arg, item.type);
+        }
+      });
+    }
+  }
+
+  return { validate, messages };
 }
 
-module.exports = createIfModel;
+module.exports = createValidator;
 </code></pre>
         </article>
     </section>

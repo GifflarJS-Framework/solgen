@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gifflar Docs src/modules/models/if.js</title>
+  <title>Gifflar Docs src/index.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -109,7 +109,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>src/modules/models/if.js</h1>
+                    <h1>src/index.js</h1>
                 </header>
                 
 
@@ -118,45 +118,77 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @todo Finish documentation
- * @author Levy Santiago
- * @module
- * @category Model
- * @name createIfModel
- * @description A &lt;b>Factory&lt;/b> for creating an if statement object model (json). In the
- * &lt;b>Content Model&lt;/b>, the If Model receives all the content functions, because it's a statement
- * that can implements other statements.
- * @param {string} _condition The condition to be satisfied in if statement.
- * @param {boolean} _else If the else statement is enabled or not
- * @returns {Object} The if statement object model.
- * @example
- * Usage
- * const newIf = createIfModel("1 == 1");
- *
- * Return
- * {
- *   statement: "if",
- *   else: false,
- *   condition: "1 == 1",
- *   content: [],
- * }
- */
-function createIfModel(_condition = "", _else = false) {
+            <pre class="prettyprint source linenums"><code>const createContractModel = require("./modules/models/contract");
+const createContractWriter = require("./modules/writers/contractWriter");
+const createCompiler = require("./modules/compiler");
+
+function createContractManager(_name) {
+  const contractWriter = createContractWriter();
+  const compiler = createCompiler();
+
   /**
-   * @todo Write documentation
+   * @property {string} code The contracts code after writing.
+   * @property {Object} json The json interface after compiling.
+   * @property {string} address The blockchain address of the contract in the network.
    */
-  let _if = {
-    statement: "if",
-    else: _else ? _else : false,
-    condition: _condition ? _condition : "",
-    content: [],
+  const data = {
+    models: [],
+    code: "",
+    json: {},
+    address: "",
   };
 
-  return _if;
+  function createContract(name) {
+    const newcontract = createContractModel(name);
+    data.models.push(newcontract);
+
+    return newcontract;
+  }
+
+  function getContract(name) {
+    return data.models.filter((contract) => {
+      return contract.name == name;
+    })[0];
+  }
+
+  /**
+   *
+   * @param {Object[]} [contracts]
+   */
+  function write(contracts) {
+    // Copying data models
+    let _contracts = [...data.models];
+
+    // If a list of contracts was passed
+    if (contracts &amp;&amp; Array.isArray(contracts) &amp;&amp; contracts[0]) {
+      _contracts = contracts;
+    }
+
+    // Call the contract writer to write the code
+    data.code = contractWriter.write(_contracts);
+
+    return data.code;
+  }
+
+  function compile() {
+    data.json = compiler.compile(data.code);
+    return data.json;
+  }
+
+  function deploy() {
+    return "";
+  }
+
+  data.createContract = createContract;
+  data.write = write;
+  data.compile = compile;
+  data.deploy = deploy;
+  data.getContract = getContract;
+
+  return data;
 }
 
-module.exports = createIfModel;
+module.exports = createContractManager;
 </code></pre>
         </article>
     </section>

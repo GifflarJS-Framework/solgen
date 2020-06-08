@@ -156,23 +156,24 @@
    */
   function write(inputs, typeon = true) {
     let text = "";
+    const _inputs = [...inputs];
 
     // If there are no inputs
-    if (!inputs.length) {
+    if (!_inputs.length) {
       return text;
     }
 
     // Defining the first input
     if (typeon) {
-      text += inputs[0].type + " ";
+      text += _inputs[0].type + " ";
     }
-    text += inputs[0].name;
+    text += _inputs[0].name;
 
     // Removing the first element
-    inputs.shift();
+    _inputs.shift();
 
     // Defining the other inputs
-    inputs.map((input) => {
+    _inputs.map((input) => {
       text += ", ";
       if (typeon) {
         text += input.type + " ";
