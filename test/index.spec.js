@@ -1,5 +1,5 @@
 const createContractManager = require("../src/index");
-const createCompiler = require("../src/modules/compiler");
+const createCompiler = require("../src/modules/compiler/compiler");
 const helpers = require("../src/utils/helpers");
 const assert = require("assert");
 const fs = require("fs");

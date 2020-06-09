@@ -1,6 +1,6 @@
 const createContractModel = require("./modules/models/contract");
 const createContractWriter = require("./modules/writers/contractWriter");
-const createCompiler = require("./modules/compiler");
+const createCompiler = require("./modules/compiler/compiler");
 
 function createContractManager(_name) {
   const contractWriter = createContractWriter();
