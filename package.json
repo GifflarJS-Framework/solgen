@@ -4,7 +4,7 @@
   "description": "A smart contract generator framework for IoT.",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha test/*",
+    "test": "./node_modules/mocha/bin/mocha test/**/*",
     "docs": "jsdoc -c jsdoc-config.json"
   },
   "repository": {

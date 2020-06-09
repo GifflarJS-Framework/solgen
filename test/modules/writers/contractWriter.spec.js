@@ -1,7 +1,7 @@
-const createContractWriter = require("../../src/modules/writers/contractWriter");
+const createContractWriter = require("../../../src/modules/writers/contractWriter");
 const assert = require("assert");
-const helpers = require("../../src/utils/helpers");
-const json = require("../examples/modeling/contract-2.json");
+const helpers = require("../../../src/utils/helpers");
+const json = require("../../examples/modeling/contract-2.json");
 
 describe("Test Contract Writer", () => {
   let writer = null;
