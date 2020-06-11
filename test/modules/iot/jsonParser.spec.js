@@ -1,7 +1,7 @@
 const assert = require("assert");
-const createIoTJsonParser = require("../../../src/modules/iot/json_parser");
+const createIoTJsonParser = require("../../../src/modules/iot/jsonParser");
 
-describe("IoT Json Parser", () => {
+describe.only("IoT Json Parser", () => {
   //Entry example
   const sensors = [
     {
@@ -22,6 +22,11 @@ describe("IoT Json Parser", () => {
             max: "10",
             min: "0",
           },
+          {
+            idv: "test",
+            type: "uint",
+            default: "",
+          },
         ],
       },
     },
@@ -30,7 +35,9 @@ describe("IoT Json Parser", () => {
   it("Parsing", () => {
     const jsonParser = createIoTJsonParser();
 
-    jsonParser.parse(sensors);
+    const manager = jsonParser.parse(sensors);
+    console.log(JSON.stringify(manager.models));
+    console.log(manager.write());
 
     assert.equal("", "");
   });
