@@ -24,7 +24,14 @@ const createRequest = require("../models/request");
 function createFunctionWriter(variables) {
   const inputWriter = createInputWriter();
   const contentWriter = createContentWriter();
-  const outputWriter = createOutputWriter(variables);
+
+  function _selectFunctionVariables(func) {
+    const localVariables = func.content.filter((item) => {
+      return item.statement == "variable";
+    });
+
+    return localVariables;
+  }
 
   /**
    * @name write
@@ -71,6 +78,8 @@ function createFunctionWriter(variables) {
     let request = createRequest();
 
     functions.map((f) => {
+      const localVariables = _selectFunctionVariables(f);
+      let outputWriter = createOutputWriter(variables.concat(localVariables));
       let text_return = "";
       let text_returns = "";
       let scope = " " + f.scope;

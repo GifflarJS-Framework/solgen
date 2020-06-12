@@ -58,7 +58,7 @@ function createOutputWriter(variables = []) {
         text_return += helpers.getCommaExpression(values);
         text_returns += helpers.getCommaExpression(types);
 
-        text_return = "return " + text_return + ";\n";
+        text_return = "return (" + text_return + ");\n";
         text_returns = "returns (" + text_returns + ")";
       }
     }
