@@ -51,7 +51,7 @@ contracts.push(newContract);
 counter = counter + 1;
 }
 
-function getLastContract() public{
+function getLastContract() public returns (address) {
 address _contract = address(0);
 if(counter > 0){
 _contract = contracts[counter - 1];
@@ -59,6 +59,7 @@ _contract = contracts[counter - 1];
 else{
 _contract = contracts[0];
 }
+return (_contract);
 }
 
 }

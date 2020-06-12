@@ -79,7 +79,7 @@ function createFunctionWriter(variables) {
 
     functions.map((f) => {
       const localVariables = _selectFunctionVariables(f);
-      let outputWriter = createOutputWriter(variables.concat(localVariables));
+      const outputWriter = createOutputWriter(variables.concat(localVariables));
       let text_return = "";
       let text_returns = "";
       let scope = " " + f.scope;

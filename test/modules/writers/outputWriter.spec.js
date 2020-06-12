@@ -23,7 +23,7 @@ describe("Output Writer", () => {
   const outputWriter = createOutputWriter(json.variables);
   it("Writing Outputs", () => {
     // Expected values
-    const expected_return = "return message, messages;\n";
+    const expected_return = "return (message, messages);\n";
     const expected_returns = "returns (string, string[])";
 
     // Executing output writing

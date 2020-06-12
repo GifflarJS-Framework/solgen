@@ -1,7 +1,7 @@
 const assert = require("assert");
 const createIoTJsonParser = require("../../../src/modules/iot/jsonParser");
 
-describe.only("IoT Json Parser", () => {
+describe("IoT Json Parser", () => {
   //Entry example
   const sensors = [
     {
@@ -24,7 +24,7 @@ describe.only("IoT Json Parser", () => {
           },
           {
             idv: "test",
-            type: "uint",
+            type: "bool",
             default: "",
           },
         ],

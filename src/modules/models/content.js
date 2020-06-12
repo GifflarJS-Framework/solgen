@@ -139,14 +139,16 @@ function createContentModel(globalVars = []) {
    */
   function setCallEvent(name, inputNames) {
     const inputs = [];
-    inputNames.map((input) => {
-      const variable = contentVars.filter((item) => {
-        return item.name == input;
-      })[0];
-      if (variable) {
-        inputs.push({ name: variable.name, type: variable.type });
-      }
-    });
+    if (inputNames) {
+      inputNames.map((input) => {
+        const variable = contentVars.filter((item) => {
+          return item.name == input;
+        })[0];
+        if (variable) {
+          inputs.push({ name: variable.name, type: variable.type });
+        }
+      });
+    }
     const newEvent = createEventModel(name, inputs);
     stack[top].content.push(newEvent);
     return stack[top];

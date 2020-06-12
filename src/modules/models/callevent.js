@@ -73,16 +73,16 @@ function createEventModel(_name, _inputs = []) {
    * @param {string} _variable The variable name.
    * @returns {Object} The new event object model with the new input.
    */
-  function setInput(_type, _variable) {
-    const new_input = {
-      name: _variable,
-      type: _type,
-    };
-    event.inputs.push(new_input);
-    return event;
-  }
+  //   function setInput(_type, _variable) {
+  //     const new_input = {
+  //       name: _variable,
+  //       type: _type,
+  //     };
+  //     event.inputs.push(new_input);
+  //     return event;
+  //   }
 
-  event.setInput = setInput;
+  //event.setInput = setInput;
 
   return event;
 }
