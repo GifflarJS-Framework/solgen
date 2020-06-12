@@ -22,11 +22,6 @@ describe("IoT Json Parser", () => {
             max: "10",
             min: "0",
           },
-          {
-            idv: "test",
-            type: "bool",
-            default: "",
-          },
         ],
       },
     },
