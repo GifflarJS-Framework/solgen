@@ -69,10 +69,10 @@ function createFunctionWriter(variables) {
   function write(functions, cb) {
     let text = "//FUNCTIONS\n";
     let request = createRequest();
-    let text_return = "";
-    let text_returns = "";
 
     functions.map((f) => {
+      let text_return = "";
+      let text_returns = "";
       let scope = " " + f.scope;
       // Verifying whether is a constructor or not
       // Opening the inputs clousure
