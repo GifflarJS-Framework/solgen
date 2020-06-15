@@ -1,7 +1,7 @@
-const createAssignmentModel = require("../../src/modules/models/assignment");
-const helpers = require("../../src/utils/helpers");
+const createAssignmentModel = require("../../../src/modules/models/assignment");
+const helpers = require("../../../src/utils/helpers");
 const assert = require("assert");
-const createValidator = require("../../src/modules/validation/validator");
+const createValidator = require("../../../src/modules/validation/validator");
 
 /**
  * Testing Assignment Model

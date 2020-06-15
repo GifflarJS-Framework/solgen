@@ -1,18 +1,18 @@
-const createContractManager = require("../../../src/modules/manager/contractManager");
-const createCompiler = require("../../../src/modules/compiler/compiler");
-const helpers = require("../../../src/utils/helpers");
+const createContractManager = require("../../../../src/modules/manager/contractManager");
+const createCompiler = require("../../../../src/modules/compiler/compiler");
+const helpers = require("../../../../src/utils/helpers");
 const assert = require("assert");
 const fs = require("fs");
-const writing_path = __dirname + "/../../examples/writing/";
+const writing_path = __dirname + "/../../../examples/writing/";
 const solc = require("solc");
 
 describe("Test ContractManager", () => {
   // Expected values
   const expected_model = JSON.stringify(
-    require("../../examples/modeling/contract-4.json")
+    require("../../../examples/modeling/contract-4.json")
   );
   const expected_complete_model = JSON.stringify(
-    require("../../examples/modeling/contract-5.json")
+    require("../../../examples/modeling/contract-5.json")
   );
   let expected_code = "";
 

@@ -1,4 +1,4 @@
-const createOutputWriter = require("../../../src/modules/writers/statements/outputWriter");
+const createOutputWriter = require("../../../../src/modules/writers/statements/outputWriter");
 const assert = require("assert");
 
 const json = {

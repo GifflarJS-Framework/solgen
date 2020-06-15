@@ -2,6 +2,7 @@ const createAssignmentModel = require("./assignment");
 const createVariableModel = require("./variable");
 const createEventModel = require("./callevent");
 const createIfModel = require("./if");
+const createNewContractModel = require("./newcontract");
 
 /**
  * @author Levy Santiago
@@ -67,6 +68,7 @@ function createContentModel(globalVars = []) {
     obj.setAssignment = setAssignment;
     obj.setVariable = setVariable;
     obj.setCallMethod = setCallMethod;
+    obj.setNewContract = setNewContract;
 
     return obj;
   }
@@ -151,6 +153,20 @@ function createContentModel(globalVars = []) {
     }
     const newEvent = createEventModel(name, inputs);
     stack[top].content.push(newEvent);
+    return stack[top];
+  }
+
+  /**
+   * @todo Write function and documentation
+   * @param {*} variable
+   * @param {*} contractName
+   * @param {*} args
+   */
+  function setNewContract(variable, contractName, args, config = {}) {
+    const newContract =
+      config.newContract ||
+      createNewContractModel(variable, contractName, args);
+    stack[top].content.push(newContract);
     return stack[top];
   }
 

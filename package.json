@@ -4,8 +4,22 @@
   "description": "A smart contract generator framework for IoT.",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha test/**/*",
-    "docs": "jsdoc -c jsdoc-config.json"
+    "test": "echo Unit Testing && npm run testunit && echo Functional Testing && npm run testfunc",
+    "testunit": "./node_modules/mocha/bin/mocha test/unit/**/*",
+    "testfunc": "./node_modules/mocha/bin/mocha test/functional/**/*",
+    "docs": "jsdoc -c jsdoc-config.json",
+    "postinstall": "link-module-alias"
+  },
+  "_moduleAliases": {
+    "@models": "./src/modules/models",
+    "@writers": "./src/modules/writers",
+    "@compiler": "./src/modules/compiler",
+    "@deployer": "./src/modules/deployer",
+    "@iot": "./src/modules/iot",
+    "@manager": "./src/modules/manager",
+    "@validation": "./src/modules/validation",
+    "@utils": "./src/utils",
+    "@examples": "./test/examples"
   },
   "repository": {
     "type": "git",
@@ -28,6 +42,7 @@
   "devDependencies": {
     "better-docs": "^2.0.1",
     "jsdoc-mermaid": "^1.0.0",
+    "link-module-alias": "^1.2.0",
     "mocha": "^7.1.2"
   },
   "dependencies": {

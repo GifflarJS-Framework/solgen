@@ -1,7 +1,7 @@
-const createFunctionModel = require("../../src/modules/models/function");
+const createFunctionModel = require("../../../src/modules/models/function");
 const assert = require("assert");
 const expected = JSON.stringify(
-  require("../examples/modeling/function-1.json")
+  require("../../examples/modeling/function-1.json")
 );
 
 describe("Function Model", () => {

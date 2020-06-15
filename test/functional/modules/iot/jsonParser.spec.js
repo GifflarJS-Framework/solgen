@@ -1,5 +1,5 @@
 const assert = require("assert");
-const createIoTJsonParser = require("../../../src/modules/iot/jsonParser");
+const createIoTJsonParser = require("../../../../src/modules/iot/jsonParser");
 
 describe("IoT Json Parser", () => {
   //Entry example

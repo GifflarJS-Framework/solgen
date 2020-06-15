@@ -1,4 +1,4 @@
-const createExpressionWriter = require("../../../src/modules/writers/statements/expressionWriter");
+const createExpressionWriter = require("../../../../src/modules/writers/statements/expressionWriter");
 const assert = require("assert");
 
 const json = {
