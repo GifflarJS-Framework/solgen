@@ -7,8 +7,7 @@
     "test": "echo Unit Testing && npm run testunit && echo Functional Testing && npm run testfunc",
     "testunit": "./node_modules/mocha/bin/mocha test/unit/**/*",
     "testfunc": "./node_modules/mocha/bin/mocha test/functional/**/*",
-    "docs": "jsdoc -c jsdoc-config.json",
-    "postinstall": "link-module-alias"
+    "docs": "jsdoc -c jsdoc-config.json"
   },
   "_moduleAliases": {
     "@models": "./src/modules/models",

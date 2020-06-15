@@ -1,3 +1,4 @@
+require("module-alias/register");
 const createContractModel = require("@models/contract");
 const assert = require("assert");
 

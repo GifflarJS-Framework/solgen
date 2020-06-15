@@ -1,3 +1,4 @@
+require("module-alias/register");
 const helpers = require("@utils/helpers");
 const createRequest = require("@models/request");
 const createFunctionModel = require("@models/function");
