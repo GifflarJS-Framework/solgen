@@ -42,8 +42,8 @@
   "devDependencies": {
     "better-docs": "^2.0.1",
     "jsdoc-mermaid": "^1.0.0",
-    "link-module-alias": "^1.2.0",
-    "mocha": "^7.1.2"
+    "mocha": "^7.1.2",
+    "module-alias": "^2.2.2"
   },
   "dependencies": {
     "solc": "^0.4.23"
