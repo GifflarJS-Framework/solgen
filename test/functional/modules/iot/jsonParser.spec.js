@@ -31,8 +31,8 @@ describe("IoT Json Parser", () => {
     const jsonParser = createIoTJsonParser();
 
     const manager = jsonParser.parse(sensors);
-    console.log(JSON.stringify(manager.models));
-    console.log(manager.write());
+    //console.log(JSON.stringify(manager.models));
+    //console.log(manager.write());
 
     assert.equal("", "");
   });
