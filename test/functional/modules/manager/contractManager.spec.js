@@ -84,7 +84,8 @@ describe("Test ContractManager", () => {
     gContractController
       .createFunction("createContract", "public")
       .setInput("address", "_owner")
-      .setVariable("address", "newContract", "new DHT11(_owner)")
+      //.setVariable("address", "newContract", "new DHT11(_owner)")
+      .setContractVariable("newContract", "DHT11", ["_owner"])
       .setCallMethod("contracts", "push", "newContract")
       .setAssignment("counter", "counter + 1");
 

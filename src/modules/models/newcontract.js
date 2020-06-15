@@ -1,7 +1,6 @@
-function createNewContractModel(variable, contractName, args = []) {
+function createNewContractModel(contractName, args = []) {
   const json = {
     statement: "newcontract",
-    variable: variable,
     contractName: contractName,
     args: args,
   };

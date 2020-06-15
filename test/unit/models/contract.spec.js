@@ -20,15 +20,19 @@ describe("Contract Model when creating function", () => {
     contractModel
       .createFunction("public")
       .setInput("address", "_owner")
-      .setNewContract("contract", "Contract", ["_owner"], { newContract });
+      .setContractVariable("contract", "Contract", ["_owner"], {
+        newContract,
+      });
 
-    // Getting the actual contractModel created
-    const actual = JSON.stringify(
+    const actualContent = JSON.stringify(
       contractModel.contract.functions[0].content[0]
     );
-
-    const actualContent = contractModel.contract.functions[0].content[0];
-    const expectedContent = newContract;
+    const expectedContent = JSON.stringify({
+      statement: "variable",
+      type: "address",
+      name: "contract",
+      value: newContract,
+    });
 
     // Asserting the result
     assert.equal(

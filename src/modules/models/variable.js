@@ -10,17 +10,19 @@
  * @param {string} [_scope = ""] The scope of the varible (public, private).
  * @param {string} [_setMethod = false] If you want to generate automatically the variable set function.
  * @param {string} [_value = ""] The value to be assigned to the variable after the creation.
+ * This value actually can receive an statement object too.
  * @returns {Object} The if statement object model.
  * @example
  * Usage
- * const newVariable = createVariableModel("string", "name", "public", false, _value);
+ * const newVariable = createVariableModel("string", "name", "public", false, "hello");
  *
  * Return
  * {
- *   statement: "if",
- *   else: false,
- *   condition: "1 == 1",
- *   content: [],
+ *   type: "string",
+ *   name: "name",
+ *   scope: "public",
+ *   setMethod: false,
+ *   value: "hello"
  * }
  */
 function createVariableModel(

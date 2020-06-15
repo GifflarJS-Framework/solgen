@@ -68,7 +68,7 @@ function createContentModel(globalVars = []) {
     obj.setAssignment = setAssignment;
     obj.setVariable = setVariable;
     obj.setCallMethod = setCallMethod;
-    obj.setNewContract = setNewContract;
+    obj.setContractVariable = setContractVariable;
 
     return obj;
   }
@@ -162,12 +162,11 @@ function createContentModel(globalVars = []) {
    * @param {*} contractName
    * @param {*} args
    */
-  function setNewContract(variable, contractName, args, config = {}) {
+  function setContractVariable(variable, contractName, args, config = {}) {
     const newContract =
-      config.newContract ||
-      createNewContractModel(variable, contractName, args);
-    stack[top].content.push(newContract);
-    return stack[top];
+      config.newContract || createNewContractModel(contractName, args);
+
+    return setVariable("address", variable, newContract);
   }
 
   /**
