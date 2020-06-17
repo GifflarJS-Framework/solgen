@@ -1,5 +1,14 @@
+require("module-alias/register");
+const fs = require("fs");
 const assert = require("assert");
-const createIoTJsonParser = require("../../../../src/modules/iot/jsonParser");
+const createIoTJsonParser = require("@iot/jsonParser");
+const expectedModeling = JSON.stringify(
+  require("@examples/modeling/contract-6.json")
+);
+const writing_path = __dirname + "/../../../examples/writing/";
+const expectedCode = fs.readFileSync(writing_path + "contract-6.txt", {
+  encoding: "utf8",
+});
 
 describe("IoT Json Parser", () => {
   //Entry example
@@ -27,13 +36,31 @@ describe("IoT Json Parser", () => {
     },
   ];
 
-  it("Parsing", () => {
-    const jsonParser = createIoTJsonParser();
+  let manager = null;
+  let jsonParser = null;
 
-    const manager = jsonParser.parse(sensors);
-    //console.log(JSON.stringify(manager.models));
-    //console.log(manager.write());
+  it("jsonParser creation shouldn't throw error", () => {
+    assert.doesNotThrow(() => {
+      jsonParser = createIoTJsonParser();
+    }, "jsonParser creation shouldn't throw error.");
+  });
 
-    assert.equal("", "");
+  describe("#parse()", () => {
+    it("parsing JSON shouldn't throw error", () => {
+      assert.doesNotThrow(() => {
+        jsonParser.parse(sensors);
+      }, "JSON parsing shouldn't throw error.");
+    });
+  });
+
+  it("should match with the expected JSON", () => {
+    manager = jsonParser.parse(sensors);
+    const actualModeling = JSON.stringify(manager.models);
+    assert.equal(actualModeling, expectedModeling);
+  });
+
+  it("should match with the expected code", () => {
+    const actualCode = manager.write();
+    assert.equal(actualCode, expectedCode);
   });
 });
