@@ -2,12 +2,15 @@
   "name": "gifflar",
   "version": "1.0.0",
   "description": "A smart contract generator framework for IoT.",
-  "main": "index.js",
+  "main": "bin/index.js",
   "scripts": {
     "test": "echo Unit Testing && npm run testunit && echo Functional Testing && npm run testfunc",
     "testunit": "./node_modules/mocha/bin/mocha test/unit/**/*",
     "testfunc": "./node_modules/mocha/bin/mocha test/functional/**/*",
     "docs": "jsdoc -c jsdoc-config.json"
+  },
+  "bin": {
+    "gifflar": "./bin/index.js"
   },
   "_moduleAliases": {
     "@models": "./src/modules/models",

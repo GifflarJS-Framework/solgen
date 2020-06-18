@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gifflar Docs src/modules/writers/statements/callEventWriter.js</title>
+  <title>Gifflar Docs src/modules/manager/contractManager.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -109,7 +109,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>src/modules/writers/statements/callEventWriter.js</h1>
+                    <h1>src/modules/manager/contractManager.js</h1>
                 </header>
                 
 
@@ -118,58 +118,77 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const createRequest = require("../../models/request");
-const createInputWriter = require("./inputWriter");
+            <pre class="prettyprint source linenums"><code>const createContractModel = require("../models/contract");
+const createContractWriter = require("../writers/contractWriter");
+const createCompiler = require("../compiler/compiler");
 
-function createCalleventWriter() {
-  const inputWriter = createInputWriter();
-  const request = createRequest();
+function createContractManager(_name) {
+  const contractWriter = createContractWriter();
+  const compiler = createCompiler();
+
   /**
-   * @name write
-   * @description Writes a Solidity event call. **This method updates the request
-   * object to send the events to be created by the eventWriter**.
-   * @param {Object} event The event object to be wrote in Solidity code.
-   * @returns {string} The event Solidity code as **string**.
-   * @example
-   * Input
-   * {
-   *   statement: "callevent",
-   *   name: "myEvent",
-   *   inputs: {
-   *      name: "_message",
-   *      type: "string"
-   *   },
-   *   {
-   *      name: "_val",
-   *      type: "uint"
-   *   }
-   * }
-   *
-   * Return
-   * "emit myEvent(_message, _val);"
+   * @property {string} code The contracts code after writing.
+   * @property {Object} json The json interface after compiling.
+   * @property {string} address The blockchain address of the contract in the network.
    */
-  function write(event, cb) {
-    request.events.push(event);
-    const inputs_copy = [];
-    // Copying the object or else the args function
-    // shifts the first element of the original object
-    // We need the object later for creating the events
-    Object.assign(inputs_copy, event.inputs);
-    const text =
-      "emit " +
-      event.name +
-      "(" +
-      inputWriter.write(inputs_copy, false) +
-      ");\n";
+  const data = {
+    models: [],
+    code: "",
+    json: {},
+    address: "",
+  };
 
-    cb(request);
-    return text;
+  function createContract(name) {
+    const newcontract = createContractModel(name);
+    data.models.push(newcontract);
+
+    return newcontract;
   }
 
-  return { write };
+  function getContract(name) {
+    return data.models.filter((contract) => {
+      return contract.name == name;
+    })[0];
+  }
+
+  /**
+   *
+   * @param {Object[]} [contracts]
+   */
+  function write(contracts) {
+    // Copying data models
+    let _contracts = [...data.models];
+
+    // If a list of contracts was passed
+    if (contracts &amp;&amp; Array.isArray(contracts) &amp;&amp; contracts[0]) {
+      _contracts = contracts;
+    }
+
+    // Call the contract writer to write the code
+    data.code = contractWriter.write(_contracts);
+
+    return data.code;
+  }
+
+  function compile() {
+    data.json = compiler.compile(data.code);
+    return data.json;
+  }
+
+  function deploy() {
+    return "";
+  }
+
+  data.createContract = createContract;
+  data.write = write;
+  data.compile = compile;
+  data.deploy = deploy;
+  data.getContract = getContract;
+
+  return data;
 }
 
-module.exports = createCalleventWriter;
+module.exports = createContractManager;
 </code></pre>
         </article>
     </section>

@@ -101,7 +101,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#createContentWriter">createContentWriter</a></li><li><a href="global.html#createContractWriter">createContractWriter</a></li><li><a href="global.html#createEventWriter">createEventWriter</a></li><li><a href="global.html#createFunctionWriter">createFunctionWriter</a></li><li><a href="global.html#createIfWriter">createIfWriter</a></li><li><a href="global.html#createOutputWriter">createOutputWriter</a></li><li><a href="global.html#write">write</a></li></ul></div><div class="category"><h2>Diagrams</h2><h3>Modules</h3><ul><li><a href="module-Complete%2520Sequence%2520Diagram.html">Complete Sequence Diagram</a></li><li><a href="module-Framework%2520model.html">Framework model</a></li><li><a href="module-Modeling%2520Sequence%2520Diagram.html">Modeling Sequence Diagram</a></li><li><a href="module-Writing%2520Sequence%2520Diagram.html">Writing Sequence Diagram</a></li></ul></div><div class="category"><h2>Model</h2><h3>Modules</h3><ul><li><a href="module-createAssignmentModel.html">createAssignmentModel</a></li><li><a href="module-createContentModel.html">createContentModel</a></li><li><a href="module-createContractModel.html">createContractModel</a></li><li><a href="module-createEventModel.html">createEventModel</a></li><li><a href="module-createFunctionModel.html">createFunctionModel</a></li><li><a href="module-createIfModel.html">createIfModel</a></li><li><a href="module-createVariableModel.html">createVariableModel</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#createContentWriter">createContentWriter</a></li><li><a href="global.html#createContractWriter">createContractWriter</a></li><li><a href="global.html#createEventWriter">createEventWriter</a></li><li><a href="global.html#createFunctionWriter">createFunctionWriter</a></li><li><a href="global.html#createIfWriter">createIfWriter</a></li><li><a href="global.html#createOutputWriter">createOutputWriter</a></li><li><a href="global.html#write">write</a></li></ul></div><div class="category"><h2>Diagrams</h2><h3>Modules</h3><ul><li><a href="module-Complete%2520Sequence%2520Diagram.html">Complete Sequence Diagram</a></li><li><a href="module-Framework%2520model.html">Framework model</a></li><li><a href="module-Modeling%2520Sequence%2520Diagram.html">Modeling Sequence Diagram</a></li><li><a href="module-Writing%2520Sequence%2520Diagram.html">Writing Sequence Diagram</a></li></ul></div><div class="category"><h2>Model</h2><h3>Modules</h3><ul><li><a href="module-createAssignmentModel.html">createAssignmentModel</a></li><li><a href="module-createContentModel.html">createContentModel</a></li><li><a href="module-createContractModel.html">createContractModel</a></li><li><a href="module-createEventModel.html">createEventModel</a></li><li><a href="module-createFunctionModel.html">createFunctionModel</a></li><li><a href="module-createIfModel.html">createIfModel</a></li><li><a href="module-createIoTJsonParser.html">createIoTJsonParser</a></li><li><a href="module-createVariableModel.html">createVariableModel</a></li></ul></div>
                 
             </nav>
         </div>
@@ -122,6 +122,7 @@
 const createVariableModel = require("./variable");
 const createEventModel = require("./callevent");
 const createIfModel = require("./if");
+const createNewContractModel = require("./newcontract");
 
 /**
  * @author Levy Santiago
@@ -170,7 +171,6 @@ function createContentModel(globalVars = []) {
    * @method
    * @private
    * @description Assign the statements functions needed to build the content.
-   * @member {Function}
    * @param {Object} obj The current json content object.
    * @returns {Object} The same object with all statement functions assigned.
    * @example
@@ -187,6 +187,7 @@ function createContentModel(globalVars = []) {
     obj.setAssignment = setAssignment;
     obj.setVariable = setVariable;
     obj.setCallMethod = setCallMethod;
+    obj.setContractVariable = setContractVariable;
 
     return obj;
   }
@@ -196,7 +197,6 @@ function createContentModel(globalVars = []) {
    * @name setVariable
    * @method
    * @description Sets a new variable declaration inside the content.
-   * @member {Function}
    * @param {string} _type The type of the variable ("string", "uint", ...)
    * @param {string} _name The variable name.
    * @param {string} [_value] The eventual value to be assigned to it during the declaration.
@@ -259,17 +259,32 @@ function createContentModel(globalVars = []) {
    */
   function setCallEvent(name, inputNames) {
     const inputs = [];
-    inputNames.map((input) => {
-      const variable = contentVars.filter((item) => {
-        return item.name == input;
-      })[0];
-      if (variable) {
-        inputs.push({ name: variable.name, type: variable.type });
-      }
-    });
+    if (inputNames) {
+      inputNames.map((input) => {
+        const variable = contentVars.filter((item) => {
+          return item.name == input;
+        })[0];
+        if (variable) {
+          inputs.push({ name: variable.name, type: variable.type });
+        }
+      });
+    }
     const newEvent = createEventModel(name, inputs);
     stack[top].content.push(newEvent);
     return stack[top];
+  }
+
+  /**
+   * @todo Write function and documentation
+   * @param {*} variable
+   * @param {*} contractName
+   * @param {*} args
+   */
+  function setContractVariable(variable, contractName, args, config = {}) {
+    const newContract =
+      config.newContract || createNewContractModel(contractName, args);
+
+    return setVariable("address", variable, newContract);
   }
 
   /**

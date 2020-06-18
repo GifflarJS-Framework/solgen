@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gifflar Docs createEventModel</title>
+  <title>Gifflar Docs createIoTJsonParser</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -107,7 +107,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Module</p>
-                    <h1>createEventModel</h1>
+                    <h1>createIoTJsonParser</h1>
                 </header>
                 
 
@@ -128,14 +128,184 @@
     <div class="container-overview">
     
         
-            <div class="description"><script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>A <b>Factory</b> for creating an event object model (json).
-This object later is used as a call for the event, so the event is created
-automatically based in the inputs.</p></div>
+            <div class="description"><script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>This Factory will create an iotJsonParser object. The object is responsible for
+knowing how to translate an specific IoT sensors JSON to the JSON the framework
+understand. When executing the function &quot;parse&quot;, the IoTJsonParser returns a
+ContractManager already setted up with all contract JSONs created.</p></div>
         
 
         
             
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Levy Santiago</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'><p>The jsonParser object.</p></div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Object</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>Usage
+const jsonParser = createIoTJsonParser()
+
+Return
+{
+  parse: [Function]
+}</code></pre>
+    
+
+
+
+        
+    
+    </div>
+    
+    
+
+    
+        <h3 class="subsection-title">Requires</h3>
+
+        <ul>
+            <li>module:createContractManager</li>
+        </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class='vertical-section'>
+            <h1>Methods</h1>
+            <div class="members">
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="~parse">
+        <a class="href-link" href="#~parse">#</a>
+        
+            
+                <span class='tag'>inner</span>
+            
+        
+        <span class="code-name">
+            
+                parse<span class="signature">(sensors)</span><span class="type-signature"> &rarr; {Object}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>This method is responsible for parsing the Json, which contains
+information about iot sensors, to the Json that the Gifflar framework
+understand.</p>
+    </div>
+    
 
 
 
@@ -158,11 +328,7 @@ automatically based in the inputs.</p></div>
             <th>Type</th>
 
             
-            <th>Attributes</th>
-            
 
-            
-            <th>Default</th>
             
 
             <th class="last">Description</th>
@@ -175,44 +341,7 @@ automatically based in the inputs.</p></div>
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>_name</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">string</span>
-
-
-  
-  </td>
-
-  
-      <td class="attributes">
-      
-
-      
-
-      
-      </td>
-  
-
-  
-      <td class="default">
-      
-      </td>
-  
-
-  <td class="description last"><p>The name for the event.</p></td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>_inputs</code></td>
+      <td class="name"><code>sensors</code></td>
   
 
   <td class="type">
@@ -225,26 +354,11 @@ automatically based in the inputs.</p></div>
   </td>
 
   
-      <td class="attributes">
-      
-          &lt;optional><br>
-      
-
-      
-
-      
-      </td>
-  
 
   
-      <td class="default">
-      
-          []
-      
-      </td>
-  
 
-  <td class="description last"><p>The list of inputs.</p></td>
+  <td class="description last"><p>The list of sensores which contains all the sensors
+individual Jsons.</p></td>
 </tr>
 
 
@@ -323,7 +437,7 @@ automatically based in the inputs.</p></div>
 
 <div class="columns">
     
-    <div class='param-desc column is-7'><p>The event object model.</p></div>
+    <div class='param-desc column is-7'><p>ContractManager</p></div>
     
     
     <div class='column is-5 has-text-left'>
@@ -343,333 +457,10 @@ automatically based in the inputs.</p></div>
 
 
 
-    <h5>Example</h5>
-    
-    
-        <pre class="prettyprint"><code>Usage
-// First option
-const event = createEventModel("myEvent");
-event.setInput("string", "name")
-.setInput("uint", "count");
-
-// Second option
-const inputs = [
-    {
-      name: "name",
-      type: "string",
-    },
-    {
-      name: "count",
-      type: "uint",
-    },
-  ]);
-const eventModel = createEventModel("myEvent",inputs);
-
-Return
-{
-  statement: "callevent",
-  name: "myEvent",
-  inputs: [
-  {
-      name: "name",
-      type: "string",
-    },
-    {
-      name: "count",
-      type: "uint",
-    }
-  ],
-  setInput: [Function]
-}</code></pre>
-    
-
-
-
-        
-    
-    </div>
-    
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-        <div class='vertical-section'>
-            <h1>Members</h1>
-            <div class="members">
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<span class="param-type">Object</span>
-
-
-    </span>
-
-<h4 class="name" id="~event">
-    <a class="href-link" href="#~event">#</a>
-    
-        
-            <span class='tag'>inner</span>
-        
-    
-    <span class="code-name">
-        event
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>The event object to be returned.</p>
-</div>
-
-
-
-
-
-    <h5 class="subsection-title">Properties:</h5>
-
-    
-<div class="table-container">
-    <table class="props table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-            
-<tr class="deep-level-0">
-    
-        <td class="name"><code>statement</code></td>
-    
-
-    <td class="type">
-    
-        
-<span class="param-type">string</span>
-
-
-    
-    </td>
-
-    
-
-    
-
-    <td class="description last"><p>The identificator of the statement.</p></td>
-</tr>
-
-        
-            
-<tr class="deep-level-0">
-    
-        <td class="name"><code>name</code></td>
-    
-
-    <td class="type">
-    
-        
-<span class="param-type">string</span>
-
-
-    
-    </td>
-
-    
-
-    
-
-    <td class="description last"><p>The event name.</p></td>
-</tr>
-
-        
-            
-<tr class="deep-level-0">
-    
-        <td class="name"><code>inputs</code></td>
-    
-
-    <td class="type">
-    
-        
-<span class="param-type">string</span>
-
-
-    
-    </td>
-
-    
-
-    
-
-    <td class="description last"><p>The list of inputs.</p></td>
-</tr>
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li>Levy Santiago</li>
-        </ul>
-    </dd>
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<span class="param-type">function</span>
-
-
-    </span>
-
-<h4 class="name" id="~setInput">
-    <a class="href-link" href="#~setInput">#</a>
-    
-        
-            <span class='tag'>inner</span>
-        
-    
-    <span class="code-name">
-        setInput
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>The function to set a new input to the event object model.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li>Levy Santiago</li>
-        </ul>
-    </dd>
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
 </div>
             
             </div>
         </div>
-    
-
     
 
     

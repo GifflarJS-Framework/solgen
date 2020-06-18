@@ -51,7 +51,6 @@ function createContentModel(globalVars = []) {
    * @method
    * @private
    * @description Assign the statements functions needed to build the content.
-   * @member {Function}
    * @param {Object} obj The current json content object.
    * @returns {Object} The same object with all statement functions assigned.
    * @example
@@ -78,7 +77,6 @@ function createContentModel(globalVars = []) {
    * @name setVariable
    * @method
    * @description Sets a new variable declaration inside the content.
-   * @member {Function}
    * @param {string} _type The type of the variable ("string", "uint", ...)
    * @param {string} _name The variable name.
    * @param {string} [_value] The eventual value to be assigned to it during the declaration.

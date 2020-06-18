@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,7 +5,8 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gifflar Docs src/modules/writers/statements/callEventWriter.js</title>
+  <title>Gifflar Docs createIoTJsonParser
+@</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -101,78 +100,136 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#createContentWriter">createContentWriter</a></li><li><a href="global.html#createContractWriter">createContractWriter</a></li><li><a href="global.html#createEventWriter">createEventWriter</a></li><li><a href="global.html#createFunctionWriter">createFunctionWriter</a></li><li><a href="global.html#createIfWriter">createIfWriter</a></li><li><a href="global.html#createOutputWriter">createOutputWriter</a></li><li><a href="global.html#write">write</a></li></ul></div><div class="category"><h2>Diagrams</h2><h3>Modules</h3><ul><li><a href="module-Complete%2520Sequence%2520Diagram.html">Complete Sequence Diagram</a></li><li><a href="module-Framework%2520model.html">Framework model</a></li><li><a href="module-Modeling%2520Sequence%2520Diagram.html">Modeling Sequence Diagram</a></li><li><a href="module-Writing%2520Sequence%2520Diagram.html">Writing Sequence Diagram</a></li></ul></div><div class="category"><h2>Model</h2><h3>Modules</h3><ul><li><a href="module-createAssignmentModel.html">createAssignmentModel</a></li><li><a href="module-createContentModel.html">createContentModel</a></li><li><a href="module-createContractModel.html">createContractModel</a></li><li><a href="module-createEventModel.html">createEventModel</a></li><li><a href="module-createFunctionModel.html">createFunctionModel</a></li><li><a href="module-createIfModel.html">createIfModel</a></li><li><a href="module-createIoTJsonParser.html">createIoTJsonParser</a></li><li><a href="module-createVariableModel.html">createVariableModel</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#createContentWriter">createContentWriter</a></li><li><a href="global.html#createContractWriter">createContractWriter</a></li><li><a href="global.html#createEventWriter">createEventWriter</a></li><li><a href="global.html#createFunctionWriter">createFunctionWriter</a></li><li><a href="global.html#createIfWriter">createIfWriter</a></li><li><a href="global.html#createOutputWriter">createOutputWriter</a></li><li><a href="global.html#write">write</a></li></ul></div><div class="category"><h2>Diagrams</h2><h3>Modules</h3><ul><li><a href="module-Complete%2520Sequence%2520Diagram.html">Complete Sequence Diagram</a></li><li><a href="module-Framework%2520model.html">Framework model</a></li><li><a href="module-Modeling%2520Sequence%2520Diagram.html">Modeling Sequence Diagram</a></li><li><a href="module-Writing%2520Sequence%2520Diagram.html">Writing Sequence Diagram</a></li></ul></div><div class="category"><h2>Model</h2><h3>Modules</h3><ul><li><a href="createIoTJsonParser%250A@module_.html">createIoTJsonParser
+@</a></li><li><a href="module-createAssignmentModel.html">createAssignmentModel</a></li><li><a href="module-createContentModel.html">createContentModel</a></li><li><a href="module-createContractModel.html">createContractModel</a></li><li><a href="module-createEventModel.html">createEventModel</a></li><li><a href="module-createFunctionModel.html">createFunctionModel</a></li><li><a href="module-createIfModel.html">createIfModel</a></li><li><a href="module-createVariableModel.html">createVariableModel</a></li></ul></div>
                 
             </nav>
         </div>
         <div class="core" id="main-content-wrapper">
             <div class="content">
                 <header class="page-title">
-                    <p>Source</p>
-                    <h1>src/modules/writers/statements/callEventWriter.js</h1>
+                    <p>Module</p>
+                    <h1>createIoTJsonParser
+@</h1>
                 </header>
                 
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>const createRequest = require("../../models/request");
-const createInputWriter = require("./inputWriter");
+</header>
 
-function createCalleventWriter() {
-  const inputWriter = createInputWriter();
-  const request = createRequest();
-  /**
-   * @name write
-   * @description Writes a Solidity event call. **This method updates the request
-   * object to send the events to be created by the eventWriter**.
-   * @param {Object} event The event object to be wrote in Solidity code.
-   * @returns {string} The event Solidity code as **string**.
-   * @example
-   * Input
-   * {
-   *   statement: "callevent",
-   *   name: "myEvent",
-   *   inputs: {
-   *      name: "_message",
-   *      type: "string"
-   *   },
-   *   {
-   *      name: "_val",
-   *      type: "uint"
-   *   }
-   * }
-   *
-   * Return
-   * "emit myEvent(_message, _val);"
-   */
-  function write(event, cb) {
-    request.events.push(event);
-    const inputs_copy = [];
-    // Copying the object or else the args function
-    // shifts the first element of the original object
-    // We need the object later for creating the events
-    Object.assign(inputs_copy, event.inputs);
-    const text =
-      "emit " +
-      event.name +
-      "(" +
-      inputWriter.write(inputs_copy, false) +
-      ");\n";
+<article>
+    <div class="container-overview">
+    
+        
+            <div class="description"><script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>This Factory will create an iotJsonParser object. The object is responsible for
+knowing how to translate an specific IoT sensors JSON to the JSON the framework
+understand. When executing the function &quot;parse&quot;, the IoTJsonParser returns a
+ContractManager already setted up with all contract JSONs created.</p></div>
+        
 
-    cb(request);
-    return text;
-  }
+        
 
-  return { write };
-}
 
-module.exports = createCalleventWriter;
-</code></pre>
-        </article>
-    </section>
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Levy Santiago</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="src_modules_iot_jsonParser.js.html" class="button">View Source</a>
+            <span>
+                <a href="src_modules_iot_jsonParser.js.html">src/modules/iot/jsonParser.js</a>, <a href="src_modules_iot_jsonParser.js.html#line4">line 4</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+        
+            <h3>Example</h3>
+            
+    
+        <pre class="prettyprint"><code>Usage
+const jsonParser = createIoTJsonParser()
+
+Return
+{
+  parse: [Function]
+}</code></pre>
+    
+
+        
+    
+    </div>
+    
+    
+
+    
+        <h3 class="subsection-title">Requires</h3>
+
+        <ul>
+            <li>module:createContractManager</li>
+        </ul>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

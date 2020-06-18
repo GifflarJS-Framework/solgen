@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gifflar Docs src/modules/writers/statements/callEventWriter.js</title>
+  <title>Gifflar Docs src/modules/compiler/compiler.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -109,7 +109,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>src/modules/writers/statements/callEventWriter.js</h1>
+                    <h1>src/modules/compiler/compiler.js</h1>
                 </header>
                 
 
@@ -118,58 +118,22 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const createRequest = require("../../models/request");
-const createInputWriter = require("./inputWriter");
+            <pre class="prettyprint source linenums"><code>const solc = require("solc");
 
-function createCalleventWriter() {
-  const inputWriter = createInputWriter();
-  const request = createRequest();
+function createCompiler() {
   /**
-   * @name write
-   * @description Writes a Solidity event call. **This method updates the request
-   * object to send the events to be created by the eventWriter**.
-   * @param {Object} event The event object to be wrote in Solidity code.
-   * @returns {string} The event Solidity code as **string**.
-   * @example
-   * Input
-   * {
-   *   statement: "callevent",
-   *   name: "myEvent",
-   *   inputs: {
-   *      name: "_message",
-   *      type: "string"
-   *   },
-   *   {
-   *      name: "_val",
-   *      type: "uint"
-   *   }
-   * }
-   *
-   * Return
-   * "emit myEvent(_message, _val);"
+   * Compiles a Solidity code
+   * @param {string} code
    */
-  function write(event, cb) {
-    request.events.push(event);
-    const inputs_copy = [];
-    // Copying the object or else the args function
-    // shifts the first element of the original object
-    // We need the object later for creating the events
-    Object.assign(inputs_copy, event.inputs);
-    const text =
-      "emit " +
-      event.name +
-      "(" +
-      inputWriter.write(inputs_copy, false) +
-      ");\n";
-
-    cb(request);
-    return text;
+  function compile(code) {
+    const output = solc.compile(code, 1);
+    return output;
   }
 
-  return { write };
+  return { compile };
 }
 
-module.exports = createCalleventWriter;
+module.exports = createCompiler;
 </code></pre>
         </article>
     </section>

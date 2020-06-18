@@ -29,7 +29,8 @@
     "default": {
       "staticFiles": {
         "include": []
-      }
+      },
+      "outputSourceFiles": false
     },
     "better-docs": {
       "name": "Gifflar Documentation",

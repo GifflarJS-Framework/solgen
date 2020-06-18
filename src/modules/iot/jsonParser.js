@@ -2,15 +2,24 @@ const createContractManager = require("../manager/contractManager");
 const helpers = require("../../utils/helpers");
 
 /**
- * @description Esta factory irá criar um objeto iotJsonParser. O objeto é responsável
- * por saber transformar um Json específico de sensores iot no Json que o framework
- * entende. Ao executar a função "parse", o iotJsonParser retorna um ContractManager
- * já configurado com todos os Jsons de contratos criados.
- *
- * This Factory will create an iotJsonParser object. The object is responsible for
+ * @author Levy Santiago
+ * @module
+ * @category Model
+ * @name createIoTJsonParser
+ * @description This Factory will create an iotJsonParser object. The object is responsible for
  * knowing how to translate an specific IoT sensors JSON to the JSON the framework
  * understand. When executing the function "parse", the IoTJsonParser returns a
  * ContractManager already setted up with all contract JSONs created.
+ * @returns {Object} The jsonParser object.
+ * @requires createContractManager
+ * @example
+ * Usage
+ * const jsonParser = createIoTJsonParser()
+ *
+ * Return
+ * {
+ *   parse: [Function]
+ * }
  */
 function createIoTJsonParser() {
   // Creating the ContractManager
@@ -35,19 +44,28 @@ function createIoTJsonParser() {
 
       // Setting up the definitions to be made lately
       v.default
-        ? definitions.push({ variable: v.idv, value: v.default })
+        ? definitions.push({
+            variable: v.idv,
+            value: v.default,
+          })
         : null;
 
       //Setting max and min variables
       if (v.max) {
         const maxname = "max" + helpers.capitalize(v.idv);
         contract.createVariable(v.type, maxname, "public", true);
-        definitions.push({ variable: maxname, value: v.max });
+        definitions.push({
+          variable: maxname,
+          value: v.max,
+        });
       }
       if (v.min) {
         const minname = "min" + helpers.capitalize(v.idv);
         contract.createVariable(v.type, minname, "public", true);
-        definitions.push({ variable: minname, value: v.min });
+        definitions.push({
+          variable: minname,
+          value: v.min,
+        });
       }
     });
   }
@@ -133,12 +151,16 @@ function createIoTJsonParser() {
   }
 
   /**
-   *
+   * @author Levy Santiago
+   * @name parse
+   * @method
+   * @public
    * @description This method is responsible for parsing the Json, which contains
    * information about iot sensors, to the Json that the Gifflar framework
    * understand.
    * @param {Object[]} sensors - The list of sensores which contains all the sensors
    * individual Jsons.
+   * @returns {Object} ContractManager
    */
   function parse(sensors) {
     let gContract = null;
