@@ -1,10 +1,10 @@
 const createContractManager = require("../../../../src/modules/manager/contractManager");
-const createCompiler = require("../../../../src/modules/compiler/compiler");
 const helpers = require("../../../../src/utils/helpers");
 const assert = require("assert");
 const fs = require("fs");
 const writing_path = __dirname + "/../../../examples/writing/";
 const solc = require("solc");
+const { execSync } = require("child_process");
 
 describe("Test ContractManager", () => {
   // Expected values
@@ -118,11 +118,26 @@ describe("Test ContractManager", () => {
     assert.equal(actual_code, expected_code);
   });
 
+  //   it("smartcheck it", () => {
+  //     const filepath = __dirname + "/contract.sol";
+  //     fs.writeFileSync(filepath, actual_code, {
+  //       encoding: "utf8",
+  //       flag: "w",
+  //     });
+  //     const result = execSync("smartcheck -p " + filepath).toString();
+  //     console.log(result);
+  //     execSync("rm " + filepath);
+  //   }).timeout(0);
+
   // COMPILING
-  it.skip("Compiling", () => {
-    const compiler = createCompiler();
+  it("Compiling", () => {
+    const compiled = manager.compile((errors) => {
+      errors.map((e) => {
+        // console.log(e);
+      });
+    });
     const expected_interface = JSON.stringify(solc.compile(expected_code, 1));
-    const actual_interface = JSON.stringify(compiler.compile(actual_code));
+    const actual_interface = JSON.stringify(compiled);
 
     assert.equal(expected_interface, actual_interface);
   }).timeout(0);

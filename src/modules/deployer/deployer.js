@@ -1,4 +1,8 @@
-module.exports = {
+function createDeployer(web3) {
+  if (!web3) {
+    return {};
+  }
+
   /**
    * Deploys a smart contract
    * @param {JSON} abi
@@ -6,30 +10,30 @@ module.exports = {
    * @param {Array} args
    * @param {string} from
    */
-  deploy: async (abi, bytecode, args, from) => {
+  async function deploy(abi, bytecode, args, from, gas) {
     try {
       // Create a new contract and define ABI access
-      this.controller_contract = await new this.web3.eth.Contract(abi)
+      const contract = await new web3.eth.Contract(abi)
         // Deploy configuration
         .deploy({
           data: bytecode,
           arguments: args,
         })
         .send({
-          gas: GAS,
+          gas: gas,
           from: from,
         });
 
-      return this.controller_contract;
+      return contract;
     } catch (e) {
       console.log(e);
       return {};
     }
-  },
+  }
 
-  deploySensor: async (owner, from) => {
+  async function deploySensor(owner, from) {
     // Create a new contract and define ABI access
-    const transaction = await this.controller_contract.methods
+    const transaction = await controller_contract.methods
       .createContract(owner)
       // Deploy configuration
       .send({
@@ -38,24 +42,25 @@ module.exports = {
       });
 
     return transaction;
-  },
+  }
 
   /**
    * Gets a contract instance by the blockchain address and ABI
    * @param {string} contract_address
    * @param {Object} abi
    */
-  retrieveContract: async (contract_address, abi) => {
+  async function retrieveContract(contract_address, abi) {
     try {
-      this.controller_contract = await new this.web3.eth.Contract(
-        abi,
-        contract_address
-      );
+      const contract = await new web3.eth.Contract(abi, contract_address);
 
-      return this.controller_contract;
+      return contract;
     } catch (e) {
       console.log(e);
       return false;
     }
-  },
-};
+  }
+
+  return { deploy };
+}
+
+module.exports = createDeployer;

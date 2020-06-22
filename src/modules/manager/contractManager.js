@@ -50,8 +50,11 @@ function createContractManager(_name) {
     return data.code;
   }
 
-  function compile() {
+  function compile(cb) {
     data.json = compiler.compile(data.code);
+    if (data.json.errors && cb) {
+      cb(data.json.errors);
+    }
     return data.json;
   }
 
