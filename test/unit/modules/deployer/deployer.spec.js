@@ -24,35 +24,78 @@ describe("Deployer", async () => {
     assert.ok(helpers.isObject(deployer), "should return an object.");
   });
 
-  it("should return empty object", () => {
-    deployer = createDeployer();
-    assert.ok(helpers.isObjEmpty(deployer), "should return an empty object.");
-  });
-
   it("should return valid object with deploy function", () => {
     deployer = createDeployer(web3);
     assert.ok(helpers.isObject(deployer), "should return valid object.");
-    assert.ok(deployer.deploy, "should return an object with deploy function.");
+  });
+
+  it("should have deploy function", () => {
+    assert.ok(deployer.deploy, "should have deploy function.");
+  });
+
+  it("should have retrieve function", () => {
+    assert.ok(deployer.retrieve, "should have deploy function.");
+  });
+
+  it("should have setWeb3 function", () => {
+    assert.ok(deployer.setWeb3, "should have deploy function.");
+  });
+
+  it("should have getWeb3 function", () => {
+    assert.ok(deployer.getWeb3, "should have deploy function.");
   });
 
   it("should return the ganache accounts", async () => {
     assert.ok(accounts.length);
   });
 
-  it("should deploy successfully", async () => {
-    const json = solc.compile(expected_code);
-    let contract = json.contracts[":Controller"];
-    contract = await deployer.deploy(
-      JSON.parse(contract.interface),
-      contract.bytecode,
-      [],
-      accounts[0],
-      4000000
-    );
+  // Compiling contract
+  const json = solc.compile(expected_code);
+  // Selecting contract to be deployed
+  const { interface: abi, bytecode } = json.contracts[":Controller"];
+  let contract = null;
 
-    assert.ok(
-      !helpers.isObjEmpty(contract),
-      "should'nt return an empty object."
-    );
-  }).timeout(0);
+  describe("#deploy()", () => {
+    it("should deploy successfully", async () => {
+      // Setting up the inputs
+      const inputs = {
+        abi: JSON.parse(abi),
+        bytecode: bytecode,
+        args: [],
+        from: accounts[0],
+        gas: 4000000,
+      };
+
+      // Deploying
+      contract = await deployer.deploy(inputs);
+
+      // Asserting if the object isn't empty
+      assert.ok(
+        !helpers.isObjEmpty(contract),
+        "should'nt return an empty object."
+      );
+    }).timeout(0);
+  });
+
+  describe("#retrieve()", () => {
+    it("should retrieve the same object", async () => {
+      // Deploying
+      const samecontract = await deployer.retrieve(
+        JSON.parse(abi),
+        contract.options.address
+      );
+
+      // Asserting if is the same contract
+      assert.equal(
+        JSON.stringify(samecontract.methods),
+        JSON.stringify(contract.methods),
+        "should return the same object."
+      );
+      assert.equal(
+        samecontract.options.address,
+        contract.options.address,
+        "should return the same address."
+      );
+    }).timeout(0);
+  });
 });

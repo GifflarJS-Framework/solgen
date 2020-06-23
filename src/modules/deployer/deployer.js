@@ -1,19 +1,31 @@
-function createDeployer(web3) {
-  if (!web3) {
-    return {};
+function createDeployer(web3 = null) {
+  let _web3 = web3;
+
+  function setWeb3(web3) {
+    _web3 = web3;
+    return _web3;
+  }
+
+  function getWeb3() {
+    return _web3;
   }
 
   /**
    * Deploys a smart contract
-   * @param {JSON} abi
-   * @param {string} bytecode
-   * @param {Array} args
-   * @param {string} from
+   * @param {JSON} inputs
+   * @property {JSON} abi
+   * @property {string} bytecode
+   * @property {Array} args
+   * @property {string} from
    */
-  async function deploy(abi, bytecode, args, from, gas) {
+  async function deploy(inputs) {
+    if (!_web3) {
+      return {};
+    }
     try {
+      const { abi, bytecode, args, from, gas } = inputs;
       // Create a new contract and define ABI access
-      const contract = await new web3.eth.Contract(abi)
+      const contract = await new _web3.eth.Contract(abi)
         // Deploy configuration
         .deploy({
           data: bytecode,
@@ -31,36 +43,25 @@ function createDeployer(web3) {
     }
   }
 
-  async function deploySensor(owner, from) {
-    // Create a new contract and define ABI access
-    const transaction = await controller_contract.methods
-      .createContract(owner)
-      // Deploy configuration
-      .send({
-        gas: GAS,
-        from: from,
-      });
-
-    return transaction;
-  }
-
   /**
    * Gets a contract instance by the blockchain address and ABI
-   * @param {string} contract_address
+   * @param {string} address
    * @param {Object} abi
    */
-  async function retrieveContract(contract_address, abi) {
+  async function retrieve(abi, address) {
+    if (!_web3) {
+      return {};
+    }
     try {
-      const contract = await new web3.eth.Contract(abi, contract_address);
-
+      const contract = await new _web3.eth.Contract(abi, address);
       return contract;
     } catch (e) {
       console.log(e);
-      return false;
+      return {};
     }
   }
 
-  return { deploy };
+  return { deploy, retrieve, setWeb3, getWeb3 };
 }
 
 module.exports = createDeployer;

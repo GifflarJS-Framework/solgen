@@ -1,10 +1,12 @@
 const createContractModel = require("../models/contract");
 const createContractWriter = require("../writers/contractWriter");
 const createCompiler = require("../compiler/compiler");
+const createDeployer = require("../deployer/deployer");
 
-function createContractManager(_name) {
+function createContractManager(web3 = null) {
   const contractWriter = createContractWriter();
   const compiler = createCompiler();
+  const deployer = createDeployer(web3);
 
   /**
    * @property {string} code The contracts code after writing.
@@ -58,15 +60,33 @@ function createContractManager(_name) {
     return data.json;
   }
 
-  function deploy() {
-    return "";
+  /**
+   * Deploys a smart contract
+   * @param {string} contractName
+   */
+  async function deploy(contractName, from, args, gas) {
+    const json = data.json.contracts[":" + contractName];
+    if (!json) {
+      return {};
+    }
+    const inputs = {
+      abi: JSON.parse(json.interface),
+      bytecode: json.bytecode,
+      args: args,
+      from: from,
+      gas: gas,
+    };
+    const contract = await deployer.deploy(inputs);
+    return contract;
   }
 
   data.createContract = createContract;
   data.write = write;
   data.compile = compile;
-  data.deploy = deploy;
   data.getContract = getContract;
+  data.deploy = deploy;
+  data.setWeb3 = deployer.setWeb3;
+  data.getWeb3 = deployer.getWeb3;
 
   return data;
 }

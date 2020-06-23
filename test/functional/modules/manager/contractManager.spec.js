@@ -4,7 +4,15 @@ const assert = require("assert");
 const fs = require("fs");
 const writing_path = __dirname + "/../../../examples/writing/";
 const solc = require("solc");
+const ganache = require("ganache-cli");
+const Web3 = require("web3");
+const web3 = new Web3(ganache.provider());
 const { execSync } = require("child_process");
+
+let accounts = [];
+before(async () => {
+  accounts = await web3.eth.getAccounts();
+});
 
 describe("Test ContractManager", () => {
   // Expected values
@@ -18,7 +26,7 @@ describe("Test ContractManager", () => {
 
   // Actual values
   let actual_code = "";
-  const manager = createContractManager();
+  const manager = createContractManager(web3);
   let gContract = null;
   let gContractController = null;
 
@@ -136,12 +144,20 @@ describe("Test ContractManager", () => {
         // console.log(e);
       });
     });
-    const expected_interface = JSON.stringify(solc.compile(expected_code, 1));
-    const actual_interface = JSON.stringify(compiled);
+    const expected_json = JSON.stringify(solc.compile(expected_code, 1));
+    const actual_json = JSON.stringify(compiled);
 
-    assert.equal(expected_interface, actual_interface);
+    assert.equal(expected_json, actual_json);
   }).timeout(0);
 
   // DEPLOYING
-  it("Deploying", () => {});
+  it("Deploying", async () => {
+    const instance = await manager.deploy(
+      "Controller",
+      accounts[0],
+      [],
+      4000000
+    );
+    assert.ok(instance.options.address, "should have a deployed address.");
+  }).timeout(0);
 });
