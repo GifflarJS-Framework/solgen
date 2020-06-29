@@ -1,4 +1,4 @@
-const createContractManager = require("../../../../src/modules/manager/contractManager");
+const createContract = require("@management/contract");
 const helpers = require("../../../../src/utils/helpers");
 const assert = require("assert");
 const fs = require("fs");
@@ -14,31 +14,22 @@ before(async () => {
   accounts = await web3.eth.getAccounts();
 });
 
-describe("Test ContractManager", () => {
+describe("Test Contract", () => {
   // Expected values
   const expected_model = JSON.stringify(
     require("../../../examples/modeling/contract-4.json")
-  );
-  const expected_complete_model = JSON.stringify(
-    require("../../../examples/modeling/contract-5.json")
   );
   let expected_code = "";
 
   // Actual values
   let actual_code = "";
-  const manager = createContractManager(web3);
   let gContract = null;
-  let gContractController = null;
 
   it("Object creation", () => {
     // Creating contract
-    gContract = manager.createContract("DHT11");
-    gContractController = manager.createContract("Controller");
+    gContract = createContract("DHT11");
     assert.ok(!helpers.isObjEmpty(gContract), "Error while creating gContract");
-    assert.ok(
-      !helpers.isObjEmpty(gContractController),
-      "Error while creating gContractController"
-    );
+    assert.ok(!helpers.isObjEmpty(gContract), "Error while creating gContract");
   });
 
   // MODELING
@@ -73,75 +64,50 @@ describe("Test ContractManager", () => {
       .endIf();
 
     // Asserting the result
-    assert.equal(expected_model, gContract.toString());
-  });
-
-  // MODELING 2
-  it("Modeling Controller", () => {
-    // Modeling Variables
-    gContractController.createVariable("address[]", "contracts", "public");
-    gContractController.createVariable(
-      "uint256",
-      "counter",
-      "private",
-      false,
-      "0"
+    assert.equal(
+      gContract.toString(),
+      JSON.stringify(JSON.parse(expected_model)[0])
     );
-
-    // Modeling Functions
-    gContractController
-      .createFunction("createContract", "public")
-      .setInput("address", "_owner")
-      //.setVariable("address", "newContract", "new DHT11(_owner)")
-      .setContractVariable("newContract", "DHT11", ["_owner"])
-      .setCallMethod("contracts", "push", "newContract")
-      .setAssignment("counter", "counter + 1");
-
-    gContractController
-      .createFunction("getLastContract", "public")
-      .setOutput("_contract")
-      .setVariable("address", "_contract", "address(0)")
-      .beginIf("counter > 0")
-      .setAssignment("_contract", "contracts[counter - 1]")
-      .endIf()
-      .beginElse()
-      .setAssignment("_contract", "contracts[0]")
-      .endIf();
-
-    // Asserting the result
-    assert.equal(expected_complete_model, JSON.stringify(manager.models));
   });
 
   // WRITING
   it("Writing", () => {
     // Testing if writing two times the code breaks
-    manager.write();
+    gContract.write();
     // Writing again
-    actual_code = manager.write();
+    actual_code = gContract.write();
 
-    expected_code = fs.readFileSync(writing_path + "contract-5.txt", {
+    expected_code = fs.readFileSync(writing_path + "contract-4.txt", {
       encoding: "utf8",
     });
 
     assert.equal(actual_code, expected_code);
   });
 
-  //   it("smartcheck it", () => {
-  //     const filepath = __dirname + "/contract.sol";
-  //     fs.writeFileSync(filepath, actual_code, {
-  //       encoding: "utf8",
-  //       flag: "w",
-  //     });
-  //     const result = execSync("smartcheck -p " + filepath).toString();
-  //     console.log(result);
-  //     execSync("rm " + filepath);
-  //   }).timeout(0);
+  // CHECKING CONTRACTS
+  it.skip("smartcheck it", () => {
+    // Defining filepath
+    const filepath = __dirname + "/contract.sol";
+
+    // Creating file for testing
+    fs.writeFileSync(filepath, actual_code, {
+      encoding: "utf8",
+      flag: "w",
+    });
+
+    // Executing smartcheck
+    const result = execSync("smartcheck -p " + filepath).toString();
+    console.log(result);
+
+    // Removing testing file
+    execSync("rm " + filepath);
+  }).timeout(0);
 
   // COMPILING
   it("Compiling", () => {
-    const compiled = manager.compile((errors) => {
+    const compiled = gContract.compile((errors) => {
       errors.map((e) => {
-        // console.log(e);
+        //console.log(e);
       });
     });
     const expected_json = JSON.stringify(solc.compile(expected_code, 1));
@@ -152,11 +118,11 @@ describe("Test ContractManager", () => {
 
   // DEPLOYING
   it("Deploying", async () => {
-    const instance = await manager.deploy(
-      "Controller",
+    const instance = await gContract.deploy(
       accounts[0],
-      [],
-      4000000
+      [accounts[0]],
+      4000000,
+      web3
     );
     assert.ok(instance.options.address, "should have a deployed address.");
   }).timeout(0);

@@ -1,4 +1,4 @@
-const createContractManager = require("../manager/contractManager");
+const createContractManager = require("../management/contractManager");
 const helpers = require("../../utils/helpers");
 
 /**

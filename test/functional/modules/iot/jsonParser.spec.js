@@ -55,7 +55,7 @@ describe("IoT Json Parser", () => {
 
   it("should match with the expected JSON", () => {
     manager = jsonParser.parse(sensors);
-    const actualModeling = JSON.stringify(manager.models);
+    const actualModeling = JSON.stringify(manager.contracts);
     assert.equal(actualModeling, expectedModeling);
   });
 

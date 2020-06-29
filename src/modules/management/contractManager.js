@@ -1,4 +1,5 @@
 const createContractModel = require("../models/contract");
+const createContract = require("./contract");
 const createContractWriter = require("../writers/contractWriter");
 const createCompiler = require("../compiler/compiler");
 const createDeployer = require("../deployer/deployer");
@@ -14,21 +15,20 @@ function createContractManager(web3 = null) {
    * @property {string} address The blockchain address of the contract in the network.
    */
   const data = {
-    models: [],
+    contracts: [],
     code: "",
     json: {},
-    address: "",
   };
 
-  function createContract(name) {
-    const newcontract = createContractModel(name);
-    data.models.push(newcontract);
+  function createNewContract(name) {
+    const newcontract = createContract(name);
+    data.contracts.push(newcontract);
 
     return newcontract;
   }
 
   function getContract(name) {
-    return data.models.filter((contract) => {
+    return data.contracts.filter((contract) => {
       return contract.name == name;
     })[0];
   }
@@ -38,8 +38,8 @@ function createContractManager(web3 = null) {
    * @param {Object[]} [contracts]
    */
   function write(contracts) {
-    // Copying data models
-    let _contracts = [...data.models];
+    // Copying data contracts
+    let _contracts = [...data.contracts];
 
     // If a list of contracts was passed
     if (contracts && Array.isArray(contracts) && contracts[0]) {
@@ -52,12 +52,29 @@ function createContractManager(web3 = null) {
     return data.code;
   }
 
-  function compile(cb) {
+  function compileAll(cb) {
     data.json = compiler.compile(data.code);
     if (data.json.errors && cb) {
       cb(data.json.errors);
     }
     return data.json;
+  }
+
+  function compile(contract, cb) {
+    if (
+      contract &&
+      contract.compile &&
+      typeof contract.compile === "function"
+    ) {
+      const json = contract.compile();
+      if (json.errors && cb) {
+        cb(json.errors);
+      }
+      return json;
+    }
+
+    cb({});
+    return {};
   }
 
   /**
@@ -80,9 +97,10 @@ function createContractManager(web3 = null) {
     return contract;
   }
 
-  data.createContract = createContract;
+  data.createContract = createNewContract;
   data.write = write;
   data.compile = compile;
+  data.compileAll = compileAll;
   data.getContract = getContract;
   data.deploy = deploy;
   data.setWeb3 = deployer.setWeb3;

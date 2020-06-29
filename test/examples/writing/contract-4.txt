@@ -38,29 +38,3 @@ name = _name;
 
 }
 
-contract Controller{
-//VARIABLES
-address[] public contracts;
-uint256 private counter = 0;
-
-
-//FUNCTIONS
-function createContract(address _owner) public{
-address newContract = new DHT11(_owner);
-contracts.push(newContract);
-counter = counter + 1;
-}
-
-function getLastContract() public returns (address) {
-address _contract = address(0);
-if(counter > 0){
-_contract = contracts[counter - 1];
-}
-else{
-_contract = contracts[0];
-}
-return (_contract);
-}
-
-}
-
