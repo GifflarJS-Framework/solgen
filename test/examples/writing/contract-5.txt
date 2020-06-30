@@ -1,4 +1,4 @@
-pragma solidity ^0.4.23;
+pragma solidity ^0.5.17;
 
 contract DHT11{
 //VARIABLES
@@ -32,7 +32,7 @@ emit temperatureUnderflow(value1, min_value1);
 }
 }
 
-function setName(string _name) public{
+function setName(string memory _name) public{
 name = _name;
 }
 
@@ -40,19 +40,19 @@ name = _name;
 
 contract Controller{
 //VARIABLES
-address[] public contracts;
+DHT11[] public contracts;
 uint256 private counter = 0;
 
 
 //FUNCTIONS
 function createContract(address _owner) public{
-address newContract = new DHT11(_owner);
+DHT11 newContract = new DHT11(_owner);
 contracts.push(newContract);
 counter = counter + 1;
 }
 
-function getLastContract() public returns (address) {
-address _contract = address(0);
+function getLastContract() public returns (DHT11) {
+DHT11 _contract;
 if(counter > 0){
 _contract = contracts[counter - 1];
 }

@@ -1,5 +1,6 @@
 const createContractManager = require("@management/contractManager");
-const helpers = require("../../../../src/utils/helpers");
+const helpers = require("@utils/helpers");
+const { createConfig } = require("@test/lib/compile_config");
 const assert = require("assert");
 const fs = require("fs");
 const writing_path = __dirname + "/../../../examples/writing/";
@@ -82,7 +83,7 @@ describe("Test ContractManager", () => {
   // MODELING 2
   it("Modeling Controller", () => {
     // Modeling Variables
-    gContractController.createVariable("address[]", "contracts", "public");
+    gContractController.createVariable("DHT11[]", "contracts", "public");
     gContractController.createVariable(
       "uint256",
       "counter",
@@ -102,7 +103,7 @@ describe("Test ContractManager", () => {
     gContractController
       .createFunction("getLastContract", "public")
       .setOutput("_contract")
-      .setVariable("address", "_contract", "address(0)")
+      .setVariable("DHT11", "_contract", "")
       .beginIf("counter > 0")
       .setAssignment("_contract", "contracts[counter - 1]")
       .endIf()
@@ -142,14 +143,17 @@ describe("Test ContractManager", () => {
   // COMPILING
   it("Compiling", () => {
     const compiled = manager.compileAll((errors) => {
-      errors.map((e) => {
-        // console.log(e);
-      });
+      if (Array.isArray(errors)) {
+        errors.map((e) => {
+          console.log(e.formattedMessage);
+        });
+      }
     });
-    const expected_json = JSON.stringify(solc.compile(expected_code, 1));
+    const config = createConfig(expected_code);
+    const expected_json = solc.compile(config);
     const actual_json = JSON.stringify(compiled);
 
-    assert.equal(expected_json, actual_json);
+    assert.equal(actual_json, expected_json);
   }).timeout(0);
 
   // DEPLOYING
@@ -160,6 +164,7 @@ describe("Test ContractManager", () => {
       [],
       4000000
     );
+    assert.ok(instance.options, "should have a options property.");
     assert.ok(instance.options.address, "should have a deployed address.");
   }).timeout(0);
 });

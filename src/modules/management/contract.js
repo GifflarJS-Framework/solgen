@@ -20,18 +20,19 @@ function createContract(name = "") {
     if (contract.json.errors && cb) {
       cb(contract.json.errors);
     }
+    cb({});
     return contract.json;
   }
 
   async function deploy(from, args, gas, web3 = null) {
     deployer.setWeb3(web3);
-    const json = contract.json.contracts[":" + contract.name];
+    const json = contract.json.contracts.jsons[contract.name];
     if (!json) {
       return {};
     }
     const inputs = {
-      abi: JSON.parse(json.interface),
-      bytecode: json.bytecode,
+      abi: json.abi,
+      bytecode: json.evm.bytecode.object,
       args: args,
       from: from,
       gas: gas,
@@ -40,16 +41,17 @@ function createContract(name = "") {
     return contract.instance;
   }
 
-  function modeled() {
-    return contract;
+  function written() {
+    return contract.code;
   }
+
   function compiled() {
     if (contract.json) {
       return contract.json;
     }
-
     return false;
   }
+
   function deployed() {
     if (contract.instance) {
       return contractl.instance;
@@ -58,7 +60,10 @@ function createContract(name = "") {
   }
 
   contract.write = write;
+  contract.written = written;
   contract.compile = compile;
+  contract.compiled = compiled;
+  contract.deployed = deployed;
   contract.deploy = deploy;
   contract.setWeb3 = deployer.setWeb3;
 

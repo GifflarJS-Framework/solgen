@@ -6,8 +6,25 @@ function createCompiler() {
    * @param {string} code
    */
   function compile(code) {
-    const output = solc.compile(code, 1);
-    return output;
+    const output = solc.compile(
+      JSON.stringify({
+        language: "Solidity",
+        sources: {
+          jsons: {
+            content: code,
+          },
+        },
+        settings: {
+          outputSelection: {
+            // return everything
+            "*": {
+              "*": ["*"],
+            },
+          },
+        },
+      })
+    );
+    return JSON.parse(output);
   }
 
   return { compile };

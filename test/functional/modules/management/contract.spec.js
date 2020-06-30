@@ -1,5 +1,6 @@
 const createContract = require("@management/contract");
-const helpers = require("../../../../src/utils/helpers");
+const helpers = require("@utils/helpers");
+const { createConfig } = require("@test/lib/compile_config");
 const assert = require("assert");
 const fs = require("fs");
 const writing_path = __dirname + "/../../../examples/writing/";
@@ -10,6 +11,7 @@ const web3 = new Web3(ganache.provider());
 const { execSync } = require("child_process");
 
 let accounts = [];
+
 before(async () => {
   accounts = await web3.eth.getAccounts();
 });
@@ -106,24 +108,32 @@ describe("Test Contract", () => {
   // COMPILING
   it("Compiling", () => {
     const compiled = gContract.compile((errors) => {
-      errors.map((e) => {
-        //console.log(e);
-      });
+      if (Array.isArray(errors)) {
+        errors.map((e) => {
+          console.log(e.formattedMessage);
+        });
+      }
     });
-    const expected_json = JSON.stringify(solc.compile(expected_code, 1));
+    const config = createConfig(expected_code);
+    const expected_json = solc.compile(config);
     const actual_json = JSON.stringify(compiled);
 
-    assert.equal(expected_json, actual_json);
+    assert.equal(actual_json, expected_json);
   }).timeout(0);
 
   // DEPLOYING
   it("Deploying", async () => {
-    const instance = await gContract.deploy(
-      accounts[0],
-      [accounts[0]],
-      4000000,
-      web3
-    );
-    assert.ok(instance.options.address, "should have a deployed address.");
+    try {
+      const instance = await gContract.deploy(
+        accounts[0],
+        [accounts[0]],
+        4000000,
+        web3
+      );
+      assert.ok(instance.options, "should have a options property.");
+      assert.ok(instance.options.address, "should have a deployed address.");
+    } catch (e) {
+      console.log(e);
+    }
   }).timeout(0);
 });

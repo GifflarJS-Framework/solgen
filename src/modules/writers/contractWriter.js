@@ -40,7 +40,7 @@ function createContractWriter() {
     }
 
     // Writing the compiler version
-    let text = "pragma solidity ^0.4.23;\n\n";
+    let text = "pragma solidity ^0.5.17;\n\n";
 
     contracts.map((json) => {
       const variableWriter = createVariableWriter();

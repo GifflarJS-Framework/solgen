@@ -21,6 +21,7 @@
     "@management": "./src/modules/management",
     "@validation": "./src/modules/validation",
     "@utils": "./src/utils",
+    "@test": "./test",
     "@examples": "./test/examples"
   },
   "repository": {
@@ -50,7 +51,7 @@
     "module-alias": "^2.2.2"
   },
   "dependencies": {
-    "solc": "^0.4.23",
+    "solc": "^0.5.17",
     "web3": "^1.0.0-beta.35"
   }
 }

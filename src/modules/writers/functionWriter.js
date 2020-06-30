@@ -91,6 +91,14 @@ function createFunctionWriter(variables) {
         text += "function " + f.name + "(";
       }
 
+      //   const inputs = [];
+      //   let copy;
+      //   f.inputs.map((input) => {
+      //     copy = { ...input };
+      //     copy.type += " memory";
+      //     inputs.push(copy);
+      //   });
+
       // Writing the inputs
       text += inputWriter.write(f.inputs);
 

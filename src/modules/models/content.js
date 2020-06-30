@@ -164,7 +164,7 @@ function createContentModel(globalVars = []) {
     const newContract =
       config.newContract || createNewContractModel(contractName, args);
 
-    return setVariable("address", variable, newContract);
+    return setVariable(contractName, variable, newContract);
   }
 
   /**

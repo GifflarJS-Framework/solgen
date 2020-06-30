@@ -30,7 +30,7 @@ describe("Contract Model when creating function", () => {
     );
     const expectedContent = JSON.stringify({
       statement: "variable",
-      type: "address",
+      type: "Contract",
       name: "contract",
       value: newContract,
     });

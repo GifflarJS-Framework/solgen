@@ -37,6 +37,7 @@ function createInputWriter() {
   function write(inputs, typeon = true) {
     let text = "";
     const _inputs = [...inputs];
+    const memoryList = ["string"];
 
     // If there are no inputs
     if (!_inputs.length) {
@@ -44,10 +45,14 @@ function createInputWriter() {
     }
 
     // Defining the first input
+    const firstinput = _inputs[0];
     if (typeon) {
-      text += _inputs[0].type + " ";
+      text += firstinput.type + " ";
+      if (memoryList.includes(firstinput.type)) {
+        text += "memory ";
+      }
     }
-    text += _inputs[0].name;
+    text += firstinput.name;
 
     // Removing the first element
     _inputs.shift();
@@ -57,6 +62,9 @@ function createInputWriter() {
       text += ", ";
       if (typeon) {
         text += input.type + " ";
+        if (memoryList.includes(input.type)) {
+          text += "memory ";
+        }
       }
       text += input.name;
     });

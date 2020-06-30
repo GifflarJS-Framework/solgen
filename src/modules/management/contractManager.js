@@ -82,13 +82,13 @@ function createContractManager(web3 = null) {
    * @param {string} contractName
    */
   async function deploy(contractName, from, args, gas) {
-    const json = data.json.contracts[":" + contractName];
+    const json = data.json.contracts.jsons[contractName];
     if (!json) {
       return {};
     }
     const inputs = {
-      abi: JSON.parse(json.interface),
-      bytecode: json.bytecode,
+      abi: json.abi,
+      bytecode: json.evm.bytecode.object,
       args: args,
       from: from,
       gas: gas,

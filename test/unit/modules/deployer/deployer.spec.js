@@ -1,5 +1,7 @@
+require("module-alias/register");
 const assert = require("assert");
 const createDeployer = require("@deployer/deployer");
+const { createConfig } = require("@test/lib/compile_config");
 const helpers = require("@utils/helpers");
 const ganache = require("ganache-cli");
 const Web3 = require("web3");
@@ -49,18 +51,19 @@ describe("Deployer", async () => {
     assert.ok(accounts.length);
   });
 
+  const config = createConfig(expected_code);
   // Compiling contract
-  const json = solc.compile(expected_code);
+  const json = JSON.parse(solc.compile(config));
   // Selecting contract to be deployed
-  const { interface: abi, bytecode } = json.contracts[":Controller"];
+  const { abi, evm } = json.contracts.jsons["Controller"];
   let contract = null;
 
   describe("#deploy()", () => {
     it("should deploy successfully", async () => {
       // Setting up the inputs
       const inputs = {
-        abi: JSON.parse(abi),
-        bytecode: bytecode,
+        abi: abi,
+        bytecode: evm.bytecode.object,
         args: [],
         from: accounts[0],
         gas: 4000000,
@@ -81,7 +84,7 @@ describe("Deployer", async () => {
     it("should retrieve the same object", async () => {
       // Deploying
       const samecontract = await deployer.retrieve(
-        JSON.parse(abi),
+        abi,
         contract.options.address
       );
 
