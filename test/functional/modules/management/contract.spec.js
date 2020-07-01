@@ -1,6 +1,7 @@
 const createContract = require("@management/contract");
 const helpers = require("@utils/helpers");
 const { createConfig } = require("@test/lib/compile_config");
+const createSmartcheck = require("@test/lib/smartcheck");
 const assert = require("assert");
 const fs = require("fs");
 const writing_path = __dirname + "/../../../examples/writing/";
@@ -11,12 +12,13 @@ const web3 = new Web3(ganache.provider());
 const { execSync } = require("child_process");
 
 let accounts = [];
+let smartCheck = createSmartcheck();
 
 before(async () => {
   accounts = await web3.eth.getAccounts();
 });
 
-describe("Test Contract", () => {
+describe.only("Test Contract", () => {
   // Expected values
   const expected_model = JSON.stringify(
     require("../../../examples/modeling/contract-4.json")
@@ -98,7 +100,7 @@ describe("Test Contract", () => {
     });
 
     // Executing smartcheck
-    const result = execSync("smartcheck -p " + filepath).toString();
+    const result = smartCheck.run(filepath);
     console.log(result);
 
     // Removing testing file
