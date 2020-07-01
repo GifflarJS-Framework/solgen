@@ -18,7 +18,7 @@ before(async () => {
   accounts = await web3.eth.getAccounts();
 });
 
-describe.only("Test Contract", () => {
+describe("Test Contract", () => {
   // Expected values
   const expected_model = JSON.stringify(
     require("../../../examples/modeling/contract-4.json")
