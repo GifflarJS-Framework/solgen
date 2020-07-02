@@ -1,4 +1,5 @@
 const { execSync } = require("child_process");
+const helpers = require("@utils/helpers");
 
 function createSmartCheck() {
   function parse(result) {
@@ -41,12 +42,13 @@ function createSmartCheck() {
         id = "severities";
         counter += number;
       } else {
-        object[id].push({ ...auxobject });
+        if (!helpers.isObjEmpty(auxobject)) {
+          object[id].push({ ...auxobject });
+        }
         auxobject = {};
       }
     });
     object.amount = counter;
-    console.log(object);
 
     return object;
   }

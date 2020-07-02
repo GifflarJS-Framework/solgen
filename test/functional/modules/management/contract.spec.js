@@ -89,7 +89,7 @@ describe("Test Contract", () => {
   });
 
   // CHECKING CONTRACTS
-  it.skip("smartcheck it", () => {
+  it("smartcheck it", () => {
     // Defining filepath
     const filepath = __dirname + "/contract.sol";
 
@@ -101,10 +101,11 @@ describe("Test Contract", () => {
 
     // Executing smartcheck
     const result = smartCheck.run(filepath);
-    console.log(result);
 
     // Removing testing file
     execSync("rm " + filepath);
+
+    assert.ok(!result.severities[0], result.resultString);
   }).timeout(0);
 
   // COMPILING

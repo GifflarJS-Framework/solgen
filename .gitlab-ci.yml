@@ -8,9 +8,11 @@ stages:
 quality:
   stage: test
   script:
+    - sudo apt install openjdk-8-jdk openjdk-8-jre
+    - export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
     - npm install
     - npm test
-    
+
 pages:
   stage: deploy
   script:
