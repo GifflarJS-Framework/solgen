@@ -1,9 +1,13 @@
 default:
+  before_script:
+    - bundle install
+
+test:java:
   image: anapsix/alpine-java:jdk8
   script:
     - export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
 
-default:
+test:node:
   image: node:10.15.3
 stages:
   - test
