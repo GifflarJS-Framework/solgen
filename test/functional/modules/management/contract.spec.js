@@ -89,7 +89,7 @@ describe("Test Contract", () => {
   });
 
   // CHECKING CONTRACTS
-  it("smartcheck it", () => {
+  it.skip("smartcheck it", () => {
     // Defining filepath
     const filepath = __dirname + "/contract.sol";
 
