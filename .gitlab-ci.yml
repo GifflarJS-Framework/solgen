@@ -1,7 +1,10 @@
-default:
-  image: node:10.15.3
+build:java:
   image: anapsix/alpine-java:jdk8
+  script:
+    - export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
 
+build:node:
+  image: node:10.15.3
 stages:
   - test
   - deploy
@@ -9,7 +12,6 @@ stages:
 quality:
   stage: test
   script:
-    - export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
     - npm install
     - npm test
 
