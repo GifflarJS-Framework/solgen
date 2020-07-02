@@ -1,5 +1,6 @@
 default:
   image: node:10.15.3
+  image: anapsix/alpine-java:jdk8
 
 stages:
   - test
@@ -8,7 +9,6 @@ stages:
 quality:
   stage: test
   script:
-    - apt install openjdk-8-jdk openjdk-8-jre
     - export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
     - npm install
     - npm test
