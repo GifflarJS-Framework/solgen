@@ -1,4 +1,3 @@
-const createContractModel = require("../models/contract");
 const createContract = require("./contract");
 const createContractWriter = require("../writers/contractWriter");
 const createCompiler = require("../compiler/compiler");
@@ -20,7 +19,7 @@ function createContractManager(web3 = null) {
     json: {},
   };
 
-  function createNewContract(name) {
+  function newContract(name) {
     const newcontract = createContract(name);
     data.contracts.push(newcontract);
 
@@ -97,7 +96,8 @@ function createContractManager(web3 = null) {
     return contract;
   }
 
-  data.createContract = createNewContract;
+  data.newContract = newContract;
+  data.createContract = createContract;
   data.write = write;
   data.compile = compile;
   data.compileAll = compileAll;

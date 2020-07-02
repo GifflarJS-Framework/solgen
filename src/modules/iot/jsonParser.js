@@ -1,5 +1,5 @@
-const createContractManager = require("../management/contractManager");
-const helpers = require("../../utils/helpers");
+const createContractManager = require("@management/contractManager");
+const helpers = require("@utils/helpers");
 
 /**
  * @author Levy Santiago
@@ -168,14 +168,14 @@ function createIoTJsonParser() {
 
     sensors.map((sensor) => {
       // Creating the Sensor Contract
-      gContract = manager.createContract(sensor.data.name);
+      gContract = manager.newContract(sensor.data.name);
       _setupVariables(gContract, sensor.data.values);
       _setupConstructor(gContract);
       _setupGetValues(gContract, sensor.data.values);
       _setupSetMeasures(gContract);
 
       // Creating the Controller Sensor Contract
-      gContractController = manager.createContract(
+      gContractController = manager.newContract(
         sensor.data.name + "Controller"
       );
       _setupController(gContractController, sensor.data.name);

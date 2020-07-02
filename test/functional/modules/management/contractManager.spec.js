@@ -33,8 +33,8 @@ describe("Test ContractManager", () => {
 
   it("Object creation", () => {
     // Creating contract
-    gContract = manager.createContract("DHT11");
-    gContractController = manager.createContract("Controller");
+    gContract = manager.newContract("DHT11");
+    gContractController = manager.newContract("Controller");
     assert.ok(!helpers.isObjEmpty(gContract), "Error while creating gContract");
     assert.ok(
       !helpers.isObjEmpty(gContractController),

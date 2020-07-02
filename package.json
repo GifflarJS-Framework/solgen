@@ -18,7 +18,7 @@
     "@compiler": "./src/modules/compiler",
     "@deployer": "./src/modules/deployer",
     "@iot": "./src/modules/iot",
-    "@management": "./src/modules/management",
+    "@management": "./src/modules/managing",
     "@validation": "./src/modules/validation",
     "@utils": "./src/utils",
     "@test": "./test",
