@@ -1,9 +1,9 @@
-build:java:
+build:
   image: anapsix/alpine-java:jdk8
   script:
     - export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
 
-build:node:
+build:
   image: node:10.15.3
 stages:
   - test
