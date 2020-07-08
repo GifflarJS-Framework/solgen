@@ -34,15 +34,19 @@ function createContractWriter() {
    * Writes the contract Solidity code.
    * @param {Object[]} contracts - The list of contracts to be wrote.
    */
-  function write(contracts) {
+  function write(contracts, cb) {
     if (!contracts) {
       return false;
     }
 
     // Writing the compiler version
-    let text = "pragma solidity 0.5.17;\n\n";
+    let version = "pragma solidity 0.5.17;\n\n";
 
-    contracts.map((json) => {
+    let text = "";
+    let contractText;
+
+    contracts.map((json, index) => {
+      contractText = "";
       const variableWriter = createVariableWriter();
       const eventWriter = createEventWriter();
       const functionWriter = createFunctionWriter(json.contract.variables);
@@ -62,14 +66,22 @@ function createContractWriter() {
       const txt_events = eventWriter.write(events);
       const txt_close = _close();
 
-      text +=
+      contractText +=
         txt_start +
         txt_variables +
         txt_events +
         txt_functions +
         txt_close +
         "\n\n";
+
+      text += contractText;
+
+      if (cb && typeof cb == "function") {
+        cb(version + contractText, index);
+      }
     });
+
+    text = version + text;
 
     return text;
   }

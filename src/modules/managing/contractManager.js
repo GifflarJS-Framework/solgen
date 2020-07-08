@@ -3,6 +3,20 @@ const createContractWriter = require("../writers/contractWriter");
 const createCompiler = require("../compiler/compiler");
 const createDeployer = require("../deployer/deployer");
 
+/**
+ * @author Levy Santiago
+ * @module
+ * @category Model
+ * @name createContractManager
+ * @description A <b>Factory</b> to create a new Contract Manager object.
+ * @param {Object} [web3] The web3 object already with the provider.
+ * @returns {Object} The Contract Manager object.
+ * @example
+ * Usage
+ * const provider = getProvider(); //your provider of choose
+ * const web3 = Web3(provider)
+ * const manager = createContractManager();
+ */
 function createContractManager(web3 = null) {
   const contractWriter = createContractWriter();
   const compiler = createCompiler();
@@ -19,6 +33,26 @@ function createContractManager(web3 = null) {
     json: {},
   };
 
+  /**
+   * @author Levy Santiago
+   * @name newContract
+   * @method
+   * @description Creates a new contract object inside the manager object.
+   * @param {string} name The contract name.
+   * @returns {Object} The new contract object created.
+   * @example
+   * Usage
+   * manager.newContract("MyContract");
+   *
+   * Return
+   * {
+   *   name: "MyContract"
+   *   contract:{
+   *     variables: []
+   *     functions:[]
+   *   }
+   * }
+   */
   function newContract(name) {
     const newcontract = createContract(name);
     data.contracts.push(newcontract);
@@ -26,6 +60,26 @@ function createContractManager(web3 = null) {
     return newcontract;
   }
 
+  /**
+   * @author Levy Santiago
+   * @name getContract
+   * @method
+   * @description Get a contract created inside the manager object by name.
+   * @param {string} name The contract name.
+   * @returns {Object} The contract object selected.
+   * @example
+   * Usage
+   * manager.getContract("MyContract");
+   *
+   * Return
+   * {
+   *   name: "MyContract"
+   *   contract:{
+   *     variables: []
+   *     functions:[]
+   *   }
+   * }
+   */
   function getContract(name) {
     return data.contracts.filter((contract) => {
       return contract.name == name;
@@ -33,32 +87,101 @@ function createContractManager(web3 = null) {
   }
 
   /**
-   *
-   * @param {Object[]} [contracts]
+   * @author Levy Santiago
+   * @name write
+   * @method
+   * @description Writes the code of a list of contracts. The code
+   * of each contract will be together in a unique string, and this
+   * string will be saved inside the manager object.
+   * @param {Object[]} [contracts] The list of contracts objects to be wrote.
+   * @returns {Object} The Solidity code wrote.
+   * @example
+   * Usage
+   * manager.write();
+   * manager.write([contract, second_contract]);
    */
-  function write(contracts) {
-    // Copying data contracts
-    let _contracts = [...data.contracts];
+  function write(options = { contracts: [], updateContract: false }) {
+    let _contracts = [];
 
     // If a list of contracts was passed
-    if (contracts && Array.isArray(contracts) && contracts[0]) {
-      _contracts = contracts;
+    if (
+      options.contracts &&
+      Array.isArray(options.contracts) &&
+      options.contracts[0]
+    ) {
+      _contracts = options.contracts;
+    } else {
+      // Copying data contracts
+      _contracts = [...data.contracts];
     }
 
-    // Call the contract writer to write the code
-    data.code = contractWriter.write(_contracts);
+    // If contract object should be updated
+    let callback = null;
+    if (options.updateContract) {
+      callback = (individualCode, index) => {
+        // Updating individual contracts
+        _contracts[index].code = individualCode;
+      };
+    }
+    // Call the contract writer to write the contracts code
+    data.code = contractWriter.write(_contracts, callback);
 
     return data.code;
   }
 
-  function compileAll(cb) {
+  /**
+   * @author Levy Santiago
+   * @name compileAll
+   * @method
+   * @description Compiles all contracts created inside the manager object and saves the json generated.
+   * @param {Function} [cb] The callback function to get possible errors while compiling.
+   * @param {Object} [options={ updateContract: false }] The options to customize the function.
+   * @property {boolean} [updateContract = false] The option to update or not the contract object inside the manager.
+   * @returns {Object} The json of all contracts compiled.
+   * @example
+   * Usage
+   * manager.compileAll((errors)=>{
+   *    console.log(errors)
+   * });
+   *
+   * manager.compileAll((errors)=>{
+   *    console.log(errors)
+   * }, {updateContract: true});
+   */
+  function compileAll(cb, options = { updateContract: false }) {
     data.json = compiler.compile(data.code);
+
+    // If contract object should be updated
+    if (options.updateContract) {
+      data.contracts.map((contract) => {
+        const json = data.json.contracts.jsons[contract.name];
+        if (json) {
+          contract.json = json;
+        }
+      });
+    }
+
+    // Allowing error handling
     if (data.json.errors && cb) {
       cb(data.json.errors);
     }
     return data.json;
   }
 
+  /**
+   * @author Levy Santiago
+   * @name compile
+   * @method
+   * @description Compiles a given contract created inside the manager object and saves the json generated.
+   * @param {Object} contract The contract object to be compiled.
+   * @param {Function} [cb] The callback function to get possible errors while compiling.
+   * @returns {Object} The json of the contract compiled.
+   * @example
+   * Usage
+   * manager.compile(contract, (errors)=>{
+   *    console.log(errors)
+   * });
+   */
   function compile(contract, cb) {
     if (
       contract &&
@@ -77,8 +200,18 @@ function createContractManager(web3 = null) {
   }
 
   /**
-   * Deploys a smart contract
-   * @param {string} contractName
+   * @author Levy Santiago
+   * @name deploy
+   * @method
+   * @description Deploys a given contract created inside the manager object and saves the json generated.
+   * @param {Object} contract The contract object to be compiled.
+   * @param {Function} [cb] The callback function to get possible errors while compiling.
+   * @returns {Object} The json of the contract compiled.
+   * @example
+   * Usage
+   * manager.compile(contract, (errors)=>{
+   *    console.log(errors)
+   * });
    */
   async function deploy(contractName, from, args, gas) {
     const json = data.json.contracts.jsons[contractName];
