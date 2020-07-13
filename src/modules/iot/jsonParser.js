@@ -4,7 +4,7 @@ const helpers = require("@utils/helpers");
 /**
  * @author Levy Santiago
  * @module
- * @category Model
+ * @category Management
  * @name createIoTJsonParser
  * @description This Factory will create an iotJsonParser object. The object is responsible for
  * knowing how to translate an specific IoT sensors JSON to the JSON the framework

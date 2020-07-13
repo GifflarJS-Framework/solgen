@@ -18,7 +18,7 @@ const createDeployer = require("../deployer/deployer");
  * // or
  * const contract = createContract("MyContract");
  *
- * @category Model
+ * @category Management
  * @requires createContractModel
  * @requires createContractWriter
  * @requires createCompiler
@@ -70,11 +70,13 @@ function createContract(name = "") {
   function compile(cb) {
     let errors = undefined;
     contract.json = compiler.compile(contract.code);
-    if (contract.json.errors && cb) {
-      errors = contract.json.errors;
+    if (cb) {
+      if (contract.json.errors) {
+        errors = contract.json.errors;
+      }
+
+      cb(errors);
     }
-    cb(errors);
-    cb({});
     return contract.json;
   }
 

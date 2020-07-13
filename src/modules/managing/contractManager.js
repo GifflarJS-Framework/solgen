@@ -16,7 +16,7 @@ const createDeployer = require("../deployer/deployer");
  * const web3 = Web3(provider)
  * const manager = createContractManager(web3);
  *
- * @category Model
+ * @category Management
  * @requires createContract
  * @requires createContractWriter
  * @requires createCompiler

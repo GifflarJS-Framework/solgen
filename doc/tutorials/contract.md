@@ -1,14 +1,17 @@
-# Usage
+## Modeling
+
+### Usage
 
 ```js
-const contractModel = createContractModel("MyContract");
-const event = contractModel
+const { createContract } = createContract("gifflar");
+const contract = createContract("MyContract");
+const event = contract
   .createEvent("temperatureOverflow")
   .setInput("string", "_message");
 
-contractModel.createVariable("string", "tmp", "public");
+contract.createVariable("string", "tmp", "public");
 
-contractModel
+contract
   .createFunction("myFunction")
   .setInput("string", "_message")
   .setOutput("message")
@@ -22,7 +25,7 @@ contractModel
   .endIf();
 ```
 
-# Result
+### Result
 
 ```js
 {

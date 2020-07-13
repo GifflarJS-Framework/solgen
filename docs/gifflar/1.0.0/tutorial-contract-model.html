@@ -117,14 +117,15 @@
 
 <article>
     <h1>Usage</h1>
-<pre class="prettyprint source lang-js"><code>const contractModel = createContractModel(&quot;MyContract&quot;);
-const event = contractModel
+<pre class="prettyprint source lang-js"><code>const { createContract } = createContract(&quot;gifflar&quot;);
+const contract = createContract(&quot;MyContract&quot;);
+const event = contract
   .createEvent(&quot;temperatureOverflow&quot;)
   .setInput(&quot;string&quot;, &quot;_message&quot;);
 
-contractModel.createVariable(&quot;string&quot;, &quot;tmp&quot;, &quot;public&quot;);
+contract.createVariable(&quot;string&quot;, &quot;tmp&quot;, &quot;public&quot;);
 
-contractModel
+contract
   .createFunction(&quot;myFunction&quot;)
   .setInput(&quot;string&quot;, &quot;_message&quot;)
   .setOutput(&quot;message&quot;)
