@@ -3,7 +3,7 @@
 ### Usage
 
 ```js
-const { createContract } = createContract("gifflar");
+const { createContract } = require("gifflar");
 const contract = createContract("MyContract");
 const event = contract
   .createEvent("temperatureOverflow")
