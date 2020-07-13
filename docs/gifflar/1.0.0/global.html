@@ -99,7 +99,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#createContentWriter">createContentWriter</a></li><li><a href="global.html#createContractWriter">createContractWriter</a></li><li><a href="global.html#createEventWriter">createEventWriter</a></li><li><a href="global.html#createFunctionWriter">createFunctionWriter</a></li><li><a href="global.html#createIfWriter">createIfWriter</a></li><li><a href="global.html#createOutputWriter">createOutputWriter</a></li><li><a href="global.html#write">write</a></li></ul></div><div class="category"><h2>Diagrams</h2><h3>Modules</h3><ul><li><a href="module-Complete%2520Sequence%2520Diagram.html">Complete Sequence Diagram</a></li><li><a href="module-Framework%2520model.html">Framework model</a></li><li><a href="module-Modeling%2520Sequence%2520Diagram.html">Modeling Sequence Diagram</a></li><li><a href="module-Writing%2520Sequence%2520Diagram.html">Writing Sequence Diagram</a></li></ul></div><div class="category"><h2>Model</h2><h3>Modules</h3><ul><li><a href="module-createAssignmentModel.html">createAssignmentModel</a></li><li><a href="module-createContentModel.html">createContentModel</a></li><li><a href="module-createContractManager.html">createContractManager</a></li><li><a href="module-createContractModel.html">createContractModel</a></li><li><a href="module-createEventModel.html">createEventModel</a></li><li><a href="module-createFunctionModel.html">createFunctionModel</a></li><li><a href="module-createIfModel.html">createIfModel</a></li><li><a href="module-createIoTJsonParser.html">createIoTJsonParser</a></li><li><a href="module-createVariableModel.html">createVariableModel</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#createContentWriter">createContentWriter</a></li><li><a href="global.html#createContractWriter">createContractWriter</a></li><li><a href="global.html#createEventWriter">createEventWriter</a></li><li><a href="global.html#createFunctionWriter">createFunctionWriter</a></li><li><a href="global.html#createIfWriter">createIfWriter</a></li><li><a href="global.html#createOutputWriter">createOutputWriter</a></li><li><a href="global.html#write">write</a></li></ul></div><div class="category"><h2>Diagrams</h2><h3>Modules</h3><ul><li><a href="module-Complete%2520Sequence%2520Diagram.html">Complete Sequence Diagram</a></li><li><a href="module-Framework%2520model.html">Framework model</a></li><li><a href="module-Modeling%2520Sequence%2520Diagram.html">Modeling Sequence Diagram</a></li><li><a href="module-Writing%2520Sequence%2520Diagram.html">Writing Sequence Diagram</a></li></ul></div><div class="category"><h2>Model</h2><h3>Modules</h3><ul><li><a href="module-createAssignmentModel.html">createAssignmentModel</a></li><li><a href="module-createContentModel.html">createContentModel</a></li><li><a href="module-createContract.html">createContract</a></li><li><a href="module-createContractManager.html">createContractManager</a></li><li><a href="module-createContractModel.html">createContractModel</a></li><li><a href="module-createEventModel.html">createEventModel</a></li><li><a href="module-createFunctionModel.html">createFunctionModel</a></li><li><a href="module-createIfModel.html">createIfModel</a></li><li><a href="module-createIoTJsonParser.html">createIoTJsonParser</a></li><li><a href="module-createVariableModel.html">createVariableModel</a></li></ul></div>
                 
             </nav>
         </div>
@@ -629,6 +629,167 @@ Return
 <h4 class="name" id="write">
     <a class="href-link" href="#write">#</a>
     
+        
+            <span class='tag'>private</span>
+        
+    
+    <span class="code-name">
+        write
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Creates a Solidity array push statement</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>Json
+{
+  statement: "callmethod",
+  variable: "messages",
+  method: "push",
+  value: "_message"
+}
+
+Return
+"messages.push(_message);"</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="write">
+    <a class="href-link" href="#write">#</a>
+    
+    <span class="code-name">
+        write
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Writes the Solidity return and returns string representation.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>Outputs
+["message", "messages"]
+
+Result
+"return message, messages;"
+"returns (string, string[])" (callback)
+
+Usage
+text_return += outputWriter.write(f.outputs, (request) => {
+  text_returns = request.text_returns;
+});</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="write">
+    <a class="href-link" href="#write">#</a>
+    
     <span class="code-name">
         write
     </span>
@@ -729,6 +890,10 @@ constructor(string _input1){
 <h4 class="name" id="write">
     <a class="href-link" href="#write">#</a>
     
+        
+            <span class='tag'>private</span>
+        
+    
     <span class="code-name">
         write
     </span>
@@ -739,7 +904,7 @@ constructor(string _input1){
 
 
 <div class="description">
-    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Writes the Solidity return and returns string representation.</p>
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Writes the inputs of a Solidity code.</p>
 </div>
 
 
@@ -787,17 +952,30 @@ constructor(string _input1){
     <h5>Example</h5>
     
     
-        <pre class="prettyprint"><code>Outputs
-["message", "messages"]
+        <pre class="prettyprint"><code>Prototype
+function writeInputs(inputs, typeon = true) {
+//[...]
+}
 
-Result
-"return message, messages;"
-"returns (string, string[])" (callback)
+Input
+[
+  {
+    name:"_message",
+    type: "string"
+  },
+  {
+    name: "_number",
+    type: "uint"
+  }
+]
 
 Usage
-text_return += outputWriter.write(f.outputs, (request) => {
-  text_returns = request.text_returns;
-});</code></pre>
+"(" + inputWriter.writeInputs(inputs) + ")"
+=> "(string _message, uint _number)"
+
+Usage
+"(" + inputWriter.writeInputs(inputs, false) + ")"
+=> "(_message, _number)"</code></pre>
     
 
 
@@ -884,6 +1062,87 @@ text_return += outputWriter.write(f.outputs, (request) => {
  "if(_val == 1){\n
   message = _message;\n
   }"</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="write">
+    <a class="href-link" href="#write">#</a>
+    
+        
+            <span class='tag'>private</span>
+        
+    
+    <span class="code-name">
+        write
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Creates a Solidity assignment statement</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>Json
+{
+  statement: "assignment",
+  variable: "message",
+  value: "_message"
+}
+
+Return
+"message = _message;"</code></pre>
     
 
 
@@ -1172,88 +1431,6 @@ message = _message;\n
 <h4 class="name" id="write">
     <a class="href-link" href="#write">#</a>
     
-        
-            <span class='tag'>private</span>
-        
-    
-    <span class="code-name">
-        write
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Creates a Solidity array push statement</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-    <h5>Example</h5>
-    
-    
-        <pre class="prettyprint"><code>Json
-{
-  statement: "callmethod",
-  variable: "messages",
-  method: "push",
-  value: "_message"
-}
-
-Return
-"messages.push(_message);"</code></pre>
-    
-
-
-</div>
-            
-                <div class="member">
-
-<h4 class="name" id="write">
-    <a class="href-link" href="#write">#</a>
-    
     <span class="code-name">
         write
     </span>
@@ -1329,183 +1506,6 @@ object to send the events to be created by the eventWriter</strong>.</p>
 
 Return
 "emit myEvent(_message, _val);"</code></pre>
-    
-
-
-</div>
-            
-                <div class="member">
-
-<h4 class="name" id="write">
-    <a class="href-link" href="#write">#</a>
-    
-        
-            <span class='tag'>private</span>
-        
-    
-    <span class="code-name">
-        write
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Creates a Solidity assignment statement</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-    <h5>Example</h5>
-    
-    
-        <pre class="prettyprint"><code>Json
-{
-  statement: "assignment",
-  variable: "message",
-  value: "_message"
-}
-
-Return
-"message = _message;"</code></pre>
-    
-
-
-</div>
-            
-                <div class="member">
-
-<h4 class="name" id="write">
-    <a class="href-link" href="#write">#</a>
-    
-        
-            <span class='tag'>private</span>
-        
-    
-    <span class="code-name">
-        write
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Writes the inputs of a Solidity code.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-    <h5>Example</h5>
-    
-    
-        <pre class="prettyprint"><code>Prototype
-function writeInputs(inputs, typeon = true) {
-//[...]
-}
-
-Input
-[
-  {
-    name:"_message",
-    type: "string"
-  },
-  {
-    name: "_number",
-    type: "uint"
-  }
-]
-
-Usage
-"(" + inputWriter.writeInputs(inputs) + ")"
-=> "(string _message, uint _number)"
-
-Usage
-"(" + inputWriter.writeInputs(inputs, false) + ")"
-=> "(_message, _number)"</code></pre>
     
 
 

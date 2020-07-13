@@ -128,9 +128,11 @@ describe("Test Contract", () => {
   it("Deploying", async () => {
     try {
       const instance = await gContract.deploy(
-        accounts[0],
-        [accounts[0]],
-        4000000,
+        {
+          from: accounts[0],
+          args: [accounts[0]],
+          gas: 4000000,
+        },
         web3
       );
       assert.ok(instance.options, "should have a options property.");

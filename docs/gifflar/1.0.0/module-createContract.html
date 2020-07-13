@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gifflar Docs createContractManager</title>
+  <title>Gifflar Docs createContract</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -107,7 +107,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Module</p>
-                    <h1>createContractManager</h1>
+                    <h1>createContract</h1>
                 </header>
                 
 
@@ -128,7 +128,7 @@
     <div class="container-overview">
     
         
-            <div class="description"><script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>A <b>Factory</b> to create a new Contract Manager object.</p></div>
+            <div class="description"><script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>A <b>Factory</b> to create a new Contract object.</p></div>
         
 
         
@@ -160,6 +160,8 @@
             
 
             
+            <th>Default</th>
+            
 
             <th class="last">Description</th>
         </tr>
@@ -171,7 +173,7 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>web3</code></td>
+      <td class="name"><code>name</code></td>
   
 
   <td class="type">
@@ -196,8 +198,15 @@
   
 
   
+      <td class="default">
+      
+          ""
+      
+      </td>
+  
 
-  <td class="description last"><p>The web3 object already with the provider.</p></td>
+  <td class="description last"><p>The contract name. This will be the name of
+the contract inside the code too.</p></td>
 </tr>
 
 
@@ -276,7 +285,7 @@
 
 <div class="columns">
     
-    <div class='param-desc column is-7'><p>The Contract Manager object.</p></div>
+    <div class='param-desc column is-7'><p>The Contract object.</p></div>
     
     
     <div class='column is-5 has-text-left'>
@@ -300,9 +309,10 @@
     
     
         <pre class="prettyprint"><code>Usage
-const provider = getProvider(); //your provider of choose
-const web3 = Web3(provider)
-const manager = createContractManager(web3);</code></pre>
+const contract = createContract();
+contract.setName("MyContract");
+// or
+const contract = createContract("MyContract");</code></pre>
     
 
 
@@ -317,7 +327,7 @@ const manager = createContractManager(web3);</code></pre>
         <h3 class="subsection-title">Requires</h3>
 
         <ul>
-            <li><a href="module-createContract.html">module:createContract</a></li>
+            <li><a href="module-createContractModel.html">module:createContractModel</a></li>
         
             <li>module:createContractWriter</li>
         
@@ -355,7 +365,7 @@ const manager = createContractManager(web3);</code></pre>
         
         <span class="code-name">
             
-                compile<span class="signature">(contractName, cb<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Object}</span>
+                compile<span class="signature">(cb<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Object}</span>
             
         </span>
     </h4>
@@ -364,7 +374,7 @@ const manager = createContractManager(web3);</code></pre>
     
     
     <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Compiles a given contract created inside the manager object and saves the json generated.</p>
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Compiles the code of a contract.</p>
     </div>
     
 
@@ -404,39 +414,6 @@ const manager = createContractManager(web3);</code></pre>
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>contractName</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">Object</span>
-
-
-  
-  </td>
-
-  
-      <td class="attributes">
-      
-
-      
-
-      
-      </td>
-  
-
-  
-
-  <td class="description last"><p>The name of the contract to be compiled.</p></td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
       <td class="name"><code>cb</code></td>
   
 
@@ -463,7 +440,7 @@ const manager = createContractManager(web3);</code></pre>
 
   
 
-  <td class="description last"><p>The callback function to get possible errors while compiling.</p></td>
+  <td class="description last"><p>The callback function to handle errors.</p></td>
 </tr>
 
 
@@ -542,7 +519,7 @@ const manager = createContractManager(web3);</code></pre>
 
 <div class="columns">
     
-    <div class='param-desc column is-7'><p>The json of the contract compiled.</p></div>
+    <div class='param-desc column is-7'><p>The JSON with the contract's abi and bytecode.</p></div>
     
     
     <div class='column is-5 has-text-left'>
@@ -566,8 +543,15 @@ const manager = createContractManager(web3);</code></pre>
     
     
         <pre class="prettyprint"><code>Usage
-manager.compile("MyContract", (errors)=>{
-   console.log(errors)
+contract.compile();
+
+// or
+contract.compile((errors)=>{
+   if(errors){
+       errors.map((error)=>{
+           console.log(error);
+       });
+   }
 });</code></pre>
     
 
@@ -578,8 +562,8 @@ manager.compile("MyContract", (errors)=>{
 
 
     
-    <h4 class="name" id="~compileAll">
-        <a class="href-link" href="#~compileAll">#</a>
+    <h4 class="name" id="~compiled">
+        <a class="href-link" href="#~compiled">#</a>
         
             
                 <span class='tag'>inner</span>
@@ -587,7 +571,7 @@ manager.compile("MyContract", (errors)=>{
         
         <span class="code-name">
             
-                compileAll<span class="signature">(cb<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Object}</span>
+                compiled<span class="signature">()</span><span class="type-signature"> &rarr; {Object}</span>
             
         </span>
     </h4>
@@ -596,7 +580,8 @@ manager.compile("MyContract", (errors)=>{
     
     
     <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Compiles all contracts created inside the manager object and saves the json generated.</p>
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Returns the contract JSON if was already compiled.
+If yes, the function returns it, or else return undefined.</p>
     </div>
     
 
@@ -607,69 +592,6 @@ manager.compile("MyContract", (errors)=>{
 
 
 
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-            <th>Attributes</th>
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>cb</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">function</span>
-
-
-  
-  </td>
-
-  
-      <td class="attributes">
-      
-          &lt;optional><br>
-      
-
-      
-
-      
-      </td>
-  
-
-  
-
-  <td class="description last"><p>The callback function to get possible errors while compiling.</p></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
 
 
 
@@ -741,7 +663,8 @@ manager.compile("MyContract", (errors)=>{
 
 <div class="columns">
     
-    <div class='param-desc column is-7'><p>The json of all contracts compiled.</p></div>
+    <div class='param-desc column is-7'><p>The JSON of the contract containing the ABI and Bytecode.
+Or undefined, if the contract wasn't compiled.</p></div>
     
     
     <div class='column is-5 has-text-left'>
@@ -765,9 +688,7 @@ manager.compile("MyContract", (errors)=>{
     
     
         <pre class="prettyprint"><code>Usage
-manager.compileAll((errors)=>{
-   console.log(errors)
-});</code></pre>
+contract.compiled();</code></pre>
     
 
 
@@ -786,7 +707,7 @@ manager.compileAll((errors)=>{
         
         <span class="code-name">
             
-                deploy<span class="signature">(contractName, inputs)</span><span class="type-signature"> &rarr; {Object}</span>
+                deploy<span class="signature">(inputs, web3)</span><span class="type-signature"> &rarr; {Object}</span>
             
         </span>
     </h4>
@@ -795,7 +716,7 @@ manager.compileAll((errors)=>{
     
     
     <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Deploys a given contract created inside the manager object and saves the json generated.</p>
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Deploys the contract.</p>
     </div>
     
 
@@ -833,13 +754,13 @@ manager.compileAll((errors)=>{
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>contractName</code></td>
+      <td class="name"><code>inputs</code></td>
   
 
   <td class="type">
   
       
-<span class="param-type">string</span>
+<span class="param-type">function</span>
 
 
   
@@ -849,7 +770,7 @@ manager.compileAll((errors)=>{
 
   
 
-  <td class="description last"><p>The name of the contract to be deployed.</p></td>
+  <td class="description last"><p>The inputs for contract deploying.</p></td>
 </tr>
 
 
@@ -858,7 +779,7 @@ manager.compileAll((errors)=>{
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>inputs</code></td>
+      <td class="name"><code>web3</code></td>
   
 
   <td class="type">
@@ -874,7 +795,7 @@ manager.compileAll((errors)=>{
 
   
 
-  <td class="description last"><p>The inputs for contract deploying.</p></td>
+  <td class="description last"><p>The web3 instance with the provider configured.</p></td>
 </tr>
 
 
@@ -1051,7 +972,7 @@ manager.compileAll((errors)=>{
 
 <div class="columns">
     
-    <div class='param-desc column is-7'><p>The contract instance on the blockchain.</p></div>
+    <div class='param-desc column is-7'><p>The JSON with the contract's abi and bytecode.</p></div>
     
     
     <div class='column is-5 has-text-left'>
@@ -1075,11 +996,13 @@ manager.compileAll((errors)=>{
     
     
         <pre class="prettyprint"><code>Usage
-manager.deploy("MyContract", {
-  from: "0xsd3...",
-  args: ["message"],
-  gas: 300000
-});</code></pre>
+const provider = getProvider(); //your provider of choose
+const web3 = Web3(provider)
+contract.deploy({
+   from: "0xsd3...",
+   args: ["message"],
+   gas: 300000
+}, web3);</code></pre>
     
 
 
@@ -1089,8 +1012,8 @@ manager.deploy("MyContract", {
 
 
     
-    <h4 class="name" id="~getContract">
-        <a class="href-link" href="#~getContract">#</a>
+    <h4 class="name" id="~deployed">
+        <a class="href-link" href="#~deployed">#</a>
         
             
                 <span class='tag'>inner</span>
@@ -1098,7 +1021,7 @@ manager.deploy("MyContract", {
         
         <span class="code-name">
             
-                getContract<span class="signature">(name)</span><span class="type-signature"> &rarr; {Object}</span>
+                deployed<span class="signature">()</span><span class="type-signature"> &rarr; {Object}</span>
             
         </span>
     </h4>
@@ -1107,7 +1030,8 @@ manager.deploy("MyContract", {
     
     
     <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Get a contract created inside the manager object by name.</p>
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Returns the contract blockchain instance if was already deployed.
+If yes, the function returns it, or else return undefined.</p>
     </div>
     
 
@@ -1118,57 +1042,6 @@ manager.deploy("MyContract", {
 
 
 
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>name</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">string</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>The contract name.</p></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
 
 
 
@@ -1240,7 +1113,8 @@ manager.deploy("MyContract", {
 
 <div class="columns">
     
-    <div class='param-desc column is-7'><p>The contract object selected.</p></div>
+    <div class='param-desc column is-7'><p>The blockchain instance of the contract.
+Or undefined, if the contract wasn't deployed yet.</p></div>
     
     
     <div class='column is-5 has-text-left'>
@@ -1264,210 +1138,7 @@ manager.deploy("MyContract", {
     
     
         <pre class="prettyprint"><code>Usage
-manager.getContract("MyContract");
-
-Return
-{
-  name: "MyContract"
-  contract:{
-    variables: []
-    functions:[]
-  }
-}</code></pre>
-    
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="~newContract">
-        <a class="href-link" href="#~newContract">#</a>
-        
-            
-                <span class='tag'>inner</span>
-            
-        
-        <span class="code-name">
-            
-                newContract<span class="signature">(name)</span><span class="type-signature"> &rarr; {Object}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Creates a new contract object inside the manager object.</p>
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>name</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">string</span>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last"><p>The contract name.</p></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li>Levy Santiago</li>
-        </ul>
-    </dd>
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'><p>The new contract object created.</p></div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<span class="param-type">Object</span>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-    <h5>Example</h5>
-    
-    
-        <pre class="prettyprint"><code>Usage
-manager.newContract("MyContract");
-
-Return
-{
-  name: "MyContract"
-  contract:{
-    variables: []
-    functions:[]
-  }
-}</code></pre>
+contract.deployed();</code></pre>
     
 
 
@@ -1486,7 +1157,7 @@ Return
         
         <span class="code-name">
             
-                write<span class="signature">(contracts<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Object}</span>
+                write<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span>
             
         </span>
     </h4>
@@ -1495,9 +1166,8 @@ Return
     
     
     <div class="description">
-        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Writes the code of a list of contracts. The code
-of each contract will be together in a unique string, and this
-string will be saved inside the manager object.</p>
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Writes the code of a contract. The code
+of each contract will be saved inside the contract object.</p>
     </div>
     
 
@@ -1508,69 +1178,6 @@ string will be saved inside the manager object.</p>
 
 
 
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-            <th>Attributes</th>
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>contracts</code></td>
-  
-
-  <td class="type">
-  
-      
-<span class="param-type">Array.&lt;Object></span>
-
-
-  
-  </td>
-
-  
-      <td class="attributes">
-      
-          &lt;optional><br>
-      
-
-      
-
-      
-      </td>
-  
-
-  
-
-  <td class="description last"><p>The list of contracts objects to be wrote.</p></td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
 
 
 
@@ -1648,7 +1255,7 @@ string will be saved inside the manager object.</p>
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<span class="param-type">Object</span>
+<span class="param-type">string</span>
 
 
     </div>
@@ -1666,8 +1273,143 @@ string will be saved inside the manager object.</p>
     
     
         <pre class="prettyprint"><code>Usage
-manager.write();
-manager.write([contract, second_contract]);</code></pre>
+contract.write();</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="~written">
+        <a class="href-link" href="#~written">#</a>
+        
+            
+                <span class='tag'>inner</span>
+            
+        
+        <span class="code-name">
+            
+                written<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Returns the contract code written.
+If yes, the function returns it.</p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Levy Santiago</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'><p>The Solidity code of the contract.
+Can be a null sitring or the code as string.</p></div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">string</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>Usage
+contract.written();</code></pre>
     
 
 

@@ -6,7 +6,6 @@ const createDeployer = require("../deployer/deployer");
 /**
  * @author Levy Santiago
  * @module
- * @category Model
  * @name createContractManager
  * @description A <b>Factory</b> to create a new Contract Manager object.
  * @param {Object} [web3] The web3 object already with the provider.
@@ -15,7 +14,13 @@ const createDeployer = require("../deployer/deployer");
  * Usage
  * const provider = getProvider(); //your provider of choose
  * const web3 = Web3(provider)
- * const manager = createContractManager();
+ * const manager = createContractManager(web3);
+ *
+ * @category Model
+ * @requires createContract
+ * @requires createContractWriter
+ * @requires createCompiler
+ * @requires createDeployer
  */
 function createContractManager(web3 = null) {
   const contractWriter = createContractWriter();
@@ -100,16 +105,12 @@ function createContractManager(web3 = null) {
    * manager.write();
    * manager.write([contract, second_contract]);
    */
-  function write(options = { contracts: [], updateContract: false }) {
+  function write(contracts) {
     let _contracts = [];
 
     // If a list of contracts was passed
-    if (
-      options.contracts &&
-      Array.isArray(options.contracts) &&
-      options.contracts[0]
-    ) {
-      _contracts = options.contracts;
+    if (contracts && Array.isArray(contracts) && contracts[0]) {
+      _contracts = contracts;
     } else {
       // Copying data contracts
       _contracts = [...data.contracts];
@@ -117,12 +118,13 @@ function createContractManager(web3 = null) {
 
     // If contract object should be updated
     let callback = null;
-    if (options.updateContract) {
-      callback = (individualCode, index) => {
-        // Updating individual contracts
-        _contracts[index].code = individualCode;
-      };
-    }
+
+    // Saving the individual code inside contract
+    callback = (individualCode, index) => {
+      // Updating individual contracts
+      _contracts[index].code = individualCode;
+    };
+
     // Call the contract writer to write the contracts code
     data.code = contractWriter.write(_contracts, callback);
 
@@ -135,31 +137,24 @@ function createContractManager(web3 = null) {
    * @method
    * @description Compiles all contracts created inside the manager object and saves the json generated.
    * @param {Function} [cb] The callback function to get possible errors while compiling.
-   * @param {Object} [options={ updateContract: false }] The options to customize the function.
-   * @property {boolean} [updateContract = false] The option to update or not the contract object inside the manager.
    * @returns {Object} The json of all contracts compiled.
    * @example
    * Usage
    * manager.compileAll((errors)=>{
    *    console.log(errors)
    * });
-   *
-   * manager.compileAll((errors)=>{
-   *    console.log(errors)
-   * }, {updateContract: true});
    */
-  function compileAll(cb, options = { updateContract: false }) {
+  function compileAll(cb) {
+    // Compiling all
     data.json = compiler.compile(data.code);
 
-    // If contract object should be updated
-    if (options.updateContract) {
-      data.contracts.map((contract) => {
-        const json = data.json.contracts.jsons[contract.name];
-        if (json) {
-          contract.json = json;
-        }
-      });
-    }
+    // Updating the contract object
+    data.contracts.map((contract) => {
+      const json = data.json.contracts.jsons[contract.name];
+      if (json) {
+        contract.json = json;
+      }
+    });
 
     // Allowing error handling
     if (data.json.errors && cb) {
@@ -173,21 +168,28 @@ function createContractManager(web3 = null) {
    * @name compile
    * @method
    * @description Compiles a given contract created inside the manager object and saves the json generated.
-   * @param {Object} contract The contract object to be compiled.
+   * @param {Object} contractName The name of the contract to be compiled.
    * @param {Function} [cb] The callback function to get possible errors while compiling.
    * @returns {Object} The json of the contract compiled.
    * @example
    * Usage
-   * manager.compile(contract, (errors)=>{
+   * manager.compile("MyContract", (errors)=>{
    *    console.log(errors)
    * });
    */
-  function compile(contract, cb) {
+  function compile(contractName, cb) {
+    // Filtering the contract by contract name
+    const contract = data.contracts.filter((contract) => {
+      return contract.name === contractName;
+    })[0];
+
+    // If contract object is valid
     if (
       contract &&
       contract.compile &&
       typeof contract.compile === "function"
     ) {
+      // Compiling contract
       const json = contract.compile();
       if (json.errors && cb) {
         cb(json.errors);
@@ -204,28 +206,34 @@ function createContractManager(web3 = null) {
    * @name deploy
    * @method
    * @description Deploys a given contract created inside the manager object and saves the json generated.
-   * @param {Object} contract The contract object to be compiled.
-   * @param {Function} [cb] The callback function to get possible errors while compiling.
-   * @returns {Object} The json of the contract compiled.
+   * @param {string} contractName The name of the contract to be deployed.
+   * @param {Object} inputs The inputs for contract deploying.
+   * @property {string} from The address who will deploy the contract.
+   * @property {Array} args The arguments needed to deploy the contract.
+   * @property {Number} gas The amount of fee you are willing to pay when deploying the contract.
+   * @returns {Object} The contract instance on the blockchain.
    * @example
    * Usage
-   * manager.compile(contract, (errors)=>{
-   *    console.log(errors)
+   * manager.deploy("MyContract", {
+   *   from: "0xsd3...",
+   *   args: ["message"],
+   *   gas: 300000
    * });
    */
-  async function deploy(contractName, from, args, gas) {
+  async function deploy(contractName, inputs) {
+    // Obtaining the contract JSON
     const json = data.json.contracts.jsons[contractName];
     if (!json) {
       return {};
     }
-    const inputs = {
+    const _inputs = {
       abi: json.abi,
       bytecode: json.evm.bytecode.object,
-      args: args,
-      from: from,
-      gas: gas,
+      args: inputs.args,
+      from: inputs.from,
+      gas: inputs.gas,
     };
-    const contract = await deployer.deploy(inputs);
+    const contract = await deployer.deploy(_inputs);
     return contract;
   }
 

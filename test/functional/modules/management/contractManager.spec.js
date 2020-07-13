@@ -158,12 +158,11 @@ describe("Test ContractManager", () => {
 
   // DEPLOYING
   it("Deploying Controller", async () => {
-    const instance = await manager.deploy(
-      "Controller",
-      accounts[0],
-      [],
-      4000000
-    );
+    const instance = await manager.deploy("Controller", {
+      from: accounts[0],
+      args: [],
+      gas: 4000000,
+    });
     assert.ok(instance.options, "should have a options property.");
     assert.ok(instance.options.address, "should have a deployed address.");
   }).timeout(0);
