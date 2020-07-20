@@ -26,7 +26,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/lif-uesc/gifflar.git"
+    "url": "git+https://gitlab.com/gifflarsuite/gifflar"
   },
   "keywords": [
     "blockchain",
@@ -39,9 +39,9 @@
   "author": "Levy Santiago",
   "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.com/lif-uesc/gifflar.git/issues"
+    "url": "https://gitlab.com/gifflarsuite/gifflar/issues"
   },
-  "homepage": "https://gitlab.com/lif-uesc/gifflar.git#readme",
+  "homepage": "https://gitlab.com/gifflarsuite/gifflar#readme",
   "devDependencies": {
     "@smartdec/smartcheck": "^2.0.1",
     "better-docs": "^2.0.1",
