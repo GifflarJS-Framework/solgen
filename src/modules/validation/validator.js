@@ -27,14 +27,19 @@ function createValidator() {
     _throwError(messages.wrongType(arg, type));
   }
 
+  /**
+   * @name validate
+   * @description Creates a validator object.
+   * @param {Object} list The list of properties to be used to validate the attributes.
+   */
   function validate(list) {
     if (Array.isArray(list)) {
       list.map((item) => {
         // REQUIRED
-        if (item.required && !item.value) {
+        if (item.required && !item.attribute) {
           _throwRequired(item.arg);
         } // TYPE
-        else if (typeof item.value != item.type) {
+        else if (typeof item.attribute != item.type) {
           _throwWrongType(item.arg, item.type);
         }
       });

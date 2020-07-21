@@ -19,18 +19,18 @@ const createValidator = require("../validation/validator");
  *   value: '"bob"',
  * }
  */
-function createAssignmentModel(_variable, _value) {
+function createAssignmentModel(variable, value) {
   const validator = createValidator();
   const validation = [
     {
-      arg: "_variable",
-      value: _variable,
+      arg: "variable",
+      attribute: variable,
       type: "string",
       required: true,
     },
     {
-      arg: "_value",
-      value: _value,
+      arg: "value",
+      attribute: value,
       type: "string",
       required: true,
     },
@@ -53,8 +53,8 @@ function createAssignmentModel(_variable, _value) {
    */
   const assignment = {
     statement: "assignment",
-    variable: _variable,
-    value: _value,
+    variable: variable,
+    value: value,
   };
 
   validator.validate(validation);
