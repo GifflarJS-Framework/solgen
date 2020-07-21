@@ -57,6 +57,7 @@ function createAssignmentModel(variable, value) {
     value: value,
   };
 
+  // Validating
   validator.validate(validation);
   return assignment;
 }

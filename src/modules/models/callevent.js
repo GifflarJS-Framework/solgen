@@ -1,3 +1,5 @@
+const createValidator = require("../validation/validator");
+
 /**
  * @author Levy Santiago
  * @module
@@ -11,12 +13,6 @@
  * @returns {Object} The event object model.
  * @example
  * Usage
- * // First option
- * const event = createEventModel("myEvent");
- * event.setInput("string", "name")
- * .setInput("uint", "count");
- *
- * // Second option
  * const inputs = [
  *     {
  *       name: "name",
@@ -47,7 +43,24 @@
  * }
  *
  */
-function createEventModel(_name, _inputs = []) {
+function createEventModel(name, inputs = []) {
+  const validator = createValidator();
+  const validation = [
+    {
+      arg: "name",
+      attribute: name,
+      type: "string",
+      required: true,
+    },
+    {
+      arg: "inputs",
+      attribute: inputs,
+      type: "object",
+      isArray: true,
+      required: false,
+    },
+  ];
+
   /**
    * @author Levy Santiago
    * @member {Object}
@@ -59,30 +72,11 @@ function createEventModel(_name, _inputs = []) {
    */
   const event = {
     statement: "callevent",
-    name: _name,
-    inputs: _inputs,
+    name: name,
+    inputs: inputs,
   };
 
-  /**
-   * @author Levy Santiago
-   * @name setInput
-   * @method
-   * @description The function to set a new input to the event object model.
-   * @member {Function}
-   * @param {string} _type The variable type ("string", "uint", ...).
-   * @param {string} _variable The variable name.
-   * @returns {Object} The new event object model with the new input.
-   */
-  //   function setInput(_type, _variable) {
-  //     const new_input = {
-  //       name: _variable,
-  //       type: _type,
-  //     };
-  //     event.inputs.push(new_input);
-  //     return event;
-  //   }
-
-  //event.setInput = setInput;
+  validator.validate(validation);
 
   return event;
 }

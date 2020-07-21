@@ -13,6 +13,13 @@ function createValidator() {
     wrongType: (arg, type) => {
       return "The '" + arg + "' argument must be of type " + type;
     },
+    /**
+     * @param {string} arg
+     * @param {string} type
+     */
+    wrongStructure: (arg, structure) => {
+      return "The '" + arg + "' argument must be of structure " + structure;
+    },
   };
 
   function _throwError(message) {
@@ -27,10 +34,32 @@ function createValidator() {
     _throwError(messages.wrongType(arg, type));
   }
 
+  function _throwWrongStructure(arg, type) {
+    _throwError(messages.wrongType(arg, type));
+  }
+
   /**
    * @name validate
    * @description Creates a validator object.
-   * @param {Object} list The list of properties to be used to validate the attributes.
+   * @param {Object} options The list of properties to be used to validate the attributes.
+   * @example
+   * Usage
+   * const validation = [
+   *  {
+   *    arg: "variable",
+   *    attribute: variable,
+   *    type: "string",
+   *    required: true,
+   *  },
+   *  {
+   *    arg: "value",
+   *    attribute: value,
+   *    type: "string",
+   *    required: true,
+   *  },
+   *];
+   *
+   * validator.validate(validation);
    */
   function validate(list) {
     if (Array.isArray(list)) {
@@ -41,6 +70,8 @@ function createValidator() {
         } // TYPE
         else if (typeof item.attribute != item.type) {
           _throwWrongType(item.arg, item.type);
+        } else if (item.isArray && !Array.isArray(item.attribute)) {
+          _throwWrongStructure(item.arg, "Array");
         }
       });
     }
