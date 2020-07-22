@@ -148,6 +148,11 @@ function createContractManager(web3 = null) {
     // Compiling all
     data.json = compiler.compile(data.code);
 
+    // Allowing error handling
+    if (data.json.errors && cb) {
+      cb(data.json.errors);
+    }
+
     // Updating the contract object
     data.contracts.map((contract) => {
       const json = data.json.contracts.jsons[contract.name];
@@ -156,10 +161,6 @@ function createContractManager(web3 = null) {
       }
     });
 
-    // Allowing error handling
-    if (data.json.errors && cb) {
-      cb(data.json.errors);
-    }
     return data.json;
   }
 
