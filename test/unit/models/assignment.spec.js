@@ -54,8 +54,8 @@ describe("Assignment Model", () => {
    */
   it("Testing argument type error", () => {
     // Setting up error messages
-    const message_1 = messages.wrongType("variable", "string");
-    const message_2 = messages.wrongType("value", "string");
+    const message_1 = messages.wrongType("variable", "string", "number");
+    const message_2 = messages.wrongType("value", "string", "number");
     const message_3 = message_1;
 
     // Asserting errors

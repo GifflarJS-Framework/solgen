@@ -19,7 +19,7 @@ describe("Contract Model when creating function", () => {
 
     // Creating constructor
     contractModel
-      .createFunction("public")
+      .createConstructor("public")
       .setInput("address", "_owner")
       .setContractVariable("contract", "Contract", ["_owner"], {
         newContract,

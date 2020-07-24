@@ -3,6 +3,7 @@ const createVariableModel = require("./variable");
 const createEventModel = require("./callevent");
 const createIfModel = require("./if");
 const createNewContractModel = require("./newcontract");
+const createMethodModel = require("./callmethod");
 
 /**
  * @author Levy Santiago
@@ -77,9 +78,9 @@ function createContentModel(globalVars = []) {
    * @name setVariable
    * @method
    * @description Sets a new variable declaration inside the content.
-   * @param {string} _type The type of the variable ("string", "uint", ...)
-   * @param {string} _name The variable name.
-   * @param {string} [_value] The eventual value to be assigned to it during the declaration.
+   * @param {string} type The type of the variable ("string", "uint", ...)
+   * @param {string} name The variable name.
+   * @param {string} [value] The eventual value to be assigned to it during the declaration.
    * @returns {Object} The content object model with the new variable added.
    * @example
    * Usage
@@ -97,8 +98,8 @@ function createContentModel(globalVars = []) {
    *   ]
    * }
    */
-  function setVariable(_type, _name, _value) {
-    const newVariable = createVariableModel(_type, _name, "", false, _value);
+  function setVariable(type, name, value) {
+    const newVariable = createVariableModel(type, name, "", false, value);
     contentVars.push(newVariable);
     stack[top].content.push(newVariable);
     return stack[top];
@@ -106,17 +107,12 @@ function createContentModel(globalVars = []) {
 
   /**
    * @todo Finish documentation
-   * @param {*} _variable
-   * @param {*} _method
-   * @param {*} _value
+   * @param {*} variable
+   * @param {*} method_
+   * @param {*} value
    */
-  function setCallMethod(_variable, _method, _value) {
-    const newCallMethod = {
-      statement: "callmethod",
-      variable: _variable,
-      method: _method,
-      value: _value,
-    };
+  function setCallMethod(variable, method_, value) {
+    const newCallMethod = createMethodModel(variable, method_, value);
     stack[top].content.push(newCallMethod);
     return stack[top];
   }

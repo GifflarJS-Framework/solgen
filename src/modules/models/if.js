@@ -1,3 +1,5 @@
+const createValidator = require("../validation/validator");
+
 /**
  * @todo Finish documentation
  * @author Levy Santiago
@@ -23,6 +25,24 @@
  * }
  */
 function createIfModel(_condition = "", _else = false) {
+  //Validating
+  const validator = createValidator();
+  const validation = [
+    {
+      arg: "_condition",
+      attribute: _condition,
+      type: "string",
+      required: false,
+    },
+    {
+      arg: "_else",
+      attribute: _else,
+      type: "boolean",
+      required: false,
+    },
+  ];
+  validator.validate(validation);
+
   /**
    * @todo Write documentation
    */

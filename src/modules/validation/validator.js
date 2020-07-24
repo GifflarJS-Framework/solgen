@@ -10,8 +10,16 @@ function createValidator() {
      * @param {string} arg
      * @param {string} type
      */
-    wrongType: (arg, type) => {
-      return "The '" + arg + "' argument must be of type " + type;
+    wrongType: (arg, type, actualType) => {
+      return (
+        "The '" +
+        arg +
+        "' argument must be of type " +
+        type +
+        ". Actual type is " +
+        actualType +
+        "."
+      );
     },
     /**
      * @param {string} arg
@@ -30,12 +38,12 @@ function createValidator() {
     _throwError(messages.required(arg));
   }
 
-  function _throwWrongType(arg, type) {
-    _throwError(messages.wrongType(arg, type));
+  function _throwWrongType(arg, type, actualType) {
+    _throwError(messages.wrongType(arg, type, actualType));
   }
 
-  function _throwWrongStructure(arg, type) {
-    _throwError(messages.wrongType(arg, type));
+  function _throwWrongStructure(arg, type, actualType) {
+    _throwError(messages.wrongType(arg, type, actualType));
   }
 
   /**
@@ -54,7 +62,7 @@ function createValidator() {
    *  {
    *    arg: "value",
    *    attribute: value,
-   *    type: "string",
+   *    type: ["string", "object"],
    *    required: true,
    *  },
    *];
@@ -64,14 +72,26 @@ function createValidator() {
   function validate(list) {
     if (Array.isArray(list)) {
       list.map((item) => {
+        const actualType = typeof item.attribute;
         // REQUIRED
         if (item.required && !item.attribute) {
           _throwRequired(item.arg);
-        } // TYPE
-        else if (typeof item.attribute != item.type) {
-          _throwWrongType(item.arg, item.type);
-        } else if (item.isArray && !Array.isArray(item.attribute)) {
-          _throwWrongStructure(item.arg, "Array");
+        }
+        // TYPE
+        if (Array.isArray(item.type)) {
+          // If the expected type is like: ["string", "object"]
+          if (item.attribute && !item.type.includes(actualType)) {
+            _throwWrongType(item.arg, item.type, actualType);
+          }
+        } else {
+          // If the expected type is like: "object"
+          if (item.attribute && actualType != item.type) {
+            _throwWrongType(item.arg, item.type, actualType);
+          }
+        }
+        // IS ARRAY
+        if (item.attribute && item.isArray && !Array.isArray(item.attribute)) {
+          _throwWrongStructure(item.arg, "Array", actualType);
         }
       });
     }
