@@ -55,6 +55,7 @@
                 >
                     API Documentation
                 </a>
+                
                 <div class="dropdown is-hoverable is-right">
                     <a class="dropdown-trigger link">
                         Tutorials
@@ -63,15 +64,14 @@
                     <div class="dropdown-menu">
                         <div class="dropdown-content">
                         
-                            
-                                <a class="dropdown-item" href="tutorial-contract.html">
-                                    Contract
-                                </a>
-                            
+                            <a class="dropdown-item" href="tutorial-contract.html">
+                                Contract
+                            </a>
                         
                         </div>
                     </div>
                 </div>
+                
                  
                     
                         <a
@@ -99,7 +99,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#createContentWriter">createContentWriter</a></li><li><a href="global.html#createContractWriter">createContractWriter</a></li><li><a href="global.html#createEventWriter">createEventWriter</a></li><li><a href="global.html#createFunctionWriter">createFunctionWriter</a></li><li><a href="global.html#createIfWriter">createIfWriter</a></li><li><a href="global.html#createOutputWriter">createOutputWriter</a></li><li><a href="global.html#write">write</a></li></ul></div><div class="category"><h2>Diagrams</h2><h3>Modules</h3><ul><li><a href="module-Complete%2520Sequence%2520Diagram.html">Complete Sequence Diagram</a></li><li><a href="module-Framework%2520model.html">Framework model</a></li><li><a href="module-Modeling%2520Sequence%2520Diagram.html">Modeling Sequence Diagram</a></li><li><a href="module-Writing%2520Sequence%2520Diagram.html">Writing Sequence Diagram</a></li></ul></div><div class="category"><h2>Management</h2><h3>Modules</h3><ul><li><a href="module-createContract.html">createContract</a></li><li><a href="module-createContractManager.html">createContractManager</a></li><li><a href="module-createIoTJsonParser.html">createIoTJsonParser</a></li></ul></div><div class="category"><h2>Model</h2><h3>Modules</h3><ul><li><a href="module-createAssignmentModel.html">createAssignmentModel</a></li><li><a href="module-createContentModel.html">createContentModel</a></li><li><a href="module-createContractModel.html">createContractModel</a></li><li><a href="module-createEventModel.html">createEventModel</a></li><li><a href="module-createFunctionModel.html">createFunctionModel</a></li><li><a href="module-createIfModel.html">createIfModel</a></li><li><a href="module-createVariableModel.html">createVariableModel</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#createContentWriter">createContentWriter</a></li><li><a href="global.html#createContractWriter">createContractWriter</a></li><li><a href="global.html#createEventWriter">createEventWriter</a></li><li><a href="global.html#createFunctionWriter">createFunctionWriter</a></li><li><a href="global.html#createIfWriter">createIfWriter</a></li><li><a href="global.html#createMethodModel">createMethodModel</a></li><li><a href="global.html#createOutputWriter">createOutputWriter</a></li><li><a href="global.html#validate">validate</a></li><li><a href="global.html#write">write</a></li></ul></div><div class="category"><h2>Diagrams</h2><h3>Modules</h3><ul><li><a href="module-Complete%2520Sequence%2520Diagram.html">Complete Sequence Diagram</a></li><li><a href="module-Framework%2520model.html">Framework model</a></li><li><a href="module-Modeling%2520Sequence%2520Diagram.html">Modeling Sequence Diagram</a></li><li><a href="module-Writing%2520Sequence%2520Diagram.html">Writing Sequence Diagram</a></li></ul></div><div class="category"><h2>Management</h2><h3>Modules</h3><ul><li><a href="module-createContract.html">createContract</a></li><li><a href="module-createContractManager.html">createContractManager</a></li></ul></div><div class="category"><h2>Model</h2><h3>Modules</h3><ul><li><a href="module-createAssignmentModel.html">createAssignmentModel</a></li><li><a href="module-createContentModel.html">createContentModel</a></li><li><a href="module-createContractModel.html">createContractModel</a></li><li><a href="module-createEventModel.html">createEventModel</a></li><li><a href="module-createFunctionModel.html">createFunctionModel</a></li><li><a href="module-createIfModel.html">createIfModel</a></li><li><a href="module-createVariableModel.html">createVariableModel</a></li></ul></div>
                 
             </nav>
         </div>
@@ -130,24 +130,42 @@
         
             <div class="description"><script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Getting the Solidity code of the contract from the {json} created in Modeling stage.
 Getting the JSON of the contract to be created.</p><div class="mermaid">sequenceDiagram
-  Coder->>gContract: createContract()
-  activate gContract
-  gContract-->>Coder: gContract
-  gContract->>ContractWriter Factory: createContractWriter()
+  System->>Contract: createContract()
+  activate Contract
+  Contract-->>System: Contract
+  Contract->>ContractWriter Factory: createContractWriter()
   activate ContractWriter Factory
   ContractWriter Factory->>ContractWriter: create()
   activate ContractWriter
   ContractWriter-->>ContractWriter Factory: ContractWriter
-  ContractWriter Factory-->>gContract: ContractWriter
+  ContractWriter Factory-->>Contract: ContractWriter
   deactivate ContractWriter Factory
 
-  Coder->>gContract: gContract.write()
-  gContract->>ContractWriter: write({json})
-  ContractWriter-->>gContract: "code.sol"
-  gContract-->>Coder: "code.sol"
+  System->>Contract: Contract.write()
+  Contract->>ContractWriter: write({json})
+  ContractWriter-->>Contract: "code.sol"
+  Contract-->>System: "code.sol"
 
   deactivate gContract
-  deactivate ContractWriter</div></div>
+  deactivate ContractWriter</div><div class="mermaid">sequenceDiagram
+  Sistema->>Contrato: criarContrato()
+  activate Contrato
+  Contrato->>Fábrica Escritor: criarEscritor()
+  activate Fábrica Escritor
+  Fábrica Escritor->>Escritor: criar()
+  activate Escritor
+  Escritor-->>Fábrica Escritor: Escritor
+  Fábrica Escritor-->>Contrato: Escritor
+  Contrato-->>Sistema: Contrato
+  deactivate Fábrica Escritor
+
+  Sistema->>Contrato: Contrato.escrever()
+  Contrato->>Escritor: escrever({json})
+  Escritor-->>Contrato: "code.sol"
+  Contrato-->>Sistema: "code.sol"
+
+  deactivate Contrato
+  deactivate Escritor</div></div>
         
 
         

@@ -4,24 +4,13 @@
   "description": "A smart contract generator framework for IoT.",
   "main": "bin/index.js",
   "scripts": {
-    "test": "echo Unit Testing && npm run testunit && echo Functional Testing && npm run testfunc",
+    "test": "jest",
     "testunit": "./node_modules/mocha/bin/mocha test/unit/**/*",
     "testfunc": "./node_modules/mocha/bin/mocha test/functional/**/*",
     "docs": "jsdoc -c jsdoc-config.json"
   },
   "bin": {
     "gifflar": "./bin/index.js"
-  },
-  "_moduleAliases": {
-    "@models": "./src/modules/models",
-    "@writers": "./src/modules/writers",
-    "@compiler": "./src/modules/compiler",
-    "@deployer": "./src/modules/deployer",
-    "@management": "./src/modules/managing",
-    "@validation": "./src/modules/validation",
-    "@utils": "./src/utils",
-    "@test": "./test",
-    "@examples": "./test/examples"
   },
   "repository": {
     "type": "git",
@@ -43,14 +32,28 @@
   "homepage": "https://gitlab.com/gifflarsuite/gifflar#readme",
   "devDependencies": {
     "@smartdec/smartcheck": "^2.0.1",
+    "@types/jest": "26.0.16",
+    "@typescript-eslint/eslint-plugin": "^3.10.1",
+    "@typescript-eslint/parser": "^3.10.1",
     "better-docs": "^2.0.1",
+    "eslint": "^7.21.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-import-resolver-typescript": "^2.3.0",
+    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-prettier": "^3.1.4",
     "ganache-cli": "^6.9.1",
+    "jest": "^26.6.3",
     "jsdoc-mermaid": "^1.0.0",
-    "mocha": "^7.1.2",
-    "module-alias": "^2.2.2"
+    "module-alias": "^2.2.2",
+    "prettier": "^2.2.1",
+    "ts-jest": "26.4.4",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^4.2.3"
   },
   "dependencies": {
     "solc": "^0.5.17",
-    "web3": "^1.0.0-beta.35"
+    "types-solc": "^1.0.1",
+    "web3": "1.3.3"
   }
 }

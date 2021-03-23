@@ -55,6 +55,7 @@
                 >
                     API Documentation
                 </a>
+                
                 <div class="dropdown is-hoverable is-right">
                     <a class="dropdown-trigger link">
                         Tutorials
@@ -63,15 +64,14 @@
                     <div class="dropdown-menu">
                         <div class="dropdown-content">
                         
-                            
-                                <a class="dropdown-item" href="tutorial-contract.html">
-                                    Contract
-                                </a>
-                            
+                            <a class="dropdown-item" href="tutorial-contract.html">
+                                Contract
+                            </a>
                         
                         </div>
                     </div>
                 </div>
+                
                  
                     
                         <a
@@ -99,7 +99,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#createContentWriter">createContentWriter</a></li><li><a href="global.html#createContractWriter">createContractWriter</a></li><li><a href="global.html#createEventWriter">createEventWriter</a></li><li><a href="global.html#createFunctionWriter">createFunctionWriter</a></li><li><a href="global.html#createIfWriter">createIfWriter</a></li><li><a href="global.html#createOutputWriter">createOutputWriter</a></li><li><a href="global.html#write">write</a></li></ul></div><div class="category"><h2>Diagrams</h2><h3>Modules</h3><ul><li><a href="module-Complete%2520Sequence%2520Diagram.html">Complete Sequence Diagram</a></li><li><a href="module-Framework%2520model.html">Framework model</a></li><li><a href="module-Modeling%2520Sequence%2520Diagram.html">Modeling Sequence Diagram</a></li><li><a href="module-Writing%2520Sequence%2520Diagram.html">Writing Sequence Diagram</a></li></ul></div><div class="category"><h2>Management</h2><h3>Modules</h3><ul><li><a href="module-createContract.html">createContract</a></li><li><a href="module-createContractManager.html">createContractManager</a></li><li><a href="module-createIoTJsonParser.html">createIoTJsonParser</a></li></ul></div><div class="category"><h2>Model</h2><h3>Modules</h3><ul><li><a href="module-createAssignmentModel.html">createAssignmentModel</a></li><li><a href="module-createContentModel.html">createContentModel</a></li><li><a href="module-createContractModel.html">createContractModel</a></li><li><a href="module-createEventModel.html">createEventModel</a></li><li><a href="module-createFunctionModel.html">createFunctionModel</a></li><li><a href="module-createIfModel.html">createIfModel</a></li><li><a href="module-createVariableModel.html">createVariableModel</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#createContentWriter">createContentWriter</a></li><li><a href="global.html#createContractWriter">createContractWriter</a></li><li><a href="global.html#createEventWriter">createEventWriter</a></li><li><a href="global.html#createFunctionWriter">createFunctionWriter</a></li><li><a href="global.html#createIfWriter">createIfWriter</a></li><li><a href="global.html#createMethodModel">createMethodModel</a></li><li><a href="global.html#createOutputWriter">createOutputWriter</a></li><li><a href="global.html#validate">validate</a></li><li><a href="global.html#write">write</a></li></ul></div><div class="category"><h2>Diagrams</h2><h3>Modules</h3><ul><li><a href="module-Complete%2520Sequence%2520Diagram.html">Complete Sequence Diagram</a></li><li><a href="module-Framework%2520model.html">Framework model</a></li><li><a href="module-Modeling%2520Sequence%2520Diagram.html">Modeling Sequence Diagram</a></li><li><a href="module-Writing%2520Sequence%2520Diagram.html">Writing Sequence Diagram</a></li></ul></div><div class="category"><h2>Management</h2><h3>Modules</h3><ul><li><a href="module-createContract.html">createContract</a></li><li><a href="module-createContractManager.html">createContractManager</a></li></ul></div><div class="category"><h2>Model</h2><h3>Modules</h3><ul><li><a href="module-createAssignmentModel.html">createAssignmentModel</a></li><li><a href="module-createContentModel.html">createContentModel</a></li><li><a href="module-createContractModel.html">createContractModel</a></li><li><a href="module-createEventModel.html">createEventModel</a></li><li><a href="module-createFunctionModel.html">createFunctionModel</a></li><li><a href="module-createIfModel.html">createIfModel</a></li><li><a href="module-createVariableModel.html">createVariableModel</a></li></ul></div>
                 
             </nav>
         </div>
@@ -347,12 +347,6 @@ automatically based in the inputs.</p></div>
     
     
         <pre class="prettyprint"><code>Usage
-// First option
-const event = createEventModel("myEvent");
-event.setInput("string", "name")
-.setInput("uint", "count");
-
-// Second option
 const inputs = [
     {
       name: "name",
@@ -535,87 +529,6 @@ Return
         </tbody>
     </table>
 </div>
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li>Levy Santiago</li>
-        </ul>
-    </dd>
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-</div>
-            
-                <div class="member">
-
-    <span class="method-parameter is-pulled-right">
-        <label>Type:</label>
-        
-<span class="param-type">function</span>
-
-
-    </span>
-
-<h4 class="name" id="~setInput">
-    <a class="href-link" href="#~setInput">#</a>
-    
-        
-            <span class='tag'>inner</span>
-        
-    
-    <span class="code-name">
-        setInput
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>The function to set a new input to the event object model.</p>
-</div>
-
-
 
 
 

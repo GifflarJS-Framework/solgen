@@ -55,6 +55,7 @@
                 >
                     API Documentation
                 </a>
+                
                 <div class="dropdown is-hoverable is-right">
                     <a class="dropdown-trigger link">
                         Tutorials
@@ -63,15 +64,14 @@
                     <div class="dropdown-menu">
                         <div class="dropdown-content">
                         
-                            
-                                <a class="dropdown-item" href="tutorial-contract.html">
-                                    Contract
-                                </a>
-                            
+                            <a class="dropdown-item" href="tutorial-contract.html">
+                                Contract
+                            </a>
                         
                         </div>
                     </div>
                 </div>
+                
                  
                     
                         <a
@@ -111,14 +111,10 @@
                 </header>
                 <section>
 
-<header>
-    
-</header>
-
 <article>
     <h2>Modeling</h2>
 <h3>Usage</h3>
-<pre class="prettyprint source lang-js"><code>const { createContract } = createContract(&quot;gifflar&quot;);
+<pre class="prettyprint source lang-js"><code>const { createContract } = require(&quot;gifflar&quot;);
 const contract = createContract(&quot;MyContract&quot;);
 const event = contract
   .createEvent(&quot;temperatureOverflow&quot;)

@@ -55,6 +55,7 @@
                 >
                     API Documentation
                 </a>
+                
                 <div class="dropdown is-hoverable is-right">
                     <a class="dropdown-trigger link">
                         Tutorials
@@ -63,15 +64,14 @@
                     <div class="dropdown-menu">
                         <div class="dropdown-content">
                         
-                            
-                                <a class="dropdown-item" href="tutorial-contract.html">
-                                    Contract
-                                </a>
-                            
+                            <a class="dropdown-item" href="tutorial-contract.html">
+                                Contract
+                            </a>
                         
                         </div>
                     </div>
                 </div>
+                
                  
                     
                         <a
@@ -99,7 +99,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#createContentWriter">createContentWriter</a></li><li><a href="global.html#createContractWriter">createContractWriter</a></li><li><a href="global.html#createEventWriter">createEventWriter</a></li><li><a href="global.html#createFunctionWriter">createFunctionWriter</a></li><li><a href="global.html#createIfWriter">createIfWriter</a></li><li><a href="global.html#createOutputWriter">createOutputWriter</a></li><li><a href="global.html#write">write</a></li></ul></div><div class="category"><h2>Diagrams</h2><h3>Modules</h3><ul><li><a href="module-Complete%2520Sequence%2520Diagram.html">Complete Sequence Diagram</a></li><li><a href="module-Framework%2520model.html">Framework model</a></li><li><a href="module-Modeling%2520Sequence%2520Diagram.html">Modeling Sequence Diagram</a></li><li><a href="module-Writing%2520Sequence%2520Diagram.html">Writing Sequence Diagram</a></li></ul></div><div class="category"><h2>Management</h2><h3>Modules</h3><ul><li><a href="module-createContract.html">createContract</a></li><li><a href="module-createContractManager.html">createContractManager</a></li><li><a href="module-createIoTJsonParser.html">createIoTJsonParser</a></li></ul></div><div class="category"><h2>Model</h2><h3>Modules</h3><ul><li><a href="module-createAssignmentModel.html">createAssignmentModel</a></li><li><a href="module-createContentModel.html">createContentModel</a></li><li><a href="module-createContractModel.html">createContractModel</a></li><li><a href="module-createEventModel.html">createEventModel</a></li><li><a href="module-createFunctionModel.html">createFunctionModel</a></li><li><a href="module-createIfModel.html">createIfModel</a></li><li><a href="module-createVariableModel.html">createVariableModel</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Global</h3><ul><li><a href="global.html#createContentWriter">createContentWriter</a></li><li><a href="global.html#createContractWriter">createContractWriter</a></li><li><a href="global.html#createEventWriter">createEventWriter</a></li><li><a href="global.html#createFunctionWriter">createFunctionWriter</a></li><li><a href="global.html#createIfWriter">createIfWriter</a></li><li><a href="global.html#createMethodModel">createMethodModel</a></li><li><a href="global.html#createOutputWriter">createOutputWriter</a></li><li><a href="global.html#validate">validate</a></li><li><a href="global.html#write">write</a></li></ul></div><div class="category"><h2>Diagrams</h2><h3>Modules</h3><ul><li><a href="module-Complete%2520Sequence%2520Diagram.html">Complete Sequence Diagram</a></li><li><a href="module-Framework%2520model.html">Framework model</a></li><li><a href="module-Modeling%2520Sequence%2520Diagram.html">Modeling Sequence Diagram</a></li><li><a href="module-Writing%2520Sequence%2520Diagram.html">Writing Sequence Diagram</a></li></ul></div><div class="category"><h2>Management</h2><h3>Modules</h3><ul><li><a href="module-createContract.html">createContract</a></li><li><a href="module-createContractManager.html">createContractManager</a></li></ul></div><div class="category"><h2>Model</h2><h3>Modules</h3><ul><li><a href="module-createAssignmentModel.html">createAssignmentModel</a></li><li><a href="module-createContentModel.html">createContentModel</a></li><li><a href="module-createContractModel.html">createContractModel</a></li><li><a href="module-createEventModel.html">createEventModel</a></li><li><a href="module-createFunctionModel.html">createFunctionModel</a></li><li><a href="module-createIfModel.html">createIfModel</a></li><li><a href="module-createVariableModel.html">createVariableModel</a></li></ul></div>
                 
             </nav>
         </div>
@@ -626,15 +626,11 @@ Return
             
                 <div class="member">
 
-<h4 class="name" id="write">
-    <a class="href-link" href="#write">#</a>
-    
-        
-            <span class='tag'>private</span>
-        
+<h4 class="name" id="validate">
+    <a class="href-link" href="#validate">#</a>
     
     <span class="code-name">
-        write
+        validate
     </span>
     
 </h4>
@@ -643,7 +639,7 @@ Return
 
 
 <div class="description">
-    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Creates a Solidity array push statement</p>
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Creates a validator object.</p>
 </div>
 
 
@@ -691,16 +687,116 @@ Return
     <h5>Example</h5>
     
     
-        <pre class="prettyprint"><code>Json
-{
-  statement: "callmethod",
-  variable: "messages",
-  method: "push",
-  value: "_message"
-}
+        <pre class="prettyprint"><code>Usage
+const validation = [
+ {
+   arg: "variable",
+   attribute: variable,
+   type: "string",
+   required: true,
+ },
+ {
+   arg: "value",
+   attribute: value,
+   type: ["string", "object"],
+   required: true,
+ },
+];
 
-Return
-"messages.push(_message);"</code></pre>
+validator.validate(validation);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+<h4 class="name" id="write">
+    <a class="href-link" href="#write">#</a>
+    
+    <span class="code-name">
+        write
+    </span>
+    
+</h4>
+
+
+
+
+<div class="description">
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Writes an expression statement in Solidity code.</p>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>Input
+{
+    statement: "expression",
+    operator: "!",
+    value1: {
+        statement: "expression",
+        value1: {
+          statement: "expression",
+          value1: "val",
+          operator: "+",
+          value2: "1",
+        },
+        operator: "+",
+        value2: {
+          statement: "expression",
+          value1: "val",
+          operator: "+",
+          value2: "1",
+        },
+    },
+    before: true,
+ }
+
+ Result
+ "!((val+1)+(val+1))"</code></pre>
     
 
 
@@ -800,202 +896,6 @@ text_return += outputWriter.write(f.outputs, (request) => {
 
 
 <div class="description">
-    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Define all functions of the contract</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-    <h5>Example</h5>
-    
-    
-        <pre class="prettyprint"><code>Json
-[
-  {
-    name: "myFunction",
-    isConstructor: false,
-    inputs: [
-      {
-        name: "_input1",
-        type: "string"
-      }
-    ],
-    outputs: [],
-    content: {
-      assignment: {
-        variable: "input1",
-        value: "_input1"
-      }
-    }
-  }
-]
-
-Return
-function myFunction(string _input1){
-  input1 = _input1;
-}
-
-// If isConstructor is true, the name of the function
-// will be desconsidered, and the return will be
-Return
-constructor(string _input1){
-  input1 = _input1;
-}</code></pre>
-    
-
-
-</div>
-            
-                <div class="member">
-
-<h4 class="name" id="write">
-    <a class="href-link" href="#write">#</a>
-    
-        
-            <span class='tag'>private</span>
-        
-    
-    <span class="code-name">
-        write
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Writes the inputs of a Solidity code.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-    <h5>Example</h5>
-    
-    
-        <pre class="prettyprint"><code>Prototype
-function writeInputs(inputs, typeon = true) {
-//[...]
-}
-
-Input
-[
-  {
-    name:"_message",
-    type: "string"
-  },
-  {
-    name: "_number",
-    type: "uint"
-  }
-]
-
-Usage
-"(" + inputWriter.writeInputs(inputs) + ")"
-=> "(string _message, uint _number)"
-
-Usage
-"(" + inputWriter.writeInputs(inputs, false) + ")"
-=> "(_message, _number)"</code></pre>
-    
-
-
-</div>
-            
-                <div class="member">
-
-<h4 class="name" id="write">
-    <a class="href-link" href="#write">#</a>
-    
-    <span class="code-name">
-        write
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
     <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Writes an if statement in Solidity code.</p>
 </div>
 
@@ -1072,10 +972,6 @@ Usage
 <h4 class="name" id="write">
     <a class="href-link" href="#write">#</a>
     
-        
-            <span class='tag'>private</span>
-        
-    
     <span class="code-name">
         write
     </span>
@@ -1086,84 +982,8 @@ Usage
 
 
 <div class="description">
-    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Creates a Solidity assignment statement</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-    <h5>Example</h5>
-    
-    
-        <pre class="prettyprint"><code>Json
-{
-  statement: "assignment",
-  variable: "message",
-  value: "_message"
-}
-
-Return
-"message = _message;"</code></pre>
-    
-
-
-</div>
-            
-                <div class="member">
-
-<h4 class="name" id="write">
-    <a class="href-link" href="#write">#</a>
-    
-    <span class="code-name">
-        write
-    </span>
-    
-</h4>
-
-
-
-
-<div class="description">
-    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Writes an expression statement in Solidity code.</p>
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Writes a Solidity event call. <strong>This method updates the request
+object to send the events to be created by the eventWriter</strong>.</p>
 </div>
 
 
@@ -1213,29 +1033,20 @@ Return
     
         <pre class="prettyprint"><code>Input
 {
-    statement: "expression",
-    operator: "!",
-    value1: {
-        statement: "expression",
-        value1: {
-          statement: "expression",
-          value1: "val",
-          operator: "+",
-          value2: "1",
-        },
-        operator: "+",
-        value2: {
-          statement: "expression",
-          value1: "val",
-          operator: "+",
-          value2: "1",
-        },
-    },
-    before: true,
- }
+  statement: "callevent",
+  name: "myEvent",
+  inputs: {
+     name: "_message",
+     type: "string"
+  },
+  {
+     name: "_val",
+     type: "uint"
+  }
+}
 
- Result
- "!((val+1)+(val+1))"</code></pre>
+Return
+"emit myEvent(_message, _val);"</code></pre>
     
 
 
@@ -1441,8 +1252,7 @@ message = _message;\n
 
 
 <div class="description">
-    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Writes a Solidity event call. <strong>This method updates the request
-object to send the events to be created by the eventWriter</strong>.</p>
+    <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script><p>Define all functions of the contract</p>
 </div>
 
 
@@ -1490,22 +1300,38 @@ object to send the events to be created by the eventWriter</strong>.</p>
     <h5>Example</h5>
     
     
-        <pre class="prettyprint"><code>Input
-{
-  statement: "callevent",
-  name: "myEvent",
-  inputs: {
-     name: "_message",
-     type: "string"
-  },
+        <pre class="prettyprint"><code>Json
+[
   {
-     name: "_val",
-     type: "uint"
+    name: "myFunction",
+    isConstructor: false,
+    inputs: [
+      {
+        name: "_input1",
+        type: "string"
+      }
+    ],
+    outputs: [],
+    content: {
+      assignment: {
+        variable: "input1",
+        value: "_input1"
+      }
+    }
   }
-}
+]
 
 Return
-"emit myEvent(_message, _val);"</code></pre>
+function myFunction(string _input1){
+  input1 = _input1;
+}
+
+// If isConstructor is true, the name of the function
+// will be desconsidered, and the return will be
+Return
+constructor(string _input1){
+  input1 = _input1;
+}</code></pre>
     
 
 
@@ -1515,6 +1341,211 @@ Return
         </div>
     
 
+    
+        <div class='vertical-section'>
+            <h1>Methods</h1>
+            <div class="members">
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="createMethodModel">
+        <a class="href-link" href="#createMethodModel">#</a>
+        
+        <span class="code-name">
+            
+                createMethodModel<span class="signature">(_variable, _method, _value)</span><span class="type-signature"></span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <script type="text/javascript" src="https://unpkg.com/mermaid@7.1.0/dist/mermaid.min.js"></script>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>_variable</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">*</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>_method</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">*</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>_value</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">*</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+    <dt class="tag-todo">To Do:</dt>
+    <dd class="tag-todo">
+        <ul>
+            <li>Finish documentation</li>
+        </ul>
+    </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+            
+            </div>
+        </div>
     
 
     

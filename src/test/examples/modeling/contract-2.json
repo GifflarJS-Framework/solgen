@@ -1,0 +1,126 @@
+{
+  "name": "MyContract",
+  "contract": {
+    "variables": [
+      {
+        "type": "string",
+        "scope": "public",
+        "name": "message",
+        "setMethod": true
+      },
+      {
+        "type": "string[]",
+        "scope": "public",
+        "name": "messages",
+        "setMethod": true
+      }
+    ],
+    "functions": [
+      {
+        "name": "",
+        "scope": "public",
+        "isConstructor": true,
+        "inputs": [
+          {
+            "name": "_message",
+            "type": "string"
+          }
+        ],
+        "content": [
+          {
+            "statement": "assignment",
+            "variable": "message",
+            "value": "_message"
+          },
+          {
+            "statement": "assignment",
+            "variable": "messages",
+            "value": "[]"
+          },
+          {
+            "statement": "push",
+            "variable": "messages",
+            "value": "_message"
+          },
+          {
+            "statement": "assignment",
+            "variable": "message",
+            "value": {
+              "statement": "expression",
+              "value": "val++"
+            }
+          }
+        ]
+      },
+      {
+        "name": "myFunction",
+        "scope": "public",
+        "isConstructor": false,
+        "inputs": [
+          {
+            "name": "_message",
+            "type": "string"
+          },
+          {
+            "name": "_val",
+            "type": "uint"
+          }
+        ],
+        "outputs": ["message"],
+        "content": [
+          {
+            "statement": "variable",
+            "type": "string",
+            "name": "tmp",
+            "value": "\"asd\""
+          },
+          {
+            "statement": "assignment",
+            "variable": "message",
+            "value": "_message"
+          },
+          {
+            "statement": "if",
+            "else": false,
+            "condition": "_val == 1",
+            "content": [
+              {
+                "statement": "callevent",
+                "name": "temperatureOverflow",
+                "inputs": [
+                  {
+                    "name": "_message",
+                    "type": "string"
+                  },
+                  {
+                    "name": "_val",
+                    "type": "uint"
+                  }
+                ]
+              },
+              {
+                "statement": "callevent",
+                "name": "temperatureOverflow2",
+                "inputs": [
+                  {
+                    "name": "_message",
+                    "type": "string"
+                  },
+                  {
+                    "name": "_val",
+                    "type": "uint"
+                  }
+                ]
+              },
+              {
+                "statement": "assignment",
+                "variable": "message",
+                "value": "_message"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
