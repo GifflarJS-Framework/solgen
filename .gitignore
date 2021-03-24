@@ -1,5 +1,11 @@
 node_modules/
 package-lock.json
 .env
+old/
 *.old.js
 *.example.*
+.vscode
+yarn.lock
+yarn-error.log
+coverage/
+docs/
