@@ -30,10 +30,10 @@ describe("Contract Model", () => {
       .beginIf("valueId == 1")
       .setAssignment("value1", "_val")
       .beginIf("value1 >= max_value1")
-      .setCallEvent("temperatureOverflow", ["value1", "max_value1"])
+      .setEventCall("temperatureOverflow", ["value1", "max_value1"])
       .endIf()
       .beginElseIf("value1 <= min_value1")
-      .setCallEvent("temperatureUnderflow", ["value1", "min_value1"])
+      .setEventCall("temperatureUnderflow", ["value1", "min_value1"])
       .endElseIf()
       .endIf();
 

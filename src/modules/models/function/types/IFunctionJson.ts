@@ -6,4 +6,5 @@ export interface IFunctionJson {
   isConstructor: boolean;
   inputs: Array<IInput>;
   outputs: Array<string>;
+  modifiers: Array<string>;
 }

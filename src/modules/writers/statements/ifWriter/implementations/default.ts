@@ -1,5 +1,6 @@
-import { IContent } from "@models/content/types/IContent";
+import { IContents } from "@models/content/types/IContents";
 import { IIf } from "@models/if/types/IIf";
+import { IRequest } from "@models/request/types/IRequest";
 import { IIfWriter } from "../types/IIfWriter";
 
 /**
@@ -19,7 +20,10 @@ import { IIfWriter } from "../types/IIfWriter";
  * }
  */
 function createIfWriter(
-  writeContent: (content: Array<IContent>) => string
+  writeContent: (
+    content: Array<IContents>,
+    callback: (request: IRequest) => void
+  ) => string
 ): IIfWriter {
   const ifWriter: IIfWriter = {
     /**
@@ -58,7 +62,9 @@ function createIfWriter(
         text = `else ${text}`;
       }
       text += "{\n";
-      text += writeContent(json.content);
+      text += writeContent(json.content, (request: IRequest) => {
+        text += "";
+      });
       text += "}\n";
 
       return text;

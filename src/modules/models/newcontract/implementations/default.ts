@@ -5,7 +5,7 @@ function createNewContractModel({
   contractName,
   args = [],
 }: ICreateNewContract): INewContract {
-  const json = {
+  const json: INewContract = {
     statement: "newcontract",
     contractName,
     args,

@@ -1,8 +1,8 @@
-import { IContent } from "@models/content/types/IContent";
+import { IStackItem } from "@models/content/types/IStackItem";
 
-export interface IIf {
-  statement: string;
+export interface IIf extends IStackItem {
+  statement: "if";
   else: boolean;
   condition: string;
-  content: Array<IContent>;
+  // content: Array<IContent>;
 }

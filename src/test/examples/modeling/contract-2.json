@@ -85,7 +85,7 @@
             "condition": "_val == 1",
             "content": [
               {
-                "statement": "callevent",
+                "statement": "event_call",
                 "name": "temperatureOverflow",
                 "inputs": [
                   {
@@ -99,7 +99,7 @@
                 ]
               },
               {
-                "statement": "callevent",
+                "statement": "event_call",
                 "name": "temperatureOverflow2",
                 "inputs": [
                   {

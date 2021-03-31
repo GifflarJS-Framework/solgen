@@ -1,7 +1,7 @@
 import { IRequest } from "../types/IRequest";
 
 function createRequest(): IRequest {
-  const request = {
+  const request: IRequest = {
     functions: [],
     events: [],
     text_returns: "",

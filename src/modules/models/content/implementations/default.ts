@@ -1,7 +1,7 @@
 /* eslint-disable no-use-before-define */
 import createAssignmentModel from "@models/assignment";
-import createEventModel from "@models/callevent";
-import createMethodModel from "@models/callmethod";
+import createEventCallModel from "@models/eventCall";
+import createMethodCallModel from "@models/methodcall";
 import { IInput } from "@models/function/types/IInput";
 import createIfModel from "@models/if";
 import { IIf } from "@models/if/types/IIf";
@@ -11,12 +11,9 @@ import createVariableModel from "@models/variable";
 import { IVariable } from "@models/variable/types/IVariable";
 import { IContent } from "../types/IContent";
 import { ICreateContentDTO } from "../types/ICreateContentDTO";
+import { IStackItem } from "../types/IStackItem";
 
 interface IIfContent extends IIf, IContent {}
-
-interface IStackItem {
-  content: Array<any>;
-}
 
 /**
  * @author Levy Santiago
@@ -43,7 +40,7 @@ interface IStackItem {
  *   endIf: [Function],
  *   endElse: [Function],
  *   endElseIf: [Function]
- *   setCallEvent: [Function]
+ *   setEventCall: [Function]
  *   setAssignment: [Function],
  *   setVariable: [Function]
  * }
@@ -102,13 +99,13 @@ function createContentModel({ globalVars = [] }: ICreateContentDTO): IContent {
    * @param {*} method_
    * @param {*} value
    */
-  function setCallMethod(
+  function setMethodCall(
     variable: string,
     method: string,
     value: string
   ): IContent {
-    const newCallMethod = createMethodModel({ variable, method, value });
-    stack[top].content.push(newCallMethod);
+    const newMethodCall = createMethodCallModel({ variable, method, value });
+    stack[top].content.push(newMethodCall);
     const contentItem: IContent = _assignFunctions(stack[top]);
     return contentItem;
   }
@@ -136,7 +133,7 @@ function createContentModel({ globalVars = [] }: ICreateContentDTO): IContent {
    * @param {string} name The name of the event.
    * @param {string[]} inputNames Array of the variable names to pass for the event call.
    */
-  function setCallEvent(name: string, inputNames: Array<string>): IContent {
+  function setEventCall(name: string, inputNames: Array<string>): IContent {
     const inputs: Array<IInput> = [];
     if (inputNames) {
       inputNames.map((inputName) => {
@@ -149,8 +146,8 @@ function createContentModel({ globalVars = [] }: ICreateContentDTO): IContent {
         return variable;
       });
     }
-    const newEvent = createEventModel({ name, inputs });
-    stack[top].content.push(newEvent);
+    const newEventCall = createEventCallModel({ name, inputs });
+    stack[top].content.push(newEventCall);
     const contentItem: IContent = _assignFunctions(stack[top]);
     return contentItem;
   }
@@ -205,7 +202,9 @@ function createContentModel({ globalVars = [] }: ICreateContentDTO): IContent {
     if (stack.length > 1) {
       const json = stack.pop();
       top -= 1;
-      stack[top].content.push(json);
+      if (json) {
+        stack[top].content.push(json);
+      }
     }
     const contentItem: IContent = _assignFunctions(stack[top]);
     return contentItem;
@@ -230,10 +229,10 @@ function createContentModel({ globalVars = [] }: ICreateContentDTO): IContent {
       beginElseIf,
       endIf,
       endElseIf: endIf,
-      setCallEvent,
+      setEventCall,
       setAssignment,
       setVariable,
-      setCallMethod,
+      setMethodCall,
       setContractVariable,
     };
 

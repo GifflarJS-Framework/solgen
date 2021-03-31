@@ -1,5 +1,5 @@
 export interface INewContract {
-  statement: string;
+  statement: "newcontract";
   contractName: string;
   args: Array<string>;
 }

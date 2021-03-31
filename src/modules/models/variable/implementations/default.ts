@@ -1,5 +1,5 @@
 import { ICreateVariableDTO } from "../types/ICreateVariableDTO";
-import { IVariable } from "../types/IVariable";
+import { ILocalVariable } from "../types/ILocalVariable";
 
 /**
  * @todo Finish documentation
@@ -31,25 +31,16 @@ import { IVariable } from "../types/IVariable";
 function createVariableModel({
   type,
   name,
-  scope = "",
-  setMethod = false,
   value = "",
-}: ICreateVariableDTO): IVariable {
-  if (scope) {
-    return {
-      type,
-      name,
-      scope,
-      value,
-      setMethod,
-    };
-  }
-  return {
+}: ICreateVariableDTO): ILocalVariable {
+  const variable: ILocalVariable = {
     statement: "variable",
     type,
     name,
     value,
   };
+
+  return variable;
 }
 
 export default createVariableModel;

@@ -34,10 +34,10 @@ import { IInput } from "../types/IInput";
 function createFunctionModel({
   name,
   scope,
-  isConstructor,
+  isConstructor = false,
   inputs,
   outputs,
-  globalVars,
+  globalVars = [],
 }: ICreateFunctionDTO): IFunction {
   const content_json = createContentModel({ globalVars });
   /**
@@ -49,6 +49,7 @@ function createFunctionModel({
     isConstructor: isConstructor || false,
     inputs: inputs || [],
     outputs: outputs || [],
+    modifiers: [],
     ...content_json,
 
     /**

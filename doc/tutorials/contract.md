@@ -16,7 +16,7 @@ contract
   .setInput("string", "_message")
   .setOutput("message")
   .setVariable("string", "tmp")
-  .setCallEvent(event)
+  .setEventCall(event)
   .setAssignment("message", "_message")
   .beginIf("val == 1")
   .beginIf("val == 1")
@@ -54,7 +54,7 @@ contract
                 value: "",
               },
               {
-                statement: "callevent",
+                statement: "event_call",
                 name: "temperatureOverflow",
                 inputs: [{ name: "_message", type: "string" }],
               },

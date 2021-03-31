@@ -1,5 +1,5 @@
 const createContract = require("./contract");
-const createContractWriter = require("../writers/contractWriter");
+const createContractWriter = require("../writers/old/contractWriter");
 const createCompiler = require("../compiler/compiler");
 const createDeployer = require("../deployer/deployer");
 

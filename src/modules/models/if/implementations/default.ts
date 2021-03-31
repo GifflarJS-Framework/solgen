@@ -30,7 +30,7 @@ function createIfModel({ condition = "", onElse = false }: ICreateIf): IIf {
   /**
    * @todo Write documentation
    */
-  const _if = {
+  const _if: IIf = {
     statement: "if",
     else: onElse || false,
     condition: condition || "",

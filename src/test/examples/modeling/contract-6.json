@@ -124,7 +124,7 @@
               "condition": "temperature <= maxTemperature",
               "content": [
                 {
-                  "statement": "callevent",
+                  "statement": "event_call",
                   "name": "temperatureOverflow",
                   "inputs": [
                     {
@@ -141,7 +141,7 @@
               "condition": "temperature >= minTemperature",
               "content": [
                 {
-                  "statement": "callevent",
+                  "statement": "event_call",
                   "name": "temperatureUnderflow",
                   "inputs": [
                     {
@@ -177,7 +177,7 @@
               "condition": "humidity <= maxHumidity",
               "content": [
                 {
-                  "statement": "callevent",
+                  "statement": "event_call",
                   "name": "humidityOverflow",
                   "inputs": [
                     {
@@ -194,7 +194,7 @@
               "condition": "humidity >= minHumidity",
               "content": [
                 {
-                  "statement": "callevent",
+                  "statement": "event_call",
                   "name": "humidityUnderflow",
                   "inputs": [
                     {
@@ -249,7 +249,7 @@
               "value": "new DHT11(_owner)"
             },
             {
-              "statement": "callmethod",
+              "statement": "method_call",
               "variable": "contracts",
               "method": "push",
               "value": "newContract"

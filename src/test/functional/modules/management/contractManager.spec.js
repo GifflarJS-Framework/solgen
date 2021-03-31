@@ -3,10 +3,12 @@ const helpers = require("@utils/helpers");
 const { createConfig } = require("@test/lib/compile_config");
 const assert = require("assert");
 const fs = require("fs");
-const writing_path = __dirname + "/../../../examples/writing/";
+
+const writing_path = `${__dirname}/../../../examples/writing/`;
 const solc = require("solc");
 const ganache = require("ganache-cli");
 const Web3 = require("web3");
+
 const web3 = new Web3(ganache.provider());
 const { execSync } = require("child_process");
 
@@ -66,10 +68,10 @@ describe("Test ContractManager", () => {
       .beginIf("_valueId == 1")
       .setAssignment("value1", "_val")
       .beginIf("value1 >= max_value1")
-      .setCallEvent("temperatureOverflow", ["value1", "max_value1"])
+      .setEventCall("temperatureOverflow", ["value1", "max_value1"])
       .endIf()
       .beginElseIf("value1 <= min_value1")
-      .setCallEvent("temperatureUnderflow", ["value1", "min_value1"])
+      .setEventCall("temperatureUnderflow", ["value1", "min_value1"])
       .endElseIf()
       .endIf();
 
@@ -97,7 +99,7 @@ describe("Test ContractManager", () => {
       .createFunction("createContract", "public")
       .setInput("address", "_owner")
       .setContractVariable("newContract", "DHT11", ["_owner"])
-      .setCallMethod("contracts", "push", "newContract")
+      .setMethodCall("contracts", "push", "newContract")
       .setAssignment("counter", "counter + 1");
 
     gContractController
@@ -122,7 +124,7 @@ describe("Test ContractManager", () => {
     // Writing again
     actual_code = manager.write();
 
-    expected_code = fs.readFileSync(writing_path + "contract-5.txt", {
+    expected_code = fs.readFileSync(`${writing_path}contract-5.txt`, {
       encoding: "utf8",
     });
 

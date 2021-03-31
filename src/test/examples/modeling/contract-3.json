@@ -29,7 +29,7 @@
             "value": "_message"
           },
           {
-            "statement": "callevent",
+            "statement": "event_call",
             "name": "myEvent",
             "inputs": [
               {

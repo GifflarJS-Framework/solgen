@@ -1,5 +1,5 @@
-import createEventModel from "@models/callevent";
-import { IEvent } from "@models/callevent/types/IEvent";
+import createEventModel from "@models/eventCall";
+import { IEventCall } from "@models/eventCall/types/IEventCall";
 import createFunctionModel from "@models/function";
 import { IFunction } from "@models/function/types/IFunction";
 import { IInput } from "@models/function/types/IInput";
@@ -52,9 +52,9 @@ function createContractModel({ contractName }: ICreateContractDTO): IContract {
     /**
      * @todo Write documentation
      */
-    createEvent(name: string, inputs: Array<IInput>): IEvent {
-      const newCallEvent = createEventModel({ name, inputs });
-      return newCallEvent;
+    createEventCall(name: string, inputs: Array<IInput>): IEventCall {
+      const newEventCall = createEventModel({ name, inputs });
+      return newEventCall;
     },
 
     /**

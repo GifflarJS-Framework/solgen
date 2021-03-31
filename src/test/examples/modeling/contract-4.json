@@ -96,7 +96,7 @@
                   "condition": "value1 >= max_value1",
                   "content": [
                     {
-                      "statement": "callevent",
+                      "statement": "event_call",
                       "name": "temperatureOverflow",
                       "inputs": [
                         {
@@ -117,7 +117,7 @@
                   "condition": "value1 <= min_value1",
                   "content": [
                     {
-                      "statement": "callevent",
+                      "statement": "event_call",
                       "name": "temperatureUnderflow",
                       "inputs": [
                         {

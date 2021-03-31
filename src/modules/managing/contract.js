@@ -1,5 +1,5 @@
 const createContractModel = require("../models/contract");
-const createContractWriter = require("../writers/contractWriter");
+const createContractWriter = require("../writers/old/contractWriter");
 const createCompiler = require("../compiler/compiler");
 const createDeployer = require("../deployer/deployer");
 
@@ -68,7 +68,7 @@ function createContract(name = "") {
    * });
    */
   function compile(cb) {
-    let errors = undefined;
+    let errors;
     contract.json = compiler.compile(contract.code);
     if (cb) {
       if (contract.json.errors) {

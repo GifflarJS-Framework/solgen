@@ -1,5 +1,5 @@
 const assert = require("assert");
-const createContractWriter = require("../../../../modules/writers/contractWriter");
+const createContractWriter = require("../../../../modules/writers/old/contractWriter");
 const helpers = require("../../../../utils/helpers");
 const json = require("../../../examples/modeling/contract-2.json");
 
