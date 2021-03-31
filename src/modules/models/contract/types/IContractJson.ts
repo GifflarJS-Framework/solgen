@@ -1,5 +1,6 @@
 import { IFunction } from "@models/function/types/IFunction";
 import { IGlobalVariable } from "@models/globalVariable/types/IGlobalVariable";
+import { Contract } from "web3-eth-contract";
 
 export interface IContractJson {
   name: string;
@@ -7,4 +8,7 @@ export interface IContractJson {
     variables: Array<IGlobalVariable>;
     functions: Array<IFunction>;
   };
+  code: string;
+  json: any;
+  instance: Contract;
 }

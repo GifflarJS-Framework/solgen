@@ -11,6 +11,9 @@
     "paths": {
       "@models/*": ["modules/models/*"],
       "@writers/*": ["modules/writers/*"],
+      "@compiler": ["modules/compiler"],
+      "@deployer": ["modules/deployer"],
+      "@managing/*": ["modules/managing/*"],
       "@utils/*": ["utils/*"],
       "@test/*": ["test/*"]
     },

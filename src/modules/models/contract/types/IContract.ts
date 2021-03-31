@@ -5,7 +5,7 @@ import { IVariable } from "@models/variable/types/IVariable";
 import { IContractJson } from "./IContractJson";
 
 export interface IContract extends IContractJson {
-  json(): IContractJson;
+  toJson(): IContractJson;
 
   createEventCall(name: string, inputs: Array<IInput>): IEventCall;
 
