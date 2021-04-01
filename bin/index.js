@@ -1,10 +1,9 @@
-require("module-alias/register");
-const createContractManager = require("@management/contractManager");
-const createContract = require("@management/contract");
+import createContractManager from ("@managing/contractManager");
+import createContract from ("@managing/contract");
 
 const Gifflar = {
   createContractManager,
   createContract,
 };
 
-module.exports = Gifflar;
+export default Gifflar;
