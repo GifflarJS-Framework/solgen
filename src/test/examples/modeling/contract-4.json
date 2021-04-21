@@ -4,6 +4,7 @@
     "contract": {
       "variables": [
         {
+          "statement": "global_variable",
           "type": "address",
           "name": "manager",
           "scope": "public",
@@ -11,6 +12,7 @@
           "setMethod": false
         },
         {
+          "statement": "global_variable",
           "type": "string",
           "name": "name",
           "scope": "public",
@@ -18,6 +20,7 @@
           "setMethod": true
         },
         {
+          "statement": "global_variable",
           "type": "uint256",
           "name": "value1",
           "scope": "public",
@@ -25,6 +28,7 @@
           "setMethod": false
         },
         {
+          "statement": "global_variable",
           "type": "uint256",
           "name": "max_value1",
           "scope": "public",
@@ -32,6 +36,7 @@
           "setMethod": false
         },
         {
+          "statement": "global_variable",
           "type": "uint256",
           "name": "min_value1",
           "scope": "public",
@@ -51,6 +56,7 @@
             }
           ],
           "outputs": [],
+          "modifiers": [],
           "content": [
             {
               "statement": "assignment",
@@ -79,6 +85,7 @@
             }
           ],
           "outputs": [],
+          "modifiers": [],
           "content": [
             {
               "statement": "if",

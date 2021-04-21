@@ -49,7 +49,7 @@ interface IIfContent extends IIf, IContent {}
 function createContentModel({ globalVars = [] }: ICreateContentDTO): IContent {
   // Copying the array
   const contentVars: Array<IVariable> = [].concat(Object.assign(globalVars));
-  const stack: Array<IStackItem> = [
+  const stack: Array<any> = [
     {
       content: [],
     },

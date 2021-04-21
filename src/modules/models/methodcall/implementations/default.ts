@@ -12,7 +12,7 @@ function createMethodModel({
   method,
   value,
 }: ICreateMethodCallDTO): IMethodCall {
-  const jsonmethod = {
+  const jsonmethod: IMethodCall = {
     statement: "method_call",
     variable,
     method,

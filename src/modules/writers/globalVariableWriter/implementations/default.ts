@@ -34,12 +34,19 @@ function createGlobalVariableWriter(): IGlobalVariableWriter {
      * @private
      */
     write(
-      variables: Array<IGlobalVariable>,
+      variables: IGlobalVariable | Array<IGlobalVariable>,
       callback: (request: IRequest) => void
     ): string {
       let text = "";
       text = "//VARIABLES\n";
-      variables.map((v) => {
+      let variableList: IGlobalVariable[] = [];
+      if (Array.isArray(variables)) {
+        variableList = variables;
+      } else {
+        variableList = [variables];
+      }
+
+      variableList.map((v) => {
         if (v.scope) {
           text += `${v.type} ${v.scope} ${v.name}`;
           if (v.value) {

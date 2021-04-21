@@ -9,6 +9,7 @@
     }
   ],
   "outputs": ["_message"],
+  "modifiers": [],
   "content": [
     {
       "statement": "assignment",

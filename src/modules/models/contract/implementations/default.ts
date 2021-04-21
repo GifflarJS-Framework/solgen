@@ -3,6 +3,7 @@ import { IEventCall } from "@models/eventCall/types/IEventCall";
 import createFunctionModel from "@models/function";
 import { IFunction } from "@models/function/types/IFunction";
 import { IInput } from "@models/function/types/IInput";
+import createGlobalVariableModel from "@models/globalVariable/implementations/default";
 import createVariableModel from "@models/variable";
 import { IVariable } from "@models/variable/types/IVariable";
 import { IContract } from "../types/IContract";
@@ -44,7 +45,7 @@ function createContractModel({ contractName }: ICreateContractDTO): IContract {
       functions: [],
     },
 
-    json(): IContractJson {
+    toJson(): IContractJson {
       const jsonfunction = JSON.stringify(this);
       return JSON.parse(jsonfunction);
     },
@@ -67,15 +68,23 @@ function createContractModel({ contractName }: ICreateContractDTO): IContract {
       setMethod?: boolean,
       value?: string
     ): IVariable {
-      const variable = createVariableModel({
-        type,
-        name,
-        scope,
-        setMethod,
-        value,
-      });
+      let variable = null;
+      if (scope) {
+        variable = createGlobalVariableModel({
+          type,
+          name,
+          scope,
+          setMethod,
+          value,
+        });
+      } else {
+        variable = createVariableModel({
+          type,
+          name,
+          value,
+        });
+      }
       this.contract.variables.push(variable);
-
       return variable;
     },
 

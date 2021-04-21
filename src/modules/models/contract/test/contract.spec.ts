@@ -66,8 +66,7 @@ describe("Test Contract", () => {
       .endIf();
 
     // Asserting the result
-    assert.strictEqual(
-      gContract.toString(),
+    expect(gContract.toString()).toEqual(
       JSON.stringify(JSON.parse(expected_model)[0])
     );
   });
