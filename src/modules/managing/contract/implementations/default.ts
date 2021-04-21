@@ -1,10 +1,10 @@
-import createContractModel from "@models/contract";
-import createContractWriter from "@writers/contractWriter";
 import createCompiler from "@compiler";
 import createDeployer from "@deployer";
-import { IDeployerInputs } from "modules/deployer/types/IDeployerInputs";
+import createContractModel from "@models/contract";
+import createContractWriter from "@writers/contractWriter";
 import Web3 from "web3";
 import { Contract } from "web3-eth-contract";
+import { IContractDeployDTO } from "../types/IContractDeployDTO";
 import { IGifflarContract } from "../types/IGifflarContract";
 
 /**
@@ -112,7 +112,7 @@ function createContract(name = ""): IGifflarContract {
      *    gas: 300000
      * }, web3);
      */
-    async deploy(inputs: IDeployerInputs, web3: Web3): Promise<Contract> {
+    async deploy(inputs: IContractDeployDTO, web3: Web3): Promise<Contract> {
       deployer.setWeb3(web3);
       const json = contract.json.contracts.jsons[contract.name];
       if (!json) {

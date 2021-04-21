@@ -1,11 +1,12 @@
-import createContract from "@managing/contract";
-import createContractWriter from "@writers/contractWriter";
 import createCompiler from "@compiler";
 import createDeployer from "@deployer";
+import createContract from "@managing/contract";
 import { IGifflarContract } from "@managing/contract/types/IGifflarContract";
-import { IDeployerInputs } from "modules/deployer/types/IDeployerInputs";
+import createContractWriter from "@writers/contractWriter";
+import Web3 from "web3";
 import { Contract } from "web3-eth-contract";
 import { IContractManager } from "../types/IContractManager";
+import { IManagerDeployDTO } from "../types/IManagerDeployDTO";
 
 /**
  * @author Levy Santiago
@@ -26,7 +27,7 @@ import { IContractManager } from "../types/IContractManager";
  * @requires createCompiler
  * @requires createDeployer
  */
-function createContractManager(web3 = null): IContractManager {
+function createContractManager(web3: Web3 | null): IContractManager {
   const contractWriter = createContractWriter();
   const compiler = createCompiler();
   const deployer = createDeployer({ web3 });
@@ -41,6 +42,24 @@ function createContractManager(web3 = null): IContractManager {
   //   code: "",
   //   json: {},
   // };
+
+  function _writeContracts(contracts: Array<IGifflarContract>): string {
+    let _contracts: Array<IGifflarContract> = contracts;
+
+    // If contract object should be updated
+    let callback = null;
+
+    // Saving the individual code inside contract
+    callback = (individualCode: string, index: number) => {
+      // Updating individual contracts
+      _contracts[index].code = individualCode;
+    };
+
+    // Call the contract writer to write the contracts code
+    const code = contractWriter.write(_contracts, callback);
+
+    return code;
+  }
 
   const contractManager: IContractManager = {
     contracts: [],
@@ -117,29 +136,19 @@ function createContractManager(web3 = null): IContractManager {
      * manager.write();
      * manager.write([contract, second_contract]);
      */
+    writeAll(): string {
+      const _code = _writeContracts(this.contracts);
+      this.code = _code;
+      return this.code;
+    },
+
     write(contracts: Array<IGifflarContract>): string {
-      let _contracts: Array<IGifflarContract> = [];
+      const _code = _writeContracts(contracts);
+      this.code = _code;
+      return this.code;
+    },
 
-      // If a list of contracts was passed
-      if (contracts && Array.isArray(contracts) && contracts[0]) {
-        _contracts = contracts;
-      } else {
-        // Copying data contracts
-        _contracts = [...this.contracts];
-      }
-
-      // If contract object should be updated
-      let callback = null;
-
-      // Saving the individual code inside contract
-      callback = (individualCode: string, index: number) => {
-        // Updating individual contracts
-        _contracts[index].code = individualCode;
-      };
-
-      // Call the contract writer to write the contracts code
-      this.code = contractWriter.write(_contracts, callback);
-
+    written(): string | undefined {
       return this.code;
     },
 
@@ -240,7 +249,7 @@ function createContractManager(web3 = null): IContractManager {
      */
     async deploy(
       contractName: string,
-      inputs: IDeployerInputs
+      inputs: IManagerDeployDTO
     ): Promise<Contract> {
       // Obtaining the contract JSON
       const json = this.json.contracts.jsons[contractName];

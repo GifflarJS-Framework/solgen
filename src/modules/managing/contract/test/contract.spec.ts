@@ -5,8 +5,8 @@ const expectedJson = JSON.stringify(
   require("@test/examples/modeling/contract-1.json")
 );
 
-describe("Contract Writer", () => {
-  it("Writing Contract", () => {
+describe("Gifflar Contract", () => {
+  it("Writing Gifflar Contract", () => {
     const gContract = createContract("MyContract");
 
     const expected = fs.readFileSync(writing_path + "contract-1.txt", {

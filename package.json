@@ -49,7 +49,6 @@
     "prettier": "^2.2.1",
     "ts-jest": "26.4.4",
     "tsconfig-paths": "^3.9.0",
-    "types-solc": "^1.0.1",
     "typescript": "^4.2.3"
   },
   "dependencies": {

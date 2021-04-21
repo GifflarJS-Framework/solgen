@@ -4,6 +4,7 @@
     "contract": {
       "variables": [
         {
+          "statement": "global_variable",
           "type": "address",
           "name": "manager",
           "scope": "public",
@@ -11,6 +12,7 @@
           "setMethod": false
         },
         {
+          "statement": "global_variable",
           "type": "string",
           "name": "name",
           "scope": "public",
@@ -18,6 +20,7 @@
           "setMethod": true
         },
         {
+          "statement": "global_variable",
           "type": "uint256",
           "name": "value1",
           "scope": "public",
@@ -25,6 +28,7 @@
           "setMethod": false
         },
         {
+          "statement": "global_variable",
           "type": "uint256",
           "name": "max_value1",
           "scope": "public",
@@ -32,6 +36,7 @@
           "setMethod": false
         },
         {
+          "statement": "global_variable",
           "type": "uint256",
           "name": "min_value1",
           "scope": "public",
@@ -51,16 +56,17 @@
             }
           ],
           "outputs": [],
+          "modifiers": [],
           "content": [
             {
               "statement": "assignment",
               "variable": "manager",
-              "value": "_owner"
+              "value": { "statement": "expression", "value": "_owner" }
             },
             {
               "statement": "assignment",
               "variable": "name",
-              "value": "\"DHT11\""
+              "value": { "statement": "expression", "value": "\"DHT11\"" }
             }
           ]
         },
@@ -79,6 +85,7 @@
             }
           ],
           "outputs": [],
+          "modifiers": [],
           "content": [
             {
               "statement": "if",
@@ -88,7 +95,7 @@
                 {
                   "statement": "assignment",
                   "variable": "value1",
-                  "value": "_val"
+                  "value": { "statement": "expression", "value": "_val" }
                 },
                 {
                   "statement": "if",
@@ -144,6 +151,7 @@
     "contract": {
       "variables": [
         {
+          "statement": "global_variable",
           "type": "DHT11[]",
           "name": "contracts",
           "scope": "public",
@@ -151,6 +159,7 @@
           "setMethod": false
         },
         {
+          "statement": "global_variable",
           "type": "uint256",
           "name": "counter",
           "scope": "private",
@@ -170,6 +179,7 @@
             }
           ],
           "outputs": [],
+          "modifiers": [],
           "content": [
             {
               "statement": "variable",
@@ -190,7 +200,7 @@
             {
               "statement": "assignment",
               "variable": "counter",
-              "value": "counter + 1"
+              "value": { "statement": "expression", "value": "counter + 1" }
             }
           ]
         },
@@ -200,6 +210,7 @@
           "isConstructor": false,
           "inputs": [],
           "outputs": ["_contract"],
+          "modifiers": [],
           "content": [
             {
               "statement": "variable",
@@ -215,7 +226,10 @@
                 {
                   "statement": "assignment",
                   "variable": "_contract",
-                  "value": "contracts[counter - 1]"
+                  "value": {
+                    "statement": "expression",
+                    "value": "contracts[counter - 1]"
+                  }
                 }
               ]
             },
@@ -227,7 +241,10 @@
                 {
                   "statement": "assignment",
                   "variable": "_contract",
-                  "value": "contracts[0]"
+                  "value": {
+                    "statement": "expression",
+                    "value": "contracts[0]"
+                  }
                 }
               ]
             }
