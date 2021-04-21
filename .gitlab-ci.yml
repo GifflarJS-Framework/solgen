@@ -8,9 +8,8 @@ stages:
 quality:
   stage: test
   script:
-    - npm install
-    - npm i --save-dev @types/jest
-    - npm test
+    - yarn
+    - yarn test
 
 pages:
   stage: deploy
