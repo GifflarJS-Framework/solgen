@@ -61,12 +61,18 @@
             {
               "statement": "assignment",
               "variable": "manager",
-              "value": "_owner"
+              "value": {
+                "statement": "expression",
+                "value": "_owner"
+              }
             },
             {
               "statement": "assignment",
               "variable": "name",
-              "value": "\"DHT11\""
+              "value": {
+                "statement": "expression",
+                "value": "\"DHT11\""
+              }
             }
           ]
         },
@@ -95,7 +101,10 @@
                 {
                   "statement": "assignment",
                   "variable": "value1",
-                  "value": "_val"
+                  "value": {
+                    "statement": "expression",
+                    "value": "_val"
+                  }
                 },
                 {
                   "statement": "if",

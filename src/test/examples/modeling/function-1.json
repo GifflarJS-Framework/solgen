@@ -14,7 +14,10 @@
     {
       "statement": "assignment",
       "variable": "message",
-      "value": "_message"
+      "value": {
+        "statement": "expression",
+        "value": "_message"
+      }
     },
     {
       "statement": "if",
@@ -24,7 +27,10 @@
         {
           "statement": "assignment",
           "variable": "message",
-          "value": "_message"
+          "value": {
+            "statement": "expression",
+            "value": "_message"
+          }
         }
       ]
     }

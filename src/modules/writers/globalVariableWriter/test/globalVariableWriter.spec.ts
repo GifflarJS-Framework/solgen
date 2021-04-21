@@ -23,7 +23,16 @@ describe("Variable Writer", () => {
         inputs: [{ name: "_age", type: "uint" }],
         outputs: [],
         modifiers: [],
-        content: [{ statement: "assignment", variable: "age", value: "_age" }],
+        content: [
+          {
+            statement: "assignment",
+            variable: "age",
+            value: {
+              statement: "expression",
+              value: "_age",
+            },
+          },
+        ],
       },
     ];
     const result = variableWriter.write(variable, (request: IRequest) => {
@@ -68,7 +77,16 @@ describe("Variable Writer", () => {
         inputs: [{ name: "_age", type: "uint" }],
         outputs: [],
         modifiers: [],
-        content: [{ statement: "assignment", variable: "age", value: "_age" }],
+        content: [
+          {
+            statement: "assignment",
+            variable: "age",
+            value: {
+              statement: "expression",
+              value: "_age",
+            },
+          },
+        ],
       },
     ];
     const result = variableWriter.write(variables, (request: IRequest) => {

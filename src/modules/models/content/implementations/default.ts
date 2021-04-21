@@ -12,6 +12,7 @@ import { IVariable } from "@models/variable/types/IVariable";
 import { IContent } from "../types/IContent";
 import { ICreateContentDTO } from "../types/ICreateContentDTO";
 import { IStackItem } from "../types/IStackItem";
+import createExpressionModel from "@models/expression/";
 
 interface IIfContent extends IIf, IContent {}
 
@@ -115,13 +116,11 @@ function createContentModel({ globalVars = [] }: ICreateContentDTO): IContent {
    * @param {*} variable
    * @param {*} expression
    */
-  function setAssignment(
-    variable: string,
-    expression: string | undefined
-  ): IContent {
+  function setAssignment(variable: string, expression: string): IContent {
+    const expressionModel = createExpressionModel({ value: expression });
     const newAssignment = createAssignmentModel({
       variable,
-      value: expression,
+      value: expressionModel,
     });
     stack[top].content.push(newAssignment);
     const contentItem: IContent = _assignFunctions(stack[top]);

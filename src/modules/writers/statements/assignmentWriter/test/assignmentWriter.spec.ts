@@ -7,7 +7,10 @@ describe("Assignment Writer", () => {
     const assignment: IAssignment = {
       statement: "assignment",
       variable: "age",
-      value: "20",
+      value: {
+        statement: "expression",
+        value: "20",
+      },
     };
 
     const expected = "age = 20;";

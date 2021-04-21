@@ -26,14 +26,14 @@ function createAssignmentWriter(): IAssignmentWriter {
      * "message = _message;"
      */
     write(json: IAssignment): string {
-      let expressionValue = json.value;
-      if (typeof expressionValue === "object") {
-        const expression: IExpression = createExpressionModel({
-          value: expressionValue,
-        });
-        expressionValue = expressionWriter.write(expression);
-      }
-      const text = `${json.variable} = ${expressionValue};\n`;
+      let expression = json.value;
+      // if (typeof expressionValue === "object") {
+      // const expression: IExpression = createExpressionModel({
+      //   value: expressionValue.value,
+      // });
+      const expressionText = expressionWriter.write(expression);
+      // }
+      const text = `${json.variable} = ${expressionText};\n`;
       return text;
     },
   };

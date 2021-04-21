@@ -6,7 +6,7 @@ import { IExpression } from "../types/IExpression";
  * @ignore
  */
 function createExpressionModel({ value }: ICreateExpressionDTO): IExpression {
-  const expression = {
+  const expression: IExpression = {
     statement: "expression",
     value: value,
   };
