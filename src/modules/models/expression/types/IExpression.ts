@@ -1,4 +1,4 @@
 export interface IExpression {
-  statement?: string;
+  statement?: "expression";
   value: string;
 }

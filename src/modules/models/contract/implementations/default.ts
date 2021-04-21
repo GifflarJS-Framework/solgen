@@ -4,6 +4,7 @@ import createFunctionModel from "@models/function";
 import { IFunction } from "@models/function/types/IFunction";
 import { IInput } from "@models/function/types/IInput";
 import createGlobalVariableModel from "@models/globalVariable/implementations/default";
+import { IGlobalVariable } from "@models/globalVariable/types/IGlobalVariable";
 import createVariableModel from "@models/variable";
 import { IVariable } from "@models/variable/types/IVariable";
 import { IContract } from "../types/IContract";
@@ -64,26 +65,26 @@ function createContractModel({ contractName }: ICreateContractDTO): IContract {
     createVariable(
       type: string,
       name: string,
-      scope?: string,
+      scope: string,
       setMethod?: boolean,
       value?: string
-    ): IVariable {
-      let variable = null;
+    ): IGlobalVariable {
+      const variable = createGlobalVariableModel({
+        type,
+        name,
+        scope,
+        setMethod,
+        value,
+      });
       if (scope) {
-        variable = createGlobalVariableModel({
-          type,
-          name,
-          scope,
-          setMethod,
-          value,
-        });
-      } else {
-        variable = createVariableModel({
-          type,
-          name,
-          value,
-        });
       }
+      // else {
+      //   variable = createVariableModel({
+      //     type,
+      //     name,
+      //     value,
+      //   });
+      // }
       this.contract.variables.push(variable);
       return variable;
     },

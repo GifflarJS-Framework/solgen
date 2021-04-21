@@ -1,7 +1,7 @@
 import { IEventCall } from "@models/eventCall/types/IEventCall";
 import { IFunction } from "@models/function/types/IFunction";
 import { IInput } from "@models/function/types/IInput";
-import { IVariable } from "@models/variable/types/IVariable";
+import { IGlobalVariable } from "@models/globalVariable/types/IGlobalVariable";
 import { IContractJson } from "./IContractJson";
 
 export interface IContract extends IContractJson {
@@ -12,10 +12,10 @@ export interface IContract extends IContractJson {
   createVariable(
     type: string,
     name: string,
-    scope?: string,
+    scope: string,
     setMethod?: boolean,
     value?: string
-  ): IVariable;
+  ): IGlobalVariable;
 
   createConstructor(
     scope: string,
