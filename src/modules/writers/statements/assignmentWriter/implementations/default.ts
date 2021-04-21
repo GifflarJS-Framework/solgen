@@ -1,6 +1,6 @@
 import { IAssignment } from "@models/assignment/types/IAssignment";
 import { IExpression } from "@models/expression/types/IExpression";
-import createExpressionModel from "@models/old/expression";
+import createExpressionModel from "@models/expression";
 import createExpressionWriter from "../../expressionWriter";
 import { IAssignmentWriter } from "../types/IAssignmentWriter";
 
