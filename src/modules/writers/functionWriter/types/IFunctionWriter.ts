@@ -1,9 +1,9 @@
-import { IFunction } from "@models/function/types/IFunction";
+import { IFunctionJson } from "@models/function/types/IFunctionJson";
 import { IRequest } from "@models/request/types/IRequest";
 
 export interface IFunctionWriter {
   write(
-    functions: Array<IFunction>,
+    functions: Array<IFunctionJson>,
     callback: (request: IRequest) => void
   ): string;
 }

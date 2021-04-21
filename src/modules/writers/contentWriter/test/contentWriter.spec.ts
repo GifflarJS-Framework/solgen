@@ -1,4 +1,3 @@
-import assignment from "@models/assignment";
 import { IContents } from "@models/content/types/IContents";
 import createContentWriter from "../implementations/default";
 

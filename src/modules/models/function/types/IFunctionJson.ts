@@ -1,6 +1,7 @@
+import { IStackItem } from "@models/content/types/IStackItem";
 import { IInput } from "./IInput";
 
-export interface IFunctionJson {
+export interface IFunctionJson extends IStackItem {
   name: string;
   scope: string;
   isConstructor: boolean;

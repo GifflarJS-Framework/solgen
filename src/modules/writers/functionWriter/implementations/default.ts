@@ -9,6 +9,7 @@ import { ILocalVariable } from "@models/variable/types/ILocalVariable";
 import { IVariable } from "@models/variable/types/IVariable";
 import { IContents } from "@models/content/types/IContents";
 import { IFunctionWriter } from "../types/IFunctionWriter";
+import { IFunctionJson } from "@models/function/types/IFunctionJson";
 
 /**
  * @name createFunctionWriter
@@ -34,7 +35,9 @@ function createFunctionWriter(
   const inputWriter = createInputWriter();
   const contentWriter = createContentWriter();
 
-  function _selectFunctionVariables(func: IFunction): Array<ILocalVariable> {
+  function _selectFunctionVariables(
+    func: IFunctionJson
+  ): Array<ILocalVariable> {
     const localVariables: Array<any> = func.content.filter(
       (item: IContents) => {
         return item.statement === "variable";
@@ -86,7 +89,7 @@ function createFunctionWriter(
      * }
      */
     write(
-      functions: Array<IFunction>,
+      functions: Array<IFunctionJson>,
       callback: (request: IRequest) => void
     ): string {
       let text = "//FUNCTIONS\n";
