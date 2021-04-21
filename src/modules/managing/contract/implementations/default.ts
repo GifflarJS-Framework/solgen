@@ -78,7 +78,9 @@ function createContract(name = ""): IGifflarContract {
      */
     compile(callback: (errors: any) => void): any {
       let errors;
-      contract.json = compiler.compile(contract.code);
+      if (contract.code) {
+        contract.json = compiler.compile(contract.code);
+      }
       if (callback) {
         if (contract.json.errors) {
           errors = contract.json.errors;
@@ -139,7 +141,7 @@ function createContract(name = ""): IGifflarContract {
      * Usage
      * contract.written();
      */
-    written(): string {
+    written(): string | undefined {
       return contract.code;
     },
 
@@ -155,7 +157,7 @@ function createContract(name = ""): IGifflarContract {
      * Usage
      * contract.compiled();
      */
-    compiled(): any {
+    compiled(): any | undefined {
       return contract.json;
     },
 
@@ -171,7 +173,7 @@ function createContract(name = ""): IGifflarContract {
      * Usage
      * contract.deployed();
      */
-    deployed(): Contract {
+    deployed(): Contract | undefined {
       return contract.instance;
     },
   };

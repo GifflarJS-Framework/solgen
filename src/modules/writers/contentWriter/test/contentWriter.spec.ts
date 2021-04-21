@@ -33,7 +33,7 @@ describe("Content Writer", () => {
     const expected =
       "uint age = 20;\nif(age > 15){\nage = 30;\nemit ageUpdate(age);\n}";
     const result = contentWriter.write(contents, (request) => {
-      console.log(request);
+      // console.log(request);
 
       expect(request).toHaveProperty("functions", []);
       expect(request).toHaveProperty("events", [

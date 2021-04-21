@@ -4,15 +4,15 @@ import assert from "assert";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import ganache from "ganache-cli";
 import Web3 from "web3";
-import example_contract_4 from "@test/examples/modeling/contract-4.json";
 import createContract from "..";
 import { IContract } from "../types/IContract";
+const example_contract_4 = require("@test/examples/modeling/contract-4.json");
 
-const writing_path = `${__dirname}/../../../examples/writing/`;
-const web3 = new Web3(ganache.provider());
+// const writing_path = `${__dirname}/../../../examples/writing/`;
+// const web3 = new Web3(ganache.provider());
 
-const accounts: Array<string> = [];
-const smartCheck = createSmartcheck();
+// const accounts: Array<string> = [];
+// const smartCheck = createSmartcheck();
 
 // before(async () => {
 //   accounts = await web3.eth.getAccounts();

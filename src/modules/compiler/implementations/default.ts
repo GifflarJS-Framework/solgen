@@ -1,5 +1,5 @@
-// import solc from "solc";
-import { solc } from "types-solc";
+import solc from "solc";
+// import { solc } from "types-solc";
 import { ICompiler } from "../types/ICompiler";
 
 function createCompiler(): ICompiler {
