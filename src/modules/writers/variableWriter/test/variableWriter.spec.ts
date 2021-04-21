@@ -12,7 +12,7 @@ describe.only("Variable Writer", () => {
       value: "20",
     };
 
-    const expected = "uint age = 20;";
+    const expected = "uint age = 20";
     const result = variableWriter.write(variable, (request: IRequest) => {
       expect(request).toHaveProperty("functions", []);
       expect(request).toHaveProperty("events", []);

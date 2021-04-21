@@ -33,7 +33,7 @@ function createAssignmentWriter(): IAssignmentWriter {
       // });
       const expressionText = expressionWriter.write(expression);
       // }
-      const text = `${json.variable} = ${expressionText};\n`;
+      const text = `${json.variable} = ${expressionText}`;
       return text;
     },
   };

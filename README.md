@@ -20,9 +20,11 @@ Um framework para gerar, compilar e implementar contratos inteligentes em tempo 
 | Chamada de eventos      | :heavy_check_mark: | `emit myEvent(_name);`                                |
 | Criação de Funções      | :heavy_check_mark: | `function myFuntion() public {...}`                   |
 | Criação de Construtor   | :heavy_check_mark: | `function constructor() public {...}`                 |
-| Estrutura IF            | :heavy_check_mark: | `if(count == 1){...}`                                 |
+| Estrutura IF/Else       | :heavy_check_mark: | `if(count == 1){...}else{...}`                        |
 | IFs aninhados           | :heavy_check_mark: | `if(){if(){...}}`                                     |
-| Loops                   |        :x:         | `for(i=0;i<count;i++){...}`                           |
+| Loops For               | :heavy_check_mark: | `for(i=0;i<count;i++){...}`                           |
+| Loops While             |        :x:         | `while(a != b){...}`                                  |
+| Loops Do/While          |        :x:         | `do{...}while(a != b);`                               |
 | Herança                 |        :x:         | `contract Dog is Animal{...}`                         |
 
 ## Documentation

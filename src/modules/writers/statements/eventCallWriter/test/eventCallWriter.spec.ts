@@ -11,7 +11,7 @@ describe("Event Call Writer", () => {
       name: "eventName",
     };
 
-    const expected = "eventName(age);";
+    const expected = "eventName(age)";
     const expectedEvents: Array<IEventCall> = [eventCall];
     const result = eventCallWriter.write(eventCall, (request: IRequest) => {
       expect(request).toHaveProperty("functions", []);

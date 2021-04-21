@@ -13,7 +13,7 @@ describe("Assignment Writer", () => {
       },
     };
 
-    const expected = "age = 20;";
+    const expected = "age = 20";
     const result = assignmentWriter.write(assignment);
 
     expect(result).toMatch(expected);

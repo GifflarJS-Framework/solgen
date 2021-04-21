@@ -44,7 +44,7 @@ function createEventCallWriter(): IEventCallWriter {
       const text = `emit ${event.name}(${inputWriter.write(
         inputs_copy,
         false
-      )});\n`;
+      )})`;
 
       callback(request);
       return text;

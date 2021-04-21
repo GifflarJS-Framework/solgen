@@ -11,7 +11,7 @@ describe("Method Call Writer", () => {
       value: "20",
     };
 
-    const expected = "person.setAge(20);";
+    const expected = "person.setAge(20)";
     const result = methodCallWriter.write(inputs);
 
     expect(result).toMatch(expected);

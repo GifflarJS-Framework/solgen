@@ -22,7 +22,7 @@ function createMethodCallWriter(): IMethodCallWriter {
      * "messages.push(_message);"
      */
     write(json: IMethodCall): string {
-      return `${json.variable}.${json.method}(${json.value});\n`;
+      return `${json.variable}.${json.method}(${json.value})`;
     },
   };
 

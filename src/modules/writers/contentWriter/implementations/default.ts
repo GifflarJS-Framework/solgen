@@ -4,8 +4,9 @@ import { IRequest } from "@models/request/types/IRequest";
 import createGlobalVariableWriter from "@writers/globalVariableWriter";
 import createAssignmentWriter from "@writers/statements/assignmentWriter";
 import createEventCallWriter from "@writers/statements/eventCallWriter";
+import createForWriter from "@writers/statements/forWriter";
 import createIfWriter from "@writers/statements/ifWriter";
-import createCallMethodWriter from "@writers/statements/methodCallWriter";
+import createMethodCallWriter from "@writers/statements/methodCallWriter";
 import createVariableWriter from "@writers/variableWriter";
 import { IContentWriter } from "../types/IContentWriter";
 
@@ -25,20 +26,23 @@ import { IContentWriter } from "../types/IContentWriter";
 function createContentWriter(): IContentWriter {
   let request = createRequest();
   const ifWriter = createIfWriter(write);
+  const forWriter = createForWriter(write);
   const assignmentWriter = createAssignmentWriter();
   const eventCallWriter = createEventCallWriter();
-  const callMethodWriter = createCallMethodWriter();
+  const callMethodWriter = createMethodCallWriter();
   const variableWriter = createVariableWriter();
-  const globalVariableWriter = createGlobalVariableWriter();
 
   const statements = {
     assignment: assignmentWriter.write,
     if: ifWriter.write,
+    for: forWriter.write,
     event_call: eventCallWriter.write,
     variable: variableWriter.write,
     method_call: callMethodWriter.write,
-    global_variable: globalVariableWriter.write,
   };
+
+  // All statement control that doesn't need the ; in the end
+  const controls = ["if", "for"];
 
   /**
    * @name write
@@ -103,6 +107,10 @@ function createContentWriter(): IContentWriter {
         text += handler(anyItem, (_request: IRequest) => {
           request = _request;
         });
+
+        if (!controls.includes(item.statement)) {
+          text += ";\n";
+        }
       }
 
       return text;

@@ -46,15 +46,15 @@ function createVariableWriter(): IVariableWriter {
      * @param {*} json_variables
      * @private
      */
-    write(variables: IVariable, callback: (request: IRequest) => void): string {
+    write(variable: IVariable, callback: (request: IRequest) => void): string {
       let text = "";
-      // If variables not an array, is the local variable definition
+      // If variable not an array, is the local variable definition
 
-      if (variables.value) {
-        const value = _handleValue(variables.value);
-        text += `${variables.type} ${variables.name} = ${value};\n`;
+      if (variable.value) {
+        const value = _handleValue(variable.value);
+        text += `${variable.type} ${variable.name} = ${value}`;
       } else {
-        text += `${variables.type} ${variables.name};\n`;
+        text += `${variable.type} ${variable.name}`;
       }
       // If variables is an array, is the global variable definition
 
