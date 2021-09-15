@@ -9,10 +9,10 @@ import createNewContractModel from "@models/newcontract";
 import { INewContract } from "@models/newcontract/types/INewContract";
 import createVariableModel from "@models/variable";
 import { IVariable } from "@models/variable/types/IVariable";
+import createExpressionModel from "@models/expression/";
 import { IContent } from "../types/IContent";
 import { ICreateContentDTO } from "../types/ICreateContentDTO";
 import { IStackItem } from "../types/IStackItem";
-import createExpressionModel from "@models/expression/";
 
 interface IIfContent extends IIf, IContent {}
 

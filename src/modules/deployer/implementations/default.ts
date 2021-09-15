@@ -49,7 +49,7 @@ function createDeployer({ web3 }: ICreateDeployerDTO): IDeployer {
 
         return contract;
       } catch (e) {
-        throw new Error(e);
+        throw new Error("Error when obtaining SmC instance");
       }
     },
 
@@ -66,7 +66,7 @@ function createDeployer({ web3 }: ICreateDeployerDTO): IDeployer {
         const contract = await new _web3.eth.Contract(abi, address);
         return contract;
       } catch (e) {
-        throw new Error(e);
+        throw new Error("Error when obtaining SmC instance");
       }
     },
   };

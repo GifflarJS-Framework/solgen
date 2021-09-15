@@ -7,7 +7,7 @@
     "strict": true,
     "strictPropertyInitialization": false,
     "baseUrl": "./src",
-    "allowJs": true,
+    "types": ["jest"],
     "paths": {
       "@models/*": ["modules/models/*"],
       "@writers/*": ["modules/writers/*"],
@@ -24,5 +24,9 @@
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
-  }
+  },
+  "exclude": [
+    "./bin/index.ts"
+  ],
+  "include": ["node_modules/@types", "src/**/**.ts", "src/test/unit/models/assignment.spec.js"]
 }
