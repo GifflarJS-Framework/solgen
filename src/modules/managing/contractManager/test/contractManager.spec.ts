@@ -2,7 +2,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import fs from "fs";
 import solc from "solc";
-import path from "path";
 import createContractManager from "../implementations/default";
 
 const writing_path = `${__dirname}/../../../../test/examples/writing/`;
