@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable import/no-extraneous-dependencies */
 import fs from "fs";
 import solc from "solc";
 import createContractManager from "../implementations/default";
-const writing_path = __dirname + "/../../../../test/examples/writing/";
+
+const writing_path = `${__dirname}/../../../../test/examples/writing/`;
 const expectedJson = JSON.stringify(
   require("@test/examples/modeling/contract-5.json")
 );
@@ -21,7 +24,7 @@ describe("Contract Manager Writer", () => {
     const gContract = gContractManager.newContract("DHT11");
     const gContractController = gContractManager.newContract("Controller");
 
-    const expected = fs.readFileSync(writing_path + "contract-5.txt", {
+    const expected = fs.readFileSync(`${writing_path}contract-5.txt`, {
       encoding: "utf8",
     });
 
@@ -101,6 +104,7 @@ describe("Contract Manager Writer", () => {
       if (Array.isArray(errors)) {
         errors.map((e) => {
           // console.log(e.formattedMessage);
+          return null;
         });
       }
     });
