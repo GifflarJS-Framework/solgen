@@ -7,7 +7,7 @@
         "name": "message",
         "scope": "public",
         "value": "",
-        "setMethod": true
+        "setMethod": false
       }
     ],
     "functions": [
@@ -15,28 +15,13 @@
         "name": "",
         "scope": "public",
         "isConstructor": true,
-        "inputs": [
-          {
-            "name": "_message",
-            "type": "string"
-          }
-        ],
+        "inputs": [{ "name": "_message", "type": "string" }],
         "outputs": [],
         "content": [
           {
             "statement": "assignment",
             "variable": "message",
             "value": "_message"
-          },
-          {
-            "statement": "event_call",
-            "name": "myEvent",
-            "inputs": [
-              {
-                "name": "message",
-                "type": "string"
-              }
-            ]
           }
         ]
       }

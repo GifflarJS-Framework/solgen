@@ -48,7 +48,7 @@ function createDeployer({ web3 }: ICreateDeployerDTO): IDeployer {
           });
 
         return contract;
-      } catch (e) {
+      } catch (e: any) {
         throw new Error(e);
       }
     },
@@ -65,7 +65,7 @@ function createDeployer({ web3 }: ICreateDeployerDTO): IDeployer {
       try {
         const contract = await new _web3.eth.Contract(abi, address);
         return contract;
-      } catch (e) {
+      } catch (e: any) {
         throw new Error(e);
       }
     },
