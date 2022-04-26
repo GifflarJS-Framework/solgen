@@ -4,6 +4,7 @@
   "description": "A smart contract generator framework for IoT.",
   "main": "bin/index.js",
   "scripts": {
+    "build": "rm -r bin && npx tsc -p tsconfig.json",
     "test": "jest",
     "testunit": "./node_modules/mocha/bin/mocha test/unit/**/*",
     "testfunc": "./node_modules/mocha/bin/mocha test/functional/**/*",

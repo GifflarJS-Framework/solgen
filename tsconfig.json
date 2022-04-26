@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "outDir": "./dist",
+    "outDir": "./bin",
     "rootDir": "./src",
     "strict": true,
     "strictPropertyInitialization": false,
@@ -22,11 +22,16 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
+    "declaration": true,
+    "emitDeclarationOnly": false,
+    "isolatedModules": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "exclude": [
-    "./bin/index.ts"
-  ],
-  "include": ["node_modules/@types", "src/**/**.ts", "src/test/unit/models/assignment.spec.js"]
+  "exclude": ["./bin/index.ts"],
+  "include": [
+    "node_modules/@types",
+    "src/**/**.ts",
+    "src/test/unit/models/assignment.spec.js"
+  ]
 }

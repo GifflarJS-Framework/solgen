@@ -1,4 +1,4 @@
-import createSmartcheck from "@test/lib/smartcheck";
+//import createSmartcheck from "@test/lib/smartcheck";
 import helpers from "@utils/helpers";
 import assert from "assert";
 // eslint-disable-next-line import/no-extraneous-dependencies

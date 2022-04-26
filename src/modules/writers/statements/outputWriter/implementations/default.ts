@@ -1,6 +1,7 @@
 import { IVariable } from "@models/variable/types/IVariable";
 import helpers from "@utils/helpers";
 import { IOutputWriter } from "../types/IOutputWriter";
+import { IOutputWriterCallbackObject } from "../types/IOutputWriterCallbackObject";
 
 /**
  * @name createOutputWriter

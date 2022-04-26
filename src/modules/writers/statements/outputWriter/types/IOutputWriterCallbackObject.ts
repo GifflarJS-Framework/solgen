@@ -1,3 +1,3 @@
-interface IOutputWriterCallbackObject {
+export interface IOutputWriterCallbackObject {
   text_returns: string;
 }
