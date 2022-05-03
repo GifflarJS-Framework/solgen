@@ -1,4 +1,4 @@
-import createRequestModelDefault from "./implementations/default";
+import createRequestModelDefault from "./implementations/Request";
 
 const implementations = {
   default: createRequestModelDefault,

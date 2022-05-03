@@ -1,7 +1,12 @@
-import createAssignmentModelDefault from "./implementations/default";
+import { container } from "tsyringe";
+import AssignmentModel from "./implementations/AssignmentModel";
+import { IAssignmentModel } from "./types/IAssignmentModel";
 
 const implementations = {
-  default: createAssignmentModelDefault,
+  default: AssignmentModel,
 };
 
-export default implementations.default;
+container.registerSingleton<IAssignmentModel>(
+  "AssignmentModel",
+  implementations.default
+);

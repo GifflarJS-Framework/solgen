@@ -1,7 +1,9 @@
-import createIfModelDefault from "../if/implementations/default";
+import { container } from "tsyringe";
+import IfModel from "../if/implementations/IfModel";
+import { IIfModel } from "./types/IIfModel";
 
 const implementations = {
-  default: createIfModelDefault,
+  default: IfModel,
 };
 
-export default implementations.default;
+container.registerSingleton<IIfModel>("IfModel", implementations.default);

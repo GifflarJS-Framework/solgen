@@ -1,7 +1,12 @@
-import createFunctionModelDefault from "./implementations/default";
+import { container } from "tsyringe";
+import FunctionModel from "./implementations/FunctionModel";
+import { IFunctionModel } from "./types/IFunctionModel";
 
 const implementations = {
-  default: createFunctionModelDefault,
+  default: FunctionModel,
 };
 
-export default implementations.default;
+container.registerSingleton<IFunctionModel>(
+  "FunctionModel",
+  implementations.default
+);

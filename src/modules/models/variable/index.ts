@@ -1,7 +1,12 @@
-import createVariableDefault from "./implementations/default";
+import { container } from "tsyringe";
+import VariableModel from "./implementations/VariableModel";
+import { IVariableModel } from "./types/IVariableModel";
 
 const implementations = {
-  default: createVariableDefault,
+  default: VariableModel,
 };
 
-export default implementations.default;
+container.registerSingleton<IVariableModel>(
+  "VariableModel",
+  implementations.default
+);

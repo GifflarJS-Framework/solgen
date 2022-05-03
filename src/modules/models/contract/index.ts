@@ -1,7 +1,12 @@
-import createContractModelDefault from "./implementations/default";
+import { container } from "tsyringe";
+import ContractModel from "./implementations/ContractModel";
+import { IContractModel } from "./types/IContractModel";
 
 const implementations = {
-  default: createContractModelDefault,
+  default: ContractModel,
 };
 
-export default implementations.default;
+container.registerSingleton<IContractModel>(
+  "ContractModel",
+  implementations.default
+);

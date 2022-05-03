@@ -1,7 +1,12 @@
-import createMethodCallDefault from "./implementations/default";
+import { container } from "tsyringe";
+import MethodCallModel from "./implementations/MethodCallModel";
+import { IMethodCallModel } from "./types/IMethodCallModel";
 
 const implementations = {
-  default: createMethodCallDefault,
+  default: MethodCallModel,
 };
 
-export default implementations.default;
+container.registerSingleton<IMethodCallModel>(
+  "MethodCallModel",
+  implementations.default
+);

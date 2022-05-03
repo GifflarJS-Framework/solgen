@@ -1,7 +1,12 @@
-import createGlobalVariableModelDefault from "./implementations/default";
+import { container } from "tsyringe";
+import GlobalVariableModel from "./implementations/GlobalVariableModel";
+import { IGlobalVariableModel } from "./types/IGlobalVariableModel";
 
 const implementations = {
-  default: createGlobalVariableModelDefault,
+  default: GlobalVariableModel,
 };
 
-export default implementations.default;
+container.registerSingleton<IGlobalVariableModel>(
+  "GlobalVariableModel",
+  implementations.default
+);

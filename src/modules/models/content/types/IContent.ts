@@ -1,4 +1,3 @@
-import { IContents } from "./IContents";
 import { IStackItem } from "./IStackItem";
 
 export interface IContent extends IStackItem {

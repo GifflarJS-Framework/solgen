@@ -1,7 +1,12 @@
-import createContentModelDefault from "./implementations/default";
+import { container } from "tsyringe";
+import ContentModel from "./implementations/ContentModel";
+import { IContentModel } from "./types/IContentModel";
 
 const implementations = {
-  default: createContentModelDefault,
+  default: ContentModel,
 };
 
-export default implementations.default;
+container.registerSingleton<IContentModel>(
+  "ContentModel",
+  implementations.default
+);
