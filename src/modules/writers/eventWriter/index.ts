@@ -1,7 +1,12 @@
-import createEventWriterDefault from "./implementations/default";
+import { container } from "tsyringe";
+import EventWriter from "./implementations/EventWriter";
+import { IEventWriter } from "./types/IEventWriter";
 
 const implementations = {
-  default: createEventWriterDefault,
+  default: EventWriter,
 };
 
-export default implementations.default;
+container.registerSingleton<IEventWriter>(
+  "EventWriter",
+  implementations.default
+);

@@ -1,7 +1,12 @@
-import createMethodCallWriterDefault from "./implementations/default";
+import { container } from "tsyringe";
+import MethodCallWriter from "./implementations/MethodCallWriter";
+import { IMethodCallWriter } from "./types/IMethodCallWriter";
 
 const implementations = {
-  default: createMethodCallWriterDefault,
+  default: MethodCallWriter,
 };
 
-export default implementations.default;
+container.registerSingleton<IMethodCallWriter>(
+  "MethodCallWriter",
+  implementations.default
+);

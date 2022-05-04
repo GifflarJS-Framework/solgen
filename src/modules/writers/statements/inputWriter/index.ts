@@ -1,7 +1,12 @@
-import createInputWriterDefault from "./implementations/default";
+import { container } from "tsyringe";
+import InputWriter from "./implementations/InputWriter";
+import { IInputWriter } from "./types/IInputWriter";
 
 const implementations = {
-  default: createInputWriterDefault,
+  default: InputWriter,
 };
 
-export default implementations.default;
+container.registerSingleton<IInputWriter>(
+  "InputWriter",
+  implementations.default
+);

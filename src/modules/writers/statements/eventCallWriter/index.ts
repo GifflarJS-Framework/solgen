@@ -1,7 +1,12 @@
-import createEventCallWriter from "./implementations/default";
+import { container } from "tsyringe";
+import EventCallWriter from "./implementations/EventCallWriter";
+import { IEventCallWriter } from "./types/IEventCallWriter";
 
 const implementations = {
-  default: createEventCallWriter,
+  default: EventCallWriter,
 };
 
-export default implementations.default;
+container.registerSingleton<IEventCallWriter>(
+  "EventCallWriter",
+  implementations.default
+);

@@ -1,7 +1,12 @@
-import createNewContractWriterDefault from "./implementations/default";
+import { container } from "tsyringe";
+import NewContractWriter from "./implementations/NewContractWriter";
+import { INewContractWriter } from "./types/INewContractWriter";
 
 const implementations = {
-  default: createNewContractWriterDefault,
+  default: NewContractWriter,
 };
 
-export default implementations.default;
+container.registerSingleton<INewContractWriter>(
+  "NewContractWriter",
+  implementations.default
+);

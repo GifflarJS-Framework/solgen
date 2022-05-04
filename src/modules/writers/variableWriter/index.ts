@@ -1,7 +1,12 @@
-import createVariableWriterDefault from "./implementations/default";
+import { container } from "tsyringe";
+import VariableWriter from "./implementations/VariableWriter";
+import { IVariableWriter } from "./types/IVariableWriter";
 
 const implementations = {
-  default: createVariableWriterDefault,
+  default: VariableWriter,
 };
 
-export default implementations.default;
+container.registerSingleton<IVariableWriter>(
+  "VariableWriter",
+  implementations.default
+);

@@ -1,7 +1,12 @@
-import createContentWriterDefault from "./implementations/default";
+import { container } from "tsyringe";
+import ContentWriter from "./implementations/ContentWriter";
+import { IContentWriter } from "./types/IContentWriter";
 
 const implementations = {
-  default: createContentWriterDefault,
+  default: ContentWriter,
 };
 
-export default implementations.default;
+container.registerSingleton<IContentWriter>(
+  "ContentWrite",
+  implementations.default
+);

@@ -1,7 +1,12 @@
-import createFunctionWriterDefault from "./implementations/default";
+import { container } from "tsyringe";
+import FunctionWriter from "./implementations/FunctionWriter";
+import { IFunctionWriter } from "./types/IFunctionWriter";
 
 const implementations = {
-  default: createFunctionWriterDefault,
+  default: FunctionWriter,
 };
 
-export default implementations.default;
+container.registerSingleton<IFunctionWriter>(
+  "FunctionWriter",
+  implementations.default
+);

@@ -1,7 +1,12 @@
-import createExpressionWriterDefault from "./implementations/default";
+import { container } from "tsyringe";
+import ExpressionWriter from "./implementations/ExpressionWriter";
+import { IExpressionWriter } from "./types/IExpressionWriter";
 
 const implementations = {
-  default: createExpressionWriterDefault,
+  default: ExpressionWriter,
 };
 
-export default implementations.default;
+container.registerSingleton<IExpressionWriter>(
+  "ExpressionWriter",
+  implementations.default
+);

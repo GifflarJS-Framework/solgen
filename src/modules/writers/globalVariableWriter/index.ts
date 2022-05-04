@@ -1,7 +1,12 @@
-import createGlobalVariableDefault from "./implementations/default";
+import { container } from "tsyringe";
+import GlobalVariableWriter from "./implementations/GlobalVariableWriter";
+import { IGlobalVariableWriter } from "./types/IGlobalVariableWriter";
 
 const implementations = {
-  default: createGlobalVariableDefault,
+  default: GlobalVariableWriter,
 };
 
-export default implementations.default;
+container.registerSingleton<IGlobalVariableWriter>(
+  "GlobalVariableWriter",
+  implementations.default
+);

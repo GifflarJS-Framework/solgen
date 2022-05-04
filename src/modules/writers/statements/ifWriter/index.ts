@@ -1,7 +1,9 @@
-import createIfWriterDefault from "./implementations/default";
+import { container } from "tsyringe";
+import IfWriter from "./implementations/IfWriter";
+import { IIfWriter } from "./types/IIfWriter";
 
 const implementations = {
-  default: createIfWriterDefault,
+  default: IfWriter,
 };
 
-export default implementations.default;
+container.registerSingleton<IIfWriter>("IfWriter", implementations.default);

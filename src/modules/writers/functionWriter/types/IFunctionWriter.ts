@@ -1,9 +1,9 @@
 import { IFunctionJson } from "@models/function/types/IFunctionJson";
-import { IRequest } from "@models/request/types/IRequest";
+import { IGlobalVariable } from "@models/globalVariable/types/IGlobalVariable";
 
 export interface IFunctionWriter {
   write(
     functions: Array<IFunctionJson>,
-    callback: (request: IRequest) => void
+    variables: Array<IGlobalVariable>
   ): string;
 }

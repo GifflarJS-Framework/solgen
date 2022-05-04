@@ -1,7 +1,12 @@
-import createOutputWriterDefault from "./implementations/default";
+import { container } from "tsyringe";
+import OutputWriter from "./implementations/OutputWriter";
+import { IOutputWriter } from "./types/IOutputWriter";
 
 const implementations = {
-  default: createOutputWriterDefault,
+  default: OutputWriter,
 };
 
-export default implementations.default;
+container.registerSingleton<IOutputWriter>(
+  "OutputWriter",
+  implementations.default
+);

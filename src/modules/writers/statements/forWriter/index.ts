@@ -1,7 +1,9 @@
-import createForWriterDefault from "./implementations/default";
+import { container } from "tsyringe";
+import ForWriter from "./implementations/ForWriter";
+import { IForWriter } from "./types/IForWriter";
 
 const implementations = {
-  default: createForWriterDefault,
+  default: ForWriter,
 };
 
-export default implementations.default;
+container.registerSingleton<IForWriter>("ForWriter", implementations.default);

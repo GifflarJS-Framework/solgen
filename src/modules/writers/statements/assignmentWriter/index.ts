@@ -1,7 +1,12 @@
-import createAssignmentWriterDefault from "./implementations/default";
+import { container } from "tsyringe";
+import AssignmentWriter from "./implementations/AssignmentWriter";
+import { IAssignmentWriter } from "./types/IAssignmentWriter";
 
 const implementations = {
-  default: createAssignmentWriterDefault,
+  default: AssignmentWriter,
 };
 
-export default implementations.default;
+container.registerSingleton<IAssignmentWriter>(
+  "AssignmentWriter",
+  implementations.default
+);
