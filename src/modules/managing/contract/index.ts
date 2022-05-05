@@ -1,7 +1,12 @@
-import createGifflarContractDefault from "./implementations/default";
+import { container } from "tsyringe";
+import GifflarContract from "./implementations/GifflarContract";
+import { IGifflarContract } from "./types/IGifflarContract";
 
 const implementations = {
-  default: createGifflarContractDefault,
+  default: GifflarContract,
 };
 
-export default implementations.default;
+container.registerSingleton<IGifflarContract>(
+  "GifflarContract",
+  implementations.default
+);

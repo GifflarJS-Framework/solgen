@@ -1,7 +1,9 @@
-import createDeployerDefault from "./implementations/default";
+import { container } from "tsyringe";
+import Deployer from "./implementations/Deployer";
+import { IDeployer } from "./types/IDeployer";
 
 const implementations = {
-  default: createDeployerDefault,
+  default: Deployer,
 };
 
-export default implementations.default;
+container.registerSingleton<IDeployer>("Deployer", implementations.default);

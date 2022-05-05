@@ -1,7 +1,9 @@
-import createCompilerDefault from "./implementations/default";
+import { container } from "tsyringe";
+import Compiler from "./implementations/Compiler";
+import { ICompiler } from "./types/ICompiler";
 
 const implementations = {
-  default: createCompilerDefault,
+  default: Compiler,
 };
 
-export default implementations.default;
+container.registerSingleton<ICompiler>("Compiler", implementations.default);

@@ -1,12 +1,12 @@
 import { container } from "tsyringe";
 import ContractModel from "./implementations/ContractModel";
-import { IContractModel } from "./types/IContractModel";
+import { IContract } from "./types/IContract";
 
 const implementations = {
   default: ContractModel,
 };
 
-container.registerSingleton<IContractModel>(
+container.registerSingleton<IContract>(
   "ContractModel",
   implementations.default
 );
