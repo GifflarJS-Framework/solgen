@@ -7,6 +7,6 @@ const implementations = {
 };
 
 container.registerSingleton<IContentWriter>(
-  "ContentWrite",
+  "ContentWriter",
   implementations.default
 );

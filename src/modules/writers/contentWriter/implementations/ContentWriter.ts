@@ -23,7 +23,10 @@ class ContentWriter implements IContentWriter {
     private variableWriter: IVariableWriter,
     @inject("MethodCallWriter")
     private methodCallWriter: IMethodCallWriter
-  ) {}
+  ) {
+    ifWriter._init(this.write);
+    forWriter._init(this.write);
+  }
 
   statements = {
     assignment: this.assignmentWriter.write,

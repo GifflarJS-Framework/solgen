@@ -1,20 +1,19 @@
+import { IContents } from "@models/content/types/IContents";
 import { IIf } from "@models/if/types/IIf";
-import { inject, injectable } from "tsyringe";
 import { IIfWriter } from "../types/IIfWriter";
 
-interface IFakeContentWriter {
-  write(obj: any): string;
-}
+class IfWriter implements IIfWriter {
+  private writeContent: (content: Array<IContents>) => string;
 
-@injectable()
-class createIfWriter implements IIfWriter {
-  // TODO: Corrigir contentWriter
-  constructor(
-    @inject("ContentWriter")
-    private contentWriter: IFakeContentWriter
-  ) {}
+  constructor() {}
+
+  _init(_writeContent: (content: Array<IContents>) => string): void {
+    this.writeContent = _writeContent;
+  }
 
   write(json: IIf) {
+    if (!this.writeContent) throw new Error("writeContent Function not set.");
+
     let text = `if(${json.condition})`;
     // if else is turned on
     if (!json.condition) {
@@ -25,11 +24,11 @@ class createIfWriter implements IIfWriter {
       text = `else ${text}`;
     }
     text += "{\n";
-    text += this.contentWriter.write(json.content);
+    text += this.writeContent(json.content);
     text += "}\n";
 
     return text;
   }
 }
 
-export default createIfWriter;
+export default IfWriter;

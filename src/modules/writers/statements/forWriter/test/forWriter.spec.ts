@@ -1,10 +1,17 @@
+import { IContents } from "@models/content/types/IContents";
 import { IFor } from "@models/for/types/IFor";
 import { container } from "tsyringe";
 import { IForWriter } from "../types/IForWriter";
 
-describe("If Writer", () => {
+describe("For Writer", () => {
+  const writeContentMock = (content: IContents[]) => {
+    return "emit myEvent(age);\n";
+  };
+
   it("Writing If", () => {
     const forWriter: IForWriter = container.resolve("ForWriter");
+    forWriter._init(writeContentMock);
+
     const myfor: IFor = {
       statement: "for",
       assignment: {
@@ -23,7 +30,7 @@ describe("If Writer", () => {
       content: [],
     };
 
-    const expected = "for(uint i = 0;i < 100;i++){\n}\n";
+    const expected = "for(uint i = 0;i < 100;i++){\nemit myEvent(age);\n}\n";
     const result = forWriter.write(myfor);
 
     expect(result).toEqual(expected);

@@ -1,17 +1,17 @@
 import { IContents } from "@models/content/types/IContents";
 import { IIf } from "@models/if/types/IIf";
-import { IRequest } from "@models/request/types/IRequest";
-import createIfWriter from "../";
+import { container } from "tsyringe";
+import { IIfWriter } from "../types/IIfWriter";
 
 describe("If Writer", () => {
-  const writeContentMock = (
-    content: IContents[],
-    callback: (request: IRequest) => void
-  ) => {
+  const writeContentMock = (content: IContents[]) => {
     return "age = 20;\n";
   };
+
+  const ifWriter: IIfWriter = container.resolve("IfWriter");
+  ifWriter._init(writeContentMock);
+
   it("Writing If", () => {
-    const ifWriter = createIfWriter(writeContentMock);
     const myif: IIf = {
       statement: "if",
       condition: "2 > 1",
@@ -26,7 +26,6 @@ describe("If Writer", () => {
   });
 
   it("Writing Else", () => {
-    const ifWriter = createIfWriter(writeContentMock);
     const myelse: IIf = {
       statement: "if",
       condition: "",

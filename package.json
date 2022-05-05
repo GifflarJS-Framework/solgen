@@ -5,7 +5,7 @@
   "main": "bin/index.js",
   "scripts": {
     "build": "rm -r bin && npx tsc -p tsconfig.json",
-    "test": "jest ./src/modules/writers/statements/forWriter/test/forWriter.spec.ts",
+    "test": "jest ./src/modules/writers/statements/ifWriter/test/ifWriter.spec.ts",
     "testunit": "./node_modules/mocha/bin/mocha test/unit/**/*",
     "testfunc": "./node_modules/mocha/bin/mocha test/functional/**/*",
     "docs": "jsdoc -c jsdoc-config.json"
