@@ -1,17 +1,10 @@
-import { IContents } from "@models/content/types/IContents";
 import { IFor } from "@models/for/types/IFor";
-import { IRequest } from "@models/request/types/IRequest";
-import createForWriter from "../implementations/default";
+import { container } from "tsyringe";
+import { IForWriter } from "../types/IForWriter";
 
 describe("If Writer", () => {
-  const writeContentMock = (
-    content: IContents[],
-    callback: (request: IRequest) => void
-  ) => {
-    return "emit myEvent(age);\n";
-  };
   it("Writing If", () => {
-    const forWriter = createForWriter(writeContentMock);
+    const forWriter: IForWriter = container.resolve("ForWriter");
     const myfor: IFor = {
       statement: "for",
       assignment: {
@@ -30,7 +23,7 @@ describe("If Writer", () => {
       content: [],
     };
 
-    const expected = "for(uint i = 0;i < 100;i++){\nemit myEvent(age);\n}\n";
+    const expected = "for(uint i = 0;i < 100;i++){\n}\n";
     const result = forWriter.write(myfor);
 
     expect(result).toEqual(expected);

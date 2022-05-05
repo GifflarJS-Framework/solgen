@@ -1,9 +1,11 @@
 import { IAssignment } from "@models/assignment/types/IAssignment";
-import createAssignmentWriter from "../implementations/default";
+import { container } from "tsyringe";
+import { IAssignmentWriter } from "../types/IAssignmentWriter";
 
 describe("Assignment Writer", () => {
   it("Writing Assignment", () => {
-    const assignmentWriter = createAssignmentWriter();
+    const assignmentWriter: IAssignmentWriter =
+      container.resolve("AssignmentWriter");
     const assignment: IAssignment = {
       statement: "assignment",
       variable: "age",
