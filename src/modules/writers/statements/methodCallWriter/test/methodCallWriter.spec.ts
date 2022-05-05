@@ -1,9 +1,12 @@
 import { IMethodCall } from "@models/methodcall/types/IMethodCall";
-import createMethodCallWriter from "../implementations/default";
+import { container } from "tsyringe";
+import { IMethodCallWriter } from "../types/IMethodCallWriter";
 
 describe("Method Call Writer", () => {
   it("Writing Method Call", () => {
-    const methodCallWriter = createMethodCallWriter();
+    const methodCallWriter: IMethodCallWriter =
+      container.resolve("MethodCallWriter");
+
     const inputs: IMethodCall = {
       statement: "method_call",
       variable: "person",

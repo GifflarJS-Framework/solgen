@@ -1,9 +1,12 @@
 import { INewContract } from "@models/newcontract/types/INewContract";
-import createNewContractWriter from "../implementations/default";
+import { container } from "tsyringe";
+import { INewContractWriter } from "../types/INewContractWriter";
 
 describe("New Contract Writer", () => {
   it("Writing New Contract", () => {
-    const newContractWriter = createNewContractWriter();
+    const newContractWriter: INewContractWriter =
+      container.resolve("NewContractWriter");
+
     const newContract: INewContract = {
       statement: "newcontract",
       args: ["owner"],

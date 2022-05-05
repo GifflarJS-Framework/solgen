@@ -1,5 +1,6 @@
 import { IVariable } from "@models/variable/types/IVariable";
-import createOutputWriter from "../implementations/default";
+import { container } from "tsyringe";
+import { IOutputWriter } from "../types/IOutputWriter";
 
 describe("Output Writer", () => {
   it("Writing Output", () => {
@@ -7,12 +8,12 @@ describe("Output Writer", () => {
       { type: "uint256", name: "output1" },
       { type: "string", name: "output2" },
     ];
-    const outputWriter = createOutputWriter(variables);
+    const outputWriter: IOutputWriter = container.resolve("OutputWriter");
     const outputs: Array<string> = ["output1", "output2"];
 
     const expected = "return (output1, output2);";
     const expectedReturns = "returns (uint256, string)";
-    const result = outputWriter.write(outputs, (object) => {
+    const result = outputWriter.write(outputs, variables, (object) => {
       expect(object.text_returns).toMatch(expectedReturns);
     });
 

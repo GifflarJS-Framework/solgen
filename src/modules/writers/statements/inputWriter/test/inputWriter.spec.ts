@@ -1,9 +1,10 @@
 import { IInput } from "@models/function/types/IInput";
-import createInputWriter from "../implementations/default";
+import { container } from "tsyringe";
+import { IInputWriter } from "../types/IInputWriter";
 
 describe("Input Writer", () => {
   it("Writing Input", () => {
-    const inputWriter = createInputWriter();
+    const inputWriter: IInputWriter = container.resolve("InputWriter");
     const inputs: IInput[] = [
       {
         type: "uint",
