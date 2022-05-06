@@ -1,6 +1,7 @@
 import { IInput } from "@models/function/types/IInput";
 
-export interface ICreateEventCallDTO {
+export interface IEvent {
+  statement: "event";
   name: string;
-  variables: Array<string>;
+  inputs: Array<IInput>;
 }

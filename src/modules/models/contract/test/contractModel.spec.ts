@@ -3,9 +3,10 @@ import helpers from "@utils/helpers";
 import assert from "assert";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import ganache from "ganache-cli";
+import { container } from "tsyringe";
 import Web3 from "web3";
-import createContract from "..";
 import { IContract } from "../types/IContract";
+import { IContractModel } from "../types/IContractModel";
 const example_contract_4 = require("@test/examples/modeling/contract-4.json");
 
 // const writing_path = `${__dirname}/../../../examples/writing/`;
@@ -19,6 +20,8 @@ const example_contract_4 = require("@test/examples/modeling/contract-4.json");
 // });
 
 describe("Test Contract", () => {
+  const contractModel: IContractModel = container.resolve("ContractModel");
+
   // Expected values
   const expected_model = JSON.stringify(example_contract_4);
   const expected_code = "";
@@ -29,7 +32,7 @@ describe("Test Contract", () => {
 
   it("Object creation", () => {
     // Creating contract
-    gContract = createContract({ contractName: "DHT11" });
+    gContract = contractModel.execute("DHT11");
     assert.ok(!helpers.isObjEmpty(gContract), "Error while creating gContract");
     assert.ok(!helpers.isObjEmpty(gContract), "Error while creating gContract");
   });
@@ -38,10 +41,20 @@ describe("Test Contract", () => {
   it("Modeling DHT11", () => {
     // Creating the variables
     gContract.createVariable("address", "manager", "public");
-    gContract.createVariable("string", "name", "public", true);
+    gContract.createVariable("string", "name", "public");
     gContract.createVariable("uint256", "value1", "public");
     gContract.createVariable("uint256", "max_value1", "public");
     gContract.createVariable("uint256", "min_value1", "public");
+
+    // Creating events
+    gContract.createEvent("temperatureOverflow", [
+      { name: "value1", type: "uint256" },
+      { name: "max_value1", type: "uint256" },
+    ]);
+    gContract.createEvent("temperatureUnderflow", [
+      { name: "value1", type: "uint256" },
+      { name: "min_value1", type: "uint256" },
+    ]);
 
     // Creating constructor
     gContract
@@ -64,6 +77,11 @@ describe("Test Contract", () => {
       .setEventCall("temperatureUnderflow", ["value1", "min_value1"])
       .endElseIf()
       .endIf();
+
+    gContract
+      .createFunction("setName", "public")
+      .setInput("string", "_name")
+      .setAssignment("name", "_name");
 
     // Asserting the result
     expect(gContract.toString()).toEqual(

@@ -10,6 +10,7 @@ import { IEventCallModel } from "@models/eventCall/types/IEventCallModel";
 import { Contract } from "web3-eth-contract";
 import { IContractDeployDTO } from "../types/IContractDeployDTO";
 import Web3 from "web3";
+import IEventModel from "@models/event/types/IEventModel";
 
 @injectable()
 class GifflarContract extends ContractModel implements IGifflarContract {
@@ -30,9 +31,11 @@ class GifflarContract extends ContractModel implements IGifflarContract {
     @inject("FunctionModel")
     functionModel: IFunctionModel,
     @inject("EventModel")
-    eventCallModel: IEventCallModel
+    eventCallModel: IEventCallModel,
+    @inject("EventModel")
+    eventModel: IEventModel
   ) {
-    super(name, globalVariableModel, functionModel, eventCallModel);
+    super(name, globalVariableModel, functionModel, eventCallModel, eventModel);
   }
 
   setName(newName: string): void {

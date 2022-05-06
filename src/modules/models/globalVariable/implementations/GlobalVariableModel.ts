@@ -7,7 +7,6 @@ class GlobalVariableModel implements IGlobalVariableModel {
     type,
     name,
     scope = "",
-    setMethod = false,
     value = "",
   }: ICreateGlobalVariableDTO): IGlobalVariable {
     const globalVariable: IGlobalVariable = {
@@ -16,7 +15,6 @@ class GlobalVariableModel implements IGlobalVariableModel {
       name,
       scope,
       value,
-      setMethod,
     };
 
     return globalVariable;

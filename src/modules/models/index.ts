@@ -8,5 +8,6 @@ import "./globalVariable";
 import "./for";
 import "./expression";
 import "./eventCall";
+import "./event";
 import "./function";
 import "./contract";

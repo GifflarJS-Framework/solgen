@@ -1,6 +1,9 @@
-import createForModel from "../implementations/default";
+import { container } from "tsyringe";
+import { IForModel } from "../types/IForModel";
 
 describe("Test For Model", () => {
+  const forModel: IForModel = container.resolve("ForModel");
+
   it("Creating For Model", () => {
     const expected = {
       statement: "for",
@@ -14,7 +17,7 @@ describe("Test For Model", () => {
       content: [],
     };
 
-    const result = createForModel({
+    const result = forModel.execute({
       assignment: {
         statement: "assignment",
         variable: "i",

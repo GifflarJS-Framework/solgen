@@ -1,17 +1,20 @@
 import { IGlobalVariable } from "@models/globalVariable/types/IGlobalVariable";
 import { IRequest } from "@models/request/types/IRequest";
-import createVariableWriter from "../implementations/default";
+import { container } from "tsyringe";
+import { IGlobalVariableWriter } from "../types/IGlobalVariableWriter";
 
-describe("Variable Writer", () => {
-  it("Writing Variable", () => {
-    const variableWriter = createVariableWriter();
+describe("Global Variable Writer", () => {
+  const variableWriter: IGlobalVariableWriter = container.resolve(
+    "GlobalVariableWriter"
+  );
+
+  it("Writing Global Variable", () => {
     const variable: IGlobalVariable = {
       statement: "global_variable",
       name: "age",
       type: "uint",
       value: "20",
       scope: "private",
-      setMethod: true,
     };
 
     const expected = "//VARIABLES\nuint private age = 20;";
@@ -48,7 +51,6 @@ describe("Variable Writer", () => {
   });
 
   it("Writing many variables", () => {
-    const variableWriter = createVariableWriter();
     const variables: IGlobalVariable[] = [
       {
         statement: "global_variable",
@@ -56,7 +58,6 @@ describe("Variable Writer", () => {
         type: "uint",
         value: "20",
         scope: "private",
-        setMethod: true,
       },
       {
         statement: "global_variable",
@@ -64,7 +65,6 @@ describe("Variable Writer", () => {
         type: "string",
         value: "",
         scope: "public",
-        setMethod: false,
       },
     ];
 

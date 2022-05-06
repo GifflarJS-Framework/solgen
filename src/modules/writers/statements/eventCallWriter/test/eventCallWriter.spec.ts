@@ -8,7 +8,7 @@ describe("Event Call Writer", () => {
       container.resolve("EventCallWriter");
     const eventCall: IEventCall = {
       statement: "event_call",
-      inputs: [{ type: "uint", name: "age" }],
+      variables: ["age"],
       name: "eventName",
     };
 

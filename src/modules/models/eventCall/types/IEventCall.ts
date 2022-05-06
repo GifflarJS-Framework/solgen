@@ -1,5 +1,5 @@
-import { IEvent } from "./IEvent";
-
-export interface IEventCall extends IEvent {
+export interface IEventCall {
   statement: "event_call";
+  name: string;
+  variables: Array<string>;
 }

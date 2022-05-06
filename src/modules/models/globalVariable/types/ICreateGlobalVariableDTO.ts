@@ -5,5 +5,4 @@ export interface ICreateGlobalVariableDTO {
   name: string;
   scope: string;
   value?: string | INewContract;
-  setMethod?: boolean;
 }

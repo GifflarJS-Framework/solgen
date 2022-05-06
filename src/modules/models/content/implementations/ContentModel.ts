@@ -88,19 +88,10 @@ class ContentModel {
       name: string,
       inputNames: Array<string>
     ): IContent => {
-      const inputs: Array<IInput> = [];
-      if (inputNames) {
-        inputNames.map((inputName) => {
-          const variable = contentVars.filter((item) => {
-            return item.name === inputName;
-          })[0];
-          if (variable) {
-            inputs.push({ name: variable.name, type: variable.type });
-          }
-          return variable;
-        });
-      }
-      const newEventCall = this.eventCallModel.execute({ name, inputs });
+      const newEventCall = this.eventCallModel.execute({
+        name,
+        variables: inputNames,
+      });
       stack[top].content.push(newEventCall);
       const contentItem: IContent = _assignFunctions(stack[top]);
       return contentItem;

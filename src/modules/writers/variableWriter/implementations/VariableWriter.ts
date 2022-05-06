@@ -16,11 +16,6 @@ class VariableWriter implements IVariableWriter {
     newcontract: this.newContractWriter.write,
   };
 
-  /**
-   *
-   * @param {*} value The value to be assigned to the variable. Can be a string or a
-   * statement (Object).
-   */
   _handleValue(value: string | INewContract) {
     // If the value is a statement
     if (typeof value !== "string") {

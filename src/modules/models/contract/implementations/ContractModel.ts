@@ -9,100 +9,132 @@ import { IEventCallModel } from "@models/eventCall/types/IEventCallModel";
 import { IGlobalVariableModel } from "@models/globalVariable/types/IGlobalVariableModel";
 import { IFunctionModel } from "@models/function/types/IFunctionModel";
 import { IContractItem } from "../types/IContractItem";
+import IEventModel from "@models/event/types/IEventModel";
+import { IEvent } from "@models/event/types/IEvent";
+import { IContractModel } from "../types/IContractModel";
 
 @injectable()
-class ContractModel implements IContract {
-  contract: IContractItem = {
-    variables: [],
-    functions: [],
-  };
-
+class ContractModel implements IContractModel {
   constructor(
-    public name: string = "",
     @inject("GlobalVariableModel")
     private globalVariableModel: IGlobalVariableModel,
     @inject("FunctionModel")
     private functionModel: IFunctionModel,
+    @inject("EventCallModel")
+    private eventCallModel: IEventCallModel,
     @inject("EventModel")
-    private eventCallModel: IEventCallModel
+    private eventModel: IEventModel
   ) {}
 
-  toJson(): IContractJson {
-    const jsonfunction = JSON.stringify(this);
-    return JSON.parse(jsonfunction);
-  }
+  execute(contractName: string): IContract {
+    const contract: IContractItem = {
+      variables: [],
+      events: [],
+      functions: [],
+    };
 
-  createEventCall(name: string, inputs: Array<IInput>): IEventCall {
-    const newEventCall = this.eventCallModel.execute({ name, inputs });
-    return newEventCall;
-  }
+    const toJson = (): IContractJson => {
+      const jsonfunction = JSON.stringify(this);
+      return JSON.parse(jsonfunction);
+    };
 
-  createVariable(
-    type: string,
-    name: string,
-    scope: string,
-    setMethod?: boolean,
-    value?: string
-  ): IGlobalVariable {
-    const variable = this.globalVariableModel.execute({
-      type,
-      name,
-      scope,
-      setMethod,
-      value,
-    });
-    if (scope) {
-    }
-    // else {
-    //   variable = createVariableModel({
-    //     type,
-    //     name,
-    //     value,
-    //   });
-    // }
-    this.contract.variables.push(variable);
-    return variable;
-  }
+    const createEvent = (name: string, inputs: Array<IInput>): IEvent => {
+      const event = this.eventModel.execute({ name, inputs });
+      contract.events.push(event);
+      return event;
+    };
 
-  createConstructor(
-    scope: string,
-    inputs?: Array<IInput>,
-    outputs?: Array<string>
-  ): IFunction {
-    const _function = this.functionModel.execute({
-      name: "",
-      scope,
-      isConstructor: true,
-      inputs,
-      outputs,
-      globalVars: this.contract.variables,
-    });
-    this.contract.functions.push(_function);
+    const createEventCall = (
+      name: string,
+      variables: Array<string>
+    ): IEventCall => {
+      const newEventCall = this.eventCallModel.execute({ name, variables });
+      return newEventCall;
+    };
 
-    return _function;
-  }
+    const createVariable = (
+      type: string,
+      name: string,
+      scope: string,
+      value?: string
+    ): IGlobalVariable => {
+      const variable = this.globalVariableModel.execute({
+        type,
+        name,
+        scope,
+        value,
+      });
+      if (scope) {
+      }
+      // else {
+      //   variable = createVariableModel({
+      //     type,
+      //     name,
+      //     value,
+      //   });
+      // }
+      contract.variables.push(variable);
+      return variable;
+    };
 
-  createFunction(
-    name: string,
-    scope: string,
-    inputs: Array<IInput>,
-    outputs: Array<string>
-  ): IFunction {
-    const _function = this.functionModel.execute({
-      name,
-      scope,
-      inputs,
-      outputs,
-      isConstructor: false,
-      globalVars: this.contract.variables,
-    });
-    this.contract.functions.push(_function);
+    const createConstructor = (
+      scope: string,
+      inputs?: Array<IInput>,
+      outputs?: Array<string>
+    ): IFunction => {
+      const _function = this.functionModel.execute({
+        name: "",
+        scope,
+        isConstructor: true,
+        inputs,
+        outputs,
+        globalVars: contract.variables,
+      });
+      contract.functions.push(_function);
 
-    return _function;
-  }
+      return _function;
+    };
 
-  toString(): string {
-    return JSON.stringify(this);
+    const createFunction = (
+      name: string,
+      scope: string,
+      inputs: Array<IInput>,
+      outputs: Array<string>
+    ): IFunction => {
+      const _function = this.functionModel.execute({
+        name,
+        scope,
+        inputs,
+        outputs,
+        isConstructor: false,
+        globalVars: contract.variables,
+      });
+      contract.functions.push(_function);
+
+      return _function;
+    };
+
+    const _assignFunctions = <T>(obj: any): T => {
+      const _obj = {
+        ...obj,
+        name: contractName,
+        contract,
+        toJson,
+        createEvent,
+        createEventCall,
+        createVariable,
+        createConstructor,
+        createFunction,
+        toString: (): string => {
+          return JSON.stringify(_obj);
+        },
+      };
+
+      return _obj;
+    };
+
+    const json: IContract = _assignFunctions({});
+    return json;
   }
 }
 

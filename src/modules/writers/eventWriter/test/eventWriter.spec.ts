@@ -1,9 +1,10 @@
 import { IEvent } from "@models/eventCall/types/IEvent";
-import createEventWriter from "../";
+import { container } from "tsyringe";
+import { IEventWriter } from "../types/IEventWriter";
 
 describe("Event Writer", () => {
   it("Writing Event", () => {
-    const eventWriter = createEventWriter();
+    const eventWriter: IEventWriter = container.resolve("EventWriter");
     const event: IEvent = {
       name: "myEvent",
       inputs: [

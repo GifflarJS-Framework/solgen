@@ -1,21 +1,24 @@
-import createIfModel from "../implementations/default";
+import { container } from "tsyringe";
 import { IGlobalVariable } from "../types/IGlobalVariable";
+import { IGlobalVariableModel } from "../types/IGlobalVariableModel";
 
 describe("Global Variable Model", () => {
   it("Creating", () => {
+    const globalVariableModel: IGlobalVariableModel = container.resolve(
+      "GlobalVariableModel"
+    );
+
     const expected: IGlobalVariable = {
       statement: "global_variable",
       type: "uint",
       name: "age",
       scope: "private",
       value: "20",
-      setMethod: true,
     };
-    const model = createIfModel({
+    const model = globalVariableModel.execute({
       name: "age",
       scope: "private",
       type: "uint",
-      setMethod: true,
       value: "20",
     });
 

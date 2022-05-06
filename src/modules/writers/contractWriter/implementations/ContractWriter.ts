@@ -1,9 +1,7 @@
 import { IContractJson } from "@models/contract/types/IContractJson";
-import { IEvent } from "@models/eventCall/types/IEvent";
 import { IEventWriter } from "@writers/eventWriter/types/IEventWriter";
 import { IFunctionWriter } from "@writers/functionWriter/types/IFunctionWriter";
 import { IGlobalVariableWriter } from "@writers/globalVariableWriter/types/IGlobalVariableWriter";
-import { IVariableWriter } from "@writers/variableWriter/types/IVariableWriter";
 import { inject, injectable } from "tsyringe";
 import { IContractWriter } from "../types/IContractWriter";
 
@@ -18,10 +16,6 @@ class ContractWriter implements IContractWriter {
     private globalVariableWriter: IGlobalVariableWriter
   ) {}
 
-  /**
-   * Write the initial clousures of the contract Solidity code.
-   * @private
-   */
   private _start(contract_name: string) {
     // Initing the contract
     const text = `contract ${contract_name}{\n`;
@@ -29,10 +23,6 @@ class ContractWriter implements IContractWriter {
     return text;
   }
 
-  /**
-   * Write the final clousures of the contract Solidity code.
-   * @private
-   */
   private _close(): string {
     // Closing contract definition
     const text = "}";
@@ -66,12 +56,12 @@ class ContractWriter implements IContractWriter {
         }
       );
 
-      let events: Array<IEvent> = [];
+      const txt_events = this.eventWriter.write(json.contract.events);
+
       const txt_functions = this.functionWriter.write(
         functions,
         json.contract.variables
       );
-      const txt_events = this.eventWriter.write(events);
       const txt_close = this._close();
 
       contractText += `${

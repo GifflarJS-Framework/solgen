@@ -1,9 +1,10 @@
 import { IFunctionJson } from "@models/function/types/IFunctionJson";
-import createFunctionWriter from "../implementations/default";
+import { container } from "tsyringe";
+import { IFunctionWriter } from "../types/IFunctionWriter";
 
 describe("Contract Writer", () => {
   it("Writing Contract", () => {
-    const functionWriter = createFunctionWriter([]);
+    const functionWriter: IFunctionWriter = container.resolve("FunctionWriter");
 
     const myFunction: IFunctionJson = {
       name: "MyFunction",
@@ -19,9 +20,7 @@ describe("Contract Writer", () => {
 
     const expected =
       "//FUNCTIONS\nfunction MyFunction() public returns (uint) {\nuint age = 18;\nreturn (age);\n}";
-    const result = functionWriter.write([myFunction], (request) => {
-      // console.log(request);
-    });
+    const result = functionWriter.write([myFunction], []);
 
     expect(result).toMatch(expected);
   });

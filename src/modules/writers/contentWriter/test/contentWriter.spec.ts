@@ -1,9 +1,11 @@
 import { IContents } from "@models/content/types/IContents";
-import createContentWriter from "../implementations/default";
+import { container } from "tsyringe";
+import { IContentWriter } from "../types/IContentWriter";
 
 describe("Content Writer", () => {
+  const contentWriter: IContentWriter = container.resolve("ContentWriter");
+
   it("Writing Content", () => {
-    const contentWriter = createContentWriter();
     const contents: IContents[] = [
       {
         statement: "variable",
@@ -23,7 +25,7 @@ describe("Content Writer", () => {
           {
             statement: "event_call",
             name: "ageUpdate",
-            inputs: [{ type: "uint", name: "age" }],
+            variables: ["age"],
           },
         ],
         else: false,
@@ -32,19 +34,7 @@ describe("Content Writer", () => {
 
     const expected =
       "uint age = 20;\nif(age > 15){\nage = 30;\nemit ageUpdate(age);\n}";
-    const result = contentWriter.write(contents, (request) => {
-      // console.log(request);
-
-      expect(request).toHaveProperty("functions", []);
-      expect(request).toHaveProperty("events", [
-        {
-          statement: "event_call",
-          name: "ageUpdate",
-          inputs: [{ name: "age", type: "uint" }],
-        },
-      ]);
-      expect(request).toHaveProperty("text_returns", "");
-    });
+    const result = contentWriter.write(contents);
 
     expect(result).toMatch(expected);
   });

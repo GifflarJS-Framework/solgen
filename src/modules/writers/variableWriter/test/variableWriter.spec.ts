@@ -1,9 +1,11 @@
 import { IRequest } from "@models/request/types/IRequest";
 import { ILocalVariable } from "@models/variable/types/ILocalVariable";
-import createVariableWriter from "../implementations/default";
+import { container } from "tsyringe";
+import { IVariableWriter } from "../types/IVariableWriter";
 
 describe.only("Variable Writer", () => {
-  const variableWriter = createVariableWriter();
+  const variableWriter: IVariableWriter = container.resolve("VariableWriter");
+
   it("Writing Variable", () => {
     const variable: ILocalVariable = {
       statement: "variable",
@@ -13,11 +15,7 @@ describe.only("Variable Writer", () => {
     };
 
     const expected = "uint age = 20";
-    const result = variableWriter.write(variable, (request: IRequest) => {
-      expect(request).toHaveProperty("functions", []);
-      expect(request).toHaveProperty("events", []);
-      expect(request).toHaveProperty("text_returns", "");
-    });
+    const result = variableWriter.write(variable);
 
     expect(result).toMatch(expected);
   });

@@ -1,3 +1,4 @@
+import { IEvent } from "@models/event/types/IEvent";
 import { IEventCall } from "@models/eventCall/types/IEventCall";
 import { IFunction } from "@models/function/types/IFunction";
 import { IInput } from "@models/function/types/IInput";
@@ -7,13 +8,14 @@ import { IContractJson } from "./IContractJson";
 export interface IContract extends IContractJson {
   toJson(): IContractJson;
 
-  createEventCall(name: string, inputs: Array<IInput>): IEventCall;
+  createEvent(name: string, inputs: Array<IInput>): IEvent;
+
+  createEventCall(name: string, variables: Array<string>): IEventCall;
 
   createVariable(
     type: string,
     name: string,
     scope: string,
-    setMethod?: boolean,
     value?: string
   ): IGlobalVariable;
 

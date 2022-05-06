@@ -1,4 +1,5 @@
 import { IContents } from "@models/content/types/IContents";
+import { IEventWriter } from "@writers/eventWriter/types/IEventWriter";
 import { IAssignmentWriter } from "@writers/statements/assignmentWriter/types/IAssignmentWriter";
 import { IEventCallWriter } from "@writers/statements/eventCallWriter/types/IEventCallWriter";
 import { IForWriter } from "@writers/statements/forWriter/types/IForWriter";
@@ -17,24 +18,27 @@ class ContentWriter implements IContentWriter {
     private ifWriter: IIfWriter,
     @inject("ForWriter")
     private forWriter: IForWriter,
-    @inject("EventCall")
+    @inject("EventCallWriter")
     private eventCallWriter: IEventCallWriter,
+    @inject("EventWriter")
+    private eventWriter: IEventWriter,
     @inject("VariableWriter")
     private variableWriter: IVariableWriter,
     @inject("MethodCallWriter")
     private methodCallWriter: IMethodCallWriter
   ) {
-    ifWriter._init(this.write);
-    forWriter._init(this.write);
+    ifWriter._init(this);
+    forWriter._init(this);
   }
 
   statements = {
-    assignment: this.assignmentWriter.write,
-    if: this.ifWriter.write,
-    for: this.forWriter.write,
-    event_call: this.eventCallWriter.write,
-    variable: this.variableWriter.write,
-    method_call: this.methodCallWriter.write,
+    assignment: this.assignmentWriter,
+    if: this.ifWriter,
+    for: this.forWriter,
+    event: this.eventWriter,
+    event_call: this.eventCallWriter,
+    variable: this.variableWriter,
+    method_call: this.methodCallWriter,
   };
 
   // All statement control that doesn't need the ; in the end
@@ -48,7 +52,7 @@ class ContentWriter implements IContentWriter {
       const handler = this.statements[item.statement];
       if (handler) {
         const anyItem: any = item;
-        text += handler(anyItem);
+        text += handler.write(anyItem);
 
         if (!this.controls.includes(item.statement)) {
           text += ";\n";

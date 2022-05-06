@@ -6,7 +6,6 @@ export interface IGlobalVariableModel {
     type,
     name,
     scope,
-    setMethod,
     value,
   }: ICreateGlobalVariableDTO): IGlobalVariable;
 }

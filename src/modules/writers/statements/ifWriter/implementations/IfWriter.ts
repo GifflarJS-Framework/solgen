@@ -1,18 +1,18 @@
-import { IContents } from "@models/content/types/IContents";
 import { IIf } from "@models/if/types/IIf";
+import { IContentWriter } from "@writers/contentWriter/types/IContentWriter";
 import { IIfWriter } from "../types/IIfWriter";
 
 class IfWriter implements IIfWriter {
-  private writeContent: (content: Array<IContents>) => string;
+  private contentWriter: IContentWriter;
 
   constructor() {}
 
-  _init(_writeContent: (content: Array<IContents>) => string): void {
-    this.writeContent = _writeContent;
+  _init(contentWriter: IContentWriter): void {
+    this.contentWriter = contentWriter;
   }
 
   write(json: IIf) {
-    if (!this.writeContent) throw new Error("writeContent Function not set.");
+    if (!this.contentWriter) throw new Error("Content Writer not set.");
 
     let text = `if(${json.condition})`;
     // if else is turned on
@@ -24,7 +24,7 @@ class IfWriter implements IIfWriter {
       text = `else ${text}`;
     }
     text += "{\n";
-    text += this.writeContent(json.content);
+    text += this.contentWriter.write(json.content);
     text += "}\n";
 
     return text;

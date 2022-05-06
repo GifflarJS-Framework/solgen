@@ -3,11 +3,11 @@ import { IEventCall } from "../types/IEventCall";
 import { IEventCallModel } from "../types/IEventCallModel";
 
 class EventCallModel implements IEventCallModel {
-  execute({ name, inputs = [] }: ICreateEventCallDTO): IEventCall {
+  execute({ name, variables = [] }: ICreateEventCallDTO): IEventCall {
     const event: IEventCall = {
       statement: "event_call",
       name,
-      inputs,
+      variables,
     };
 
     return event;
