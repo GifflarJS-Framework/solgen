@@ -1,12 +1,12 @@
 import { container } from "tsyringe";
 import GifflarContract from "./implementations/GifflarContract";
-import { IGifflarContract } from "./types/IGifflarContract";
+import { IGifflarContractModel } from "./types/IGifflarContractModel";
 
 const implementations = {
   default: GifflarContract,
 };
 
-container.registerSingleton<IGifflarContract>(
-  "GifflarContract",
+container.registerSingleton<IGifflarContractModel>(
+  "GifflarContractModel",
   implementations.default
 );

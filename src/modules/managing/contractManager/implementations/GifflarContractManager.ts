@@ -1,23 +1,28 @@
 import { IGifflarContract } from "@managing/contract/types/IGifflarContract";
+import { IGifflarContractModel } from "@managing/contract/types/IGifflarContractModel";
 import { IContractWriter } from "@writers/contractWriter/types/IContractWriter";
 import { ICompiler } from "modules/compiler/types/ICompiler";
 import { IDeployer } from "modules/deployer/types/IDeployer";
-import { container, inject, injectable } from "tsyringe";
+import { inject, injectable } from "tsyringe";
+import Web3 from "web3";
 import { Contract } from "web3-eth-contract";
+import { IGifflarContractManager } from "../types/IGifflarContractManager";
 import { IManagerDeployDTO } from "../types/IManagerDeployDTO";
 
 @injectable()
-class GifflarContractManager {
+class GifflarContractManager implements IGifflarContractManager {
   contracts: Array<IGifflarContract> = [];
   code: string = "";
   json: any = {};
 
   constructor(
+    @inject("GifflarContractModel")
+    private contractModel: IGifflarContractModel,
     @inject("ContractWriter")
     private contractWriter: IContractWriter,
     @inject("Deployer")
     private deployer: IDeployer,
-    @inject("ContractWriter")
+    @inject("Compiler")
     private compiler: ICompiler
   ) {}
 
@@ -40,7 +45,7 @@ class GifflarContractManager {
   }
 
   newContract(name: string): IGifflarContract {
-    const newcontract: IGifflarContract = container.resolve("GifflarContract");
+    const newcontract: IGifflarContract = this.contractModel.execute(name);
     newcontract.setName(name);
     this.contracts.push(newcontract);
 
@@ -137,8 +142,14 @@ class GifflarContractManager {
     return contract;
   }
 
-  setWeb3 = this.deployer.setWeb3;
-  getWeb3 = this.deployer.getWeb3;
+  setWeb3(newWeb3: Web3): Web3 {
+    this.deployer.setWeb3(newWeb3);
+    return newWeb3;
+  }
+
+  getWeb3(): Web3 | null | undefined {
+    return this.deployer.getWeb3();
+  }
 }
 
 export default GifflarContractManager;

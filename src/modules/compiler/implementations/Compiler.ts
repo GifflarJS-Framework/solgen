@@ -1,4 +1,4 @@
-import { solc } from "solc";
+import solc from "solc";
 import { ICompiler } from "../types/ICompiler";
 
 class Compiler implements ICompiler {

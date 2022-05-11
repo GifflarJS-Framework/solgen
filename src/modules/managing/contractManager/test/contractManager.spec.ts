@@ -2,7 +2,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import fs from "fs";
 import solc from "solc";
-import createContractManager from "../implementations/default";
+import { container } from "tsyringe";
+import { IGifflarContractManager } from "../types/IGifflarContractManager";
 
 const writing_path = `${__dirname}/../../../../test/examples/writing/`;
 const expectedJson = JSON.stringify(
@@ -18,7 +19,10 @@ beforeAll(async () => {
 });
 
 describe("Contract Manager Writer", () => {
-  const gContractManager = createContractManager(web3);
+  const gContractManager: IGifflarContractManager = container.resolve(
+    "GifflarContractManager"
+  );
+  gContractManager.setWeb3(web3);
 
   it("Writing Contract Manager", () => {
     const gContract = gContractManager.newContract("DHT11");
@@ -30,10 +34,20 @@ describe("Contract Manager Writer", () => {
 
     // Creating the variables
     gContract.createVariable("address", "manager", "public");
-    gContract.createVariable("string", "name", "public", true);
+    gContract.createVariable("string", "name", "public");
     gContract.createVariable("uint256", "value1", "public");
     gContract.createVariable("uint256", "max_value1", "public");
     gContract.createVariable("uint256", "min_value1", "public");
+
+    // Creating events
+    gContract.createEvent("temperatureOverflow", [
+      { name: "value1", type: "uint256" },
+      { name: "max_value1", type: "uint256" },
+    ]);
+    gContract.createEvent("temperatureUnderflow", [
+      { name: "value1", type: "uint256" },
+      { name: "min_value1", type: "uint256" },
+    ]);
 
     // Creating constructor
     gContract
@@ -57,15 +71,14 @@ describe("Contract Manager Writer", () => {
       .endElseIf()
       .endIf();
 
+    gContract
+      .createFunction("setName", "public")
+      .setInput("string", "_name")
+      .setAssignment("name", "_name");
+
     // Modeling Variables
     gContractController.createVariable("DHT11[]", "contracts", "public");
-    gContractController.createVariable(
-      "uint256",
-      "counter",
-      "private",
-      false,
-      "0"
-    );
+    gContractController.createVariable("uint256", "counter", "private", "0");
 
     // Modeling Functions
     gContractController
@@ -100,7 +113,7 @@ describe("Contract Manager Writer", () => {
 
   // COMPILING
   it("Compiling", () => {
-    const compiled = gContractManager.compileAll((errors) => {
+    const compiled = gContractManager.compileAll((errors: any) => {
       if (Array.isArray(errors)) {
         errors.map((e) => {
           // console.log(e.formattedMessage);

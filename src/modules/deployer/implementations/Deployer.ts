@@ -4,16 +4,8 @@ import { AbiItem } from "web3-utils";
 import { IDeployer } from "../types/IDeployer";
 import { IDeployerInputs } from "../types/IDeployerInputs";
 
-interface ICreateDeployerDTO {
-  web3: Web3 | undefined | null;
-}
-
 class Deployer implements IDeployer {
   private web3: Web3 | undefined | null;
-
-  constructor({ web3 }: ICreateDeployerDTO) {
-    this.web3 = web3;
-  }
 
   setWeb3(newWeb3: Web3): Web3 {
     this.web3 = newWeb3;

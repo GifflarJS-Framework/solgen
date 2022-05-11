@@ -1,12 +1,16 @@
-import createFunctionModel from "../";
+import { container } from "tsyringe";
+import { IFunctionModel } from "../types/IFunctionModel";
+
 const expected = JSON.stringify(
   require("@test/examples/modeling/function-1.json")
 );
 
 describe("Function Model", () => {
+  const functionModel: IFunctionModel = container.resolve("FunctionModel");
+
   it("Creating", () => {
     // Creating function
-    const myFunction = createFunctionModel({
+    const myFunction = functionModel.execute({
       name: "myFunction",
       scope: "public",
     });

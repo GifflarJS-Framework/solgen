@@ -4,12 +4,14 @@ import { container } from "tsyringe";
 import { IIfWriter } from "../types/IIfWriter";
 
 describe("If Writer", () => {
-  const writeContentMock = (content: IContents[]) => {
-    return "age = 20;\n";
+  const contentWriterMock = {
+    write: (content: IContents[]): string => {
+      return "age = 20;\n";
+    },
   };
 
   const ifWriter: IIfWriter = container.resolve("IfWriter");
-  ifWriter._init(writeContentMock);
+  ifWriter._init(contentWriterMock);
 
   it("Writing If", () => {
     const myif: IIf = {

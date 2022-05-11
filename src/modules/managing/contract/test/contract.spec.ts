@@ -1,13 +1,19 @@
 import fs from "fs";
-import createContract from "../implementations/default";
+import { container } from "tsyringe";
+import { IGifflarContract } from "../types/IGifflarContract";
+import { IGifflarContractModel } from "../types/IGifflarContractModel";
 const writing_path = __dirname + "/../../../../test/examples/writing/";
 const expectedJson = JSON.stringify(
   require("@test/examples/modeling/contract-1.json")
 );
 
 describe("Gifflar Contract", () => {
+  const contractModel: IGifflarContractModel = container.resolve(
+    "GifflarContractModel"
+  );
+
   it("Writing Gifflar Contract", () => {
-    const gContract = createContract("MyContract");
+    const gContract: IGifflarContract = contractModel.execute("MyContract");
 
     const expected = fs.readFileSync(writing_path + "contract-1.txt", {
       encoding: "utf8",
@@ -15,10 +21,20 @@ describe("Gifflar Contract", () => {
 
     // Creating the variables
     gContract.createVariable("address", "manager", "public");
-    gContract.createVariable("string", "name", "public", true);
+    gContract.createVariable("string", "name", "public");
     gContract.createVariable("uint256", "value1", "public");
     gContract.createVariable("uint256", "max_value1", "public");
     gContract.createVariable("uint256", "min_value1", "public");
+
+    // Creating events
+    gContract.createEvent("temperatureOverflow", [
+      { name: "value1", type: "uint256" },
+      { name: "max_value1", type: "uint256" },
+    ]);
+    gContract.createEvent("temperatureUnderflow", [
+      { name: "value1", type: "uint256" },
+      { name: "min_value1", type: "uint256" },
+    ]);
 
     // Creating constructor
     gContract
@@ -41,6 +57,11 @@ describe("Gifflar Contract", () => {
       .setEventCall("temperatureUnderflow", ["value1", "min_value1"])
       .endElseIf()
       .endIf();
+
+    gContract
+      .createFunction("setName", "public")
+      .setInput("string", "_name")
+      .setAssignment("name", "_name");
 
     const resultJson = JSON.stringify(gContract);
     const result = gContract.write();

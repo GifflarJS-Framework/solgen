@@ -4,13 +4,15 @@ import { container } from "tsyringe";
 import { IForWriter } from "../types/IForWriter";
 
 describe("For Writer", () => {
-  const writeContentMock = (content: IContents[]) => {
-    return "emit myEvent(age);\n";
+  const contentWriterMock = {
+    write: (content: IContents[]): string => {
+      return "emit myEvent(age);\n";
+    },
   };
 
   it("Writing If", () => {
     const forWriter: IForWriter = container.resolve("ForWriter");
-    forWriter._init(writeContentMock);
+    forWriter._init(contentWriterMock);
 
     const myfor: IFor = {
       statement: "for",
