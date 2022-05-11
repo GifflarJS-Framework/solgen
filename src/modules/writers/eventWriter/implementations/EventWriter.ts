@@ -1,4 +1,4 @@
-import { IEvent } from "@models/eventCall/types/IEvent";
+import { IEvent } from "@models/event/types/IEvent";
 import { IInputWriter } from "@writers/statements/inputWriter/types/IInputWriter";
 import { inject, injectable } from "tsyringe";
 import { IEventWriter } from "../types/IEventWriter";
