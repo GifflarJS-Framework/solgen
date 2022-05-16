@@ -26,7 +26,8 @@
     "emitDeclarationOnly": false,
     "isolatedModules": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true
   },
   "exclude": ["./bin/index.ts"],
   "include": [

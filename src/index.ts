@@ -1,12 +1,18 @@
+import "reflect-metadata";
+import "./modules";
 import { container } from "tsyringe";
-import { IContractManager } from "@managing/contractManager/types/IContractManager";
-import { IContract } from "@models/contract/types/IContract";
+import { IGifflarContract } from "@managing/contract/types/IGifflarContract";
+import { IGifflarContractModel } from "@managing/contract/types/IGifflarContractModel";
+import { IGifflarContractManager } from "@managing/contractManager/types/IGifflarContractManager";
 
-const createContract = (): IContract => {
-  return container.resolve("GifflarContract");
+const createContract = (name: string): IGifflarContract => {
+  const gifflarContractModel: IGifflarContractModel = container.resolve(
+    "GifflarContractModel"
+  );
+  return gifflarContractModel.execute(name);
 };
 
-const createContractManager = (): IContractManager => {
+const createContractManager = (): IGifflarContractManager => {
   return container.resolve("GifflarContractManager");
 };
 
