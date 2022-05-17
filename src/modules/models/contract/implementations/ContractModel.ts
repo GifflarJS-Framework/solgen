@@ -34,7 +34,7 @@ class ContractModel implements IContractModel {
     };
 
     const toJson = (): IContractJson => {
-      const jsonfunction = JSON.stringify(this);
+      const jsonfunction = JSON.stringify({ name: contractName, contract });
       return JSON.parse(jsonfunction);
     };
 
@@ -114,11 +114,13 @@ class ContractModel implements IContractModel {
       return _function;
     };
 
-    const _assignFunctions = <T>(obj: any): T => {
-      const _obj = {
-        ...obj,
+    const _assignFunctions = (): IContract => {
+      const _obj: IContract = {
         name: contractName,
         contract,
+        code: "",
+        json: {},
+        instance: undefined,
         toJson,
         createEvent,
         createEventCall,
@@ -133,7 +135,7 @@ class ContractModel implements IContractModel {
       return _obj;
     };
 
-    const json: IContract = _assignFunctions({});
+    const json: IContract = _assignFunctions();
     return json;
   }
 }
