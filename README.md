@@ -2,7 +2,7 @@
     <img src="https://i.imgur.com/mwbuYqE.png" alt="gifflar banner"/>
 </div>
 
-[![pipeline status](https://gitlab.com/lif-uesc/gifflar/badges/master/pipeline.svg)](https://gitlab.com/lif-uesc/gifflar/-/commits/master)
+[![Node.js CI](https://github.com/GifflarJS-Framework/gifflar-library/actions/workflows/tests.yml/badge.svg)](https://github.com/GifflarJS-Framework/gifflar-library/actions/workflows/tests.yml)
 
 # Gifflar.js
 
