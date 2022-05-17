@@ -128,7 +128,7 @@ class ContractModel implements IContractModel {
         createConstructor,
         createFunction,
         toString: (): string => {
-          return JSON.stringify(_obj);
+          return JSON.stringify({ name: _obj.name, contract: _obj.contract });
         },
       };
 

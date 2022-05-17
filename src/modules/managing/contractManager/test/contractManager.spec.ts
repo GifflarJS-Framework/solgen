@@ -99,14 +99,16 @@ describe("Contract Manager Writer", () => {
       .setAssignment("_contract", "contracts[0]")
       .endIf();
 
-    const resultJson = JSON.stringify(gContractManager.contracts);
+    const resultJson = gContractManager.contracts.map((contract) => {
+      return JSON.parse(contract.toString());
+    });
     const result = gContractManager.writeAll();
 
     // const deployed = gContract.compile((err) => {});
     // console.log(JSON.stringify(deployed));
 
     // Testing json
-    expect(resultJson).toEqual(expectedJson);
+    expect(JSON.stringify(resultJson)).toEqual(expectedJson);
     // Testing code
     expect(result).toEqual(expected);
   });

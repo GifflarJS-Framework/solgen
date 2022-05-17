@@ -63,7 +63,7 @@ describe("Gifflar Contract", () => {
       .setInput("string", "_name")
       .setAssignment("name", "_name");
 
-    const resultJson = JSON.stringify(gContract);
+    const resultJson = gContract.toString();
     const result = gContract.write();
 
     // const deployed = gContract.compile((err) => {});
