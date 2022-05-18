@@ -8,6 +8,10 @@
 
 Um framework para gerar, compilar e implementar contratos inteligentes em tempo de execução.
 
+## Status de projeto
+
+**Em desenvolvimento**
+
 ## Propriedades suportadas
 
 | Propriedade             |      Suporta       | Exemplo                                               |
@@ -26,7 +30,3 @@ Um framework para gerar, compilar e implementar contratos inteligentes em tempo 
 | Loops While             |        :x:         | `while(a != b){...}`                                  |
 | Loops Do/While          |        :x:         | `do{...}while(a != b);`                               |
 | Herança                 |        :x:         | `contract Dog is Animal{...}`                         |
-
-## Documentation
-
-The JSDocs is being built [here](https://gifflarsuite.gitlab.io/gifflar/docs/gifflar/1.0.0/index.html)
