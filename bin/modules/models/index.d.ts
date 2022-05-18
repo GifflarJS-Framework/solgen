@@ -1,0 +1,13 @@
+import "./assignment";
+import "./variable";
+import "./content";
+import "./newcontract";
+import "./methodcall";
+import "./if";
+import "./globalVariable";
+import "./for";
+import "./expression";
+import "./eventCall";
+import "./event";
+import "./function";
+import "./contract";
