@@ -15,4 +15,5 @@ export interface IContent extends IStackItem {
   beginElse(): IContent;
   endIf(): IContent;
   endElseIf(): IContent;
+  endElse(): IContent;
 }

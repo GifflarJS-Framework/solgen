@@ -145,6 +145,7 @@ class ContentModel {
         beginElseIf,
         endIf,
         endElseIf: endIf,
+        endElse: endIf,
         setEventCall,
         setAssignment,
         setVariable,
