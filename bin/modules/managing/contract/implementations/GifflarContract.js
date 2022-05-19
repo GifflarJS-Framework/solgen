@@ -72,9 +72,9 @@ var GifflarContract = /** @class */ (function () {
         var _contractModel = this.contractModel.execute(contractName);
         var gContract = __assign(__assign({}, _contractModel), { setName: function (newName) {
                 gContract.name = newName;
-            }, write: function () {
-                var contracts = [gContract];
-                gContract.code = _this.contractWriter.write(contracts, function () {
+            }, write: function (contracts) {
+                var _contracts = contracts || [gContract];
+                gContract.code = _this.contractWriter.write(_contracts, function () {
                     return "";
                 });
                 return gContract.code;

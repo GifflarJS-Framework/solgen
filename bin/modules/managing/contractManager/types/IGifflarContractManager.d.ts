@@ -1,5 +1,6 @@
 import { IWeb3 } from "../../../deployer/types/IWeb3";
 import { IGifflarContract } from "../../contract/types/IGifflarContract";
+import { IContractJson } from "../../../models/contract/types/IContractJson";
 import { Contract } from "web3-eth-contract";
 import { IManagerDeployDTO } from "./IManagerDeployDTO";
 export interface IGifflarContractManager {
@@ -9,7 +10,7 @@ export interface IGifflarContractManager {
     newContract(name: string): IGifflarContract;
     getContract(name: string): IGifflarContract;
     writeAll(): string;
-    write(contracts: Array<IGifflarContract>): string;
+    write(contracts: Array<IContractJson>): string;
     written(): string | undefined;
     compileAll(callback: (errors: Array<any>) => void): any;
     compile(contractName: string, callback: (errors: Array<any>) => void): void;
