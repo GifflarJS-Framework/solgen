@@ -1,10 +1,10 @@
-import Web3 from "web3";
 import { AbiItem } from "web3-utils";
 import { Contract } from "web3-eth-contract";
 import { IDeployerInputs } from "./IDeployerInputs";
+import { IWeb3 } from "./IWeb3";
 export interface IDeployer {
-    setWeb3(newWeb3: Web3): Web3;
-    getWeb3(): Web3 | undefined | null;
+    setWeb3(newWeb3: IWeb3): IWeb3;
+    getWeb3(): IWeb3 | undefined | null;
     deploy(inputs: IDeployerInputs): Promise<Contract>;
     retrieve(abi: AbiItem, address: string): Promise<Contract>;
 }

@@ -82,25 +82,19 @@ var Deployer = /** @class */ (function () {
     };
     Deployer.prototype.retrieve = function (abi, address) {
         return __awaiter(this, void 0, void 0, function () {
-            var contract, e_2;
+            var contract;
             return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!this.web3) {
-                            throw new Error("No web3 object configured.");
-                        }
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, new this.web3.eth.Contract(abi, address)];
-                    case 2:
-                        contract = _a.sent();
-                        return [2 /*return*/, contract];
-                    case 3:
-                        e_2 = _a.sent();
-                        throw new Error(e_2);
-                    case 4: return [2 /*return*/];
+                if (!this.web3) {
+                    throw new Error("No web3 object configured.");
                 }
+                try {
+                    contract = new this.web3.eth.Contract(abi, address);
+                    return [2 /*return*/, contract];
+                }
+                catch (e) {
+                    throw new Error(e);
+                }
+                return [2 /*return*/];
             });
         });
     };
