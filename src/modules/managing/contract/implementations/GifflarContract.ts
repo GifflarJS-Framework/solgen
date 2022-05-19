@@ -8,6 +8,7 @@ import { IContractDeployDTO } from "../types/IContractDeployDTO";
 import { IContractModel } from "@models/contract/types/IContractModel";
 import { IGifflarContractModel } from "../types/IGifflarContractModel";
 import { IWeb3 } from "@deployer/types/IWeb3";
+import { IContractJson } from "@models/contract/types/IContractJson";
 
 @injectable()
 class GifflarContract implements IGifflarContractModel {
@@ -31,9 +32,9 @@ class GifflarContract implements IGifflarContractModel {
         gContract.name = newName;
       },
 
-      write: (): string => {
-        const contracts = [gContract];
-        gContract.code = this.contractWriter.write(contracts, () => {
+      write: (contracts?: Array<IContractJson>): string => {
+        const _contracts = contracts || [gContract];
+        gContract.code = this.contractWriter.write(_contracts, () => {
           return "";
         });
         return gContract.code;

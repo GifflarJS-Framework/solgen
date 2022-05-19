@@ -1,6 +1,7 @@
 import { IWeb3 } from "@deployer/types/IWeb3";
 import { IGifflarContract } from "@managing/contract/types/IGifflarContract";
 import { IGifflarContractModel } from "@managing/contract/types/IGifflarContractModel";
+import { IContractJson } from "@models/contract/types/IContractJson";
 import { IContractWriter } from "@writers/contractWriter/types/IContractWriter";
 import { ICompiler } from "modules/compiler/types/ICompiler";
 import { IDeployer } from "modules/deployer/types/IDeployer";
@@ -26,8 +27,8 @@ class GifflarContractManager implements IGifflarContractManager {
     private compiler: ICompiler
   ) {}
 
-  private _writeContracts(contracts: Array<IGifflarContract>): string {
-    let _contracts: Array<IGifflarContract> = contracts;
+  private _writeContracts(contracts: Array<IContractJson>): string {
+    let _contracts: Array<IContractJson> = contracts;
 
     // If contract object should be updated
     let callback = null;
