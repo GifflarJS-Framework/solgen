@@ -1,18 +1,18 @@
-import Web3 from "web3";
+import { IAbiItem } from "@deployer/types/IAbiItem";
+import { IWeb3 } from "@deployer/types/IWeb3";
 import { Contract } from "web3-eth-contract";
-import { AbiItem } from "web3-utils";
 import { IDeployer } from "../types/IDeployer";
 import { IDeployerInputs } from "../types/IDeployerInputs";
 
 class Deployer implements IDeployer {
-  private web3: Web3 | undefined | null;
+  private web3: IWeb3 | undefined | null;
 
-  setWeb3(newWeb3: Web3): Web3 {
+  setWeb3(newWeb3: IWeb3): IWeb3 {
     this.web3 = newWeb3;
     return this.web3;
   }
 
-  getWeb3(): Web3 | undefined | null {
+  getWeb3(): IWeb3 | undefined | null {
     return this.web3;
   }
 
@@ -40,12 +40,12 @@ class Deployer implements IDeployer {
     }
   }
 
-  async retrieve(abi: AbiItem, address: string): Promise<Contract> {
+  async retrieve(abi: IAbiItem, address: string): Promise<Contract> {
     if (!this.web3) {
       throw new Error("No web3 object configured.");
     }
     try {
-      const contract = await new this.web3.eth.Contract(abi, address);
+      const contract = new this.web3.eth.Contract(abi, address);
       return contract;
     } catch (e: any) {
       throw new Error(e);
