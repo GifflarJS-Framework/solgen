@@ -5,9 +5,9 @@ import { inject, injectable } from "tsyringe";
 import { IGifflarContract } from "../types/IGifflarContract";
 import { Contract } from "web3-eth-contract";
 import { IContractDeployDTO } from "../types/IContractDeployDTO";
-import Web3 from "web3";
 import { IContractModel } from "@models/contract/types/IContractModel";
 import { IGifflarContractModel } from "../types/IGifflarContractModel";
+import { IWeb3 } from "@deployer/types/IWeb3";
 
 @injectable()
 class GifflarContract implements IGifflarContractModel {
@@ -56,7 +56,7 @@ class GifflarContract implements IGifflarContractModel {
 
       deploy: async (
         inputs: IContractDeployDTO,
-        web3: Web3
+        web3: IWeb3
       ): Promise<Contract> => {
         this.deployer.setWeb3(web3);
         const json = gContract.json.contracts.jsons[gContract.name];
