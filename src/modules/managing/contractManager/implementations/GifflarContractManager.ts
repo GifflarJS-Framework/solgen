@@ -1,10 +1,10 @@
+import { IWeb3 } from "@deployer/types/IWeb3";
 import { IGifflarContract } from "@managing/contract/types/IGifflarContract";
 import { IGifflarContractModel } from "@managing/contract/types/IGifflarContractModel";
 import { IContractWriter } from "@writers/contractWriter/types/IContractWriter";
 import { ICompiler } from "modules/compiler/types/ICompiler";
 import { IDeployer } from "modules/deployer/types/IDeployer";
 import { inject, injectable } from "tsyringe";
-import Web3 from "web3";
 import { Contract } from "web3-eth-contract";
 import { IGifflarContractManager } from "../types/IGifflarContractManager";
 import { IManagerDeployDTO } from "../types/IManagerDeployDTO";
@@ -142,12 +142,12 @@ class GifflarContractManager implements IGifflarContractManager {
     return contract;
   }
 
-  setWeb3(newWeb3: Web3): Web3 {
+  setWeb3(newWeb3: IWeb3): IWeb3 {
     this.deployer.setWeb3(newWeb3);
     return newWeb3;
   }
 
-  getWeb3(): Web3 | null | undefined {
+  getWeb3(): IWeb3 | null | undefined {
     return this.deployer.getWeb3();
   }
 }
