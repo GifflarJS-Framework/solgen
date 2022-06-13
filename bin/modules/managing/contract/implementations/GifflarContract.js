@@ -90,12 +90,21 @@ var GifflarContract = /** @class */ (function () {
                     callback(errors);
                 }
                 return gContract.json;
+            }, setWeb3: function (web3) {
+                _this.deployer.setWeb3(web3);
             }, deploy: function (inputs, web3) { return __awaiter(_this, void 0, void 0, function () {
                 var json, _inputs, _a;
                 return __generator(this, function (_b) {
                     switch (_b.label) {
                         case 0:
-                            this.deployer.setWeb3(web3);
+                            if (!this.deployer.getWeb3()) {
+                                if (web3) {
+                                    this.deployer.setWeb3(web3);
+                                }
+                                else {
+                                    throw Error("Web3 is not defined");
+                                }
+                            }
                             json = gContract.json.contracts.jsons[gContract.name];
                             if (!json) {
                                 throw new Error("Failed to find compiled contract.");
