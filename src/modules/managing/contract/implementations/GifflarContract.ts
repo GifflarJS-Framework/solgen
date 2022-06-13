@@ -55,11 +55,21 @@ class GifflarContract implements IGifflarContractModel {
         return gContract.json;
       },
 
+      setWeb3: (web3: IWeb3): void => {
+        this.deployer.setWeb3(web3);
+      },
+
       deploy: async (
         inputs: IContractDeployDTO,
-        web3: IWeb3
+        web3?: IWeb3
       ): Promise<Contract> => {
-        this.deployer.setWeb3(web3);
+        if (!this.deployer.getWeb3()) {
+          if (web3) {
+            this.deployer.setWeb3(web3);
+          } else {
+            throw Error("Web3 is not defined");
+          }
+        }
         const json = gContract.json.contracts.jsons[gContract.name];
         if (!json) {
           throw new Error("Failed to find compiled contract.");
