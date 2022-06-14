@@ -92,7 +92,7 @@ var GifflarContract = /** @class */ (function () {
                 return gContract.json;
             }, setWeb3: function (web3) {
                 _this.deployer.setWeb3(web3);
-            }, deploy: function (inputs, web3) { return __awaiter(_this, void 0, void 0, function () {
+            }, deploy: function (inputs, accountPrivateKey, web3) { return __awaiter(_this, void 0, void 0, function () {
                 var json, _inputs, _a;
                 return __generator(this, function (_b) {
                     switch (_b.label) {
@@ -117,7 +117,7 @@ var GifflarContract = /** @class */ (function () {
                                 gas: inputs.gas,
                             };
                             _a = gContract;
-                            return [4 /*yield*/, this.deployer.deploy(_inputs)];
+                            return [4 /*yield*/, this.deployer.deploy(_inputs, accountPrivateKey)];
                         case 1:
                             _a.instance = _b.sent();
                             return [2 /*return*/, gContract.instance];

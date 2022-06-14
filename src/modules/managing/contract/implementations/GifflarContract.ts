@@ -61,6 +61,7 @@ class GifflarContract implements IGifflarContractModel {
 
       deploy: async (
         inputs: IContractDeployDTO,
+        accountPrivateKey?: string,
         web3?: IWeb3
       ): Promise<Contract> => {
         if (!this.deployer.getWeb3()) {
@@ -81,7 +82,10 @@ class GifflarContract implements IGifflarContractModel {
           from: inputs.from,
           gas: inputs.gas,
         };
-        gContract.instance = await this.deployer.deploy(_inputs);
+        gContract.instance = await this.deployer.deploy(
+          _inputs,
+          accountPrivateKey
+        );
         return gContract.instance;
       },
       written: (): string | undefined => {

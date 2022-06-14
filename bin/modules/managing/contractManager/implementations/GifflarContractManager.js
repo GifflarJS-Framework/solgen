@@ -136,7 +136,7 @@ var GifflarContractManager = /** @class */ (function () {
         callback([]);
         throw new Error("Unable to compile contract");
     };
-    GifflarContractManager.prototype.deploy = function (contractName, inputs) {
+    GifflarContractManager.prototype.deploy = function (contractName, inputs, accountPrivateKey) {
         return __awaiter(this, void 0, void 0, function () {
             var json, _inputs, contract;
             return __generator(this, function (_a) {
@@ -153,7 +153,7 @@ var GifflarContractManager = /** @class */ (function () {
                             from: inputs.from,
                             gas: inputs.gas,
                         };
-                        return [4 /*yield*/, this.deployer.deploy(_inputs)];
+                        return [4 /*yield*/, this.deployer.deploy(_inputs, accountPrivateKey)];
                     case 1:
                         contract = _a.sent();
                         return [2 /*return*/, contract];

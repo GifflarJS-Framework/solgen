@@ -14,7 +14,7 @@ export interface IGifflarContractManager {
     written(): string | undefined;
     compileAll(callback: (errors: Array<any>) => void): any;
     compile(contractName: string, callback: (errors: Array<any>) => void): void;
-    deploy(contractName: string, inputs: IManagerDeployDTO): Promise<Contract>;
+    deploy(contractName: string, inputs: IManagerDeployDTO, accountPrivateKey?: string): Promise<Contract>;
     setWeb3(newWeb3: IWeb3): IWeb3;
     getWeb3(): IWeb3 | undefined | null;
 }

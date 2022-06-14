@@ -7,7 +7,7 @@ export interface IGifflarContract extends IContract {
     setName(newName: string): void;
     write(contracts?: Array<IContractJson>): string;
     compile(callback: (errors: any) => void): any;
-    deploy(inputs: IContractDeployDTO, web3?: IWeb3): Promise<Contract>;
+    deploy(inputs: IContractDeployDTO, accountPrivateKey?: string, web3?: IWeb3): Promise<Contract>;
     written(): string | undefined;
     compiled(): any | undefined;
     setWeb3(web3: IWeb3): void;

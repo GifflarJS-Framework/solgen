@@ -46,9 +46,9 @@ var Deployer = /** @class */ (function () {
     Deployer.prototype.getWeb3 = function () {
         return this.web3;
     };
-    Deployer.prototype.deploy = function (inputs) {
+    Deployer.prototype.deploy = function (inputs, accountPrivateKey) {
         return __awaiter(this, void 0, void 0, function () {
-            var abi, bytecode, args, from, gas, contract, e_1;
+            var account, abi, bytecode, args, from, gas, contract, e_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -58,6 +58,12 @@ var Deployer = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
+                        // Used if there is no account in memory
+                        if (accountPrivateKey) {
+                            account = this.web3.eth.accounts.privateKeyToAccount(accountPrivateKey);
+                            // Adding account to memory wallet
+                            this.web3.eth.accounts.wallet.add(account);
+                        }
                         abi = inputs.abi, bytecode = inputs.bytecode, args = inputs.args, from = inputs.from, gas = inputs.gas;
                         return [4 /*yield*/, new this.web3.eth.Contract(abi)
                                 // Deploy configuration

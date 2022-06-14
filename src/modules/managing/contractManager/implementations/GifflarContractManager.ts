@@ -125,7 +125,8 @@ class GifflarContractManager implements IGifflarContractManager {
 
   async deploy(
     contractName: string,
-    inputs: IManagerDeployDTO
+    inputs: IManagerDeployDTO,
+    accountPrivateKey?: string
   ): Promise<Contract> {
     // Obtaining the contract JSON
     const json = this.json.contracts.jsons[contractName];
@@ -139,7 +140,7 @@ class GifflarContractManager implements IGifflarContractManager {
       from: inputs.from,
       gas: inputs.gas,
     };
-    const contract = await this.deployer.deploy(_inputs);
+    const contract = await this.deployer.deploy(_inputs, accountPrivateKey);
     return contract;
   }
 

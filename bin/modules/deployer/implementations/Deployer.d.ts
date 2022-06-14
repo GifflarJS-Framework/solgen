@@ -7,7 +7,7 @@ declare class Deployer implements IDeployer {
     private web3;
     setWeb3(newWeb3: IWeb3): IWeb3;
     getWeb3(): IWeb3 | undefined | null;
-    deploy(inputs: IDeployerInputs): Promise<Contract>;
+    deploy(inputs: IDeployerInputs, accountPrivateKey?: string): Promise<Contract>;
     retrieve(abi: IAbiItem, address: string): Promise<Contract>;
 }
 export default Deployer;
