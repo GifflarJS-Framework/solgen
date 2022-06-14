@@ -1,2 +1,0 @@
-import "./contract";
-import "./contractManager";
