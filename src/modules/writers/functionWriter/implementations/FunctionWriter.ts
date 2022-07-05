@@ -66,6 +66,12 @@ class FunctionWriter implements IFunctionWriter {
         }
       );
 
+      // Organizing state mutability
+      let stateMutability = "";
+      if (f.stateMutability) {
+        stateMutability = ` ${f.stateMutability}`;
+      }
+
       // Organizing all modifiers
       let modifiers = "";
       if (f.modifiers) {
@@ -76,7 +82,7 @@ class FunctionWriter implements IFunctionWriter {
       }
 
       // Closing inputs and setting scope
-      text += `)${scope}${modifiers}`;
+      text += `)${scope}${stateMutability}${modifiers}`;
 
       // Setting the returns text
       if (text_returns) {
