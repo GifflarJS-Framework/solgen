@@ -1,5 +1,4 @@
 /* eslint-disable no-use-before-define */
-import { IInput } from "@models/function/types/IInput";
 import { INewContract } from "@models/newcontract/types/INewContract";
 import { IVariable } from "@models/variable/types/IVariable";
 import { IContent } from "../types/IContent";
@@ -13,6 +12,8 @@ import { IMethodCallModel } from "@models/methodcall/types/IMethodCallModel";
 import { IEventCallModel } from "@models/eventCall/types/IEventCallModel";
 import { ICreateContentDTO } from "../types/ICreateContentDTO";
 import { IIf } from "@models/if/types/IIf";
+import { ITypeName } from "modules/types/ITypeName";
+import { IVariableOptions } from "modules/types/IVariableOptions";
 
 interface IIfContent extends IIf, IContent {}
 
@@ -45,11 +46,17 @@ class ContentModel {
     let top = 0;
 
     const setVariable = (
-      type: string,
+      type: ITypeName,
       name: string,
-      value: string | INewContract
+      value: string | INewContract,
+      options?: IVariableOptions
     ): IContent => {
-      const newVariable = this.variableModel.execute({ type, name, value });
+      const newVariable = this.variableModel.execute({
+        type:
+          type === "custom" && options?.customType ? options.customType : type,
+        name,
+        value,
+      });
       contentVars.push(newVariable);
       stack[top].content.push(newVariable);
       const contentItem: IContent = _assignFunctions(stack[top]);
@@ -103,7 +110,9 @@ class ContentModel {
       args: Array<string>
     ): IContent => {
       const newContract = this.newContractModel.execute({ contractName, args });
-      return setVariable(contractName, variable, newContract);
+      return setVariable("custom", variable, newContract, {
+        customType: contractName,
+      });
     };
 
     const beginIf = (condition: string, onElse?: boolean): IContent => {
