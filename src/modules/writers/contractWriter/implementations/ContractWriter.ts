@@ -2,6 +2,7 @@ import { IContractJson } from "@models/contract/types/IContractJson";
 import { IEventWriter } from "@writers/eventWriter/types/IEventWriter";
 import { IFunctionWriter } from "@writers/functionWriter/types/IFunctionWriter";
 import { IGlobalVariableWriter } from "@writers/globalVariableWriter/types/IGlobalVariableWriter";
+import { IModifierWriter } from "@writers/statements/modifierWriter/types/IModifierWriter";
 import { inject, injectable } from "tsyringe";
 import { IContractWriter } from "../types/IContractWriter";
 
@@ -13,7 +14,9 @@ class ContractWriter implements IContractWriter {
     @inject("FunctionWriter")
     private functionWriter: IFunctionWriter,
     @inject("GlobalVariableWriter")
-    private globalVariableWriter: IGlobalVariableWriter
+    private globalVariableWriter: IGlobalVariableWriter,
+    @inject("ModifierWriter")
+    private modifierWriter: IModifierWriter
   ) {}
 
   private _start(contract_name: string) {
@@ -49,6 +52,7 @@ class ContractWriter implements IContractWriter {
       const txt_start = this._start(json.name);
       let { functions } = json.contract;
 
+      // Variables
       const txt_variables = this.globalVariableWriter.write(
         json.contract.variables,
         (request) => {
@@ -56,8 +60,13 @@ class ContractWriter implements IContractWriter {
         }
       );
 
+      // Events
       const txt_events = this.eventWriter.write(json.contract.events);
 
+      // Modifiers
+      const txt_modifiers = this.modifierWriter.write(json.contract.modifiers);
+
+      // Functions
       const txt_functions = this.functionWriter.write(
         functions,
         json.contract.variables

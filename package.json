@@ -1,5 +1,5 @@
 {
-  "name": "gifflar",
+  "name": "gifflar-library",
   "version": "1.0.0",
   "description": "A smart contract generator library.",
   "main": "bin/index.js",

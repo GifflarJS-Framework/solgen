@@ -10,6 +10,11 @@ export interface IContent extends IStackItem {
     contractName: string,
     args: Array<string>
   ): IContent;
+
+  /**
+   * Remember to use the "endIf" function when finishing "if" conditions actions,
+   * or else all the conditions made will have any effect.
+   *  */
   beginIf(condition: string, onElse?: boolean): IContent;
   beginElseIf(condition: string): IContent;
   beginElse(): IContent;

@@ -6,6 +6,9 @@ import { IWeb3 } from "./IWeb3";
 export interface IDeployer {
   setWeb3(newWeb3: IWeb3): IWeb3;
   getWeb3(): IWeb3 | undefined | null;
-  deploy(inputs: IDeployerInputs): Promise<Contract>;
+  deploy(
+    inputs: IDeployerInputs,
+    accountPrivateKey?: string
+  ): Promise<Contract>;
   retrieve(abi: AbiItem, address: string): Promise<Contract>;
 }

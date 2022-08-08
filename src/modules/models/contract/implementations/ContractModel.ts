@@ -12,6 +12,9 @@ import { IContractItem } from "../types/IContractItem";
 import IEventModel from "@models/event/types/IEventModel";
 import { IEvent } from "@models/event/types/IEvent";
 import { IContractModel } from "../types/IContractModel";
+import { IStateMutabilityType } from "modules/types/IStateMutabilityType";
+import { ITypeName } from "modules/types/ITypeName";
+import { IVariableOptions } from "modules/types/IVariableOptions";
 
 @injectable()
 class ContractModel implements IContractModel {
@@ -30,6 +33,7 @@ class ContractModel implements IContractModel {
     const contract: IContractItem = {
       variables: [],
       events: [],
+      modifiers: [],
       functions: [],
     };
 
@@ -53,13 +57,15 @@ class ContractModel implements IContractModel {
     };
 
     const createVariable = (
-      type: string,
+      type: ITypeName,
       name: string,
       scope: string,
-      value?: string
+      value?: string,
+      options?: IVariableOptions
     ): IGlobalVariable => {
       const variable = this.globalVariableModel.execute({
-        type,
+        type:
+          type === "custom" && options?.customType ? options.customType : type,
         name,
         scope,
         value,
@@ -99,7 +105,8 @@ class ContractModel implements IContractModel {
       name: string,
       scope: string,
       inputs: Array<IInput>,
-      outputs: Array<string>
+      outputs: Array<string>,
+      stateMutability?: IStateMutabilityType
     ): IFunction => {
       const _function = this.functionModel.execute({
         name,
@@ -108,6 +115,7 @@ class ContractModel implements IContractModel {
         outputs,
         isConstructor: false,
         globalVars: contract.variables,
+        stateMutability,
       });
       contract.functions.push(_function);
 

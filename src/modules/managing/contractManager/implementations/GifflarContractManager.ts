@@ -1,10 +1,11 @@
+import { IWeb3 } from "@deployer/types/IWeb3";
 import { IGifflarContract } from "@managing/contract/types/IGifflarContract";
 import { IGifflarContractModel } from "@managing/contract/types/IGifflarContractModel";
+import { IContractJson } from "@models/contract/types/IContractJson";
 import { IContractWriter } from "@writers/contractWriter/types/IContractWriter";
 import { ICompiler } from "modules/compiler/types/ICompiler";
 import { IDeployer } from "modules/deployer/types/IDeployer";
 import { inject, injectable } from "tsyringe";
-import Web3 from "web3";
 import { Contract } from "web3-eth-contract";
 import { IGifflarContractManager } from "../types/IGifflarContractManager";
 import { IManagerDeployDTO } from "../types/IManagerDeployDTO";
@@ -26,8 +27,8 @@ class GifflarContractManager implements IGifflarContractManager {
     private compiler: ICompiler
   ) {}
 
-  private _writeContracts(contracts: Array<IGifflarContract>): string {
-    let _contracts: Array<IGifflarContract> = contracts;
+  private _writeContracts(contracts: Array<IContractJson>): string {
+    let _contracts: Array<IContractJson> = contracts;
 
     // If contract object should be updated
     let callback = null;
@@ -124,7 +125,8 @@ class GifflarContractManager implements IGifflarContractManager {
 
   async deploy(
     contractName: string,
-    inputs: IManagerDeployDTO
+    inputs: IManagerDeployDTO,
+    accountPrivateKey?: string
   ): Promise<Contract> {
     // Obtaining the contract JSON
     const json = this.json.contracts.jsons[contractName];
@@ -138,16 +140,16 @@ class GifflarContractManager implements IGifflarContractManager {
       from: inputs.from,
       gas: inputs.gas,
     };
-    const contract = await this.deployer.deploy(_inputs);
+    const contract = await this.deployer.deploy(_inputs, accountPrivateKey);
     return contract;
   }
 
-  setWeb3(newWeb3: Web3): Web3 {
+  setWeb3(newWeb3: IWeb3): IWeb3 {
     this.deployer.setWeb3(newWeb3);
     return newWeb3;
   }
 
-  getWeb3(): Web3 | null | undefined {
+  getWeb3(): IWeb3 | null | undefined {
     return this.deployer.getWeb3();
   }
 }

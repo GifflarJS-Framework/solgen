@@ -1,5 +1,6 @@
+import { IWeb3 } from "@deployer/types/IWeb3";
 import { IGifflarContract } from "@managing/contract/types/IGifflarContract";
-import Web3 from "web3";
+import { IContractJson } from "@models/contract/types/IContractJson";
 import { Contract } from "web3-eth-contract";
 import { IManagerDeployDTO } from "./IManagerDeployDTO";
 
@@ -10,11 +11,15 @@ export interface IGifflarContractManager {
   newContract(name: string): IGifflarContract;
   getContract(name: string): IGifflarContract;
   writeAll(): string;
-  write(contracts: Array<IGifflarContract>): string;
+  write(contracts: Array<IContractJson>): string;
   written(): string | undefined;
   compileAll(callback: (errors: Array<any>) => void): any;
   compile(contractName: string, callback: (errors: Array<any>) => void): void;
-  deploy(contractName: string, inputs: IManagerDeployDTO): Promise<Contract>;
-  setWeb3(newWeb3: Web3): Web3;
-  getWeb3(): Web3 | undefined | null;
+  deploy(
+    contractName: string,
+    inputs: IManagerDeployDTO,
+    accountPrivateKey?: string
+  ): Promise<Contract>;
+  setWeb3(newWeb3: IWeb3): IWeb3;
+  getWeb3(): IWeb3 | undefined | null;
 }

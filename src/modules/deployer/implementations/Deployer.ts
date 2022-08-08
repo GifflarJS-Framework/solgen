@@ -16,11 +16,24 @@ class Deployer implements IDeployer {
     return this.web3;
   }
 
-  async deploy(inputs: IDeployerInputs): Promise<Contract> {
+  async deploy(
+    inputs: IDeployerInputs,
+    accountPrivateKey?: string
+  ): Promise<Contract> {
     if (!this.web3) {
       throw new Error("No web3 object configured.");
     }
     try {
+      // Used if there is no account in memory
+      if (accountPrivateKey) {
+        // Creating account from private key
+        const account =
+          this.web3.eth.accounts.privateKeyToAccount(accountPrivateKey);
+
+        // Adding account to memory wallet
+        this.web3.eth.accounts.wallet.add(account);
+      }
+
       const { abi, bytecode, args, from, gas } = inputs;
       // Create a new contract and define ABI access
       const contract = await new this.web3.eth.Contract(abi)

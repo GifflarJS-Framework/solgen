@@ -4,7 +4,7 @@ import { IContractItem } from "./IContractItem";
 export interface IContractJson {
   name: string;
   contract: IContractItem;
-  code: string;
-  json: any;
-  instance: Contract | undefined;
+  code?: string;
+  json?: any;
+  instance?: Contract | undefined;
 }

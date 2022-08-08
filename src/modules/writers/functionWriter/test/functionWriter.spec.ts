@@ -10,6 +10,7 @@ describe("Contract Writer", () => {
       name: "MyFunction",
       scope: "public",
       isConstructor: false,
+      stateMutability: "view",
       inputs: [],
       modifiers: [],
       outputs: ["age"],
@@ -19,7 +20,7 @@ describe("Contract Writer", () => {
     };
 
     const expected =
-      "//FUNCTIONS\nfunction MyFunction() public returns (uint) {\nuint age = 18;\nreturn (age);\n}";
+      "//FUNCTIONS\nfunction MyFunction() public view returns (uint) {\nuint age = 18;\nreturn (age);\n}";
     const result = functionWriter.write([myFunction], []);
 
     expect(result).toMatch(expected);
