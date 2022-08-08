@@ -7,3 +7,4 @@ import "./inputWriter";
 import "./methodCallWriter";
 import "./newContractWriter";
 import "./outputWriter";
+import "./modifierWriter";
