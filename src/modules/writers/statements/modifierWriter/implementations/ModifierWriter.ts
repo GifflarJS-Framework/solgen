@@ -13,33 +13,40 @@ class ModifierWriter implements IModifierWriter {
     private inputWriter: IInputWriter
   ) {}
 
-  write(json: IModifier): string {
-    let str = `modifier ${json.title}`;
+  write(modifiers: Array<IModifier>): string {
+    let text = ``;
 
-    // Defining args if any
-    if (json.args.length > 0) {
-      const argsStr = this.inputWriter.write(json.args);
+    modifiers.map((modifier) => {
+      let str = `modifier ${modifier.title}`;
+
+      // Defining args if any
+      if (modifier.args.length > 0) {
+        const argsStr = this.inputWriter.write(modifier.args);
+        // Defining the modifier content
+        str = str.concat(`(${argsStr})`);
+      }
+
+      // If virtual
+      if (modifier.isVirtual) {
+        str = str.concat(` virtual`);
+      }
+
+      // If overriding
+      if (modifier.isOverriding) {
+        str = str.concat(` override`);
+      }
+
       // Defining the modifier content
-      str = str.concat(`(${argsStr})`);
-    }
+      const contentStr = this.contentWriter.write(modifier.content);
+      str = str.concat(`{\n`);
+      str = str.concat(`${contentStr}`);
+      str = str.concat(`_;\n}`);
 
-    // If virtual
-    if (json.isVirtual) {
-      str = str.concat(` virtual`);
-    }
+      // Updating complete text
+      text = text.concat(`${str}\n\n`);
+    });
 
-    // If overriding
-    if (json.isOverriding) {
-      str = str.concat(` override`);
-    }
-
-    // Defining the modifier content
-    const contentStr = this.contentWriter.write(json.content);
-    str = str.concat(`{\n`);
-    str = str.concat(`${contentStr}`);
-    str = str.concat(`_;\n}`);
-
-    return str;
+    return text;
   }
 }
 

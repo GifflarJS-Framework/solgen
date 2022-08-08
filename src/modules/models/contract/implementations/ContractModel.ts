@@ -33,6 +33,7 @@ class ContractModel implements IContractModel {
     const contract: IContractItem = {
       variables: [],
       events: [],
+      modifiers: [],
       functions: [],
     };
 

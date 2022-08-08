@@ -23,7 +23,7 @@ describe("Modifier Writer", () => {
       .endIf();
 
     // Writing modifier
-    const result = modifierWriter.write(myModifier);
+    const result = modifierWriter.write([myModifier]);
 
     //Expected text
     const expected =
@@ -32,7 +32,7 @@ describe("Modifier Writer", () => {
       `emit PriceTooLow(price);\n` +
       `}\n` +
       `_;\n` +
-      `}`;
+      `}\n\n`;
 
     expect(expected).toEqual(result);
   });
@@ -55,7 +55,7 @@ describe("Modifier Writer", () => {
       .endIf();
 
     // Writing modifier
-    const result = modifierWriter.write(myModifier);
+    const result = modifierWriter.write([myModifier]);
 
     //Expected text
     const expected =
@@ -64,7 +64,7 @@ describe("Modifier Writer", () => {
       `emit PriceTooLow(price);\n` +
       `}\n` +
       `_;\n` +
-      `}`;
+      `}\n\n`;
 
     expect(expected).toEqual(result);
   });
@@ -88,7 +88,7 @@ describe("Modifier Writer", () => {
       .endIf();
 
     // Writing modifier
-    const result = modifierWriter.write(myModifier);
+    const result = modifierWriter.write([myModifier]);
 
     //Expected text
     const expected =
@@ -97,7 +97,7 @@ describe("Modifier Writer", () => {
       `emit PriceTooLow(price);\n` +
       `}\n` +
       `_;\n` +
-      `}`;
+      `}\n\n`;
 
     expect(expected).toEqual(result);
   });
