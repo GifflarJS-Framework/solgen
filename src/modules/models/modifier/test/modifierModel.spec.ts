@@ -16,6 +16,8 @@ describe("Modifier Model", () => {
       statement: "modifier",
       title: "MyModifier",
       args: [],
+      isVirtual: false,
+      isOverriding: false,
       content: [],
     });
 
@@ -36,6 +38,8 @@ describe("Modifier Model", () => {
       statement: "modifier",
       title: "MyModifier",
       args: [{ name: "price", type: "uint" }],
+      isVirtual: false,
+      isOverriding: false,
       content: [],
     });
 
@@ -62,6 +66,8 @@ describe("Modifier Model", () => {
       statement: "modifier",
       title: "MyModifier",
       args: [{ name: "price", type: "uint" }],
+      isVirtual: false,
+      isOverriding: false,
       content: [
         {
           statement: "if",

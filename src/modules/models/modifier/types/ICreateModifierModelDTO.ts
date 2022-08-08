@@ -5,4 +5,6 @@ export interface ICreateModifierModelDTO {
   title: string;
   args: Array<IInput>;
   globalVars?: Array<IVariable>;
+  isVirtual?: boolean;
+  isOverriding?: boolean;
 }

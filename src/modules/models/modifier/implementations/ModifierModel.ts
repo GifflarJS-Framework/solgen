@@ -15,6 +15,8 @@ class ModifierModel implements IModifierModel {
     title,
     args,
     globalVars = [],
+    isVirtual = false,
+    isOverriding = false,
   }: ICreateModifierModelDTO): IModifier {
     const content_json = this.contentModel.execute({ globalVars });
 
@@ -22,6 +24,8 @@ class ModifierModel implements IModifierModel {
       statement: "modifier",
       title,
       args,
+      isVirtual,
+      isOverriding,
       ...content_json,
 
       toString(): string {
