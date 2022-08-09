@@ -13,3 +13,4 @@ import "./event";
 import "./function";
 import "./contract";
 import "./modifier";
+import "./require";
