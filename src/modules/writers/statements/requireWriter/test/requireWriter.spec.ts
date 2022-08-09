@@ -12,7 +12,7 @@ describe("Require Writer", () => {
     };
 
     const result = requireWriter.write(require);
-    const expected = `require(a == b);`;
+    const expected = `require(a == b)`;
 
     expect(result).toEqual(expected);
   });
@@ -25,7 +25,7 @@ describe("Require Writer", () => {
     };
 
     const result = requireWriter.write(require);
-    const expected = `require(a == b, "a must be equal to b.");`;
+    const expected = `require(a == b, "a must be equal to b.")`;
 
     expect(result).toEqual(expected);
   });

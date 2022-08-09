@@ -5,9 +5,9 @@ class RequireWriter implements IRequireWriter {
   write(require: IRequire): string {
     let text = `require(${require.condition}`;
     if (require.errorMessage) {
-      text = text.concat(`, "${require.errorMessage}");`);
+      text = text.concat(`, "${require.errorMessage}")`);
     } else {
-      text = text.concat(`);`);
+      text = text.concat(`)`);
     }
 
     return text;
