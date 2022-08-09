@@ -8,3 +8,4 @@ import "./methodCallWriter";
 import "./newContractWriter";
 import "./outputWriter";
 import "./modifierWriter";
+import "./requireWriter";
