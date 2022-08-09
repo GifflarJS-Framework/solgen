@@ -2,6 +2,7 @@ import { IContractJson } from "@models/contract/types/IContractJson";
 import { IEventWriter } from "@writers/eventWriter/types/IEventWriter";
 import { IFunctionWriter } from "@writers/functionWriter/types/IFunctionWriter";
 import { IGlobalVariableWriter } from "@writers/globalVariableWriter/types/IGlobalVariableWriter";
+import { ICustomErrorWriter } from "@writers/statements/customErrorWriter/types/ICustomErrorWriter";
 import { IModifierWriter } from "@writers/statements/modifierWriter/types/IModifierWriter";
 import { inject, injectable } from "tsyringe";
 import { IContractWriter } from "../types/IContractWriter";
@@ -16,7 +17,9 @@ class ContractWriter implements IContractWriter {
     @inject("GlobalVariableWriter")
     private globalVariableWriter: IGlobalVariableWriter,
     @inject("ModifierWriter")
-    private modifierWriter: IModifierWriter
+    private modifierWriter: IModifierWriter,
+    @inject("CustomErrorWriter")
+    private customErrorWriter: ICustomErrorWriter
   ) {}
 
   private _start(contract_name: string) {
@@ -66,6 +69,11 @@ class ContractWriter implements IContractWriter {
       // Modifiers
       const txt_modifiers = this.modifierWriter.write(json.contract.modifiers);
 
+      // Custom Errors
+      const txt_custom_errors = this.customErrorWriter.write(
+        json.contract.customErrors
+      );
+
       // Functions
       const txt_functions = this.functionWriter.write(
         functions,
@@ -74,7 +82,13 @@ class ContractWriter implements IContractWriter {
       const txt_close = this._close();
 
       contractText += `${
-        txt_start + txt_variables + txt_events + txt_functions + txt_close
+        txt_start +
+        txt_variables +
+        txt_events +
+        txt_modifiers +
+        txt_custom_errors +
+        txt_functions +
+        txt_close
       }\n\n`;
 
       text += contractText;

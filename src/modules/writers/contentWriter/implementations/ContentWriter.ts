@@ -5,6 +5,7 @@ import { IEventCallWriter } from "@writers/statements/eventCallWriter/types/IEve
 import { IForWriter } from "@writers/statements/forWriter/types/IForWriter";
 import { IIfWriter } from "@writers/statements/ifWriter/types/IIfWriter";
 import { IMethodCallWriter } from "@writers/statements/methodCallWriter/types/IMethodCallWriter";
+import { IRequireWriter } from "@writers/statements/requireWriter/types/IRequireWriter";
 import { IVariableWriter } from "@writers/variableWriter/types/IVariableWriter";
 import { inject, injectable } from "tsyringe";
 import { IContentWriter } from "../types/IContentWriter";
@@ -25,7 +26,9 @@ class ContentWriter implements IContentWriter {
     @inject("VariableWriter")
     private variableWriter: IVariableWriter,
     @inject("MethodCallWriter")
-    private methodCallWriter: IMethodCallWriter
+    private methodCallWriter: IMethodCallWriter,
+    @inject("RequireWriter")
+    private requireWriter: IRequireWriter
   ) {
     ifWriter._init(this);
     forWriter._init(this);
@@ -39,6 +42,7 @@ class ContentWriter implements IContentWriter {
     event_call: this.eventCallWriter,
     variable: this.variableWriter,
     method_call: this.methodCallWriter,
+    require: this.requireWriter,
   };
 
   // All statement control that doesn't need the ; in the end
