@@ -1,4 +1,4 @@
-import { ICreateCustomErrorDTO } from "../types/ICreateCustomError";
+import { ICreateCustomErrorDTO } from "../types/ICreateCustomErrorDTO";
 import { ICustomError } from "../types/ICustomError";
 import { ICustomErrorModel } from "../types/ICustomErrorModel";
 
