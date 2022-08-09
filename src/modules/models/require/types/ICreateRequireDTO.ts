@@ -1,4 +1,4 @@
-export interface ICreateRequireModel {
+export interface ICreateRequireDTO {
   condition: string;
   errorMessage?: string;
 }
