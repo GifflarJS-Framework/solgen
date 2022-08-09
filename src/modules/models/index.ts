@@ -14,3 +14,4 @@ import "./contract";
 import "./modifier";
 import "./require";
 import "./assert";
+import "./customError";
