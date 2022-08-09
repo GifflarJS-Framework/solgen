@@ -34,6 +34,7 @@ class ContractModel implements IContractModel {
       variables: [],
       events: [],
       modifiers: [],
+      customErrors: [],
       functions: [],
     };
 

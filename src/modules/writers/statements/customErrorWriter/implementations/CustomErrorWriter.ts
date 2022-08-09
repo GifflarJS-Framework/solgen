@@ -10,9 +10,18 @@ class CustomErrorWriter implements ICustomErrorWriter {
     private inputWriter: IInputWriter
   ) {}
 
-  write(customError: ICustomError): string {
-    let text = `error ${customError.name}(`;
-    text = text.concat(`${this.inputWriter.write(customError.args, true)});`);
+  write(customErrors: Array<ICustomError>): string {
+    let text = ``;
+    customErrors.map((customError) => {
+      let customErrorText = `error ${customError.name}(`;
+      customErrorText = customErrorText.concat(
+        `${this.inputWriter.write(customError.args, true)});\n`
+      );
+      text = text.concat(customErrorText);
+    });
+    if (customErrors.length) {
+      text = text.concat(`\n`);
+    }
     return text;
   }
 }

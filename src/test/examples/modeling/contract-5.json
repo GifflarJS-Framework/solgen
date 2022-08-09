@@ -58,6 +58,7 @@
         }
       ],
       "modifiers": [],
+      "customErrors": [],
       "functions": [
         {
           "name": "",
@@ -181,6 +182,7 @@
       ],
       "events": [],
       "modifiers": [],
+      "customErrors": [],
       "functions": [
         {
           "name": "createContract",
