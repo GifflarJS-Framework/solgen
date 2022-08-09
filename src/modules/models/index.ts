@@ -5,7 +5,6 @@ import "./newcontract";
 import "./methodcall";
 import "./if";
 import "./globalVariable";
-import "./customVariable";
 import "./for";
 import "./expression";
 import "./eventCall";
