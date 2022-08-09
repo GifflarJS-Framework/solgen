@@ -1,4 +1,4 @@
-import { ICreateRequireModel } from "../types/ICreateRequireModel";
+import { ICreateRequireModel } from "../types/ICreateRequireDTO";
 import { IRequire } from "../types/IRequire";
 import { IRequireModel } from "../types/IRequireModel";
 
