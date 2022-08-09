@@ -2,7 +2,8 @@ import { container } from "tsyringe";
 import { ICustomErrorModel } from "../types/ICustomErrorModel";
 
 describe("CustomError", () => {
-  const customErrorModel = container.resolve<ICustomErrorModel>("CustomError");
+  const customErrorModel =
+    container.resolve<ICustomErrorModel>("CustomErrorModel");
 
   it("Creating Custom Error", () => {
     const customError = customErrorModel.execute({

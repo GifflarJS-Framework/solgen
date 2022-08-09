@@ -7,6 +7,6 @@ const implementations = {
 };
 
 container.registerSingleton<ICustomErrorModel>(
-  "CustomError",
+  "CustomErrorModel",
   implementations.default
 );
