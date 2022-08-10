@@ -32,7 +32,7 @@ const helpers = {
     });
 
     if (str) {
-      str = str.substr(2);
+      str = str.substring(2);
     }
 
     return str;
