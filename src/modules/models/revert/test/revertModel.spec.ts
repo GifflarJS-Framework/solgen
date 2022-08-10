@@ -23,7 +23,7 @@ describe("RevertModel", () => {
     expect(revert).toEqual(expected);
   });
 
-  it("Creating Revert Model with eventCall", () => {
+  it("Creating Revert Model with customErrorCall", () => {
     const revert = revertModel.execute({
       customErrorCall: {
         customErrorName: "Unauthorized",
@@ -39,7 +39,7 @@ describe("RevertModel", () => {
     expect(revert).toEqual(expected);
   });
 
-  it("Creating Revert Model with eventCall and args", () => {
+  it("Creating Revert Model with customErrorCall and args", () => {
     const revert = revertModel.execute({
       customErrorCall: {
         customErrorName: "Unauthorized",
