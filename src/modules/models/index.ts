@@ -16,3 +16,4 @@ import "./require";
 import "./assert";
 import "./customError";
 import "./revert";
+import "./break";
