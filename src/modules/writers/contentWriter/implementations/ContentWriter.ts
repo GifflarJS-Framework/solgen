@@ -46,6 +46,7 @@ class ContentWriter implements IContentWriter {
     variable: this.variableWriter,
     method_call: this.methodCallWriter,
     require: this.requireWriter,
+    revert: this.revertWriter,
   };
 
   // All statement control that doesn't need the ; in the end
