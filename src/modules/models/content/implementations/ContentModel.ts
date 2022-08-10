@@ -14,6 +14,7 @@ import { ICreateContentDTO } from "../types/ICreateContentDTO";
 import { IIf } from "@models/if/types/IIf";
 import { ITypeName } from "modules/types/ITypeName";
 import { IVariableOptions } from "modules/types/IVariableOptions";
+import { IContinueModel } from "@models/continue/types/IContinueModel";
 
 interface IIfContent extends IIf, IContent {}
 
@@ -33,7 +34,9 @@ class ContentModel {
     @inject("MethodCallModel")
     private methodCallModel: IMethodCallModel,
     @inject("EventCallModel")
-    private eventCallModel: IEventCallModel
+    private eventCallModel: IEventCallModel,
+    @inject("ContinueModel")
+    private continueModel: IContinueModel
   ) {}
 
   execute({ globalVars = [] }: ICreateContentDTO): IContent {
@@ -115,6 +118,13 @@ class ContentModel {
       });
     };
 
+    const setContinue = (): IContent => {
+      const _continue = this.continueModel.execute();
+      stack[top].content.push(_continue);
+      const contentItem: IContent = _assignFunctions(stack[top]);
+      return contentItem;
+    };
+
     const beginIf = (condition: string, onElse?: boolean): IContent => {
       const newIf = this.ifModel.execute({ condition, onElse });
       const newIfContent: IIfContent = _assignFunctions(newIf);
@@ -160,6 +170,7 @@ class ContentModel {
         setVariable,
         setMethodCall,
         setContractVariable,
+        setContinue,
       };
 
       return _obj;
