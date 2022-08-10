@@ -1,6 +1,7 @@
 import { IContents } from "@models/content/types/IContents";
 import { IEventWriter } from "@writers/eventWriter/types/IEventWriter";
 import { IAssignmentWriter } from "@writers/statements/assignmentWriter/types/IAssignmentWriter";
+import { IBreakWriter } from "@writers/statements/breakWriter/types/IBreakWriter";
 import { IEventCallWriter } from "@writers/statements/eventCallWriter/types/IEventCallWriter";
 import { IForWriter } from "@writers/statements/forWriter/types/IForWriter";
 import { IIfWriter } from "@writers/statements/ifWriter/types/IIfWriter";
@@ -31,7 +32,9 @@ class ContentWriter implements IContentWriter {
     @inject("RequireWriter")
     private requireWriter: IRequireWriter,
     @inject("RevertWriter")
-    private revertWriter: IRevertWriter
+    private revertWriter: IRevertWriter,
+    @inject("BreakWriter")
+    private breakWriter: IBreakWriter
   ) {
     ifWriter._init(this);
     forWriter._init(this);
@@ -47,6 +50,7 @@ class ContentWriter implements IContentWriter {
     method_call: this.methodCallWriter,
     require: this.requireWriter,
     revert: this.revertWriter,
+    break: this.breakWriter,
   };
 
   // All statement control that doesn't need the ; in the end

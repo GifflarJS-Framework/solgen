@@ -12,3 +12,4 @@ import "./requireWriter";
 import "./assertWriter";
 import "./customErrorWriter";
 import "./revertWriter";
+import "./breakWriter";
