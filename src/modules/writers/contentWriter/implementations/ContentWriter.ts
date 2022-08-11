@@ -8,6 +8,7 @@ import { IIfWriter } from "@writers/statements/ifWriter/types/IIfWriter";
 import { IMethodCallWriter } from "@writers/statements/methodCallWriter/types/IMethodCallWriter";
 import { IRequireWriter } from "@writers/statements/requireWriter/types/IRequireWriter";
 import { IRevertWriter } from "@writers/statements/revertWriter/types/IRevertWriter";
+import { IWhileWriter } from "@writers/statements/whileWriter/types/IWhileWriter";
 import { IVariableWriter } from "@writers/variableWriter/types/IVariableWriter";
 import { inject, injectable } from "tsyringe";
 import { IContentWriter } from "../types/IContentWriter";
@@ -34,10 +35,13 @@ class ContentWriter implements IContentWriter {
     @inject("RevertWriter")
     private revertWriter: IRevertWriter,
     @inject("BreakWriter")
-    private breakWriter: IBreakWriter
+    private breakWriter: IBreakWriter,
+    @inject("WhileWriter")
+    private whileWriter: IWhileWriter
   ) {
     ifWriter._init(this);
     forWriter._init(this);
+    whileWriter._init(this);
   }
 
   statements = {
@@ -51,10 +55,11 @@ class ContentWriter implements IContentWriter {
     require: this.requireWriter,
     revert: this.revertWriter,
     break: this.breakWriter,
+    while: this.whileWriter,
   };
 
   // All statement control that doesn't need the ; in the end
-  controls = ["if", "for"];
+  controls = ["if", "for", "while"];
 
   write(content: Array<IContents>): string {
     let text = "";

@@ -13,3 +13,4 @@ import "./assertWriter";
 import "./customErrorWriter";
 import "./revertWriter";
 import "./breakWriter";
+import "./whileWriter";

@@ -18,3 +18,4 @@ import "./customError";
 import "./revert";
 import "./break";
 import "./continue";
+import "./while";
