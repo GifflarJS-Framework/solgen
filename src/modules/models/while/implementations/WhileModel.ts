@@ -7,6 +7,7 @@ class WhileModel implements IWhileModel {
     const _while: IWhile = {
       statement: "while",
       condition,
+      content: [],
     };
     return _while;
   }

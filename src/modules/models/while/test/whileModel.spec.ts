@@ -9,6 +9,7 @@ describe("WhileModel", () => {
     const expected = {
       statement: "while",
       condition: "a == b",
+      content: [],
     };
     expect(_while).toEqual(expected);
   });
