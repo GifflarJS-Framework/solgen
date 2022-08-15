@@ -1,7 +1,7 @@
 import { container } from "tsyringe";
 import { IDoWhileModel } from "../types/IDoWhileModel";
 
-describe("WhileModel", () => {
+describe("DoWhileModel", () => {
   const doWhileModel = container.resolve<IDoWhileModel>("DoWhileModel");
 
   it("Creating Do/While Model", () => {
