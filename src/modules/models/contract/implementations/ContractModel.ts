@@ -32,6 +32,7 @@ class ContractModel implements IContractModel {
   execute(contractName: string): IContract {
     const contract: IContractItem = {
       variables: [],
+      mappings: [],
       events: [],
       modifiers: [],
       customErrors: [],

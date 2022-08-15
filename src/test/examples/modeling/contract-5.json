@@ -39,6 +39,7 @@
           "value": ""
         }
       ],
+      "mappings": [],
       "events": [
         {
           "statement": "event",
@@ -180,6 +181,7 @@
           "value": "0"
         }
       ],
+      "mappings": [],
       "events": [],
       "modifiers": [],
       "customErrors": [],

@@ -35,31 +35,26 @@ class MappingWriter implements IMappingWriter {
     return text;
   }
 
-  write(mapping: IMapping): string {
-    let text = `mapping(${mapping.type} => `;
-    const typeName: any = mapping.typeName;
+  write(mappings: Array<IMapping>): string {
+    let text = ``;
 
-    const typeNameText = this._writeTypeName(typeName);
-    text = text.concat(typeNameText);
-    // if (typeof typeName === "string") {
-    //   // TypeName is String
-    //   text = text.concat(`${mapping.typeName}`);
-    // } else if (
-    //   typeof typeName === "object" &&
-    //   Object.keys(typeName).includes("statement")
-    // ) {
-    //   // TypeName is Mapping
-    //   const _typeName: INestedMapping = typeName;
-    //   // text = text.concat(`${this.write(_typeName)}`);
-    // } else {
-    //   // TypeName is arrayType
-    //   const _typeName: IArrayType = typeName;
-    //   text = text.concat(
-    //     `${_typeName.arrayType}[${_typeName.arraySize || ""}]`
-    //   );
-    // }
+    mappings.map((mapping) => {
+      let mappingText = `mapping(${mapping.type} => `;
+      const typeName: any = mapping.typeName;
 
-    text = text.concat(`) ${mapping.scope || ""} ${mapping.name};`);
+      const typeNameText = this._writeTypeName(typeName);
+      mappingText = mappingText.concat(typeNameText);
+
+      mappingText = mappingText.concat(
+        `) ${mapping.scope || ""} ${mapping.name};`
+      );
+
+      text = text.concat(`${mappingText}\n`);
+    });
+
+    if (mappings.length) {
+      text = text.concat(`\n`);
+    }
 
     return text;
   }

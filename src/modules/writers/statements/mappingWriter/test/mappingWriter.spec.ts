@@ -14,8 +14,8 @@ describe("MappingWriter", () => {
       scope: "public",
     });
 
-    const result = mappingWriter.write(mapping);
-    const expected = `mapping(address => uint256) public myMapping;`;
+    const result = mappingWriter.write([mapping]);
+    const expected = `mapping(address => uint256) public myMapping;\n\n`;
 
     expect(result).toEqual(expected);
   });
@@ -28,8 +28,8 @@ describe("MappingWriter", () => {
       scope: "private",
     });
 
-    const result = mappingWriter.write(mapping);
-    const expected = `mapping(User => address[]) private myMapping;`;
+    const result = mappingWriter.write([mapping]);
+    const expected = `mapping(User => address[]) private myMapping;\n\n`;
 
     expect(result).toEqual(expected);
   });
@@ -42,8 +42,8 @@ describe("MappingWriter", () => {
       scope: "private",
     });
 
-    const result = mappingWriter.write(mapping);
-    const expected = `mapping(User => address[5]) private myMapping;`;
+    const result = mappingWriter.write([mapping]);
+    const expected = `mapping(User => address[5]) private myMapping;\n\n`;
 
     expect(result).toEqual(expected);
   });
@@ -60,8 +60,8 @@ describe("MappingWriter", () => {
       scope: "private",
     });
 
-    const result = mappingWriter.write(mapping);
-    const expected = `mapping(address => mapping(uint256 => uint256)) private myMapping;`;
+    const result = mappingWriter.write([mapping]);
+    const expected = `mapping(address => mapping(uint256 => uint256)) private myMapping;\n\n`;
 
     expect(result).toEqual(expected);
   });
@@ -82,8 +82,15 @@ describe("MappingWriter", () => {
       scope: "private",
     });
 
-    const result = mappingWriter.write(mapping);
-    const expected = `mapping(address => mapping(uint256 => mapping(address => uint256[]))) private myMapping;`;
+    const mapping2 = mappingModel.execute({
+      name: "myMapping",
+      type: "address",
+      typeName: "uint256",
+      scope: "public",
+    });
+
+    const result = mappingWriter.write([mapping, mapping2]);
+    const expected = `mapping(address => mapping(uint256 => mapping(address => uint256[]))) private myMapping;\nmapping(address => uint256) public myMapping;\n\n`;
 
     expect(result).toEqual(expected);
   });
