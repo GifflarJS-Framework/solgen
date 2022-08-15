@@ -3,6 +3,7 @@ import { IElementaryTypeName } from "modules/types/IElementaryTypeName";
 import { ICreateMapping } from "../types/ICreateMapping";
 import { IMapping } from "../types/IMapping";
 import { IMappingModel } from "../types/IMappingModel";
+import { INestedMapping } from "../types/INestedMapping";
 
 class MappingModel implements IMappingModel {
   execute({
@@ -20,7 +21,7 @@ class MappingModel implements IMappingModel {
 
     let _typeName:
       | IElementaryTypeName
-      | IMapping
+      | INestedMapping
       | IArrayType
       | string
       | undefined = typeName;
