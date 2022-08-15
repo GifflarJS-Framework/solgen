@@ -7,4 +7,5 @@ export interface ICreateMapping {
   customType?: string;
   typeName?: IElementaryTypeName | IMapping | IArrayType;
   customTypeName?: string;
+  name: string;
 }

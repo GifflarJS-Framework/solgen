@@ -5,4 +5,5 @@ export interface IMapping {
   statement: "mapping";
   type: IElementaryTypeName | IArrayType | string;
   typeName: IElementaryTypeName | IMapping | IArrayType | string;
+  name: string;
 }
