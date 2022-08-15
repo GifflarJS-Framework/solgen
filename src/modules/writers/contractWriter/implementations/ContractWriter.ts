@@ -3,6 +3,7 @@ import { IEventWriter } from "@writers/eventWriter/types/IEventWriter";
 import { IFunctionWriter } from "@writers/functionWriter/types/IFunctionWriter";
 import { IGlobalVariableWriter } from "@writers/globalVariableWriter/types/IGlobalVariableWriter";
 import { ICustomErrorWriter } from "@writers/statements/customErrorWriter/types/ICustomErrorWriter";
+import { IMappingWriter } from "@writers/statements/mappingWriter/types/IMappingWriter";
 import { IModifierWriter } from "@writers/statements/modifierWriter/types/IModifierWriter";
 import { inject, injectable } from "tsyringe";
 import { IContractWriter } from "../types/IContractWriter";
@@ -19,7 +20,9 @@ class ContractWriter implements IContractWriter {
     @inject("ModifierWriter")
     private modifierWriter: IModifierWriter,
     @inject("CustomErrorWriter")
-    private customErrorWriter: ICustomErrorWriter
+    private customErrorWriter: ICustomErrorWriter,
+    @inject("MappingWriter")
+    private mappingWriter: IMappingWriter
   ) {}
 
   private _start(contract_name: string) {
@@ -63,6 +66,9 @@ class ContractWriter implements IContractWriter {
         }
       );
 
+      // Mappings
+      const txt_mappings = this.mappingWriter.write(json.contract.mappings);
+
       // Events
       const txt_events = this.eventWriter.write(json.contract.events);
 
@@ -84,6 +90,7 @@ class ContractWriter implements IContractWriter {
       contractText += `${
         txt_start +
         txt_variables +
+        txt_mappings +
         txt_events +
         txt_modifiers +
         txt_custom_errors +

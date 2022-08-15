@@ -39,6 +39,7 @@
           "value": ""
         }
       ],
+      "mappings": [],
       "events": [
         {
           "statement": "event",

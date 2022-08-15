@@ -14,3 +14,4 @@ import "./customErrorWriter";
 import "./revertWriter";
 import "./breakWriter";
 import "./whileWriter";
+import "./mappingWriter";
