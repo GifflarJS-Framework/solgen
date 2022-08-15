@@ -2,6 +2,7 @@ import { IContents } from "@models/content/types/IContents";
 import { IEventWriter } from "@writers/eventWriter/types/IEventWriter";
 import { IAssignmentWriter } from "@writers/statements/assignmentWriter/types/IAssignmentWriter";
 import { IBreakWriter } from "@writers/statements/breakWriter/types/IBreakWriter";
+import { IDoWhileWriter } from "@writers/statements/doWhileWriter/types/IDoWhileWriter";
 import { IEventCallWriter } from "@writers/statements/eventCallWriter/types/IEventCallWriter";
 import { IForWriter } from "@writers/statements/forWriter/types/IForWriter";
 import { IIfWriter } from "@writers/statements/ifWriter/types/IIfWriter";
@@ -37,11 +38,14 @@ class ContentWriter implements IContentWriter {
     @inject("BreakWriter")
     private breakWriter: IBreakWriter,
     @inject("WhileWriter")
-    private whileWriter: IWhileWriter
+    private whileWriter: IWhileWriter,
+    @inject("DoWhileWriter")
+    private doWhileWriter: IDoWhileWriter
   ) {
     ifWriter._init(this);
     forWriter._init(this);
     whileWriter._init(this);
+    doWhileWriter._init(this);
   }
 
   statements = {
@@ -56,6 +60,7 @@ class ContentWriter implements IContentWriter {
     revert: this.revertWriter,
     break: this.breakWriter,
     while: this.whileWriter,
+    doWhile: this.doWhileWriter,
   };
 
   // All statement control that doesn't need the ; in the end

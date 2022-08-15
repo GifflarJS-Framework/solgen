@@ -19,4 +19,5 @@ import "./revert";
 import "./break";
 import "./continue";
 import "./while";
+import "./dowhile";
 import "./mapping";
