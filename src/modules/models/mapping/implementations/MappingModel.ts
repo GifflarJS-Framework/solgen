@@ -24,7 +24,7 @@ class MappingModel implements IMappingModel {
       | IArrayType
       | string
       | undefined = typeName;
-    if (!type) {
+    if (!typeName) {
       _typeName = customTypeName;
     }
 
