@@ -21,3 +21,4 @@ import "./continue";
 import "./while";
 import "./dowhile";
 import "./mapping";
+import "./try";
