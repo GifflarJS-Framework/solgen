@@ -48,7 +48,7 @@ class ContractWriter implements IContractWriter {
     }
 
     // Writing the compiler version
-    const version = "pragma solidity 0.5.17;\n\n";
+    const version = "pragma solidity 0.6.0;\n\n";
 
     let text = "";
     let contractText;
