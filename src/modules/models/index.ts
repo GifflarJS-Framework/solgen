@@ -23,3 +23,4 @@ import "./dowhile";
 import "./mapping";
 import "./try";
 import "./catch";
+import "./struct";

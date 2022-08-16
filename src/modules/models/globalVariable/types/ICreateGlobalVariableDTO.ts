@@ -1,9 +1,11 @@
 import { INewContract } from "@models/newcontract/types/INewContract";
-import { ITypeName } from "modules/types/ITypeName";
+import { IElementaryTypeName } from "modules/types/IElementaryTypeName";
+import { IVisibility } from "modules/types/IVisibility";
 
 export interface ICreateGlobalVariableDTO {
-  type: string;
+  type?: IElementaryTypeName;
+  customType?: string;
   name: string;
-  scope: string;
+  scope: IVisibility | undefined;
   value?: string | INewContract;
 }

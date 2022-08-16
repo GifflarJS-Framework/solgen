@@ -1,8 +1,9 @@
 import { INewContract } from "@models/newcontract/types/INewContract";
-import { ITypeName } from "modules/types/ITypeName";
+import { IElementaryTypeName } from "modules/types/IElementaryTypeName";
 
 export interface ICreateVariableDTO {
-  type: string;
+  type?: IElementaryTypeName;
+  customType?: string;
   name: string;
   value?: string | INewContract;
 }
