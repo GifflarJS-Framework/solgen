@@ -5,7 +5,7 @@ class InputWriter implements IInputWriter {
   write(inputs: Array<IInput>, typeon = true) {
     let text = "";
     const _inputs = [...inputs];
-    const memoryList = ["string"];
+    const memoryList = ["string", "bytes"];
 
     // If there are no inputs
     if (!_inputs.length) {

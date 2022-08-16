@@ -17,3 +17,4 @@ import "./whileWriter";
 import "./doWhileWriter";
 import "./mappingWriter";
 import "./tryWriter";
+import "./catchWriter";
