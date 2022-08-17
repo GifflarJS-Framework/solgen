@@ -1,5 +1,5 @@
 import { IGlobalMapping } from "@models/globalMapping/types/IGlobalMapping";
-import { INestedMapping } from "@models/globalMapping/types/INestedMapping";
+import { INestedMapping } from "@models/mapping/types/INestedMapping";
 import { IArrayType } from "modules/types/IArrayType";
 import { IGlobalMappingWriter } from "../types/IGlobalMappingWriter";
 

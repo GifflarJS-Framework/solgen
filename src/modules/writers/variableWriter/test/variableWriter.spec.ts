@@ -19,4 +19,19 @@ describe.only("Variable Writer", () => {
 
     expect(result).toMatch(expected);
   });
+
+  it("Writing Variable with data location", () => {
+    const variable: ILocalVariable = {
+      statement: "variable",
+      name: "age",
+      type: "uint",
+      dataLocation: "memory",
+      value: "20",
+    };
+
+    const expected = "uint memory age = 20";
+    const result = variableWriter.write(variable);
+
+    expect(result).toMatch(expected);
+  });
 });
