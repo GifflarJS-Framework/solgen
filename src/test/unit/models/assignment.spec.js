@@ -1,7 +1,6 @@
 const assert = require("assert");
 const createAssignmentModel = require("../../../modules/models/assignment");
 const helpers = require("../../../utils/helpers");
-const createValidator = require("../../../modules/validation/validator");
 
 /**
  * Testing Assignment Model

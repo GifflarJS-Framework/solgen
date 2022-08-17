@@ -25,3 +25,4 @@ import "./globalMapping";
 import "./try";
 import "./catch";
 import "./struct";
+import "./type";
