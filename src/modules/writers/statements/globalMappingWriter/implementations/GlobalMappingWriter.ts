@@ -1,9 +1,9 @@
-import { IMapping } from "@models/mapping/types/IMapping";
-import { INestedMapping } from "@models/mapping/types/INestedMapping";
+import { IGlobalMapping } from "@models/globalMapping/types/IGlobalMapping";
+import { INestedMapping } from "@models/globalMapping/types/INestedMapping";
 import { IArrayType } from "modules/types/IArrayType";
-import { IMappingWriter } from "../types/IMappingWriter";
+import { IGlobalMappingWriter } from "../types/IGlobalMappingWriter";
 
-class MappingWriter implements IMappingWriter {
+class GlobalMappingWriter implements IGlobalMappingWriter {
   private _writeTypeName(typeName: any): string {
     let text = ``;
     if (typeof typeName === "string") {
@@ -35,16 +35,29 @@ class MappingWriter implements IMappingWriter {
     return text;
   }
 
-  write(mapping: IMapping): string {
-    let text = `mapping(${mapping.type} => `;
+  write(mappings: Array<IGlobalMapping>): string {
+    let text = ``;
 
-    const typeName: any = mapping.typeName;
-    const typeNameText = this._writeTypeName(typeName);
-    text = text.concat(typeNameText);
-    text = text.concat(`) ${mapping.name}`);
+    mappings.map((mapping) => {
+      let mappingText = `mapping(${mapping.type} => `;
+      const typeName: any = mapping.typeName;
+
+      const typeNameText = this._writeTypeName(typeName);
+      mappingText = mappingText.concat(typeNameText);
+
+      mappingText = mappingText.concat(
+        `) ${mapping.scope || ""} ${mapping.name};`
+      );
+
+      text = text.concat(`${mappingText}\n`);
+    });
+
+    if (mappings.length) {
+      text = text.concat(`\n`);
+    }
 
     return text;
   }
 }
 
-export default MappingWriter;
+export default GlobalMappingWriter;

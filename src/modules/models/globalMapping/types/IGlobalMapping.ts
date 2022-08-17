@@ -1,10 +1,12 @@
+import { INestedMapping } from "@models/mapping/types/INestedMapping";
 import { IArrayType } from "modules/types/IArrayType";
 import { IElementaryTypeName } from "modules/types/IElementaryTypeName";
-import { INestedMapping } from "./INestedMapping";
+import { IVisibility } from "modules/types/IVisibility";
 
-export interface IMapping {
-  statement: "mapping";
+export interface IGlobalMapping {
+  statement: "global_mapping";
   type: IElementaryTypeName | IArrayType | string;
   typeName: IElementaryTypeName | INestedMapping | IArrayType | string;
   name: string;
+  scope?: IVisibility;
 }
