@@ -15,6 +15,7 @@ import { IContractModel } from "../types/IContractModel";
 import { IStateMutabilityType } from "modules/types/IStateMutabilityType";
 import { ITypeName } from "modules/types/ITypeName";
 import { IVariableOptions } from "modules/types/IVariableOptions";
+import { IVisibility } from "modules/types/IVisibility";
 
 @injectable()
 class ContractModel implements IContractModel {
@@ -61,7 +62,7 @@ class ContractModel implements IContractModel {
     const createVariable = (
       type: ITypeName,
       name: string,
-      scope: string,
+      scope: IVisibility,
       value?: string,
       options?: IVariableOptions
     ): IGlobalVariable => {

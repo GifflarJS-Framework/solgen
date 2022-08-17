@@ -1,6 +1,5 @@
 import { IArrayType } from "modules/types/IArrayType";
 import { IElementaryTypeName } from "modules/types/IElementaryTypeName";
-import { IVisibility } from "modules/types/IVisibility";
 import { INestedMapping } from "./INestedMapping";
 
 export interface IMapping {
@@ -8,5 +7,4 @@ export interface IMapping {
   type: IElementaryTypeName | IArrayType | string;
   typeName: IElementaryTypeName | INestedMapping | IArrayType | string;
   name: string;
-  scope?: IVisibility;
 }

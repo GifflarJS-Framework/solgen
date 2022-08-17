@@ -21,3 +21,7 @@ import "./continue";
 import "./while";
 import "./dowhile";
 import "./mapping";
+import "./globalMapping";
+import "./try";
+import "./catch";
+import "./struct";

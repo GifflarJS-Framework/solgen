@@ -6,14 +6,14 @@ class GlobalVariableModel implements IGlobalVariableModel {
   execute({
     type,
     name,
-    scope = "",
+    scope,
     value = "",
   }: ICreateGlobalVariableDTO): IGlobalVariable {
     const globalVariable: IGlobalVariable = {
       statement: "global_variable",
       type,
       name,
-      scope,
+      scope: scope || "",
       value,
     };
 

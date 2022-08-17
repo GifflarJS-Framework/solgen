@@ -15,4 +15,8 @@ import "./revertWriter";
 import "./breakWriter";
 import "./whileWriter";
 import "./doWhileWriter";
+import "./globalMappingWriter";
 import "./mappingWriter";
+import "./tryWriter";
+import "./catchWriter";
+import "./structWriter";

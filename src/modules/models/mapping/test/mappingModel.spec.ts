@@ -26,7 +26,6 @@ describe("Mapping Model", () => {
       customType: "User",
       customTypeName: "MyContract",
       name: "myMapping",
-      scope: "public",
     });
 
     const expected = {
@@ -34,7 +33,6 @@ describe("Mapping Model", () => {
       type: "User",
       typeName: "MyContract",
       name: "myMapping",
-      scope: "public",
     };
 
     expect(JSON.stringify(mapping)).toEqual(JSON.stringify(expected));

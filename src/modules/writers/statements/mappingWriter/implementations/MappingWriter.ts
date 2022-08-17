@@ -35,26 +35,13 @@ class MappingWriter implements IMappingWriter {
     return text;
   }
 
-  write(mappings: Array<IMapping>): string {
-    let text = ``;
+  write(mapping: IMapping): string {
+    let text = `mapping(${mapping.type} => `;
 
-    mappings.map((mapping) => {
-      let mappingText = `mapping(${mapping.type} => `;
-      const typeName: any = mapping.typeName;
-
-      const typeNameText = this._writeTypeName(typeName);
-      mappingText = mappingText.concat(typeNameText);
-
-      mappingText = mappingText.concat(
-        `) ${mapping.scope || ""} ${mapping.name};`
-      );
-
-      text = text.concat(`${mappingText}\n`);
-    });
-
-    if (mappings.length) {
-      text = text.concat(`\n`);
-    }
+    const typeName: any = mapping.typeName;
+    const typeNameText = this._writeTypeName(typeName);
+    text = text.concat(typeNameText);
+    text = text.concat(`) ${mapping.name}`);
 
     return text;
   }

@@ -1,5 +1,5 @@
 import { INewContract } from "@models/newcontract/types/INewContract";
-import { IVariable } from "@models/variable/types/IVariable";
+import { ILocalVariable } from "@models/variable/types/ILocalVariable";
 import { INewContractWriter } from "@writers/statements/newContractWriter/types/INewContractWriter";
 import { inject, injectable } from "tsyringe";
 import { IVariableStatements } from "../types/IVariableStatements";
@@ -35,16 +35,24 @@ class VariableWriter implements IVariableWriter {
     }
   }
 
-  write(variable: IVariable): string {
+  write(variable: ILocalVariable): string {
     let text = "";
-    // If variable not an array, is the local variable definition
 
+    // Writing data location text
+    let dataLocationText = ``;
+    if (variable.dataLocation) {
+      dataLocationText = ` ${variable.dataLocation}`;
+    }
+
+    // Writing value text
+    let valueText = ``;
     if (variable.value) {
       const value = this._handleValue(variable.value);
-      text += `${variable.type} ${variable.name} = ${value}`;
-    } else {
-      text += `${variable.type} ${variable.name}`;
+      valueText = ` = ${value}`;
     }
+
+    // Writing final text
+    text += `${variable.type}${dataLocationText} ${variable.name}${valueText}`;
 
     return text;
   }

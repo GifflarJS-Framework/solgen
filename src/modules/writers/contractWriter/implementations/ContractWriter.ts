@@ -3,7 +3,7 @@ import { IEventWriter } from "@writers/eventWriter/types/IEventWriter";
 import { IFunctionWriter } from "@writers/functionWriter/types/IFunctionWriter";
 import { IGlobalVariableWriter } from "@writers/globalVariableWriter/types/IGlobalVariableWriter";
 import { ICustomErrorWriter } from "@writers/statements/customErrorWriter/types/ICustomErrorWriter";
-import { IMappingWriter } from "@writers/statements/mappingWriter/types/IMappingWriter";
+import { IGlobalMappingWriter } from "@writers/statements/globalMappingWriter/types/IGlobalMappingWriter";
 import { IModifierWriter } from "@writers/statements/modifierWriter/types/IModifierWriter";
 import { inject, injectable } from "tsyringe";
 import { IContractWriter } from "../types/IContractWriter";
@@ -21,8 +21,8 @@ class ContractWriter implements IContractWriter {
     private modifierWriter: IModifierWriter,
     @inject("CustomErrorWriter")
     private customErrorWriter: ICustomErrorWriter,
-    @inject("MappingWriter")
-    private mappingWriter: IMappingWriter
+    @inject("GlobalMappingWriter")
+    private globalMappingWriter: IGlobalMappingWriter
   ) {}
 
   private _start(contract_name: string) {
@@ -48,7 +48,7 @@ class ContractWriter implements IContractWriter {
     }
 
     // Writing the compiler version
-    const version = "pragma solidity 0.5.17;\n\n";
+    const version = "pragma solidity 0.6.0;\n\n";
 
     let text = "";
     let contractText;
@@ -67,7 +67,9 @@ class ContractWriter implements IContractWriter {
       );
 
       // Mappings
-      const txt_mappings = this.mappingWriter.write(json.contract.mappings);
+      const txt_mappings = this.globalMappingWriter.write(
+        json.contract.mappings
+      );
 
       // Events
       const txt_events = this.eventWriter.write(json.contract.events);

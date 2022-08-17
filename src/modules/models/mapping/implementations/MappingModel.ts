@@ -12,7 +12,6 @@ class MappingModel implements IMappingModel {
     customType,
     customTypeName,
     name,
-    scope,
   }: ICreateMapping): IMapping {
     let _type: IElementaryTypeName | IArrayType | string | undefined = type;
     if (!type) {
@@ -37,7 +36,6 @@ class MappingModel implements IMappingModel {
       type: _type,
       typeName: _typeName,
       name,
-      scope,
     };
 
     return mapping;
