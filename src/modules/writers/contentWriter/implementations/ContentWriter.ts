@@ -10,7 +10,7 @@ import { IMethodCallWriter } from "@writers/statements/methodCallWriter/types/IM
 import { IRequireWriter } from "@writers/statements/requireWriter/types/IRequireWriter";
 import { IRevertWriter } from "@writers/statements/revertWriter/types/IRevertWriter";
 import { IWhileWriter } from "@writers/statements/whileWriter/types/IWhileWriter";
-import { IVariableWriter } from "@writers/variableWriter/types/IVariableWriter";
+import { IVariableWriter } from "@writers/statements/variableWriter/types/IVariableWriter";
 import { inject, injectable } from "tsyringe";
 import { IContentWriter } from "../types/IContentWriter";
 

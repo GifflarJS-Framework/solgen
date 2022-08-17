@@ -1,6 +1,6 @@
 import { IStruct } from "@models/struct/types/IStruct";
 import { IMappingWriter } from "@writers/statements/mappingWriter/types/IMappingWriter";
-import { IVariableWriter } from "@writers/variableWriter/types/IVariableWriter";
+import { IVariableWriter } from "@writers/statements/variableWriter/types/IVariableWriter";
 import { inject, injectable } from "tsyringe";
 import { IStructWriter } from "../types/IStructWriter";
 

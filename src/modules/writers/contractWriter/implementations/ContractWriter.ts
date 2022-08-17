@@ -2,9 +2,9 @@ import { IContractJson } from "@models/contract/types/IContractJson";
 import { IEventWriter } from "@writers/eventWriter/types/IEventWriter";
 import { IFunctionWriter } from "@writers/functionWriter/types/IFunctionWriter";
 import { IGlobalVariableWriter } from "@writers/globalVariableWriter/types/IGlobalVariableWriter";
-import { ICustomErrorWriter } from "@writers/statements/customErrorWriter/types/ICustomErrorWriter";
-import { IGlobalMappingWriter } from "@writers/statements/globalMappingWriter/types/IGlobalMappingWriter";
-import { IModifierWriter } from "@writers/statements/modifierWriter/types/IModifierWriter";
+import { ICustomErrorWriter } from "@writers/customErrorWriter/types/ICustomErrorWriter";
+import { IGlobalMappingWriter } from "@writers/globalMappingWriter/types/IGlobalMappingWriter";
+import { IModifierWriter } from "@writers/modifierWriter/types/IModifierWriter";
 import { inject, injectable } from "tsyringe";
 import { IContractWriter } from "../types/IContractWriter";
 

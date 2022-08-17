@@ -30,9 +30,5 @@
     "allowJs": true
   },
   "exclude": ["./bin/index.ts"],
-  "include": [
-    "node_modules/@types",
-    "src/**/**.ts",
-    "src/test/unit/models/assignment.spec.js"
-  ]
+  "include": ["node_modules/@types", "src/**/**.ts"]
 }
