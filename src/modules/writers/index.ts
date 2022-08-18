@@ -9,3 +9,4 @@ import "./modifierWriter";
 import "./structWriter";
 import "./customErrorWriter";
 import "./typeWriter";
+import "./enumWriter";
