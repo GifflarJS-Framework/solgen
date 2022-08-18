@@ -26,3 +26,4 @@ import "./try";
 import "./catch";
 import "./struct";
 import "./type";
+import "./enum";
