@@ -1,6 +1,11 @@
-import { IStateVariableDTO } from "./IStateVariableDTO";
+import { ICreateStateVariableDTO } from "./ICreateStateVariableDTO";
 import { IStateVariable } from "./IStateVariable";
 
 export interface IStateVariableModel {
-  execute({ type, name, scope, value }: IStateVariableDTO): IStateVariable;
+  execute({
+    type,
+    name,
+    scope,
+    value,
+  }: ICreateStateVariableDTO): IStateVariable;
 }

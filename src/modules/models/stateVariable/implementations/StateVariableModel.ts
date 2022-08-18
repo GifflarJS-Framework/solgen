@@ -1,4 +1,4 @@
-import { IStateVariableDTO } from "../types/IStateVariableDTO";
+import { ICreateStateVariableDTO } from "../types/ICreateStateVariableDTO";
 import { IStateVariable } from "../types/IStateVariable";
 import { IStateVariableModel } from "../types/IStateVariableModel";
 
@@ -8,7 +8,7 @@ class StateVariableModel implements IStateVariableModel {
     name,
     scope,
     value = "",
-  }: IStateVariableDTO): IStateVariable {
+  }: ICreateStateVariableDTO): IStateVariable {
     const stateVariable: IStateVariable = {
       statement: "state_variable",
       type,
