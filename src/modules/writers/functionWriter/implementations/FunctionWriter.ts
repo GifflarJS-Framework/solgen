@@ -1,6 +1,6 @@
 import { IContents } from "@models/content/types/IContents";
 import { IFunctionJson } from "@models/function/types/IFunctionJson";
-import { IGlobalVariable } from "@models/globalVariable/types/IGlobalVariable";
+import { IStateVariable } from "@models/stateVariable/types/IStateVariable";
 import { ILocalVariable } from "@models/variable/types/ILocalVariable";
 import { IVariable } from "@models/variable/types/IVariable";
 import { IContentWriter } from "@writers/contentWriter/types/IContentWriter";
@@ -32,7 +32,7 @@ class FunctionWriter implements IFunctionWriter {
 
   write(
     functions: Array<IFunctionJson>,
-    variables: Array<IGlobalVariable>
+    variables: Array<IStateVariable>
   ): string {
     let text = "//FUNCTIONS\n";
 

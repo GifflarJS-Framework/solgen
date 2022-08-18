@@ -4,7 +4,7 @@ import "./content";
 import "./newcontract";
 import "./methodcall";
 import "./if";
-import "./globalVariable";
+import "./stateVariable";
 import "./for";
 import "./expression";
 import "./eventCall";

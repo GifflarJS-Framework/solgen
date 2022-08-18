@@ -9,5 +9,5 @@ export interface ICreateFunctionDTO {
   stateMutability?: IStateMutabilityType;
   inputs?: Array<IInput>;
   outputs?: Array<string>;
-  globalVars?: Array<IVariable>;
+  stateVars?: Array<IVariable>;
 }

@@ -2,7 +2,7 @@ import { IEvent } from "@models/event/types/IEvent";
 import { IEventCall } from "@models/eventCall/types/IEventCall";
 import { IFunction } from "@models/function/types/IFunction";
 import { IInput } from "@models/function/types/IInput";
-import { IGlobalVariable } from "@models/globalVariable/types/IGlobalVariable";
+import { IStateVariable } from "@models/stateVariable/types/IStateVariable";
 import { IVariableOptions } from "modules/types/IVariableOptions";
 import { IContractJson } from "./IContractJson";
 
@@ -19,7 +19,7 @@ export interface IContract extends IContractJson {
     scope: string,
     value?: string,
     options?: IVariableOptions
-  ): IGlobalVariable;
+  ): IStateVariable;
 
   createConstructor(
     scope: string,

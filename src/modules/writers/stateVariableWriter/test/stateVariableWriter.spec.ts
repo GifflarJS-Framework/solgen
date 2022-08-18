@@ -1,16 +1,16 @@
-import { IGlobalVariable } from "@models/globalVariable/types/IGlobalVariable";
+import { IStateVariable } from "@models/stateVariable/types/IStateVariable";
 import { IRequest } from "@models/request/types/IRequest";
 import { container } from "tsyringe";
-import { IGlobalVariableWriter } from "../types/IGlobalVariableWriter";
+import { IStateVariableWriter } from "../types/IStateVariableWriter";
 
-describe("Global Variable Writer", () => {
-  const variableWriter: IGlobalVariableWriter = container.resolve(
-    "GlobalVariableWriter"
+describe("State Variable Writer", () => {
+  const variableWriter: IStateVariableWriter = container.resolve(
+    "StateVariableWriter"
   );
 
-  it("Writing Global Variable", () => {
-    const variable: IGlobalVariable = {
-      statement: "global_variable",
+  it("Writing State Variable", () => {
+    const variable: IStateVariable = {
+      statement: "state_variable",
       name: "age",
       type: "uint",
       value: "20",
@@ -51,16 +51,16 @@ describe("Global Variable Writer", () => {
   });
 
   it("Writing many variables", () => {
-    const variables: IGlobalVariable[] = [
+    const variables: IStateVariable[] = [
       {
-        statement: "global_variable",
+        statement: "state_variable",
         name: "age",
         type: "uint",
         value: "20",
         scope: "private",
       },
       {
-        statement: "global_variable",
+        statement: "state_variable",
         name: "name",
         type: "string",
         value: "",

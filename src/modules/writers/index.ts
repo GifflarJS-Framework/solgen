@@ -3,7 +3,7 @@ import "./contentWriter";
 import "./contractWriter";
 import "./eventWriter";
 import "./functionWriter";
-import "./globalVariableWriter";
+import "./stateVariableWriter";
 import "./globalMappingWriter";
 import "./modifierWriter";
 import "./structWriter";

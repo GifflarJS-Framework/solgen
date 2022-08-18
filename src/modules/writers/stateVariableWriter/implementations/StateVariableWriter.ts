@@ -1,11 +1,11 @@
-import { IGlobalVariable } from "@models/globalVariable/types/IGlobalVariable";
-import { IGlobalVariableWriter } from "../types/IGlobalVariableWriter";
+import { IStateVariable } from "@models/stateVariable/types/IStateVariable";
+import { IStateVariableWriter } from "../types/IStateVariableWriter";
 
-class GlobalVariableWriter implements IGlobalVariableWriter {
-  write(variables: IGlobalVariable | Array<IGlobalVariable>): string {
+class StateVariableWriter implements IStateVariableWriter {
+  write(variables: IStateVariable | Array<IStateVariable>): string {
     let text = "";
     text = "//VARIABLES\n";
-    let variableList: IGlobalVariable[] = [];
+    let variableList: IStateVariable[] = [];
     if (Array.isArray(variables)) {
       variableList = variables;
     } else {
@@ -30,4 +30,4 @@ class GlobalVariableWriter implements IGlobalVariableWriter {
   }
 }
 
-export default GlobalVariableWriter;
+export default StateVariableWriter;

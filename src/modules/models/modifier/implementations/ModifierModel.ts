@@ -14,11 +14,11 @@ class ModifierModel implements IModifierModel {
   execute({
     title,
     args,
-    globalVars = [],
+    stateVars = [],
     isVirtual = false,
     isOverriding = false,
   }: ICreateModifierDTO): IModifier {
-    const content_json = this.contentModel.execute({ globalVars });
+    const content_json = this.contentModel.execute({ stateVars });
 
     const _modifier: IModifier = {
       statement: "modifier",

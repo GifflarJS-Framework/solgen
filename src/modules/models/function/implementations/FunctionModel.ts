@@ -20,9 +20,9 @@ class FunctionModel implements IFunctionModel {
     stateMutability,
     inputs,
     outputs,
-    globalVars = [],
+    stateVars = [],
   }: ICreateFunctionDTO): IFunction {
-    const content_json = this.contentModel.execute({ globalVars });
+    const content_json = this.contentModel.execute({ stateVars });
 
     const myFunction: IFunction = {
       name,
