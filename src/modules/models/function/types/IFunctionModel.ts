@@ -8,6 +8,6 @@ export interface IFunctionModel {
     isConstructor,
     inputs,
     outputs,
-    globalVars,
+    stateVars,
   }: ICreateFunctionDTO): IFunction;
 }

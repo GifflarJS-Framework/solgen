@@ -4,15 +4,15 @@ import { IInput } from "@models/function/types/IInput";
 import { IContract } from "../types/IContract";
 import { IContractJson } from "../types/IContractJson";
 import { inject, injectable } from "tsyringe";
-import { IGlobalVariable } from "@models/globalVariable/types/IGlobalVariable";
+import { IStateVariable } from "@models/stateVariable/types/IStateVariable";
 import { IEventCallModel } from "@models/eventCall/types/IEventCallModel";
-import { IGlobalVariableModel } from "@models/globalVariable/types/IGlobalVariableModel";
+import { IStateVariableModel } from "@models/stateVariable/types/IStateVariableModel";
 import { IFunctionModel } from "@models/function/types/IFunctionModel";
 import { IContractItem } from "../types/IContractItem";
 import IEventModel from "@models/event/types/IEventModel";
 import { IEvent } from "@models/event/types/IEvent";
 import { IContractModel } from "../types/IContractModel";
-import { IStateMutabilityType } from "modules/types/IStateMutabilityType";
+import { IFunctionStateMutabilityType } from "modules/types/IFunctionStateMutabilityType";
 import { ITypeName } from "modules/types/ITypeName";
 import { IVariableOptions } from "modules/types/IVariableOptions";
 import { IVisibility } from "modules/types/IVisibility";
@@ -20,8 +20,8 @@ import { IVisibility } from "modules/types/IVisibility";
 @injectable()
 class ContractModel implements IContractModel {
   constructor(
-    @inject("GlobalVariableModel")
-    private globalVariableModel: IGlobalVariableModel,
+    @inject("StateVariableModel")
+    private stateVariableModel: IStateVariableModel,
     @inject("FunctionModel")
     private functionModel: IFunctionModel,
     @inject("EventCallModel")
@@ -65,8 +65,8 @@ class ContractModel implements IContractModel {
       scope: IVisibility,
       value?: string,
       options?: IVariableOptions
-    ): IGlobalVariable => {
-      const variable = this.globalVariableModel.execute({
+    ): IStateVariable => {
+      const variable = this.stateVariableModel.execute({
         type:
           type === "custom" && options?.customType ? options.customType : type,
         name,
@@ -97,7 +97,7 @@ class ContractModel implements IContractModel {
         isConstructor: true,
         inputs,
         outputs,
-        globalVars: contract.variables,
+        stateVars: contract.variables,
       });
       contract.functions.push(_function);
 
@@ -109,7 +109,7 @@ class ContractModel implements IContractModel {
       scope: string,
       inputs: Array<IInput>,
       outputs: Array<string>,
-      stateMutability?: IStateMutabilityType
+      stateMutability?: IFunctionStateMutabilityType
     ): IFunction => {
       const _function = this.functionModel.execute({
         name,
@@ -117,7 +117,7 @@ class ContractModel implements IContractModel {
         inputs,
         outputs,
         isConstructor: false,
-        globalVars: contract.variables,
+        stateVars: contract.variables,
         stateMutability,
       });
       contract.functions.push(_function);

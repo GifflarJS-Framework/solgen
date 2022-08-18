@@ -39,8 +39,8 @@ class ContentModel {
     private continueModel: IContinueModel
   ) {}
 
-  execute({ globalVars = [] }: ICreateContentDTO): IContent {
-    const contentVars: Array<IVariable> = [].concat(Object.assign(globalVars));
+  execute({ stateVars = [] }: ICreateContentDTO): IContent {
+    const contentVars: Array<IVariable> = [].concat(Object.assign(stateVars));
     const stack: Array<any> = [
       {
         content: [],
@@ -51,7 +51,7 @@ class ContentModel {
     const setVariable = (
       type: ITypeName,
       name: string,
-      value: string | INewContract,
+      value?: string | INewContract,
       options?: IVariableOptions
     ): IContent => {
       const newVariable = this.variableModel.execute({

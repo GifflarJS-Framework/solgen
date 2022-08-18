@@ -1,9 +1,9 @@
 import { IFunctionJson } from "@models/function/types/IFunctionJson";
-import { IGlobalVariable } from "@models/globalVariable/types/IGlobalVariable";
+import { IStateVariable } from "@models/stateVariable/types/IStateVariable";
 
 export interface IFunctionWriter {
   write(
     functions: Array<IFunctionJson>,
-    variables: Array<IGlobalVariable>
+    variables: Array<IStateVariable>
   ): string;
 }

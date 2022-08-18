@@ -1,10 +1,10 @@
 import { IContractJson } from "@models/contract/types/IContractJson";
 import { IEventWriter } from "@writers/eventWriter/types/IEventWriter";
 import { IFunctionWriter } from "@writers/functionWriter/types/IFunctionWriter";
-import { IGlobalVariableWriter } from "@writers/globalVariableWriter/types/IGlobalVariableWriter";
-import { ICustomErrorWriter } from "@writers/statements/customErrorWriter/types/ICustomErrorWriter";
-import { IGlobalMappingWriter } from "@writers/statements/globalMappingWriter/types/IGlobalMappingWriter";
-import { IModifierWriter } from "@writers/statements/modifierWriter/types/IModifierWriter";
+import { IStateVariableWriter } from "@writers/stateVariableWriter/types/IStateVariableWriter";
+import { ICustomErrorWriter } from "@writers/customErrorWriter/types/ICustomErrorWriter";
+import { IStateMappingWriter } from "@writers/stateMappingWriter/types/IStateMappingWriter";
+import { IModifierWriter } from "@writers/modifierWriter/types/IModifierWriter";
 import { inject, injectable } from "tsyringe";
 import { IContractWriter } from "../types/IContractWriter";
 
@@ -15,14 +15,14 @@ class ContractWriter implements IContractWriter {
     private eventWriter: IEventWriter,
     @inject("FunctionWriter")
     private functionWriter: IFunctionWriter,
-    @inject("GlobalVariableWriter")
-    private globalVariableWriter: IGlobalVariableWriter,
+    @inject("StateVariableWriter")
+    private stateVariableWriter: IStateVariableWriter,
     @inject("ModifierWriter")
     private modifierWriter: IModifierWriter,
     @inject("CustomErrorWriter")
     private customErrorWriter: ICustomErrorWriter,
-    @inject("GlobalMappingWriter")
-    private globalMappingWriter: IGlobalMappingWriter
+    @inject("StateMappingWriter")
+    private stateMappingWriter: IStateMappingWriter
   ) {}
 
   private _start(contract_name: string) {
@@ -59,15 +59,12 @@ class ContractWriter implements IContractWriter {
       let { functions } = json.contract;
 
       // Variables
-      const txt_variables = this.globalVariableWriter.write(
-        json.contract.variables,
-        (request) => {
-          functions = functions.concat(request.functions);
-        }
+      const txt_variables = this.stateVariableWriter.write(
+        json.contract.variables
       );
 
       // Mappings
-      const txt_mappings = this.globalMappingWriter.write(
+      const txt_mappings = this.stateMappingWriter.write(
         json.contract.mappings
       );
 

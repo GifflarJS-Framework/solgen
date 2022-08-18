@@ -4,39 +4,34 @@
     "contract": {
       "variables": [
         {
-          "statement": "global_variable",
+          "statement": "state_variable",
           "type": "address",
           "name": "manager",
-          "scope": "public",
-          "value": ""
+          "scope": "public"
         },
         {
-          "statement": "global_variable",
+          "statement": "state_variable",
           "type": "string",
           "name": "name",
-          "scope": "public",
-          "value": ""
+          "scope": "public"
         },
         {
-          "statement": "global_variable",
+          "statement": "state_variable",
           "type": "uint256",
           "name": "value1",
-          "scope": "public",
-          "value": ""
+          "scope": "public"
         },
         {
-          "statement": "global_variable",
+          "statement": "state_variable",
           "type": "uint256",
           "name": "max_value1",
-          "scope": "public",
-          "value": ""
+          "scope": "public"
         },
         {
-          "statement": "global_variable",
+          "statement": "state_variable",
           "type": "uint256",
           "name": "min_value1",
-          "scope": "public",
-          "value": ""
+          "scope": "public"
         }
       ],
       "mappings": [],
@@ -167,14 +162,13 @@
     "contract": {
       "variables": [
         {
-          "statement": "global_variable",
+          "statement": "state_variable",
           "type": "DHT11[]",
           "name": "contracts",
-          "scope": "public",
-          "value": ""
+          "scope": "public"
         },
         {
-          "statement": "global_variable",
+          "statement": "state_variable",
           "type": "uint256",
           "name": "counter",
           "scope": "private",
@@ -233,8 +227,7 @@
             {
               "statement": "variable",
               "type": "DHT11",
-              "name": "_contract",
-              "value": ""
+              "name": "_contract"
             },
             {
               "statement": "if",

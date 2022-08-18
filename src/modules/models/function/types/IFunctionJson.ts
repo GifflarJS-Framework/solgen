@@ -1,12 +1,12 @@
 import { IStackItem } from "@models/content/types/IStackItem";
 import { IInput } from "./IInput";
-import { IStateMutabilityType } from "../../../types/IStateMutabilityType";
+import { IFunctionStateMutabilityType } from "../../../types/IFunctionStateMutabilityType";
 
 export interface IFunctionJson extends IStackItem {
   name: string;
   scope: string;
   isConstructor: boolean;
-  stateMutability?: IStateMutabilityType;
+  stateMutability?: IFunctionStateMutabilityType;
   inputs: Array<IInput>;
   outputs: Array<string>;
   modifiers: Array<string>;
