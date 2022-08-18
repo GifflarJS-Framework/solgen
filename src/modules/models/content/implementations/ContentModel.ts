@@ -51,7 +51,7 @@ class ContentModel {
     const setVariable = (
       type: ITypeName,
       name: string,
-      value: string | INewContract,
+      value?: string | INewContract,
       options?: IVariableOptions
     ): IContent => {
       const newVariable = this.variableModel.execute({

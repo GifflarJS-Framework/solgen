@@ -12,7 +12,7 @@ import { IContractItem } from "../types/IContractItem";
 import IEventModel from "@models/event/types/IEventModel";
 import { IEvent } from "@models/event/types/IEvent";
 import { IContractModel } from "../types/IContractModel";
-import { IStateMutabilityType } from "modules/types/IStateMutabilityType";
+import { IFunctionStateMutabilityType } from "modules/types/IFunctionStateMutabilityType";
 import { ITypeName } from "modules/types/ITypeName";
 import { IVariableOptions } from "modules/types/IVariableOptions";
 import { IVisibility } from "modules/types/IVisibility";
@@ -109,7 +109,7 @@ class ContractModel implements IContractModel {
       scope: string,
       inputs: Array<IInput>,
       outputs: Array<string>,
-      stateMutability?: IStateMutabilityType
+      stateMutability?: IFunctionStateMutabilityType
     ): IFunction => {
       const _function = this.functionModel.execute({
         name,

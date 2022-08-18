@@ -91,7 +91,7 @@ describe("Contract Manager Writer", () => {
     gContractController
       .createFunction("getLastContract", "public")
       .setOutput("_contract")
-      .setVariable("DHT11", "_contract", "")
+      .setVariable("DHT11", "_contract")
       .beginIf("counter > 0")
       .setAssignment("_contract", "contracts[counter - 1]")
       .endIf()

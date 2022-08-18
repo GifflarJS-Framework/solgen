@@ -6,51 +6,37 @@
         {
           "type": "address",
           "name": "manager",
-          "scope": "public",
-          "value": "",
-          "setMethod": true
+          "scope": "public"
         },
         {
           "type": "uint",
           "name": "temperature",
-          "scope": "public",
-          "value": "",
-          "setMethod": false
+          "scope": "public"
         },
         {
           "type": "uint",
           "name": "maxTemperature",
-          "scope": "public",
-          "value": "",
-          "setMethod": true
+          "scope": "public"
         },
         {
           "type": "uint",
           "name": "minTemperature",
-          "scope": "public",
-          "value": "",
-          "setMethod": true
+          "scope": "public"
         },
         {
           "type": "uint",
           "name": "humidity",
-          "scope": "public",
-          "value": "",
-          "setMethod": false
+          "scope": "public"
         },
         {
           "type": "uint",
           "name": "maxHumidity",
-          "scope": "public",
-          "value": "",
-          "setMethod": true
+          "scope": "public"
         },
         {
           "type": "uint",
           "name": "minHumidity",
-          "scope": "public",
-          "value": "",
-          "setMethod": true
+          "scope": "public"
         }
       ],
       "functions": [
@@ -217,9 +203,7 @@
         {
           "type": "address[]",
           "name": "contracts",
-          "scope": "public",
-          "value": "",
-          "setMethod": false
+          "scope": "public"
         },
         {
           "type": "uint",

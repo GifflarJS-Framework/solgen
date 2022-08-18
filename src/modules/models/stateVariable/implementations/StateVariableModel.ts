@@ -7,13 +7,18 @@ class StateVariableModel implements IStateVariableModel {
     type,
     name,
     scope,
-    value = "",
+    stateMutability,
+    value,
   }: ICreateStateVariableDTO): IStateVariable {
+    if (stateMutability === "constant" && !value)
+      throw Error("A constant must have an initial value.");
+
     const stateVariable: IStateVariable = {
       statement: "state_variable",
       type,
       name,
       scope: scope || "",
+      stateMutability,
       value,
     };
 

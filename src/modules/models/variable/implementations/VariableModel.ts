@@ -7,7 +7,7 @@ class VariableModel implements IVariableModel {
     type,
     dataLocation,
     name,
-    value = "",
+    value,
   }: ICreateVariableDTO): ILocalVariable {
     const variable: ILocalVariable = {
       statement: "variable",
