@@ -1,11 +1,11 @@
 import { INestedMapping } from "@models/mapping/types/INestedMapping";
 import { IArrayType } from "modules/types/IArrayType";
 import { IElementaryTypeName } from "modules/types/IElementaryTypeName";
-import { ICreateGlobalMapping } from "../types/ICreateGlobalMapping";
-import { IGlobalMapping } from "../types/IGlobalMapping";
-import { IGlobalMappingModel } from "../types/IGlobalMappingModel";
+import { ICreateStateMappingDTO } from "../types/ICreateStateMappingDTO";
+import { IStateMapping } from "../types/IStateMapping";
+import { IStateMappingModel } from "../types/IStateMappingModel";
 
-class GlobalMappingModel implements IGlobalMappingModel {
+class StateMappingModel implements IStateMappingModel {
   execute({
     type,
     typeName,
@@ -13,7 +13,7 @@ class GlobalMappingModel implements IGlobalMappingModel {
     customTypeName,
     name,
     scope,
-  }: ICreateGlobalMapping): IGlobalMapping {
+  }: ICreateStateMappingDTO): IStateMapping {
     let _type: IElementaryTypeName | IArrayType | string | undefined = type;
     if (!type) {
       _type = customType;
@@ -32,8 +32,8 @@ class GlobalMappingModel implements IGlobalMappingModel {
     if (!_type) throw new Error("You must define a mapping type");
     if (!_typeName) throw new Error("You must define a mapping type name");
 
-    const mapping: IGlobalMapping = {
-      statement: "global_mapping",
+    const mapping: IStateMapping = {
+      statement: "state_mapping",
       type: _type,
       typeName: _typeName,
       name,
@@ -44,4 +44,4 @@ class GlobalMappingModel implements IGlobalMappingModel {
   }
 }
 
-export default GlobalMappingModel;
+export default StateMappingModel;

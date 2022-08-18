@@ -3,10 +3,11 @@ import { IArrayType } from "modules/types/IArrayType";
 import { IElementaryTypeName } from "modules/types/IElementaryTypeName";
 import { IVisibility } from "modules/types/IVisibility";
 
-export interface IGlobalMapping {
-  statement: "global_mapping";
-  type: IElementaryTypeName | IArrayType | string;
-  typeName: IElementaryTypeName | INestedMapping | IArrayType | string;
+export interface ICreateStateMappingDTO {
+  type?: IElementaryTypeName | IArrayType;
+  customType?: string;
+  typeName?: IElementaryTypeName | INestedMapping | IArrayType;
+  customTypeName?: string;
   name: string;
   scope?: IVisibility;
 }

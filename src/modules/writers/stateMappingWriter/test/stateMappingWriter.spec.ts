@@ -1,13 +1,12 @@
-import { IGlobalMappingModel } from "@models/globalMapping/types/IGlobalMappingModel";
+import { IStateMappingModel } from "@models/stateMapping/types/IStateMappingModel";
 import { container } from "tsyringe";
-import { IGlobalMappingWriter } from "../types/IGlobalMappingWriter";
+import { IStateMappingWriter } from "../types/IStateMappingWriter";
 
-describe("Global MappingWriter", () => {
+describe("State MappingWriter", () => {
   const mappingModel =
-    container.resolve<IGlobalMappingModel>("GlobalMappingModel");
-  const mappingWriter = container.resolve<IGlobalMappingWriter>(
-    "GlobalMappingWriter"
-  );
+    container.resolve<IStateMappingModel>("StateMappingModel");
+  const mappingWriter =
+    container.resolve<IStateMappingWriter>("StateMappingWriter");
 
   it("Writing mapping to simple type", () => {
     const mapping = mappingModel.execute({

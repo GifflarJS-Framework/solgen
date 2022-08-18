@@ -1,11 +1,11 @@
 import { container } from "tsyringe";
-import { IGlobalMappingModel } from "../types/IGlobalMappingModel";
+import { IStateMappingModel } from "../types/IStateMappingModel";
 
-describe("Global Mapping Model", () => {
+describe("State Mapping Model", () => {
   const mappingModel =
-    container.resolve<IGlobalMappingModel>("GlobalMappingModel");
+    container.resolve<IStateMappingModel>("StateMappingModel");
 
-  it("Creating Global Mapping Model", () => {
+  it("Creating State Mapping Model", () => {
     const mapping = mappingModel.execute({
       type: "address",
       typeName: "uint256",
@@ -13,7 +13,7 @@ describe("Global Mapping Model", () => {
     });
 
     const expected = {
-      statement: "global_mapping",
+      statement: "state_mapping",
       type: "address",
       typeName: "uint256",
       name: "myMapping",
@@ -22,7 +22,7 @@ describe("Global Mapping Model", () => {
     expect(JSON.stringify(mapping)).toEqual(JSON.stringify(expected));
   });
 
-  it("Creating Global Mapping with custom types", () => {
+  it("Creating State Mapping with custom types", () => {
     const mapping = mappingModel.execute({
       customType: "User",
       customTypeName: "MyContract",
@@ -31,7 +31,7 @@ describe("Global Mapping Model", () => {
     });
 
     const expected = {
-      statement: "global_mapping",
+      statement: "state_mapping",
       type: "User",
       typeName: "MyContract",
       name: "myMapping",
@@ -41,7 +41,7 @@ describe("Global Mapping Model", () => {
     expect(JSON.stringify(mapping)).toEqual(JSON.stringify(expected));
   });
 
-  it("Creating Global Mapping with array type", () => {
+  it("Creating State Mapping with array type", () => {
     const mapping = mappingModel.execute({
       type: "address",
       typeName: { arrayType: "uint256", arraySize: 5 },
@@ -49,7 +49,7 @@ describe("Global Mapping Model", () => {
     });
 
     const expected = {
-      statement: "global_mapping",
+      statement: "state_mapping",
       type: "address",
       typeName: { arrayType: "uint256", arraySize: 5 },
       name: "myMapping",
@@ -58,7 +58,7 @@ describe("Global Mapping Model", () => {
     expect(JSON.stringify(mapping)).toEqual(JSON.stringify(expected));
   });
 
-  it("Creating Global Mapping with array type no size", () => {
+  it("Creating State Mapping with array type no size", () => {
     const mapping = mappingModel.execute({
       type: "address",
       typeName: { arrayType: "uint256" },
@@ -66,7 +66,7 @@ describe("Global Mapping Model", () => {
     });
 
     const expected = {
-      statement: "global_mapping",
+      statement: "state_mapping",
       type: "address",
       typeName: { arrayType: "uint256" },
       name: "myMapping",

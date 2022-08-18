@@ -1,9 +1,9 @@
-import { IGlobalMapping } from "@models/globalMapping/types/IGlobalMapping";
+import { IStateMapping } from "@models/stateMapping/types/IStateMapping";
 import { INestedMapping } from "@models/mapping/types/INestedMapping";
 import { IArrayType } from "modules/types/IArrayType";
-import { IGlobalMappingWriter } from "../types/IGlobalMappingWriter";
+import { IStateMappingWriter } from "../types/IStateMappingWriter";
 
-class GlobalMappingWriter implements IGlobalMappingWriter {
+class StateMappingWriter implements IStateMappingWriter {
   private _writeTypeName(typeName: any): string {
     let text = ``;
     if (typeof typeName === "string") {
@@ -35,7 +35,7 @@ class GlobalMappingWriter implements IGlobalMappingWriter {
     return text;
   }
 
-  write(mappings: Array<IGlobalMapping>): string {
+  write(mappings: Array<IStateMapping>): string {
     let text = ``;
 
     mappings.map((mapping) => {
@@ -60,4 +60,4 @@ class GlobalMappingWriter implements IGlobalMappingWriter {
   }
 }
 
-export default GlobalMappingWriter;
+export default StateMappingWriter;
