@@ -60,10 +60,7 @@ class ContractWriter implements IContractWriter {
 
       // Variables
       const txt_variables = this.stateVariableWriter.write(
-        json.contract.variables,
-        (request) => {
-          functions = functions.concat(request.functions);
-        }
+        json.contract.variables
       );
 
       // Mappings

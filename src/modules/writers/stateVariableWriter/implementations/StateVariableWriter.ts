@@ -2,26 +2,28 @@ import { IStateVariable } from "@models/stateVariable/types/IStateVariable";
 import { IStateVariableWriter } from "../types/IStateVariableWriter";
 
 class StateVariableWriter implements IStateVariableWriter {
-  write(variables: IStateVariable | Array<IStateVariable>): string {
+  write(variables: Array<IStateVariable>): string {
     let text = "";
     text = "//VARIABLES\n";
-    let variableList: IStateVariable[] = [];
-    if (Array.isArray(variables)) {
-      variableList = variables;
-    } else {
-      variableList = [variables];
-    }
 
-    variableList.map((v) => {
-      if (v.scope) {
-        text += `${v.type} ${v.scope} ${v.name}`;
-        if (v.value) {
-          text += ` = ${v.value}`;
-        } else {
-          text += "";
-        }
-        text += ";\n";
-      }
+    variables.map((v) => {
+      // Type
+      let variableText = `${v.type}`;
+
+      // Scope
+      if (v.scope) variableText += ` ${v.scope}`;
+
+      // State mutability
+      if (v.stateMutability) variableText += ` ${v.stateMutability}`;
+
+      // Variable name
+      variableText += ` ${v.name}`;
+
+      // Value
+      if (v.value) variableText += ` = ${v.value}`;
+
+      text += `${variableText};\n`;
+
       return text;
     });
     text += "\n\n";

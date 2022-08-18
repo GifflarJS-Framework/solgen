@@ -1,5 +1,4 @@
 import { IStateVariable } from "@models/stateVariable/types/IStateVariable";
-import { IRequest } from "@models/request/types/IRequest";
 import { container } from "tsyringe";
 import { IStateVariableWriter } from "../types/IStateVariableWriter";
 
@@ -18,34 +17,8 @@ describe("State Variable Writer", () => {
     };
 
     const expected = "//VARIABLES\nuint private age = 20;";
-    const functions = [
-      {
-        name: "setAge",
-        scope: "public",
-        isConstructor: false,
-        inputs: [{ name: "_age", type: "uint" }],
-        outputs: [],
-        modifiers: [],
-        content: [
-          {
-            statement: "assignment",
-            variable: "age",
-            value: {
-              statement: "expression",
-              value: "_age",
-            },
-          },
-        ],
-      },
-    ];
-    const result = variableWriter.write(variable, (request: IRequest) => {
-      expect(request).toHaveProperty("functions");
-      expect(JSON.stringify(request.functions)).toEqual(
-        JSON.stringify(functions)
-      );
-      expect(request).toHaveProperty("events", []);
-      expect(request).toHaveProperty("text_returns", "");
-    });
+
+    const result = variableWriter.write([variable]);
 
     expect(result).toMatch(expected);
   });
@@ -69,34 +42,35 @@ describe("State Variable Writer", () => {
     ];
 
     const expected = "//VARIABLES\nuint private age = 20;\nstring public name;";
-    const functions = [
+
+    const result = variableWriter.write(variables);
+
+    expect(result).toMatch(expected);
+  });
+
+  it("Writing with state mutability", () => {
+    const variables: IStateVariable[] = [
       {
-        name: "setAge",
+        statement: "state_variable",
+        name: "age",
+        type: "uint",
+        value: "20",
+        scope: "private",
+        stateMutability: "constant",
+      },
+      {
+        statement: "state_variable",
+        name: "name",
+        type: "string",
         scope: "public",
-        isConstructor: false,
-        inputs: [{ name: "_age", type: "uint" }],
-        outputs: [],
-        modifiers: [],
-        content: [
-          {
-            statement: "assignment",
-            variable: "age",
-            value: {
-              statement: "expression",
-              value: "_age",
-            },
-          },
-        ],
+        stateMutability: "immutable",
       },
     ];
-    const result = variableWriter.write(variables, (request: IRequest) => {
-      expect(request).toHaveProperty("functions");
-      expect(JSON.stringify(request.functions)).toEqual(
-        JSON.stringify(functions)
-      );
-      expect(request).toHaveProperty("events", []);
-      expect(request).toHaveProperty("text_returns", "");
-    });
+
+    const expected =
+      "//VARIABLES\nuint private constant age = 20;\nstring public immutable name;";
+
+    const result = variableWriter.write(variables);
 
     expect(result).toMatch(expected);
   });

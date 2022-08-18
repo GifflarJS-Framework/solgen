@@ -1,4 +1,3 @@
-import { IRequest } from "@models/request/types/IRequest";
 import { ILocalVariable } from "@models/variable/types/ILocalVariable";
 import { container } from "tsyringe";
 import { IVariableWriter } from "../types/IVariableWriter";
