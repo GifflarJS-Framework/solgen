@@ -74,15 +74,6 @@ class ContractModel implements IContractModel {
         scope,
         value,
       });
-      if (scope) {
-      }
-      // else {
-      //   variable = createVariableModel({
-      //     type,
-      //     name,
-      //     value,
-      //   });
-      // }
       contract.variables.push(variable);
       return variable;
     };
