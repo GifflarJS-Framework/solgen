@@ -1,6 +1,6 @@
 import { ICatch } from "./ICatch";
-import { ICreateCatch } from "./ICreateCatch";
+import { ICreateCatchDTO } from "./ICreateCatchDTO";
 
 export interface ICatchModel {
-  execute(data: ICreateCatch): ICatch;
+  execute(data: ICreateCatchDTO): ICatch;
 }

@@ -1,9 +1,9 @@
 import { ICatch } from "../types/ICatch";
 import { ICatchModel } from "../types/ICatchModel";
-import { ICreateCatch } from "../types/ICreateCatch";
+import { ICreateCatchDTO } from "../types/ICreateCatchDTO";
 
 class CatchModel implements ICatchModel {
-  execute({ identifier, parameters }: ICreateCatch): ICatch {
+  execute({ identifier, parameters }: ICreateCatchDTO): ICatch {
     const _catch: ICatch = {
       statement: "catch",
       identifier,

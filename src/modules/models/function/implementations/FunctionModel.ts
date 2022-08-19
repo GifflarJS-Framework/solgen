@@ -1,6 +1,6 @@
 import { IContentModel } from "@models/content/types/IContentModel";
 import { inject, injectable } from "tsyringe";
-import { ICreateFunctionDTO } from "../dtos/ICreateFunctionDTO";
+import { ICreateFunctionDTO } from "../types/ICreateFunctionDTO";
 import { IFunction } from "../types/IFunction";
 import { IFunctionJson } from "../types/IFunctionJson";
 import { IFunctionModel } from "../types/IFunctionModel";

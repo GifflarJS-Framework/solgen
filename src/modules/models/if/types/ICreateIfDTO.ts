@@ -1,4 +1,4 @@
-export interface ICreateIf {
+export interface ICreateIfDTO {
   condition: string;
   onElse?: boolean;
 }

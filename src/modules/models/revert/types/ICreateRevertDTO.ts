@@ -1,4 +1,4 @@
-export interface ICreateRevert {
+export interface ICreateRevertDTO {
   message?: string;
   customErrorCall?: {
     customErrorName: string;

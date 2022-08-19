@@ -1,6 +1,6 @@
-import { ICreateIf } from "./ICreateIf";
+import { ICreateIfDTO } from "./ICreateIfDTO";
 import { IIf } from "./IIf";
 
 export interface IIfModel {
-  execute({ condition, onElse }: ICreateIf): IIf;
+  execute({ condition, onElse }: ICreateIfDTO): IIf;
 }
