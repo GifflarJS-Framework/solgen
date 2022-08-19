@@ -1,47 +1,19 @@
 import { IContractJson } from "@models/contract/types/IContractJson";
-import { IEventWriter } from "@writers/eventWriter/types/IEventWriter";
-import { IFunctionWriter } from "@writers/functionWriter/types/IFunctionWriter";
-import { IStateVariableWriter } from "@writers/stateVariableWriter/types/IStateVariableWriter";
-import { ICustomErrorWriter } from "@writers/customErrorWriter/types/ICustomErrorWriter";
-import { IStateMappingWriter } from "@writers/stateMappingWriter/types/IStateMappingWriter";
-import { IModifierWriter } from "@writers/modifierWriter/types/IModifierWriter";
 import { inject, injectable } from "tsyringe";
 import { IContractWriter } from "../types/IContractWriter";
+import { IContractBodyWriter } from "@writers/contractBodyWriter/types/IContractBodyWriter";
 
 @injectable()
 class ContractWriter implements IContractWriter {
   constructor(
-    @inject("EventWriter")
-    private eventWriter: IEventWriter,
-    @inject("FunctionWriter")
-    private functionWriter: IFunctionWriter,
-    @inject("StateVariableWriter")
-    private stateVariableWriter: IStateVariableWriter,
-    @inject("ModifierWriter")
-    private modifierWriter: IModifierWriter,
-    @inject("CustomErrorWriter")
-    private customErrorWriter: ICustomErrorWriter,
-    @inject("StateMappingWriter")
-    private stateMappingWriter: IStateMappingWriter
+    @inject("ContractBodyWriter")
+    private contractBodyWriter: IContractBodyWriter
   ) {}
-
-  private _start(contract_name: string) {
-    // Initing the contract
-    const text = `contract ${contract_name}{\n`;
-
-    return text;
-  }
-
-  private _close(): string {
-    // Closing contract definition
-    const text = "}";
-
-    return text;
-  }
 
   write(
     contracts: Array<IContractJson>,
-    callback: (versionPlusContractText: string, index: number) => void
+    /** To get every contract text individually. */
+    callback: (individualContractText: string, index: number) => void
   ): string {
     if (!contracts) {
       return "";
@@ -51,61 +23,32 @@ class ContractWriter implements IContractWriter {
     const version = "pragma solidity 0.6.0;\n\n";
 
     let text = "";
-    let contractText;
 
     contracts.map((json, index) => {
-      contractText = "";
-      const txt_start = this._start(json.contract.name);
-      let { functions } = json.contract;
+      // Begining of contract
+      const txt_start = `contract ${json.contract.name}{\n`;
 
-      // Variables
-      const txt_variables = this.stateVariableWriter.write(
-        json.contract.variables
-      );
+      // Writing contract body
+      const txt_body = this.contractBodyWriter.write(json.contract);
 
-      // Mappings
-      const txt_mappings = this.stateMappingWriter.write(
-        json.contract.mappings
-      );
+      // End of contract
+      const txt_close = "}\n\n";
 
-      // Events
-      const txt_events = this.eventWriter.write(json.contract.events);
+      // Joining all texts
+      const contractText = txt_start + txt_body + txt_close;
 
-      // Modifiers
-      const txt_modifiers = this.modifierWriter.write(json.contract.modifiers);
-
-      // Custom Errors
-      const txt_custom_errors = this.customErrorWriter.write(
-        json.contract.customErrors
-      );
-
-      // Functions
-      const txt_functions = this.functionWriter.write(
-        functions,
-        json.contract.variables
-      );
-      const txt_close = this._close();
-
-      contractText += `${
-        txt_start +
-        txt_variables +
-        txt_mappings +
-        txt_events +
-        txt_modifiers +
-        txt_custom_errors +
-        txt_functions +
-        txt_close
-      }\n\n`;
-
-      text += contractText;
-
+      // Sending the contract code to callback
       if (callback && typeof callback === "function") {
         callback(version + contractText, index);
       }
 
+      // Updating final text
+      text += contractText;
+
       return text;
     });
 
+    // Adding solidity version at contract begining
     text = version + text;
 
     return text;

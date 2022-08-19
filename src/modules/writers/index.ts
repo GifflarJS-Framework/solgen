@@ -10,3 +10,4 @@ import "./structWriter";
 import "./customErrorWriter";
 import "./typeWriter";
 import "./enumWriter";
+import "./contractBodyWriter";
