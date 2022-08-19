@@ -55,7 +55,7 @@ class ContractWriter implements IContractWriter {
 
     contracts.map((json, index) => {
       contractText = "";
-      const txt_start = this._start(json.name);
+      const txt_start = this._start(json.contract.name);
       let { functions } = json.contract;
 
       // Variables

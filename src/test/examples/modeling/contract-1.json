@@ -1,6 +1,6 @@
 {
-  "name": "MyContract",
   "contract": {
+    "name": "MyContract",
     "variables": [
       {
         "statement": "state_variable",

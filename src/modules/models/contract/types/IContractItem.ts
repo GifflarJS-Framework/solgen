@@ -6,6 +6,7 @@ import { IStateVariable } from "@models/stateVariable/types/IStateVariable";
 import { IModifier } from "@models/modifier/types/IModifier";
 
 export interface IContractItem {
+  name: string;
   variables: Array<IStateVariable>;
   mappings: Array<IStateMapping>;
   events: Array<IEvent>;

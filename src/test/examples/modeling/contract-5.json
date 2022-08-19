@@ -1,7 +1,7 @@
 [
   {
-    "name": "DHT11",
     "contract": {
+      "name": "DHT11",
       "variables": [
         {
           "statement": "state_variable",
@@ -158,8 +158,8 @@
     }
   },
   {
-    "name": "Controller",
     "contract": {
+      "name": "Controller",
       "variables": [
         {
           "statement": "state_variable",

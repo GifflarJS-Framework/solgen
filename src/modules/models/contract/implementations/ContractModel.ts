@@ -32,6 +32,7 @@ class ContractModel implements IContractModel {
 
   execute(contractName: string): IContract {
     const contract: IContractItem = {
+      name: contractName,
       variables: [],
       mappings: [],
       events: [],
@@ -127,7 +128,6 @@ class ContractModel implements IContractModel {
 
     const _assignFunctions = (): IContract => {
       const _obj: IContract = {
-        name: contractName,
         contract,
         code: "",
         json: {},
@@ -139,7 +139,7 @@ class ContractModel implements IContractModel {
         createConstructor,
         createFunction,
         toString: (): string => {
-          return JSON.stringify({ name: _obj.name, contract: _obj.contract });
+          return JSON.stringify({ contract: _obj.contract });
         },
       };
 
