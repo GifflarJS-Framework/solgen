@@ -45,10 +45,10 @@
             },
             {
               "statement": "assignment",
-              "variable": "newOwner",
+              "variable": "owner",
               "value": {
                 "statement": "expression",
-                "value": "owner"
+                "value": "newOwner"
               }
             },
             {

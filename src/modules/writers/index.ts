@@ -11,3 +11,4 @@ import "./customErrorWriter";
 import "./typeWriter";
 import "./enumWriter";
 import "./contractBodyWriter";
+import "./libraryWriter";

@@ -73,6 +73,8 @@ minHumidity = _minHumidity;
 
 }
 
+pragma solidity 0.6.0;
+
 contract DHT11Controller{
 //VARIABLES
 address[] public contracts;

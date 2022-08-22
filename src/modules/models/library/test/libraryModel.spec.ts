@@ -39,7 +39,7 @@ describe("Test Library", () => {
       .createFunction("setOwner", "public")
       .setInput("address", "newOwner")
       .setVariable("address", "oldOwner", "owner")
-      .setAssignment("newOwner", "owner")
+      .setAssignment("owner", "newOwner")
       .setEventCall("transferedOwnership", ["oldOwner", "owner"]);
 
     // Asserting the result

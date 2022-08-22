@@ -13,18 +13,18 @@ class ContractWriter implements IContractWriter {
   write(
     contracts: Array<IContractJson>,
     /** To get every contract text individually. */
-    callback: (individualContractText: string, index: number) => void
+    callback?: (individualContractText: string, index: number) => void
   ): string {
     if (!contracts) {
       return "";
     }
 
-    // Writing the compiler version
-    const version = "pragma solidity 0.6.0;\n\n";
-
     let text = "";
 
     contracts.map((json, index) => {
+      // Writing the compiler version
+      const txt_version = "pragma solidity 0.6.0;\n\n";
+
       // Begining of contract
       const txt_start = `contract ${json.contract.name}{\n`;
 
@@ -35,11 +35,11 @@ class ContractWriter implements IContractWriter {
       const txt_close = "}\n\n";
 
       // Joining all texts
-      const contractText = txt_start + txt_body + txt_close;
+      const contractText = txt_version + txt_start + txt_body + txt_close;
 
       // Sending the contract code to callback
       if (callback && typeof callback === "function") {
-        callback(version + contractText, index);
+        callback(contractText, index);
       }
 
       // Updating final text
@@ -47,9 +47,6 @@ class ContractWriter implements IContractWriter {
 
       return text;
     });
-
-    // Adding solidity version at contract begining
-    text = version + text;
 
     return text;
   }
