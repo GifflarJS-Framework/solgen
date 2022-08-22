@@ -58,13 +58,7 @@ class FunctionWriter implements IFunctionWriter {
       text += this.inputWriter.write(f.inputs);
 
       // Requiring outputs
-      text_return += this.outputWriter.write(
-        f.outputs,
-        concatenedVariables,
-        ({ text_returns: _text_returns }) => {
-          text_returns = _text_returns;
-        }
-      );
+      text_returns += this.outputWriter.write(f.outputs);
 
       // Organizing state mutability
       let stateMutability = "";
@@ -94,9 +88,6 @@ class FunctionWriter implements IFunctionWriter {
 
       // Writing function content
       text += this.contentWriter.write(f.content);
-
-      // Setting the return values
-      text += text_return;
 
       // Closing the function
       text += "}\n\n";

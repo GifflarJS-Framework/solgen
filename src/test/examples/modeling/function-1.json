@@ -8,7 +8,7 @@
       "type": "string"
     }
   ],
-  "outputs": ["_message"],
+  "outputs": [{ "type": "string" }],
   "modifiers": [],
   "content": [
     {

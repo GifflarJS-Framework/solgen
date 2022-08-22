@@ -15,6 +15,7 @@ import { IIf } from "@models/if/types/IIf";
 import { ITypeName } from "modules/types/ITypeName";
 import { IVariableOptions } from "modules/types/IVariableOptions";
 import { IContinueModel } from "@models/continue/types/IContinueModel";
+import { IReturnModel } from "@models/return/types/IReturnModel";
 
 interface IIfContent extends IIf, IContent {}
 
@@ -36,7 +37,9 @@ class ContentModel {
     @inject("EventCallModel")
     private eventCallModel: IEventCallModel,
     @inject("ContinueModel")
-    private continueModel: IContinueModel
+    private continueModel: IContinueModel,
+    @inject("ReturnModel")
+    private returnModel: IReturnModel
   ) {}
 
   execute({ stateVars = [] }: ICreateContentDTO): IContent {
@@ -125,6 +128,13 @@ class ContentModel {
       return contentItem;
     };
 
+    const setReturn = (expressions: Array<string>): IContent => {
+      const _return = this.returnModel.execute({ expressions });
+      stack[top].content.push(_return);
+      const contentItem: IContent = _assignFunctions(stack[top]);
+      return contentItem;
+    };
+
     const beginIf = (condition: string, onElse?: boolean): IContent => {
       const newIf = this.ifModel.execute({ condition, onElse });
       const newIfContent: IIfContent = _assignFunctions(newIf);
@@ -171,6 +181,7 @@ class ContentModel {
         setMethodCall,
         setContractVariable,
         setContinue,
+        setReturn,
       };
 
       return _obj;

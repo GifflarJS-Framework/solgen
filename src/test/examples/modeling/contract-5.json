@@ -221,7 +221,7 @@
           "scope": "public",
           "isConstructor": false,
           "inputs": [],
-          "outputs": ["_contract"],
+          "outputs": [{ "type": "DHT11" }],
           "modifiers": [],
           "content": [
             {
@@ -258,6 +258,10 @@
                   }
                 }
               ]
+            },
+            {
+              "statement": "return",
+              "expressions": ["_contract"]
             }
           ]
         }

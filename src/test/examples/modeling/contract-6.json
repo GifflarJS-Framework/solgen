@@ -84,7 +84,7 @@
           "scope": "public",
           "isConstructor": false,
           "inputs": [],
-          "outputs": ["temperature", "humidity"],
+          "outputs": [{ "type": "uint" }, { "type": "uint" }],
           "content": []
         },
         {
@@ -250,7 +250,7 @@
           "scope": "public",
           "isConstructor": false,
           "inputs": [],
-          "outputs": ["lastContract"],
+          "outputs": [{ "type": "address" }],
           "content": [
             {
               "statement": "variable",

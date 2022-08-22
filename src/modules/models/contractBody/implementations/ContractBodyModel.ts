@@ -5,6 +5,7 @@ import { IEventCallModel } from "@models/eventCall/types/IEventCallModel";
 import { IFunction } from "@models/function/types/IFunction";
 import { IFunctionModel } from "@models/function/types/IFunctionModel";
 import { IInput } from "@models/function/types/IInput";
+import { IOutput } from "@models/function/types/IOutput";
 import { IStateVariable } from "@models/stateVariable/types/IStateVariable";
 import { IStateVariableModel } from "@models/stateVariable/types/IStateVariableModel";
 import { IFunctionStateMutabilityType } from "modules/types/IFunctionStateMutabilityType";
@@ -23,8 +24,6 @@ class ContractBodyModel implements IContractBodyModel {
     private stateVariableModel: IStateVariableModel,
     @inject("FunctionModel")
     private functionModel: IFunctionModel,
-    @inject("EventCallModel")
-    private eventCallModel: IEventCallModel,
     @inject("EventModel")
     private eventModel: IEventModel
   ) {}
@@ -43,14 +42,6 @@ class ContractBodyModel implements IContractBodyModel {
       const event = this.eventModel.execute({ name, inputs });
       body.events.push(event);
       return event;
-    };
-
-    const createEventCall = (
-      name: string,
-      variables: Array<string>
-    ): IEventCall => {
-      const newEventCall = this.eventCallModel.execute({ name, variables });
-      return newEventCall;
     };
 
     const createVariable = (
@@ -75,7 +66,7 @@ class ContractBodyModel implements IContractBodyModel {
       name: string,
       scope: string,
       inputs: Array<IInput>,
-      outputs: Array<string>,
+      outputs: Array<IOutput>,
       stateMutability?: IFunctionStateMutabilityType
     ): IFunction => {
       const _function = this.functionModel.execute({
@@ -96,7 +87,6 @@ class ContractBodyModel implements IContractBodyModel {
       const _obj: IContractBody = {
         body,
         createEvent,
-        createEventCall,
         createVariable,
         createFunction,
       };

@@ -90,14 +90,15 @@ describe("Contract Manager Writer", () => {
 
     gContractController
       .createFunction("getLastContract", "public")
-      .setOutput("_contract")
+      .setOutput("DHT11")
       .setVariable("DHT11", "_contract")
       .beginIf("counter > 0")
       .setAssignment("_contract", "contracts[counter - 1]")
       .endIf()
       .beginElse()
       .setAssignment("_contract", "contracts[0]")
-      .endIf();
+      .endIf()
+      .setReturn(["_contract"]);
 
     const resultJson = gContractManager.contracts.map((contract) => {
       return JSON.parse(contract.toString());

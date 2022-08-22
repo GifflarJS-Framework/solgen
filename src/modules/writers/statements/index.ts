@@ -17,3 +17,4 @@ import "./mappingWriter";
 import "./tryWriter";
 import "./catchWriter";
 import "./variableWriter";
+import "./returnWriter";

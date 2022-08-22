@@ -29,3 +29,5 @@ import "./content";
 import "./contractBody";
 import "./contract";
 import "./library";
+import "./return";
+import "./interface";

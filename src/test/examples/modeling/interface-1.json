@@ -1,0 +1,35 @@
+[
+  {
+    "interface": {
+      "name": "MyInterface",
+      "events": [
+        {
+          "statement": "event",
+          "name": "transferedOwnership",
+          "inputs": [
+            { "name": "oldOwner", "type": "address" },
+            { "name": "newOwner", "type": "address" }
+          ]
+        }
+      ],
+      "modifiers": [],
+      "customErrors": [],
+      "functions": [
+        {
+          "name": "setOwner",
+          "scope": "external",
+          "isConstructor": false,
+          "inputs": [
+            {
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "outputs": [{ "type": "boolean" }],
+          "modifiers": [],
+          "content": []
+        }
+      ]
+    }
+  }
+]

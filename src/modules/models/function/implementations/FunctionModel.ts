@@ -5,6 +5,7 @@ import { IFunction } from "../types/IFunction";
 import { IFunctionJson } from "../types/IFunctionJson";
 import { IFunctionModel } from "../types/IFunctionModel";
 import { IInput } from "../types/IInput";
+import { IOutput } from "../types/IOutput";
 
 @injectable()
 class FunctionModel implements IFunctionModel {
@@ -54,8 +55,14 @@ class FunctionModel implements IFunctionModel {
         return this;
       },
 
-      setOutput(variable: string): IFunction {
-        this.outputs.push(variable);
+      setOutput(type: string, variable?: string): IFunction {
+        // Creating output
+        const newOutput: IOutput = {
+          type,
+        };
+        if (variable) newOutput.name = variable;
+        this.outputs.push(newOutput);
+
         return this;
       },
     };

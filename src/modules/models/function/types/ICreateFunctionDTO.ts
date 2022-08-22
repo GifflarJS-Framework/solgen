@@ -1,6 +1,7 @@
 import { IVariable } from "@models/variable/types/IVariable";
 import { IInput } from "../types/IInput";
 import { IFunctionStateMutabilityType } from "../../../types/IFunctionStateMutabilityType";
+import { IOutput } from "./IOutput";
 
 export interface ICreateFunctionDTO {
   name: string;
@@ -8,6 +9,6 @@ export interface ICreateFunctionDTO {
   isConstructor?: boolean;
   stateMutability?: IFunctionStateMutabilityType;
   inputs?: Array<IInput>;
-  outputs?: Array<string>;
+  outputs?: Array<IOutput>;
   stateVars?: Array<IVariable>;
 }

@@ -9,5 +9,6 @@ export interface IFunctionModel {
     inputs,
     outputs,
     stateVars,
+    stateMutability,
   }: ICreateFunctionDTO): IFunction;
 }
