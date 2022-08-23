@@ -1,6 +1,6 @@
-import { ICreateRevert } from "./ICreateRevert";
+import { ICreateRevertDTO } from "./ICreateRevertDTO";
 import { IRevert } from "./IRevert";
 
 export interface IRevertModel {
-  execute(data?: ICreateRevert): IRevert;
+  execute(data?: ICreateRevertDTO): IRevert;
 }

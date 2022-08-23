@@ -1,6 +1,6 @@
-import { ICreateWhileModel } from "./ICreateWhileModel";
+import { ICreateWhileDTO } from "./ICreateWhileDTO";
 import { IWhile } from "./IWhile";
 
 export interface IWhileModel {
-  execute({ condition }: ICreateWhileModel): IWhile;
+  execute({ condition }: ICreateWhileDTO): IWhile;
 }

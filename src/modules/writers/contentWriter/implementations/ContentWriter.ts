@@ -13,6 +13,8 @@ import { IWhileWriter } from "@writers/statements/whileWriter/types/IWhileWriter
 import { IVariableWriter } from "@writers/statements/variableWriter/types/IVariableWriter";
 import { inject, injectable } from "tsyringe";
 import { IContentWriter } from "../types/IContentWriter";
+import { IReturnWriter } from "@writers/statements/returnWriter/types/IReturnWriter";
+import { IContinue } from "@models/continue/types/IContinue";
 
 @injectable()
 class ContentWriter implements IContentWriter {
@@ -40,7 +42,9 @@ class ContentWriter implements IContentWriter {
     @inject("WhileWriter")
     private whileWriter: IWhileWriter,
     @inject("DoWhileWriter")
-    private doWhileWriter: IDoWhileWriter
+    private doWhileWriter: IDoWhileWriter,
+    @inject("ReturnWriter")
+    private returnWriter: IReturnWriter
   ) {
     ifWriter._init(this);
     forWriter._init(this);
@@ -61,6 +65,7 @@ class ContentWriter implements IContentWriter {
     break: this.breakWriter,
     while: this.whileWriter,
     doWhile: this.doWhileWriter,
+    return: this.returnWriter,
   };
 
   // All statement control that doesn't need the ; in the end

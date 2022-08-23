@@ -1,4 +1,4 @@
-import { ICreateFunctionDTO } from "../dtos/ICreateFunctionDTO";
+import { ICreateFunctionDTO } from "./ICreateFunctionDTO";
 import { IFunction } from "./IFunction";
 
 export interface IFunctionModel {
@@ -9,5 +9,6 @@ export interface IFunctionModel {
     inputs,
     outputs,
     stateVars,
+    stateMutability,
   }: ICreateFunctionDTO): IFunction;
 }

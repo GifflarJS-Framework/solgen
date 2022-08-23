@@ -1,22 +1,31 @@
-import { IVariable } from "@models/variable/types/IVariable";
+import { IOutput } from "@models/function/types/IOutput";
 import { container } from "tsyringe";
 import { IOutputWriter } from "../types/IOutputWriter";
 
 describe("Output Writer", () => {
   it("Writing Output", () => {
-    const variables: Array<IVariable> = [
-      { type: "uint256", name: "output1" },
-      { type: "string", name: "output2" },
-    ];
     const outputWriter: IOutputWriter = container.resolve("OutputWriter");
-    const outputs: Array<string> = ["output1", "output2"];
+    const outputs: Array<IOutput> = [
+      { type: "address", name: "output1" },
+      { type: "uint256", name: "output2" },
+    ];
 
-    const expected = "return (output1, output2);";
-    const expectedReturns = "returns (uint256, string)";
-    const result = outputWriter.write(outputs, variables, (object) => {
-      expect(object.text_returns).toMatch(expectedReturns);
-    });
+    const result = outputWriter.write(outputs);
+    const expected = "returns(address output1, uint256 output2)";
 
-    expect(result).toMatch(expected);
+    expect(result).toEqual(expected);
+  });
+
+  it("Writing Output without name", () => {
+    const outputWriter: IOutputWriter = container.resolve("OutputWriter");
+    const outputs: Array<IOutput> = [
+      { type: "address", name: "output1" },
+      { type: "string" },
+    ];
+
+    const result = outputWriter.write(outputs);
+    const expected = "returns(address output1, string memory)";
+
+    expect(result).toEqual(expected);
   });
 });

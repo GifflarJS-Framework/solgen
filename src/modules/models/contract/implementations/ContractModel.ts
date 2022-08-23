@@ -1,95 +1,55 @@
-import { IEventCall } from "@models/eventCall/types/IEventCall";
 import { IFunction } from "@models/function/types/IFunction";
 import { IInput } from "@models/function/types/IInput";
 import { IContract } from "../types/IContract";
 import { IContractJson } from "../types/IContractJson";
 import { inject, injectable } from "tsyringe";
-import { IStateVariable } from "@models/stateVariable/types/IStateVariable";
-import { IEventCallModel } from "@models/eventCall/types/IEventCallModel";
-import { IStateVariableModel } from "@models/stateVariable/types/IStateVariableModel";
 import { IFunctionModel } from "@models/function/types/IFunctionModel";
 import { IContractItem } from "../types/IContractItem";
-import IEventModel from "@models/event/types/IEventModel";
-import { IEvent } from "@models/event/types/IEvent";
 import { IContractModel } from "../types/IContractModel";
-import { IFunctionStateMutabilityType } from "modules/types/IFunctionStateMutabilityType";
-import { ITypeName } from "modules/types/ITypeName";
-import { IVariableOptions } from "modules/types/IVariableOptions";
-import { IVisibility } from "modules/types/IVisibility";
+import { IContractBodyModel } from "@models/contractBody/types/IContractBodyModel";
+import { IOutput } from "@models/function/types/IOutput";
+import { IInheritsModel } from "@models/inherits/types/IInheritsModel";
+import { IInherits } from "@models/inherits/types/IInherits";
 
 @injectable()
 class ContractModel implements IContractModel {
   constructor(
-    @inject("StateVariableModel")
-    private stateVariableModel: IStateVariableModel,
     @inject("FunctionModel")
     private functionModel: IFunctionModel,
-    @inject("EventCallModel")
-    private eventCallModel: IEventCallModel,
-    @inject("EventModel")
-    private eventModel: IEventModel
+    @inject("InheritsModel")
+    private inheritsModel: IInheritsModel,
+    @inject("ContractBodyModel")
+    private contractBodyModel: IContractBodyModel
   ) {}
 
   execute(contractName: string): IContract {
+    // Body of the contract
+    const contractBody = this.contractBodyModel.execute();
+
     const contract: IContractItem = {
-      variables: [],
-      mappings: [],
-      events: [],
-      modifiers: [],
-      customErrors: [],
-      functions: [],
+      name: contractName,
+      inherits: [],
+      ...contractBody.body,
     };
 
     const toJson = (): IContractJson => {
-      const jsonfunction = JSON.stringify({ name: contractName, contract });
-      return JSON.parse(jsonfunction);
+      const json = JSON.stringify({ contract });
+      return JSON.parse(json);
     };
 
-    const createEvent = (name: string, inputs: Array<IInput>): IEvent => {
-      const event = this.eventModel.execute({ name, inputs });
-      contract.events.push(event);
-      return event;
-    };
-
-    const createEventCall = (
-      name: string,
-      variables: Array<string>
-    ): IEventCall => {
-      const newEventCall = this.eventCallModel.execute({ name, variables });
-      return newEventCall;
-    };
-
-    const createVariable = (
-      type: ITypeName,
-      name: string,
-      scope: IVisibility,
-      value?: string,
-      options?: IVariableOptions
-    ): IStateVariable => {
-      const variable = this.stateVariableModel.execute({
-        type:
-          type === "custom" && options?.customType ? options.customType : type,
-        name,
-        scope,
-        value,
-      });
-      if (scope) {
-      }
-      // else {
-      //   variable = createVariableModel({
-      //     type,
-      //     name,
-      //     value,
-      //   });
-      // }
-      contract.variables.push(variable);
-      return variable;
+    const setInheritance = (
+      identifier: string,
+      args?: Array<string>
+    ): IInherits => {
+      const inherits = this.inheritsModel.execute({ identifier, args });
+      contract.inherits.push(inherits);
+      return inherits;
     };
 
     const createConstructor = (
       scope: string,
       inputs?: Array<IInput>,
-      outputs?: Array<string>
+      outputs?: Array<IOutput>
     ): IFunction => {
       const _function = this.functionModel.execute({
         name: "",
@@ -104,42 +64,18 @@ class ContractModel implements IContractModel {
       return _function;
     };
 
-    const createFunction = (
-      name: string,
-      scope: string,
-      inputs: Array<IInput>,
-      outputs: Array<string>,
-      stateMutability?: IFunctionStateMutabilityType
-    ): IFunction => {
-      const _function = this.functionModel.execute({
-        name,
-        scope,
-        inputs,
-        outputs,
-        isConstructor: false,
-        stateVars: contract.variables,
-        stateMutability,
-      });
-      contract.functions.push(_function);
-
-      return _function;
-    };
-
     const _assignFunctions = (): IContract => {
       const _obj: IContract = {
-        name: contractName,
         contract,
         code: "",
         json: {},
         instance: undefined,
         toJson,
-        createEvent,
-        createEventCall,
-        createVariable,
+        ...contractBody,
         createConstructor,
-        createFunction,
+        setInheritance,
         toString: (): string => {
-          return JSON.stringify({ name: _obj.name, contract: _obj.contract });
+          return JSON.stringify({ contract: _obj.contract });
         },
       };
 

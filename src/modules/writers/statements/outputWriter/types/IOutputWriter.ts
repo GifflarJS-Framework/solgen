@@ -1,10 +1,5 @@
-import { IVariable } from "@models/variable/types/IVariable";
-import { IOutputWriterCallbackObject } from "./IOutputWriterCallbackObject";
+import { IOutput } from "@models/function/types/IOutput";
 
 export interface IOutputWriter {
-  write(
-    outputs: Array<string>,
-    variables: Array<IVariable>,
-    callback: (object: IOutputWriterCallbackObject) => void
-  ): string;
+  write(outputs: Array<IOutput>): string;
 }

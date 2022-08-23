@@ -1,112 +1,66 @@
 import { IContractJson } from "@models/contract/types/IContractJson";
-import { IEventWriter } from "@writers/eventWriter/types/IEventWriter";
-import { IFunctionWriter } from "@writers/functionWriter/types/IFunctionWriter";
-import { IStateVariableWriter } from "@writers/stateVariableWriter/types/IStateVariableWriter";
-import { ICustomErrorWriter } from "@writers/customErrorWriter/types/ICustomErrorWriter";
-import { IStateMappingWriter } from "@writers/stateMappingWriter/types/IStateMappingWriter";
-import { IModifierWriter } from "@writers/modifierWriter/types/IModifierWriter";
 import { inject, injectable } from "tsyringe";
 import { IContractWriter } from "../types/IContractWriter";
+import { IContractBodyWriter } from "@writers/contractBodyWriter/types/IContractBodyWriter";
+import { IInheritsWriter } from "@writers/inheritsWriter/types/IInheritsWriter";
 
 @injectable()
 class ContractWriter implements IContractWriter {
   constructor(
-    @inject("EventWriter")
-    private eventWriter: IEventWriter,
-    @inject("FunctionWriter")
-    private functionWriter: IFunctionWriter,
-    @inject("StateVariableWriter")
-    private stateVariableWriter: IStateVariableWriter,
-    @inject("ModifierWriter")
-    private modifierWriter: IModifierWriter,
-    @inject("CustomErrorWriter")
-    private customErrorWriter: ICustomErrorWriter,
-    @inject("StateMappingWriter")
-    private stateMappingWriter: IStateMappingWriter
+    @inject("ContractBodyWriter")
+    private contractBodyWriter: IContractBodyWriter,
+    @inject("InheritsWriter")
+    private inheritsWriter: IInheritsWriter
   ) {}
-
-  private _start(contract_name: string) {
-    // Initing the contract
-    const text = `contract ${contract_name}{\n`;
-
-    return text;
-  }
-
-  private _close(): string {
-    // Closing contract definition
-    const text = "}";
-
-    return text;
-  }
 
   write(
     contracts: Array<IContractJson>,
-    callback: (versionPlusContractText: string, index: number) => void
+    /** To get every contract text individually. */
+    callback?: (individualContractText: string, index: number) => void
   ): string {
     if (!contracts) {
       return "";
     }
 
-    // Writing the compiler version
-    const version = "pragma solidity 0.6.0;\n\n";
-
     let text = "";
-    let contractText;
 
     contracts.map((json, index) => {
-      contractText = "";
-      const txt_start = this._start(json.name);
-      let { functions } = json.contract;
+      // Writing the compiler version
+      const txt_version = "pragma solidity 0.6.0;\n\n";
 
-      // Variables
-      const txt_variables = this.stateVariableWriter.write(
-        json.contract.variables
-      );
+      // Begining of contract
+      const txt_start = `contract ${json.contract.name}`;
 
-      // Mappings
-      const txt_mappings = this.stateMappingWriter.write(
-        json.contract.mappings
-      );
+      // Writing inheritance
+      let txt_inherts = this.inheritsWriter.write(json.contract.inherits);
+      if (txt_inherts) txt_inherts = ` ${txt_inherts}`;
+      const txt_openBraces = `{\n`;
 
-      // Events
-      const txt_events = this.eventWriter.write(json.contract.events);
+      // Writing contract body
+      const txt_body = this.contractBodyWriter.write(json.contract);
 
-      // Modifiers
-      const txt_modifiers = this.modifierWriter.write(json.contract.modifiers);
+      // End of contract
+      const txt_close = "}\n\n";
 
-      // Custom Errors
-      const txt_custom_errors = this.customErrorWriter.write(
-        json.contract.customErrors
-      );
-
-      // Functions
-      const txt_functions = this.functionWriter.write(
-        functions,
-        json.contract.variables
-      );
-      const txt_close = this._close();
-
-      contractText += `${
+      // Joining all texts
+      const contractText =
+        txt_version +
         txt_start +
-        txt_variables +
-        txt_mappings +
-        txt_events +
-        txt_modifiers +
-        txt_custom_errors +
-        txt_functions +
-        txt_close
-      }\n\n`;
+        txt_inherts +
+        txt_openBraces +
+        txt_body +
+        txt_close;
 
-      text += contractText;
-
+      // Sending the contract code to callback
       if (callback && typeof callback === "function") {
-        callback(version + contractText, index);
+        callback(contractText, index);
       }
+
+      // Updating final text
+      text += contractText;
 
       return text;
     });
-
-    text = version + text;
 
     return text;
   }

@@ -10,6 +10,8 @@ export interface IContent extends IStackItem {
     contractName: string,
     args: Array<string>
   ): IContent;
+  setReturn(expressions: Array<string>): IContent;
+  setContinue(): IContent;
 
   /**
    * Remember to use the "endIf" function when finishing "if" conditions actions,

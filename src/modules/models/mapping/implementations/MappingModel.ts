@@ -1,6 +1,6 @@
 import { IArrayType } from "modules/types/IArrayType";
 import { IElementaryTypeName } from "modules/types/IElementaryTypeName";
-import { ICreateMapping } from "../types/ICreateMapping";
+import { ICreateMappingDTO } from "../types/ICreateMappingDTO";
 import { IMapping } from "../types/IMapping";
 import { IMappingModel } from "../types/IMappingModel";
 import { INestedMapping } from "../types/INestedMapping";
@@ -12,7 +12,7 @@ class MappingModel implements IMappingModel {
     customType,
     customTypeName,
     name,
-  }: ICreateMapping): IMapping {
+  }: ICreateMappingDTO): IMapping {
     let _type: IElementaryTypeName | IArrayType | string | undefined = type;
     if (!type) {
       _type = customType;

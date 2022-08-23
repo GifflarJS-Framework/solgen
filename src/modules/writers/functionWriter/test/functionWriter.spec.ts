@@ -13,15 +13,15 @@ describe("Contract Writer", () => {
       stateMutability: "view",
       inputs: [],
       modifiers: [],
-      outputs: ["age"],
+      outputs: [{ type: "uint" }],
       content: [
         { statement: "variable", name: "age", type: "uint", value: "18" },
       ],
     };
 
     const expected =
-      "//FUNCTIONS\nfunction MyFunction() public view returns (uint) {\nuint age = 18;\nreturn (age);\n}";
-    const result = functionWriter.write([myFunction], []);
+      "//FUNCTIONS\nfunction MyFunction() public view returns(uint){\nuint age = 18;\n}\n\n";
+    const result = functionWriter.write([myFunction]);
 
     expect(result).toMatch(expected);
   });

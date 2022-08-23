@@ -1,7 +1,8 @@
 [
   {
-    "name": "DHT11",
     "contract": {
+      "name": "DHT11",
+      "inherits": [],
       "variables": [
         {
           "statement": "state_variable",
@@ -158,8 +159,9 @@
     }
   },
   {
-    "name": "Controller",
     "contract": {
+      "name": "Controller",
+      "inherits": [],
       "variables": [
         {
           "statement": "state_variable",
@@ -221,7 +223,7 @@
           "scope": "public",
           "isConstructor": false,
           "inputs": [],
-          "outputs": ["_contract"],
+          "outputs": [{ "type": "DHT11" }],
           "modifiers": [],
           "content": [
             {
@@ -258,6 +260,10 @@
                   }
                 }
               ]
+            },
+            {
+              "statement": "return",
+              "expressions": ["_contract"]
             }
           ]
         }

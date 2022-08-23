@@ -1,0 +1,20 @@
+pragma solidity 0.6.0;
+
+library Ownable{
+//VARIABLES
+address public owner;
+
+
+//EVENTS
+event transferedOwnership(address oldOwner, address newOwner);
+
+
+//FUNCTIONS
+function setOwner(address newOwner) public{
+address oldOwner = owner;
+owner = newOwner;
+emit transferedOwnership(oldOwner, owner);
+}
+
+}
+

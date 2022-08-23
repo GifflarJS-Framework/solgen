@@ -54,8 +54,8 @@ class GifflarContractManager implements IGifflarContractManager {
   }
 
   getContract(name: string): IGifflarContract {
-    return this.contracts.filter((contract) => {
-      return contract.name === name;
+    return this.contracts.filter((gContract) => {
+      return gContract.contract.name === name;
     })[0];
   }
 
@@ -85,11 +85,11 @@ class GifflarContractManager implements IGifflarContractManager {
     }
 
     // Updating the contract object
-    this.contracts.map((contract: IGifflarContract) => {
-      const json = this.json.contracts.jsons[contract.name];
+    this.contracts.map((gContract: IGifflarContract) => {
+      const json = this.json.contracts.jsons[gContract.contract.name];
       if (json) {
         // eslint-disable-next-line no-param-reassign
-        contract.json = json;
+        gContract.json = json;
       }
       return json;
     });
@@ -99,8 +99,8 @@ class GifflarContractManager implements IGifflarContractManager {
 
   compile(contractName: string, callback: (errors: Array<any>) => void): void {
     // Filtering the contract by contract name
-    const contract = this.contracts.filter((contractItem) => {
-      return contractItem.name === contractName;
+    const contract = this.contracts.filter((gContract) => {
+      return gContract.contract.name === contractName;
     })[0];
 
     // If contract object is valid

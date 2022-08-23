@@ -1,0 +1,11 @@
+pragma solidity 0.6.0;
+
+interface MyInterface is InheritableInterface('0x0c') {
+//EVENTS
+event transferedOwnership(address oldOwner, address newOwner);
+
+
+//FUNCTIONS
+function setOwner(address newOwner) external returns(boolean);
+}
+

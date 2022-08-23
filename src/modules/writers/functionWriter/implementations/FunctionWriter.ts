@@ -1,13 +1,12 @@
 import { IContents } from "@models/content/types/IContents";
 import { IFunctionJson } from "@models/function/types/IFunctionJson";
-import { IStateVariable } from "@models/stateVariable/types/IStateVariable";
 import { ILocalVariable } from "@models/variable/types/ILocalVariable";
-import { IVariable } from "@models/variable/types/IVariable";
 import { IContentWriter } from "@writers/contentWriter/types/IContentWriter";
 import { IInputWriter } from "@writers/statements/inputWriter/types/IInputWriter";
 import { IOutputWriter } from "@writers/statements/outputWriter/types/IOutputWriter";
 import { inject, injectable } from "tsyringe";
 import { IFunctionWriter } from "../types/IFunctionWriter";
+import { IFunctionWriterOptions } from "../types/IFunctionWriterOptions";
 
 @injectable()
 class FunctionWriter implements IFunctionWriter {
@@ -32,18 +31,11 @@ class FunctionWriter implements IFunctionWriter {
 
   write(
     functions: Array<IFunctionJson>,
-    variables: Array<IStateVariable>
+    options?: IFunctionWriterOptions
   ): string {
     let text = "//FUNCTIONS\n";
 
     functions.map((f) => {
-      const localVariables = this._selectFunctionVariables(f);
-      const concatenedVariables: Array<IVariable> = Array.prototype.concat(
-        variables,
-        localVariables
-      );
-      // const outputWriter = this.outputWriter.write(concatenedVariables);
-      let text_return = "";
       let text_returns = "";
       const scope = ` ${f.scope}`;
       // Verifying whether is a constructor or not
@@ -58,13 +50,7 @@ class FunctionWriter implements IFunctionWriter {
       text += this.inputWriter.write(f.inputs);
 
       // Requiring outputs
-      text_return += this.outputWriter.write(
-        f.outputs,
-        concatenedVariables,
-        ({ text_returns: _text_returns }) => {
-          text_returns = _text_returns;
-        }
-      );
+      text_returns += this.outputWriter.write(f.outputs);
 
       // Organizing state mutability
       let stateMutability = "";
@@ -72,34 +58,40 @@ class FunctionWriter implements IFunctionWriter {
         stateMutability = ` ${f.stateMutability}`;
       }
 
-      // Organizing all modifiers
-      let modifiers = "";
-      if (f.modifiers) {
-        f.modifiers.map((modifier) => {
-          modifiers += ` ${modifier}`;
-          return modifier;
-        });
-      }
-
       // Closing inputs and setting scope
-      text += `)${scope}${stateMutability}${modifiers}`;
+      text += `)${scope}${stateMutability}`;
+
+      if (!options || !options.onlyPrototype) {
+        // Organizing all modifiers
+        let modifiers = "";
+        if (f.modifiers) {
+          f.modifiers.map((modifier) => {
+            modifiers += ` ${modifier}`;
+            return modifier;
+          });
+        }
+
+        // Setting modifiers to main text
+        text += `${modifiers}`;
+      }
 
       // Setting the returns text
       if (text_returns) {
-        text += ` ${text_returns} `;
+        text += ` ${text_returns}`;
       }
 
-      // Opening the content clousure
-      text += "{\n";
+      if (options && options.onlyPrototype) {
+        text += `;\n`;
+      } else {
+        // Opening the content clousure
+        text += "{\n";
 
-      // Writing function content
-      text += this.contentWriter.write(f.content);
+        // Writing function content
+        text += this.contentWriter.write(f.content);
 
-      // Setting the return values
-      text += text_return;
-
-      // Closing the function
-      text += "}\n\n";
+        // Closing the function
+        text += "}\n\n";
+      }
 
       return text;
     });

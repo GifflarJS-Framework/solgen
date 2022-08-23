@@ -1,6 +1,6 @@
-import { ICreateMapping } from "./ICreateMapping";
+import { ICreateMappingDTO } from "./ICreateMappingDTO";
 import { IMapping } from "./IMapping";
 
 export interface IMappingModel {
-  execute(data: ICreateMapping): IMapping;
+  execute(data: ICreateMappingDTO): IMapping;
 }

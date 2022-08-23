@@ -1,45 +1,44 @@
-import { IVariable } from "@models/variable/types/IVariable";
-import helpers from "@utils/helpers";
+import { IOutput } from "@models/function/types/IOutput";
 import { IOutputWriter } from "../types/IOutputWriter";
-import { IOutputWriterCallbackObject } from "../types/IOutputWriterCallbackObject";
 
 class OutputWriter implements IOutputWriter {
-  write(
-    outputs: Array<string>,
-    variables: Array<IVariable> = [],
-    callback: (object: IOutputWriterCallbackObject) => void
-  ): string {
-    let text_return = "";
-    let text_returns = "";
-    const values: Array<string> = [];
-    const types: Array<string> = [];
+  write(outputs: Array<IOutput>): string {
+    let text = "";
+    const _outputs = [...outputs];
+    const memoryList = ["string", "bytes"];
 
-    if (outputs) {
-      outputs.map((output) => {
-        const variable = variables.filter((variableItem) => {
-          return variableItem.name === output;
-        });
+    // If there are no output
+    if (!_outputs.length) {
+      return text;
+    }
 
-        if (variable[0]) {
-          values.push(variable[0].name);
-          types.push(variable[0].type);
-        }
-        return variable;
-      });
-      if (values.length && types.length) {
-        text_return += helpers.getCommaExpression(values);
-        text_returns += helpers.getCommaExpression(types);
+    // Defining the first output
+    const firstoutput = _outputs[0];
+    text += `${firstoutput.type}`;
+    if (memoryList.includes(firstoutput.type)) {
+      text += " memory";
+    }
+    if (firstoutput.name) text += ` ${firstoutput.name}`;
 
-        text_return = `return (${text_return});\n`;
-        text_returns = `returns (${text_returns})`;
+    // Removing the first element
+    _outputs.shift();
+
+    // Defining the other outputs
+    _outputs.map((output) => {
+      text += ", ";
+
+      text += `${output.type}`;
+      if (memoryList.includes(output.type)) {
+        text += " memory";
       }
-    }
+      if (output.name) {
+        text += ` ${output.name}`;
+      }
 
-    if (typeof callback === "function") {
-      callback({ text_returns });
-    }
+      return text;
+    });
 
-    return text_return;
+    return `returns(${text})`;
   }
 }
 

@@ -1,0 +1,64 @@
+[
+  {
+    "library": {
+      "name": "Ownable",
+      "variables": [
+        {
+          "statement": "state_variable",
+          "type": "address",
+          "name": "owner",
+          "scope": "public"
+        }
+      ],
+      "mappings": [],
+      "events": [
+        {
+          "statement": "event",
+          "name": "transferedOwnership",
+          "inputs": [
+            { "name": "oldOwner", "type": "address" },
+            { "name": "newOwner", "type": "address" }
+          ]
+        }
+      ],
+      "modifiers": [],
+      "customErrors": [],
+      "functions": [
+        {
+          "name": "setOwner",
+          "scope": "public",
+          "isConstructor": false,
+          "inputs": [
+            {
+              "name": "newOwner",
+              "type": "address"
+            }
+          ],
+          "outputs": [],
+          "modifiers": [],
+          "content": [
+            {
+              "statement": "variable",
+              "type": "address",
+              "name": "oldOwner",
+              "value": "owner"
+            },
+            {
+              "statement": "assignment",
+              "variable": "owner",
+              "value": {
+                "statement": "expression",
+                "value": "newOwner"
+              }
+            },
+            {
+              "statement": "event_call",
+              "name": "transferedOwnership",
+              "variables": ["oldOwner", "owner"]
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

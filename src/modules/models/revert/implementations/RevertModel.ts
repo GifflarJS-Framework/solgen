@@ -1,9 +1,9 @@
-import { ICreateRevert } from "../types/ICreateRevert";
+import { ICreateRevertDTO } from "../types/ICreateRevertDTO";
 import { IRevert } from "../types/IRevert";
 import { IRevertModel } from "../types/IRevertModel";
 
 class RevertModel implements IRevertModel {
-  execute(data?: ICreateRevert): IRevert {
+  execute(data?: ICreateRevertDTO): IRevert {
     if (data && data.message) {
       // Revert with message `revert("message");`
       const revert: IRevert = {

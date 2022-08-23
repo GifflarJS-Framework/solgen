@@ -29,7 +29,7 @@ class GifflarContract implements IGifflarContractModel {
     const gContract: IGifflarContract = {
       ..._contractModel,
       setName: (newName: string): void => {
-        gContract.name = newName;
+        gContract.contract.name = newName;
       },
 
       write: (contracts?: Array<IContractJson>): string => {
@@ -71,7 +71,7 @@ class GifflarContract implements IGifflarContractModel {
             throw Error("Web3 is not defined");
           }
         }
-        const json = gContract.json.contracts.jsons[gContract.name];
+        const json = gContract.json.contracts.jsons[gContract.contract.name];
         if (!json) {
           throw new Error("Failed to find compiled contract.");
         }

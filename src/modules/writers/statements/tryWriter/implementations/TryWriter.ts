@@ -35,7 +35,7 @@ class TryWriter implements ITryWriter {
     const contentText = this.contentWriter.write(_try.content);
 
     // Writing final text
-    const text = `try ${expressionText} returns (${parametersText}){\n${contentText}}`;
+    const text = `try ${expressionText} returns(${parametersText}){\n${contentText}}`;
 
     return text;
   }

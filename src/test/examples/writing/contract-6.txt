@@ -27,7 +27,7 @@ maxHumidity = 10;
 minHumidity = 0;
 }
 
-function getValues() public returns (uint, uint) {
+function getValues() public returns(uint, uint) {
 return (temperature, humidity);
 }
 
@@ -73,6 +73,8 @@ minHumidity = _minHumidity;
 
 }
 
+pragma solidity 0.6.0;
+
 contract DHT11Controller{
 //VARIABLES
 address[] public contracts;
@@ -86,7 +88,7 @@ contracts.push(newContract);
 counter = counter + 1;
 }
 
-function getLastContract() public returns (address) {
+function getLastContract() public returns(address) {
 address lastContract = address(0);
 if(counter > 0){
 lastContract = contracts[counter - 1];
