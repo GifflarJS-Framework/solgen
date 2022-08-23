@@ -31,3 +31,4 @@ import "./contract";
 import "./library";
 import "./return";
 import "./interface";
+import "./inherits";
