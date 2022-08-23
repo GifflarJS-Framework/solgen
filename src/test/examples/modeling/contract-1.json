@@ -1,6 +1,7 @@
 {
   "contract": {
     "name": "MyContract",
+    "inherits": [],
     "variables": [
       {
         "statement": "state_variable",

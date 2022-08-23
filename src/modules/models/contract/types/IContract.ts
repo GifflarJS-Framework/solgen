@@ -3,12 +3,15 @@ import { IEvent } from "@models/event/types/IEvent";
 import { IFunction } from "@models/function/types/IFunction";
 import { IInput } from "@models/function/types/IInput";
 import { IOutput } from "@models/function/types/IOutput";
+import { IInherits } from "@models/inherits/types/IInherits";
 import { IStateVariable } from "@models/stateVariable/types/IStateVariable";
 import { IVariableOptions } from "modules/types/IVariableOptions";
 import { IContractJson } from "./IContractJson";
 
 export interface IContract extends IContractJson, IContractBody {
   toJson(): IContractJson;
+
+  setInheritance(identifier: string, args?: Array<string>): IInherits;
 
   createEvent(name: string, inputs: Array<IInput>): IEvent;
 
