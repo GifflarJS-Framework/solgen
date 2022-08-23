@@ -21,6 +21,8 @@ class InheritsWriter implements IInheritsWriter {
 
     // Writing final text
     const text = helpers.getCommaExpression(texts);
+    if (!text) return "";
+
     return `is ${text}`;
   }
 }
