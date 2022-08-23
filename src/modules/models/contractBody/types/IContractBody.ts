@@ -1,5 +1,4 @@
 import { IEvent } from "@models/event/types/IEvent";
-import { IEventCall } from "@models/eventCall/types/IEventCall";
 import { IFunction } from "@models/function/types/IFunction";
 import { IInput } from "@models/function/types/IInput";
 import { IOutput } from "@models/function/types/IOutput";

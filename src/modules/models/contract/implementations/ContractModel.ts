@@ -7,6 +7,7 @@ import { IFunctionModel } from "@models/function/types/IFunctionModel";
 import { IContractItem } from "../types/IContractItem";
 import { IContractModel } from "../types/IContractModel";
 import { IContractBodyModel } from "@models/contractBody/types/IContractBodyModel";
+import { IOutput } from "@models/function/types/IOutput";
 
 @injectable()
 class ContractModel implements IContractModel {
@@ -34,7 +35,7 @@ class ContractModel implements IContractModel {
     const createConstructor = (
       scope: string,
       inputs?: Array<IInput>,
-      outputs?: Array<string>
+      outputs?: Array<IOutput>
     ): IFunction => {
       const _function = this.functionModel.execute({
         name: "",
