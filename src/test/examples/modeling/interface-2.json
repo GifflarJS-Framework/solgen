@@ -2,7 +2,7 @@
   {
     "interface": {
       "name": "MyInterface",
-      "inherits": [],
+      "inherits": [{ "identifier": "InheritableInterface", "args": ["arg1"] }],
       "events": [
         {
           "statement": "event",

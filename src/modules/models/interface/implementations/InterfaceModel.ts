@@ -3,6 +3,8 @@ import { IFunction } from "@models/function/types/IFunction";
 import { IFunctionModel } from "@models/function/types/IFunctionModel";
 import { IInput } from "@models/function/types/IInput";
 import { IOutput } from "@models/function/types/IOutput";
+import { IInherits } from "@models/inherits/types/IInherits";
+import { IInheritsModel } from "@models/inherits/types/IInheritsModel";
 import { IFunctionStateMutabilityType } from "modules/types/IFunctionStateMutabilityType";
 import { inject, injectable } from "tsyringe";
 import { IInterface } from "../types/IInterface";
@@ -15,6 +17,8 @@ class InterfaceModel implements IInterfaceModel {
   constructor(
     @inject("ContractBodyModel")
     private contractBodyModel: IContractBodyModel,
+    @inject("InheritsModel")
+    private inheritsModel: IInheritsModel,
     @inject("FunctionModel")
     private functionModel: IFunctionModel
   ) {}
@@ -29,7 +33,17 @@ class InterfaceModel implements IInterfaceModel {
     // Creating interface model
     const _interface: IInterfaceItem = {
       name: interfaceName,
+      inherits: [],
       ...interfaceBody,
+    };
+
+    const setInheritance = (
+      identifier: string,
+      args?: Array<string>
+    ): IInherits => {
+      const inherits = this.inheritsModel.execute({ identifier, args });
+      _interface.inherits.push(inherits);
+      return inherits;
     };
 
     const createFunction = (
@@ -61,6 +75,7 @@ class InterfaceModel implements IInterfaceModel {
         interface: _interface,
         code: "",
         json: {},
+        setInheritance,
         createEvent: contractBody.createEvent,
         createFunction,
         toJson,
