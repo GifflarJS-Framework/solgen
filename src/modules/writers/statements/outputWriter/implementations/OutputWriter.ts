@@ -38,7 +38,7 @@ class OutputWriter implements IOutputWriter {
       return text;
     });
 
-    return `returns (${text})`;
+    return `returns(${text})`;
   }
 }
 

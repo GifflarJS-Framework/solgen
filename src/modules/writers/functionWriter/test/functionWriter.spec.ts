@@ -20,8 +20,8 @@ describe("Contract Writer", () => {
     };
 
     const expected =
-      "//FUNCTIONS\nfunction MyFunction() public view returns (uint) {\nuint age = 18;\n}";
-    const result = functionWriter.write([myFunction], []);
+      "//FUNCTIONS\nfunction MyFunction() public view returns(uint){\nuint age = 18;\n}\n\n";
+    const result = functionWriter.write([myFunction]);
 
     expect(result).toMatch(expected);
   });

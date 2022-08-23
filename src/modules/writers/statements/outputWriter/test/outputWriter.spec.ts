@@ -11,7 +11,7 @@ describe("Output Writer", () => {
     ];
 
     const result = outputWriter.write(outputs);
-    const expected = "returns (address output1, uint256 output2)";
+    const expected = "returns(address output1, uint256 output2)";
 
     expect(result).toEqual(expected);
   });
@@ -24,7 +24,7 @@ describe("Output Writer", () => {
     ];
 
     const result = outputWriter.write(outputs);
-    const expected = "returns (address output1, string memory)";
+    const expected = "returns(address output1, string memory)";
 
     expect(result).toEqual(expected);
   });

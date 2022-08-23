@@ -13,3 +13,4 @@ import "./enumWriter";
 import "./contractBodyWriter";
 import "./libraryWriter";
 import "./inheritsWriter";
+import "./interfaceWriter";

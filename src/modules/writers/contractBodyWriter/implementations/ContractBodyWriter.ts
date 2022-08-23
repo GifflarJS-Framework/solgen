@@ -44,10 +44,7 @@ class ContractBodyWriter implements IContractBodyWriter {
     );
 
     // Functions
-    const txt_functions = this.functionWriter.write(
-      bodyItem.functions,
-      bodyItem.variables
-    );
+    const txt_functions = this.functionWriter.write(bodyItem.functions);
 
     const bodyText = `${
       txt_variables +

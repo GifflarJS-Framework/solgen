@@ -53,7 +53,7 @@ contracts.push(newContract);
 counter = counter + 1;
 }
 
-function getLastContract() public returns (DHT11) {
+function getLastContract() public returns(DHT11){
 DHT11 _contract;
 if(counter > 0){
 _contract = contracts[counter - 1];

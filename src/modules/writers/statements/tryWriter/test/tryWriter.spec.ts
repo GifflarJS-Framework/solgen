@@ -17,7 +17,7 @@ describe("TryWriter", () => {
       parameters: [{ type: "uint256", name: "arg" }],
     });
     const result = tryWriter.write(_try);
-    const expected = `try MyContract.add(value) returns (uint256 arg){\n}`;
+    const expected = `try MyContract.add(value) returns(uint256 arg){\n}`;
 
     expect(result).toEqual(expected);
   });
