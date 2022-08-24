@@ -1,5 +1,7 @@
 // const { exec } = require("child_process");
 
+import { ITypeName } from "modules/types/ITypeName";
+
 interface IObjectParameters {
   keys: Array<string>;
   values: Array<any>;
@@ -22,6 +24,15 @@ const helpers = {
 
   isObject: (obj: any): boolean => {
     return typeof obj === "object";
+  },
+
+  writeTypeName: (type: ITypeName): string => {
+    let _type: string | undefined = type.regularType;
+    if (type.customType) _type = type.customType;
+    if (type.array)
+      _type = `${type.array.arrayType}[${type.array.arraySize || ""}]`;
+    if (!_type) throw new Error("Type is not defined");
+    return _type;
   },
 
   getCommaExpression(list: Array<string>): string {

@@ -1,3 +1,8 @@
+import { IArrayType } from "./IArrayType";
 import { IElementaryTypeName } from "./IElementaryTypeName";
 
-export type ITypeName = IElementaryTypeName | "custom";
+export interface ITypeName {
+  regularType?: IElementaryTypeName;
+  array?: IArrayType;
+  customType?: string;
+}

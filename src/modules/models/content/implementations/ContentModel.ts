@@ -16,6 +16,7 @@ import { ITypeName } from "modules/types/ITypeName";
 import { IVariableOptions } from "modules/types/IVariableOptions";
 import { IContinueModel } from "@models/continue/types/IContinueModel";
 import { IReturnModel } from "@models/return/types/IReturnModel";
+import helpers from "@utils/helpers";
 
 interface IIfContent extends IIf, IContent {}
 
@@ -54,12 +55,10 @@ class ContentModel {
     const setVariable = (
       type: ITypeName,
       name: string,
-      value?: string | INewContract,
-      options?: IVariableOptions
+      value?: string | INewContract
     ): IContent => {
       const newVariable = this.variableModel.execute({
-        type:
-          type === "custom" && options?.customType ? options.customType : type,
+        type: helpers.writeTypeName(type),
         name,
         value,
       });
@@ -116,9 +115,7 @@ class ContentModel {
       args: Array<string>
     ): IContent => {
       const newContract = this.newContractModel.execute({ contractName, args });
-      return setVariable("custom", variable, newContract, {
-        customType: contractName,
-      });
+      return setVariable({ customType: contractName }, variable, newContract);
     };
 
     const setContinue = (): IContent => {

@@ -1,7 +1,8 @@
+import { ITypeName } from "modules/types/ITypeName";
 import { IStackItem } from "./IStackItem";
 
 export interface IContent extends IStackItem {
-  setVariable(type: string, name: string, value?: string): IContent;
+  setVariable(type: ITypeName, name: string, value?: string): IContent;
   setMethodCall(variable: string, method: string, value: string): IContent;
   setAssignment(variable: string, expression: string | undefined): IContent;
   setEventCall(name: string, inputNames: Array<string>): IContent;

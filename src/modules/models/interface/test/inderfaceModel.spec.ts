@@ -17,8 +17,8 @@ describe("InterfaceModel", () => {
 
     _interface
       .createFunction("setOwner")
-      .setInput("address", "newOwner")
-      .setOutput("boolean");
+      .setInput({ regularType: "address" }, "newOwner")
+      .setOutput({ regularType: "bool" });
 
     // Expected value
     const expected_model = JSON.stringify(example_interface_1);
@@ -43,8 +43,8 @@ describe("InterfaceModel", () => {
 
     _interface
       .createFunction("setOwner")
-      .setInput("address", "newOwner")
-      .setOutput("boolean");
+      .setInput({ regularType: "address" }, "newOwner")
+      .setOutput({ regularType: "bool" });
 
     // Expected value
     const expected_model = JSON.stringify(example_interface_2);

@@ -5,6 +5,7 @@ import { IInput } from "@models/function/types/IInput";
 import { IOutput } from "@models/function/types/IOutput";
 import { IInherits } from "@models/inherits/types/IInherits";
 import { IStateVariable } from "@models/stateVariable/types/IStateVariable";
+import { ITypeName } from "modules/types/ITypeName";
 import { IVariableOptions } from "modules/types/IVariableOptions";
 import { IContractJson } from "./IContractJson";
 
@@ -16,7 +17,7 @@ export interface IContract extends IContractJson, IContractBody {
   createEvent(name: string, inputs: Array<IInput>): IEvent;
 
   createVariable(
-    type: string,
+    type: ITypeName,
     name: string,
     scope: string,
     value?: string,

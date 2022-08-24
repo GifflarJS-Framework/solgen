@@ -3,6 +3,7 @@
     "contract": {
       "name": "DHT11",
       "inherits": [],
+      "usings": [],
       "variables": [
         {
           "type": "address",
@@ -201,6 +202,7 @@
     "contract": {
       "name": "DHT11Controller",
       "inherits": [],
+      "usings": [],
       "variables": [
         {
           "type": "address[]",

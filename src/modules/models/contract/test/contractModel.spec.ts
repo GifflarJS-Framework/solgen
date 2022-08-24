@@ -40,11 +40,19 @@ describe("Test Contract", () => {
   // MODELING
   it("Modeling DHT11", () => {
     // Creating the variables
-    gContract.createVariable("address", "manager", "public");
-    gContract.createVariable("string", "name", "public");
-    gContract.createVariable("uint256", "value1", "public");
-    gContract.createVariable("uint256", "max_value1", "public");
-    gContract.createVariable("uint256", "min_value1", "public");
+    gContract.createVariable({ regularType: "address" }, "manager", "public");
+    gContract.createVariable({ regularType: "string" }, "name", "public");
+    gContract.createVariable({ regularType: "uint256" }, "value1", "public");
+    gContract.createVariable(
+      { regularType: "uint256" },
+      "max_value1",
+      "public"
+    );
+    gContract.createVariable(
+      { regularType: "uint256" },
+      "min_value1",
+      "public"
+    );
 
     // Creating events
     gContract.createEvent("temperatureOverflow", [
@@ -59,15 +67,15 @@ describe("Test Contract", () => {
     // Creating constructor
     gContract
       .createConstructor("public")
-      .setInput("address", "_owner")
+      .setInput({ regularType: "address" }, "_owner")
       .setAssignment("manager", "_owner")
       .setAssignment("name", '"DHT11"');
 
     // Creating a new function
     gContract
       .createFunction("setValue", "public")
-      .setInput("uint256", "_val")
-      .setInput("uint256", "_valueId")
+      .setInput({ regularType: "uint256" }, "_val")
+      .setInput({ regularType: "uint256" }, "_valueId")
       .beginIf("_valueId == 1")
       .setAssignment("value1", "_val")
       .beginIf("value1 >= max_value1")
@@ -80,7 +88,7 @@ describe("Test Contract", () => {
 
     gContract
       .createFunction("setName", "public")
-      .setInput("string", "_name")
+      .setInput({ regularType: "string" }, "_name")
       .setAssignment("name", "_name");
 
     // Asserting the result

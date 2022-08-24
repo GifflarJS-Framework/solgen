@@ -5,7 +5,10 @@ describe("UsingModel", () => {
   const usingModel = container.resolve<IUsingModel>("UsingModel");
 
   it("Creating Using", () => {
-    const using = usingModel.execute({ identifier: "MyLibrary", type: "uint" });
+    const using = usingModel.execute({
+      identifier: "MyLibrary",
+      type: "uint",
+    });
 
     const expected = {
       identifier: "MyLibrary",

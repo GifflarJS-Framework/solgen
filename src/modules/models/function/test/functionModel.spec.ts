@@ -17,8 +17,8 @@ describe("Function Model", () => {
 
     // Setting up properties
     myFunction
-      .setInput("string", "_message")
-      .setOutput("string")
+      .setInput({ regularType: "string" }, "_message")
+      .setOutput({ regularType: "string" })
       .setAssignment("message", "_message")
       .beginIf("val == 1")
       .setAssignment("message", "_message")
