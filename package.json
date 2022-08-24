@@ -5,7 +5,7 @@
   "main": "bin/index.js",
   "scripts": {
     "build": "rm -r bin && tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./bin",
-    "test": "jest --clear-cache && jest",
+    "test": "jest ./src/modules/models && jest --clear-cache && jest ./src/modules/writers && jest --clear-cache && jest ./src/modules/managing",
     "testunit": "./node_modules/mocha/bin/mocha test/unit/**/*",
     "testfunc": "./node_modules/mocha/bin/mocha test/functional/**/*",
     "docs": "jsdoc -c jsdoc-config.json"
