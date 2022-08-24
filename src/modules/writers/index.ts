@@ -15,3 +15,4 @@ import "./libraryWriter";
 import "./inheritsWriter";
 import "./interfaceWriter";
 import "./usingWriter";
+import "./importWriter";
