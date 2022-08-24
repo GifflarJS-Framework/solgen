@@ -33,3 +33,4 @@ import "./return";
 import "./interface";
 import "./inherits";
 import "./using";
+import "./import";
