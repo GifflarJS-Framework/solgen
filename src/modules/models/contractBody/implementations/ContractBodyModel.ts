@@ -6,6 +6,9 @@ import { IInput } from "@models/function/types/IInput";
 import { IOutput } from "@models/function/types/IOutput";
 import { IStateVariable } from "@models/stateVariable/types/IStateVariable";
 import { IStateVariableModel } from "@models/stateVariable/types/IStateVariableModel";
+import { IUsing } from "@models/using/types/IUsing";
+import { IUsingModel } from "@models/using/types/IUsingModel";
+import helpers from "@utils/helpers";
 import { IFunctionStateMutabilityType } from "modules/types/IFunctionStateMutabilityType";
 import { ITypeName } from "modules/types/ITypeName";
 import { IVariableOptions } from "modules/types/IVariableOptions";
@@ -23,17 +26,29 @@ class ContractBodyModel implements IContractBodyModel {
     @inject("FunctionModel")
     private functionModel: IFunctionModel,
     @inject("EventModel")
-    private eventModel: IEventModel
+    private eventModel: IEventModel,
+    @inject("UsingModel")
+    private usingModel: IUsingModel
   ) {}
 
   execute(): IContractBody {
     const body: IContractBodyItem = {
+      usings: [],
       variables: [],
       mappings: [],
       events: [],
       modifiers: [],
       customErrors: [],
       functions: [],
+    };
+
+    const createUsing = (identifier: string, type: ITypeName): IUsing => {
+      const using = this.usingModel.execute({
+        identifier,
+        type: helpers.writeTypeName(type),
+      });
+      body.usings.push(using);
+      return using;
     };
 
     const createEvent = (name: string, inputs: Array<IInput>): IEvent => {
@@ -46,12 +61,10 @@ class ContractBodyModel implements IContractBodyModel {
       type: ITypeName,
       name: string,
       scope: IVisibility,
-      value?: string,
-      options?: IVariableOptions
+      value?: string
     ): IStateVariable => {
       const variable = this.stateVariableModel.execute({
-        type:
-          type === "custom" && options?.customType ? options.customType : type,
+        type: helpers.writeTypeName(type),
         name,
         scope,
         value,
@@ -84,6 +97,7 @@ class ContractBodyModel implements IContractBodyModel {
     const _assignFunctions = (): IContractBody => {
       const _obj: IContractBody = {
         body,
+        createUsing,
         createEvent,
         createVariable,
         createFunction,

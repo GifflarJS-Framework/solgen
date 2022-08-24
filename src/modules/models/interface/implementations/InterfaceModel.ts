@@ -28,7 +28,7 @@ class InterfaceModel implements IInterfaceModel {
     const contractBody = this.contractBodyModel.execute();
 
     // Removing some unused statements in interfaces
-    const { variables, mappings, ...interfaceBody } = contractBody.body;
+    const { variables, mappings, usings, ...interfaceBody } = contractBody.body;
 
     // Creating interface model
     const _interface: IInterfaceItem = {

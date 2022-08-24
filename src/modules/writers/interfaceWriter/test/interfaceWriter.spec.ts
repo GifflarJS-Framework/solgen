@@ -20,8 +20,8 @@ describe("InterfaceWriter", () => {
 
     _interface
       .createFunction("setOwner")
-      .setInput("address", "newOwner")
-      .setOutput("boolean");
+      .setInput({ regularType: "address" }, "newOwner")
+      .setOutput({ regularType: "bool" });
 
     // Writing
     const result = interfaceWriter.write([_interface]);
@@ -45,8 +45,8 @@ describe("InterfaceWriter", () => {
 
     _interface
       .createFunction("setOwner")
-      .setInput("address", "newOwner")
-      .setOutput("boolean");
+      .setInput({ regularType: "address" }, "newOwner")
+      .setOutput({ regularType: "bool" });
 
     // Writing
     const result = interfaceWriter.write([_interface]);

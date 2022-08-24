@@ -1,9 +1,10 @@
 import { IContent } from "@models/content/types/IContent";
+import { ITypeName } from "modules/types/ITypeName";
 import { IFunctionJson } from "./IFunctionJson";
 
 export interface IFunction extends IFunctionJson, IContent {
   json: () => IFunctionJson;
   toString: () => string;
-  setInput: (type: string, variable: string) => IFunction;
-  setOutput: (type: string, variable?: string) => IFunction;
+  setInput: (type: ITypeName, variable: string) => IFunction;
+  setOutput: (type: ITypeName, variable?: string) => IFunction;
 }

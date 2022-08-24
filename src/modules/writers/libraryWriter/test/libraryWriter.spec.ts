@@ -13,7 +13,11 @@ describe("LibraryWriter", () => {
     const libraryModelInstance = libraryModel.execute("Ownable");
 
     // Creating the variables
-    libraryModelInstance.createVariable("address", "owner", "public");
+    libraryModelInstance.createVariable(
+      { regularType: "address" },
+      "owner",
+      "public"
+    );
 
     // Creating events
     libraryModelInstance.createEvent("transferedOwnership", [
@@ -24,8 +28,8 @@ describe("LibraryWriter", () => {
     // Creating a new function
     libraryModelInstance
       .createFunction("setOwner", "public")
-      .setInput("address", "newOwner")
-      .setVariable("address", "oldOwner", "owner")
+      .setInput({ regularType: "address" }, "newOwner")
+      .setVariable({ regularType: "address" }, "oldOwner", "owner")
       .setAssignment("owner", "newOwner")
       .setEventCall("transferedOwnership", ["oldOwner", "owner"]);
 

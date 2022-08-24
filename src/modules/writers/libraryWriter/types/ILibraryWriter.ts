@@ -1,4 +1,3 @@
-import { ILibrary } from "@models/library/types/ILibrary";
 import { ILibraryJson } from "@models/library/types/ILibraryJson";
 
 export interface ILibraryWriter {

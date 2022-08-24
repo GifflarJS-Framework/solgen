@@ -5,10 +5,12 @@ import { IStateMapping } from "@models/stateMapping/types/IStateMapping";
 import { IStateVariable } from "@models/stateVariable/types/IStateVariable";
 import { IModifier } from "@models/modifier/types/IModifier";
 import { IInherits } from "@models/inherits/types/IInherits";
+import { IUsing } from "@models/using/types/IUsing";
 
 export interface IContractItem {
   name: string;
   inherits: Array<IInherits>;
+  usings: Array<IUsing>;
   variables: Array<IStateVariable>;
   mappings: Array<IStateMapping>;
   events: Array<IEvent>;

@@ -1,4 +1,6 @@
 import { IContentModel } from "@models/content/types/IContentModel";
+import helpers from "@utils/helpers";
+import { ITypeName } from "modules/types/ITypeName";
 import { inject, injectable } from "tsyringe";
 import { ICreateFunctionDTO } from "../types/ICreateFunctionDTO";
 import { IFunction } from "../types/IFunction";
@@ -44,21 +46,21 @@ class FunctionModel implements IFunctionModel {
         return JSON.stringify(this);
       },
 
-      setInput(type: string, variable: string): IFunction {
+      setInput(type: ITypeName, variable: string): IFunction {
         // Creating input
         const newInput: IInput = {
           name: variable,
-          type,
+          type: helpers.writeTypeName(type),
         };
         this.inputs.push(newInput);
 
         return this;
       },
 
-      setOutput(type: string, variable?: string): IFunction {
+      setOutput(type: ITypeName, variable?: string): IFunction {
         // Creating output
         const newOutput: IOutput = {
-          type,
+          type: helpers.writeTypeName(type),
         };
         if (variable) newOutput.name = variable;
         this.outputs.push(newOutput);

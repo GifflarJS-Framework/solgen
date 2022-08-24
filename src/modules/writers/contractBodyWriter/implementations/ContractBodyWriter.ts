@@ -5,6 +5,7 @@ import { IFunctionWriter } from "@writers/functionWriter/types/IFunctionWriter";
 import { IModifierWriter } from "@writers/modifierWriter/types/IModifierWriter";
 import { IStateMappingWriter } from "@writers/stateMappingWriter/types/IStateMappingWriter";
 import { IStateVariableWriter } from "@writers/stateVariableWriter/types/IStateVariableWriter";
+import { IUsingWriter } from "@writers/usingWriter/types/IUsingWriter";
 import { inject, injectable } from "tsyringe";
 import { IContractBodyWriter } from "../types/IContractBodyWriter";
 
@@ -22,10 +23,15 @@ class ContractBodyWriter implements IContractBodyWriter {
     @inject("CustomErrorWriter")
     private customErrorWriter: ICustomErrorWriter,
     @inject("StateMappingWriter")
-    private stateMappingWriter: IStateMappingWriter
+    private stateMappingWriter: IStateMappingWriter,
+    @inject("UsingWriter")
+    private usingWriter: IUsingWriter
   ) {}
 
   write(bodyItem: IContractBodyItem): string {
+    // Usings
+    const txt_using = this.usingWriter.write(bodyItem.usings);
+
     // Variables
     const txt_variables = this.stateVariableWriter.write(bodyItem.variables);
 
@@ -47,6 +53,7 @@ class ContractBodyWriter implements IContractBodyWriter {
     const txt_functions = this.functionWriter.write(bodyItem.functions);
 
     const bodyText = `${
+      txt_using +
       txt_variables +
       txt_mappings +
       txt_events +
