@@ -35,3 +35,4 @@ import "./inherits";
 import "./using";
 import "./import";
 import "./fallback";
+import "./receive";
