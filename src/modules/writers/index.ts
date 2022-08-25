@@ -17,3 +17,4 @@ import "./interfaceWriter";
 import "./usingWriter";
 import "./importWriter";
 import "./fallbackWriter";
+import "./receiveWriter";
