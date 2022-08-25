@@ -1,5 +1,5 @@
-import { IContents } from "@models/content/types/IContents";
-import { IIf } from "@models/if/types/IIf";
+import { IContents } from "@models/definitions/content/types/IContents";
+import { IIf } from "@models/statements/if/types/IIf";
 import { container } from "tsyringe";
 import { IIfWriter } from "../types/IIfWriter";
 

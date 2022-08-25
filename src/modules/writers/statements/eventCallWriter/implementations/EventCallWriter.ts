@@ -1,4 +1,4 @@
-import { IEventCall } from "@models/eventCall/types/IEventCall";
+import { IEventCall } from "@models/statements/eventCall/types/IEventCall";
 import helpers from "@utils/helpers";
 import { IEventCallWriter } from "../types/IEventCallWriter";
 

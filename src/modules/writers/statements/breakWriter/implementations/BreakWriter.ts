@@ -1,4 +1,4 @@
-import { IBreak } from "@models/break/types/IBreak";
+import { IBreak } from "@models/statements/break/types/IBreak";
 import { IBreakWriter } from "../types/IBreakWriter";
 
 class BreakWriter implements IBreakWriter {

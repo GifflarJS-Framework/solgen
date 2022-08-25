@@ -1,5 +1,5 @@
-import { INewContract } from "@models/newcontract/types/INewContract";
-import { ILocalVariable } from "@models/variable/types/ILocalVariable";
+import { INewContract } from "@models/statements/newcontract/types/INewContract";
+import { ILocalVariable } from "@models/statements/variable/types/ILocalVariable";
 import { INewContractWriter } from "@writers/statements/newContractWriter/types/INewContractWriter";
 import { inject, injectable } from "tsyringe";
 import { IVariableStatements } from "../types/IVariableStatements";

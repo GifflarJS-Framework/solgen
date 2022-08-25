@@ -1,4 +1,4 @@
-import { INewContract } from "@models/newcontract/types/INewContract";
+import { INewContract } from "@models/statements/newcontract/types/INewContract";
 import { container } from "tsyringe";
 import { INewContractWriter } from "../types/INewContractWriter";
 

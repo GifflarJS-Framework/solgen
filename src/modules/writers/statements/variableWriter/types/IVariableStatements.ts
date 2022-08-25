@@ -1,4 +1,4 @@
-import { INewContract } from "@models/newcontract/types/INewContract";
+import { INewContract } from "@models/statements/newcontract/types/INewContract";
 
 export interface IVariableStatements {
   newcontract: (json: INewContract) => string;

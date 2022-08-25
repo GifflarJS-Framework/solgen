@@ -1,5 +1,5 @@
-import { ICatch } from "@models/catch/types/ICatch";
-import { IContentWriter } from "@writers/contentWriter/types/IContentWriter";
+import { ICatch } from "@models/statements/catch/types/ICatch";
+import { IContentWriter } from "@writers/definitions/contentWriter/types/IContentWriter";
 import { IInputWriter } from "@writers/statements/inputWriter/types/IInputWriter";
 import { inject, injectable } from "tsyringe";
 import { ICatchWriter } from "../types/ICatchWriter";

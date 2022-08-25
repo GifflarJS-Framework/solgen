@@ -1,4 +1,4 @@
-import { IMappingModel } from "@models/mapping/types/IMappingModel";
+import { IMappingModel } from "@models/statements/mapping/types/IMappingModel";
 import { container } from "tsyringe";
 import { IMappingWriter } from "../types/IMappingWriter";
 

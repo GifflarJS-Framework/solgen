@@ -1,4 +1,4 @@
-import { IAssert } from "@models/assert/types/IAssert";
+import { IAssert } from "@models/statements/assert/types/IAssert";
 import { container } from "tsyringe";
 import { IAssertWriter } from "../types/IAssertWriter";
 

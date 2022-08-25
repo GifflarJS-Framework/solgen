@@ -1,5 +1,5 @@
-import { IIf } from "@models/if/types/IIf";
-import { IContentWriter } from "@writers/contentWriter/types/IContentWriter";
+import { IIf } from "@models/statements/if/types/IIf";
+import { IContentWriter } from "@writers/definitions/contentWriter/types/IContentWriter";
 import { IIfWriter } from "../types/IIfWriter";
 
 class IfWriter implements IIfWriter {

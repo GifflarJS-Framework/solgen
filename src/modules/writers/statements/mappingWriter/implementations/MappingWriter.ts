@@ -1,5 +1,5 @@
-import { IMapping } from "@models/mapping/types/IMapping";
-import { INestedMapping } from "@models/mapping/types/INestedMapping";
+import { IMapping } from "@models/statements/mapping/types/IMapping";
+import { INestedMapping } from "@models/statements/mapping/types/INestedMapping";
 import { IArrayType } from "modules/types/IArrayType";
 import { IMappingWriter } from "../types/IMappingWriter";
 

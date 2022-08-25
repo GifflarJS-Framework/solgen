@@ -1,6 +1,6 @@
 import { IWeb3 } from "@deployer/types/IWeb3";
 import { IGifflarContract } from "@managing/contract/types/IGifflarContract";
-import { IContractJson } from "@models/contract/types/IContractJson";
+import { IContractJson } from "@models/directives/contract/types/IContractJson";
 import { Contract } from "web3-eth-contract";
 import { IManagerDeployDTO } from "./IManagerDeployDTO";
 

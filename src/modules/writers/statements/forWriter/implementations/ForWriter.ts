@@ -1,5 +1,5 @@
-import { IFor } from "@models/for/types/IFor";
-import { IContentWriter } from "@writers/contentWriter/types/IContentWriter";
+import { IFor } from "@models/statements/for/types/IFor";
+import { IContentWriter } from "@writers/definitions/contentWriter/types/IContentWriter";
 import { IAssignmentWriter } from "@writers/statements/assignmentWriter/types/IAssignmentWriter";
 import { IExpressionWriter } from "@writers/statements/expressionWriter/types/IExpressionWriter";
 import { inject, injectable } from "tsyringe";

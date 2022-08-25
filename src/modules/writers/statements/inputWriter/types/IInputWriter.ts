@@ -1,4 +1,4 @@
-import { IInput } from "@models/function/types/IInput";
+import { IInput } from "@models/definitions/function/types/IInput";
 
 export interface IInputWriter {
   write(inputs: Array<IInput>, typeon?: boolean): string;

@@ -1,4 +1,4 @@
-import { ICatchModel } from "@models/catch/types/ICatchModel";
+import { ICatchModel } from "@models/statements/catch/types/ICatchModel";
 import { container } from "tsyringe";
 import { ICatchWriter } from "../types/ICatchWriter";
 

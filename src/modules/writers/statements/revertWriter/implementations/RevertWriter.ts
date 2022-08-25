@@ -1,4 +1,4 @@
-import { IRevert } from "@models/revert/types/IRevert";
+import { IRevert } from "@models/statements/revert/types/IRevert";
 import { IRevertWriter } from "../types/IRevertWriter";
 import helpers from "@utils/helpers";
 

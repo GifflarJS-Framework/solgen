@@ -1,5 +1,5 @@
-import { IDoWhile } from "@models/dowhile/types/IDoWhile";
-import { IContentWriter } from "@writers/contentWriter/types/IContentWriter";
+import { IDoWhile } from "@models/statements/dowhile/types/IDoWhile";
+import { IContentWriter } from "@writers/definitions/contentWriter/types/IContentWriter";
 
 export interface IDoWhileWriter {
   _init(contentWriter: IContentWriter): void;

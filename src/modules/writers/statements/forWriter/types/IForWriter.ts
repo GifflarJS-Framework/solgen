@@ -1,5 +1,5 @@
-import { IFor } from "@models/for/types/IFor";
-import { IContentWriter } from "@writers/contentWriter/types/IContentWriter";
+import { IFor } from "@models/statements/for/types/IFor";
+import { IContentWriter } from "@writers/definitions/contentWriter/types/IContentWriter";
 
 export interface IForWriter {
   _init(contentWriter: IContentWriter): void;

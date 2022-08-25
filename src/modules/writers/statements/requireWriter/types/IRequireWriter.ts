@@ -1,4 +1,4 @@
-import { IRequire } from "@models/require/types/IRequire";
+import { IRequire } from "@models/statements/require/types/IRequire";
 
 export interface IRequireWriter {
   write(require: IRequire): string;

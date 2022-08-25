@@ -1,5 +1,5 @@
-import { IContents } from "@models/content/types/IContents";
-import { IDoWhileModel } from "@models/dowhile/types/IDoWhileModel";
+import { IContents } from "@models/definitions/content/types/IContents";
+import { IDoWhileModel } from "@models/statements/dowhile/types/IDoWhileModel";
 import { container } from "tsyringe";
 import { IDoWhileWriter } from "../types/IDoWhileWriter";
 

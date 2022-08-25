@@ -1,4 +1,4 @@
-import { IMapping } from "@models/mapping/types/IMapping";
+import { IMapping } from "@models/statements/mapping/types/IMapping";
 
 export interface IMappingWriter {
   write(mapping: IMapping): string;

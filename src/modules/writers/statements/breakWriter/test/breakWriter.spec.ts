@@ -1,4 +1,4 @@
-import { IBreakModel } from "@models/break/types/IBreakModel";
+import { IBreakModel } from "@models/statements/break/types/IBreakModel";
 import { container } from "tsyringe";
 import { IBreakWriter } from "../types/IBreakWriter";
 

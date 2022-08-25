@@ -1,4 +1,4 @@
-import { ILocalVariable } from "@models/variable/types/ILocalVariable";
+import { ILocalVariable } from "@models/statements/variable/types/ILocalVariable";
 import { container } from "tsyringe";
 import { IVariableWriter } from "../types/IVariableWriter";
 

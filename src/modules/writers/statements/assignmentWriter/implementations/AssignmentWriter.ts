@@ -1,4 +1,4 @@
-import { IAssignment } from "@models/assignment/types/IAssignment";
+import { IAssignment } from "@models/statements/assignment/types/IAssignment";
 import { IExpressionWriter } from "@writers/statements/expressionWriter/types/IExpressionWriter";
 import { inject, injectable } from "tsyringe";
 import { IAssignmentWriter } from "../types/IAssignmentWriter";

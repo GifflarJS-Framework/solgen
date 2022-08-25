@@ -1,5 +1,5 @@
-import { IWhile } from "@models/while/types/IWhile";
-import { IContentWriter } from "@writers/contentWriter/types/IContentWriter";
+import { IWhile } from "@models/statements/while/types/IWhile";
+import { IContentWriter } from "@writers/definitions/contentWriter/types/IContentWriter";
 import { IWhileWriter } from "../types/IWhileWriter";
 
 class WhileWriter implements IWhileWriter {

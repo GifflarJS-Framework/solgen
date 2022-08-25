@@ -1,8 +1,8 @@
 import { IWeb3 } from "@deployer/types/IWeb3";
 import { IGifflarContract } from "@managing/contract/types/IGifflarContract";
 import { IGifflarContractModel } from "@managing/contract/types/IGifflarContractModel";
-import { IContractJson } from "@models/contract/types/IContractJson";
-import { IContractWriter } from "@writers/contractWriter/types/IContractWriter";
+import { IContractJson } from "@models/directives/contract/types/IContractJson";
+import { IContractWriter } from "@writers/directives/contractWriter/types/IContractWriter";
 import { ICompiler } from "modules/compiler/types/ICompiler";
 import { IDeployer } from "modules/deployer/types/IDeployer";
 import { inject, injectable } from "tsyringe";

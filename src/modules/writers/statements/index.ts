@@ -18,3 +18,4 @@ import "./tryWriter";
 import "./catchWriter";
 import "./variableWriter";
 import "./returnWriter";
+import "./continueWriter";

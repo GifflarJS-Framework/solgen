@@ -1,5 +1,5 @@
-import { IContents } from "@models/content/types/IContents";
-import { IFor } from "@models/for/types/IFor";
+import { IContents } from "@models/definitions/content/types/IContents";
+import { IFor } from "@models/statements/for/types/IFor";
 import { container } from "tsyringe";
 import { IForWriter } from "../types/IForWriter";
 

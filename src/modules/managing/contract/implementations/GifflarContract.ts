@@ -1,14 +1,14 @@
-import { IContractWriter } from "@writers/contractWriter/types/IContractWriter";
+import { IContractWriter } from "@writers/directives/contractWriter/types/IContractWriter";
 import { ICompiler } from "modules/compiler/types/ICompiler";
 import { IDeployer } from "modules/deployer/types/IDeployer";
 import { inject, injectable } from "tsyringe";
 import { IGifflarContract } from "../types/IGifflarContract";
 import { Contract } from "web3-eth-contract";
 import { IContractDeployDTO } from "../types/IContractDeployDTO";
-import { IContractModel } from "@models/contract/types/IContractModel";
+import { IContractModel } from "@models/directives/contract/types/IContractModel";
 import { IGifflarContractModel } from "../types/IGifflarContractModel";
 import { IWeb3 } from "@deployer/types/IWeb3";
-import { IContractJson } from "@models/contract/types/IContractJson";
+import { IContractJson } from "@models/directives/contract/types/IContractJson";
 
 @injectable()
 class GifflarContract implements IGifflarContractModel {

@@ -1,4 +1,4 @@
-import { IReturnModel } from "@models/return/types/IReturnModel";
+import { IReturnModel } from "@models/statements/return/types/IReturnModel";
 import { container } from "tsyringe";
 import { IReturnWriter } from "../types/IReturnWriter";
 

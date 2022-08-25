@@ -1,4 +1,4 @@
-import { IMethodCall } from "@models/methodcall/types/IMethodCall";
+import { IMethodCall } from "@models/statements/methodcall/types/IMethodCall";
 import { IMethodCallWriter } from "../types/IMethodCallWriter";
 
 class MethodCallWriter implements IMethodCallWriter {

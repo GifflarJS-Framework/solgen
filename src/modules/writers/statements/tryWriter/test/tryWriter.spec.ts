@@ -1,4 +1,4 @@
-import { ITryModel } from "@models/try/types/ITryModel";
+import { ITryModel } from "@models/statements/try/types/ITryModel";
 import { container } from "tsyringe";
 import { ITryWriter } from "../types/ITryWriter";
 
