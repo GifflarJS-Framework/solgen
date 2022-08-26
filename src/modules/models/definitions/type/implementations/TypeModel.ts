@@ -5,7 +5,6 @@ import { ITypeModel } from "../types/ITypeModel";
 class TypeModel implements ITypeModel {
   execute({ identifier, type }: ICreateType): IType {
     const _type: IType = {
-      statement: "type",
       identifier,
       type,
     };

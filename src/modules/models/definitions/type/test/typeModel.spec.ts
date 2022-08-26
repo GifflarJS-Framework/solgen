@@ -8,7 +8,6 @@ describe("Type Model", () => {
     const type = typeModel.execute({ identifier: "my_uint", type: "uint" });
 
     const expected = {
-      statement: "type",
       identifier: "my_uint",
       type: "uint",
     };

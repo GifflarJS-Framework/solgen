@@ -21,7 +21,6 @@ class ModifierModel implements IModifierModel {
     const content_json = this.contentModel.execute({ stateVars });
 
     const _modifier: IModifier = {
-      statement: "modifier",
       title,
       args,
       isVirtual,

@@ -14,7 +14,6 @@ class StateVariableModel implements IStateVariableModel {
       throw Error("A constant must have an initial value.");
 
     const stateVariable: IStateVariable = {
-      statement: "state_variable",
       type,
       name,
       scope: scope || "",

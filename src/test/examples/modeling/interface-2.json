@@ -5,7 +5,6 @@
       "inherits": [{ "identifier": "InheritableInterface", "args": ["arg1"] }],
       "events": [
         {
-          "statement": "event",
           "name": "transferedOwnership",
           "inputs": [
             { "name": "oldOwner", "type": "address" },

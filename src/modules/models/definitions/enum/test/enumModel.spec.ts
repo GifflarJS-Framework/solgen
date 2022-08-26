@@ -10,7 +10,6 @@ describe("EnumModel", () => {
       identifiersOptions: ["SMALL", "MEDIUM", "LARGE"],
     });
     const expected = {
-      statement: "enum",
       identifier: "FreshJuiceSize",
       identifiersOptions: ["SMALL", "MEDIUM", "LARGE"],
     };

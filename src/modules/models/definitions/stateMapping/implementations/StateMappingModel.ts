@@ -33,7 +33,6 @@ class StateMappingModel implements IStateMappingModel {
     if (!_typeName) throw new Error("You must define a mapping type name");
 
     const mapping: IStateMapping = {
-      statement: "state_mapping",
       type: _type,
       typeName: _typeName,
       name,

@@ -5,7 +5,6 @@
       "usings": [],
       "variables": [
         {
-          "statement": "state_variable",
           "type": "address",
           "name": "owner",
           "scope": "public"
@@ -14,7 +13,6 @@
       "mappings": [],
       "events": [
         {
-          "statement": "event",
           "name": "transferedOwnership",
           "inputs": [
             { "name": "oldOwner", "type": "address" },

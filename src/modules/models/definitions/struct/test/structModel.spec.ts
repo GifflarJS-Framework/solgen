@@ -19,7 +19,6 @@ describe("Struct Model", () => {
     });
 
     const expected = {
-      statement: "struct",
       identifier: "MyType",
       variables: [{ statement: "variable", type: "string", name: "name" }],
       mappings: [

@@ -5,31 +5,26 @@
     "usings": [],
     "variables": [
       {
-        "statement": "state_variable",
         "type": "address",
         "name": "manager",
         "scope": "public"
       },
       {
-        "statement": "state_variable",
         "type": "string",
         "name": "name",
         "scope": "public"
       },
       {
-        "statement": "state_variable",
         "type": "uint256",
         "name": "value1",
         "scope": "public"
       },
       {
-        "statement": "state_variable",
         "type": "uint256",
         "name": "max_value1",
         "scope": "public"
       },
       {
-        "statement": "state_variable",
         "type": "uint256",
         "name": "min_value1",
         "scope": "public"
@@ -38,7 +33,6 @@
     "mappings": [],
     "events": [
       {
-        "statement": "event",
         "name": "temperatureOverflow",
         "inputs": [
           { "name": "value1", "type": "uint256" },
@@ -46,7 +40,6 @@
         ]
       },
       {
-        "statement": "event",
         "name": "temperatureUnderflow",
         "inputs": [
           { "name": "value1", "type": "uint256" },

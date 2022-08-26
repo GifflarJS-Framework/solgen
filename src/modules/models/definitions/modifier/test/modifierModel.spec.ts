@@ -13,7 +13,6 @@ describe("Modifier Model", () => {
 
     // Expected object
     const expected = JSON.stringify({
-      statement: "modifier",
       title: "MyModifier",
       args: [],
       isVirtual: false,
@@ -35,7 +34,6 @@ describe("Modifier Model", () => {
 
     // Expected object
     const expected = JSON.stringify({
-      statement: "modifier",
       title: "MyModifier",
       args: [{ name: "price", type: "uint" }],
       isVirtual: false,
@@ -63,7 +61,6 @@ describe("Modifier Model", () => {
 
     // Expected object
     const expected = JSON.stringify({
-      statement: "modifier",
       title: "MyModifier",
       args: [{ name: "price", type: "uint" }],
       isVirtual: false,

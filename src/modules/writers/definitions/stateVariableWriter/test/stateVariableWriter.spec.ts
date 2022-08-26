@@ -9,7 +9,6 @@ describe("State Variable Writer", () => {
 
   it("Writing State Variable", () => {
     const variable: IStateVariable = {
-      statement: "state_variable",
       name: "age",
       type: "uint",
       value: "20",
@@ -26,14 +25,12 @@ describe("State Variable Writer", () => {
   it("Writing many variables", () => {
     const variables: IStateVariable[] = [
       {
-        statement: "state_variable",
         name: "age",
         type: "uint",
         value: "20",
         scope: "private",
       },
       {
-        statement: "state_variable",
         name: "name",
         type: "string",
         value: "",
@@ -51,7 +48,6 @@ describe("State Variable Writer", () => {
   it("Writing with state mutability", () => {
     const variables: IStateVariable[] = [
       {
-        statement: "state_variable",
         name: "age",
         type: "uint",
         value: "20",
@@ -59,7 +55,6 @@ describe("State Variable Writer", () => {
         stateMutability: "constant",
       },
       {
-        statement: "state_variable",
         name: "name",
         type: "string",
         scope: "public",

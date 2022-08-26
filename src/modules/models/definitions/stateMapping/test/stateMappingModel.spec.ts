@@ -13,7 +13,6 @@ describe("State Mapping Model", () => {
     });
 
     const expected = {
-      statement: "state_mapping",
       type: "address",
       typeName: "uint256",
       name: "myMapping",
@@ -31,7 +30,6 @@ describe("State Mapping Model", () => {
     });
 
     const expected = {
-      statement: "state_mapping",
       type: "User",
       typeName: "MyContract",
       name: "myMapping",
@@ -49,7 +47,6 @@ describe("State Mapping Model", () => {
     });
 
     const expected = {
-      statement: "state_mapping",
       type: "address",
       typeName: { arrayType: "uint256", arraySize: 5 },
       name: "myMapping",
@@ -66,7 +63,6 @@ describe("State Mapping Model", () => {
     });
 
     const expected = {
-      statement: "state_mapping",
       type: "address",
       typeName: { arrayType: "uint256" },
       name: "myMapping",

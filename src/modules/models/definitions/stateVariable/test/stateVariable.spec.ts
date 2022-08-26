@@ -8,7 +8,6 @@ describe("State Variable Model", () => {
 
   it("Creating", () => {
     const expected: IStateVariable = {
-      statement: "state_variable",
       type: "uint",
       name: "age",
       scope: "private",
@@ -28,7 +27,6 @@ describe("State Variable Model", () => {
 
   it("Creating constant", () => {
     const expected: IStateVariable = {
-      statement: "state_variable",
       type: "uint",
       name: "age",
       scope: "private",
@@ -61,7 +59,6 @@ describe("State Variable Model", () => {
 
   it("Creating immutable", () => {
     const expected: IStateVariable = {
-      statement: "state_variable",
       type: "uint",
       name: "age",
       scope: "private",

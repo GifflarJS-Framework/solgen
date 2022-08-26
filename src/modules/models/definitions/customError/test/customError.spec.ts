@@ -11,7 +11,6 @@ describe("CustomError", () => {
     });
 
     const expected = {
-      statement: "custom_error",
       name: "Unauthorized",
       args: [],
     };
@@ -26,7 +25,6 @@ describe("CustomError", () => {
     });
 
     const expected = {
-      statement: "custom_error",
       name: "Unauthorized",
       args: [{ name: "from", type: "address" }],
     };

@@ -6,7 +6,6 @@ describe("Event Writer", () => {
   it("Writing Event", () => {
     const eventWriter: IEventWriter = container.resolve("EventWriter");
     const event: IEvent = {
-      statement: "event",
       name: "myEvent",
       inputs: [
         {
