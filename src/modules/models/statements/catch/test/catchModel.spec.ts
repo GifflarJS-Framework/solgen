@@ -19,4 +19,18 @@ describe("CatchModel", () => {
 
     expect(JSON.stringify(_catch)).toEqual(JSON.stringify(expected));
   });
+
+  it("Creating Catch Model without identifier", () => {
+    const _catch = catchModel.execute({
+      parameters: [{ type: "bytes", name: "err" }],
+    });
+
+    const expected = {
+      statement: "catch",
+      parameters: [{ type: "bytes", name: "err" }],
+      content: [],
+    };
+
+    expect(JSON.stringify(_catch)).toEqual(JSON.stringify(expected));
+  });
 });

@@ -1,7 +1,10 @@
+import { IDataLocation } from "modules/types/IDataLocation";
 import { ITypeName } from "modules/types/ITypeName";
 import { IStackItem } from "./IStackItem";
 
 export interface IContent extends IStackItem {
+  setAssert(condition: string): IContent;
+  setBreak(): IContent;
   setVariable(type: ITypeName, name: string, value?: string): IContent;
   setMethodCall(variable: string, method: string, value: string): IContent;
   setAssignment(variable: string, expression: string | undefined): IContent;
@@ -19,9 +22,39 @@ export interface IContent extends IStackItem {
    * or else all the conditions made will have any effect.
    *  */
   beginIf(condition: string, onElse?: boolean): IContent;
+  /**
+   * Remember to use the "endElseIf" function when finishing "elseIf" conditions actions,
+   * or else all the conditions made will have any effect.
+   *  */
   beginElseIf(condition: string): IContent;
+  /**
+   * Remember to use the "endElse" function when finishing "else" conditions actions,
+   * or else all the conditions made will have any effect.
+   *  */
   beginElse(): IContent;
+  /**
+   * Remember to use the "endDoWhile" function when finishing "doWhile" conditions actions,
+   * or else all the conditions made will have any effect.
+   *  */
+  beginDoWhile(condition: string): IContent;
+  /**
+   * Remember to use the "endFor" function when finishing "for" conditions actions,
+   * or else all the conditions made will have any effect.
+   *  */
+  beginFor(
+    variable: {
+      type: string;
+      name: string;
+      value: string;
+      dataLocation: IDataLocation;
+    },
+    condition: string,
+    expression: string
+  ): IContent;
+
   endIf(): IContent;
   endElseIf(): IContent;
   endElse(): IContent;
+  endDoWhile(): IContent;
+  endFor(): IContent;
 }

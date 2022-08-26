@@ -3,6 +3,6 @@ import { IInput } from "@models/definitions/function/types/IInput";
 
 export interface ICatch extends IStackItem {
   statement: "catch";
-  identifier: string;
+  identifier?: string;
   parameters: Array<IInput>;
 }

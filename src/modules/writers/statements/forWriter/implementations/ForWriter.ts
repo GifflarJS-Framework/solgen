@@ -1,7 +1,7 @@
 import { IFor } from "@models/statements/for/types/IFor";
 import { IContentWriter } from "@writers/definitions/contentWriter/types/IContentWriter";
-import { IAssignmentWriter } from "@writers/statements/assignmentWriter/types/IAssignmentWriter";
 import { IExpressionWriter } from "@writers/statements/expressionWriter/types/IExpressionWriter";
+import { IVariableWriter } from "@writers/statements/variableWriter/types/IVariableWriter";
 import { inject, injectable } from "tsyringe";
 import { IForWriter } from "../types/IForWriter";
 
@@ -10,8 +10,8 @@ class ForWriter implements IForWriter {
   private contentWriter: IContentWriter;
 
   constructor(
-    @inject("AssignmentWriter")
-    private assignmentWriter: IAssignmentWriter,
+    @inject("VariableWriter")
+    private variableWriter: IVariableWriter,
     @inject("ExpressionWriter")
     private expressionWriter: IExpressionWriter
   ) {}
@@ -23,9 +23,22 @@ class ForWriter implements IForWriter {
   write(json: IFor) {
     if (!this.contentWriter) throw new Error("Content Writer not set.");
 
-    const assigment = this.assignmentWriter.write(json.assignment);
-    const expression = this.expressionWriter.write(json.expression);
-    let text = `for(uint ${assigment};${json.condition};${expression})`;
+    let txt_variable = ``;
+    if (json.variable) {
+      txt_variable = this.variableWriter.write(json.variable);
+    }
+
+    let txt_condition = ``;
+    if (json.condition) {
+      txt_condition = json.condition;
+    }
+
+    let txt_expression = ``;
+    if (json.expression) {
+      txt_expression = this.expressionWriter.write(json.expression);
+    }
+
+    let text = `for(${txt_variable};${txt_condition};${txt_expression})`;
     text += "{\n";
     text += this.contentWriter.write(json.content);
     text += "}\n";

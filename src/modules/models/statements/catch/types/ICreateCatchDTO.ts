@@ -1,6 +1,6 @@
 import { IInput } from "@models/definitions/function/types/IInput";
 
 export interface ICreateCatchDTO {
-  identifier: string;
+  identifier?: string;
   parameters: Array<IInput>;
 }

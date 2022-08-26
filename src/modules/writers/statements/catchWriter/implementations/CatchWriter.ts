@@ -21,7 +21,9 @@ class CatchWriter implements ICatchWriter {
     const contentText = this.contentWriter.write(_catch.content);
 
     // Writing final text
-    const text = `catch ${_catch.identifier}(${parametersText}){\n${contentText}}`;
+    const text = `catch ${
+      _catch.identifier || ""
+    }(${parametersText}){\n${contentText}}`;
 
     return text;
   }

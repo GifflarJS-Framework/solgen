@@ -10,19 +10,17 @@ describe("For Writer", () => {
     },
   };
 
-  it("Writing If", () => {
+  it("Writing For", () => {
     const forWriter: IForWriter = container.resolve("ForWriter");
     forWriter._init(contentWriterMock);
 
     const myfor: IFor = {
       statement: "for",
-      assignment: {
-        statement: "assignment",
-        variable: "i",
-        value: {
-          statement: "expression",
-          value: "0",
-        },
+      variable: {
+        statement: "variable",
+        type: "uint",
+        name: "i",
+        value: "0",
       },
       condition: "i < 100",
       expression: {
@@ -33,6 +31,88 @@ describe("For Writer", () => {
     };
 
     const expected = "for(uint i = 0;i < 100;i++){\nemit myEvent(age);\n}\n";
+    const result = forWriter.write(myfor);
+
+    expect(result).toEqual(expected);
+  });
+
+  it("Writing For without variable", () => {
+    const forWriter: IForWriter = container.resolve("ForWriter");
+    forWriter._init(contentWriterMock);
+
+    const myfor: IFor = {
+      statement: "for",
+      condition: "i < 100",
+      expression: {
+        statement: "expression",
+        value: "i++",
+      },
+      content: [],
+    };
+
+    const expected = "for(;i < 100;i++){\nemit myEvent(age);\n}\n";
+    const result = forWriter.write(myfor);
+
+    expect(result).toEqual(expected);
+  });
+
+  it("Writing For without condition", () => {
+    const forWriter: IForWriter = container.resolve("ForWriter");
+    forWriter._init(contentWriterMock);
+
+    const myfor: IFor = {
+      statement: "for",
+      variable: {
+        statement: "variable",
+        type: "uint",
+        name: "i",
+        value: "0",
+      },
+      expression: {
+        statement: "expression",
+        value: "i++",
+      },
+      content: [],
+    };
+
+    const expected = "for(uint i = 0;;i++){\nemit myEvent(age);\n}\n";
+    const result = forWriter.write(myfor);
+
+    expect(result).toEqual(expected);
+  });
+
+  it("Writing For without expression", () => {
+    const forWriter: IForWriter = container.resolve("ForWriter");
+    forWriter._init(contentWriterMock);
+
+    const myfor: IFor = {
+      statement: "for",
+      variable: {
+        statement: "variable",
+        type: "uint",
+        name: "i",
+        value: "0",
+      },
+      condition: "i < 100",
+      content: [],
+    };
+
+    const expected = "for(uint i = 0;i < 100;){\nemit myEvent(age);\n}\n";
+    const result = forWriter.write(myfor);
+
+    expect(result).toEqual(expected);
+  });
+
+  it("Writing For without any parameter", () => {
+    const forWriter: IForWriter = container.resolve("ForWriter");
+    forWriter._init(contentWriterMock);
+
+    const myfor: IFor = {
+      statement: "for",
+      content: [],
+    };
+
+    const expected = "for(;;){\nemit myEvent(age);\n}\n";
     const result = forWriter.write(myfor);
 
     expect(result).toEqual(expected);

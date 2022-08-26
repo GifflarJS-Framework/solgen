@@ -13,16 +13,32 @@ import { IEventCallModel } from "@models/statements/eventCall/types/IEventCallMo
 import { ICreateContentDTO } from "../types/ICreateContentDTO";
 import { IIf } from "@models/statements/if/types/IIf";
 import { ITypeName } from "modules/types/ITypeName";
-import { IVariableOptions } from "modules/types/IVariableOptions";
 import { IContinueModel } from "@models/statements/continue/types/IContinueModel";
 import { IReturnModel } from "@models/statements/return/types/IReturnModel";
 import helpers from "@utils/helpers";
+import { IAssertModel } from "@models/statements/assert/types/IAssertModel";
+import { IBreakModel } from "@models/statements/break/types/IBreakModel";
+import { ICatchModel } from "@models/statements/catch/types/ICatchModel";
+import { IInput } from "@models/definitions/function/types/IInput";
+import { IDoWhileModel } from "@models/statements/dowhile/types/IDoWhileModel";
+import { IDoWhile } from "@models/statements/dowhile/types/IDoWhile";
+import { IForModel } from "@models/statements/for/types/IForModel";
+import { IDataLocation } from "modules/types/IDataLocation";
+import { IFor } from "@models/statements/for/types/IFor";
 
 interface IIfContent extends IIf, IContent {}
+interface IDoWhileContent extends IDoWhile, IContent {}
+interface IForContent extends IFor, IContent {}
 
 @injectable()
 class ContentModel {
   constructor(
+    @inject("AssertModel")
+    private assertModel: IAssertModel,
+    @inject("BreakModel")
+    private breakModel: IBreakModel,
+    @inject("CatchModel")
+    private catchModel: ICatchModel,
     @inject("AssignmentModel")
     private assignmnetModel: IAssignmentModel,
     @inject("ExpressionModel")
@@ -39,8 +55,12 @@ class ContentModel {
     private eventCallModel: IEventCallModel,
     @inject("ContinueModel")
     private continueModel: IContinueModel,
+    @inject("DoWhileModel")
+    private doWhileModel: IDoWhileModel,
     @inject("ReturnModel")
-    private returnModel: IReturnModel
+    private returnModel: IReturnModel,
+    @inject("ForModel")
+    private forModel: IForModel
   ) {}
 
   execute({ stateVars = [] }: ICreateContentDTO): IContent {
@@ -51,6 +71,30 @@ class ContentModel {
       },
     ];
     let top = 0;
+
+    const setAssert = (condition: string): IContent => {
+      const _assert = this.assertModel.execute({ condition });
+      stack[top].content.push(_assert);
+      const contentItem: IContent = _assignFunctions(stack[top]);
+      return contentItem;
+    };
+
+    const setBreak = (): IContent => {
+      const _break = this.breakModel.execute();
+      stack[top].content.push(_break);
+      const contentItem: IContent = _assignFunctions(stack[top]);
+      return contentItem;
+    };
+
+    const setCatch = (
+      parameters: Array<IInput>,
+      identifier?: string
+    ): IContent => {
+      const _catch = this.catchModel.execute({ identifier, parameters });
+      stack[top].content.push(_catch);
+      const contentItem: IContent = _assignFunctions(stack[top]);
+      return contentItem;
+    };
 
     const setVariable = (
       type: ITypeName,
@@ -132,6 +176,40 @@ class ContentModel {
       return contentItem;
     };
 
+    // Decision and loop structures
+
+    const beginFor = (
+      variable: {
+        type: string;
+        name: string;
+        value: string;
+        dataLocation: IDataLocation;
+      },
+      condition: string,
+      expression: string
+    ): IContent => {
+      const newFor = this.forModel.execute({
+        variable: {
+          statement: "variable",
+          ...variable,
+        },
+        condition,
+        expression: { statement: "expression", value: expression },
+      });
+      const newForContent: IForContent = _assignFunctions(newFor);
+      stack.push(newForContent);
+      top += 1;
+      return newForContent;
+    };
+
+    const beginDoWhile = (condition: string): IContent => {
+      const newDoWhile = this.doWhileModel.execute({ condition });
+      const newDoWhileContent: IDoWhileContent = _assignFunctions(newDoWhile);
+      stack.push(newDoWhileContent);
+      top += 1;
+      return newDoWhileContent;
+    };
+
     const beginIf = (condition: string, onElse?: boolean): IContent => {
       const newIf = this.ifModel.execute({ condition, onElse });
       const newIfContent: IIfContent = _assignFunctions(newIf);
@@ -151,7 +229,7 @@ class ContentModel {
       return beginIf("", true);
     };
 
-    const endIf = (): IContent => {
+    const _endDecisionStructure = (): IContent => {
       if (stack.length > 1) {
         const json = stack.pop();
         top -= 1;
@@ -163,15 +241,23 @@ class ContentModel {
       return contentItem;
     };
 
+    const [endIf, endElse, endElseIf, endDoWhile, endFor] = Array<
+      () => IContent
+    >(5).fill(_endDecisionStructure);
+
     const _assignFunctions = <T>(obj: any): T => {
       const _obj = {
         ...obj,
         beginIf,
         beginElse,
         beginElseIf,
+        beginDoWhile,
+        beginFor,
         endIf,
-        endElseIf: endIf,
-        endElse: endIf,
+        endElseIf,
+        endElse,
+        endDoWhile,
+        endFor,
         setEventCall,
         setAssignment,
         setVariable,
@@ -179,6 +265,9 @@ class ContentModel {
         setContractVariable,
         setContinue,
         setReturn,
+        setAssert,
+        setBreak,
+        setCatch,
       };
 
       return _obj;
