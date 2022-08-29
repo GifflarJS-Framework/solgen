@@ -9,6 +9,7 @@ import { ITypeName } from "modules/types/ITypeName";
 import { IVariableOptions } from "modules/types/IVariableOptions";
 import { IContractJson } from "./IContractJson";
 import { IFallback } from "@models/definitions/fallback/types/IFallback";
+import { IReceive } from "@models/definitions/receive/types/IReceive";
 
 export interface IContract extends IContractJson, IContractBody {
   toJson(): IContractJson;
@@ -39,6 +40,8 @@ export interface IContract extends IContractJson, IContractBody {
   ): IFunction;
 
   createFallback(isPayable?: boolean): IFallback;
+
+  createReceive(): IReceive;
 
   toString(): string;
 }

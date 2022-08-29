@@ -12,6 +12,8 @@ import { IInheritsModel } from "@models/toplevels/inherits/types/IInheritsModel"
 import { IInherits } from "@models/toplevels/inherits/types/IInherits";
 import { IFallbackModel } from "@models/definitions/fallback/types/IFallbackModel";
 import { IFallback } from "@models/definitions/fallback/types/IFallback";
+import { IReceiveModel } from "@models/definitions/receive/types/IReceiveModel";
+import { IReceive } from "@models/definitions/receive/types/IReceive";
 
 @injectable()
 class ContractModel implements IContractModel {
@@ -23,7 +25,9 @@ class ContractModel implements IContractModel {
     @inject("ContractBodyModel")
     private contractBodyModel: IContractBodyModel,
     @inject("FallbackModel")
-    private fallbackModel: IFallbackModel
+    private fallbackModel: IFallbackModel,
+    @inject("ReceiveModel")
+    private receiveModel: IReceiveModel
   ) {}
 
   execute(contractName: string): IContract {
@@ -60,6 +64,14 @@ class ContractModel implements IContractModel {
       return fallback;
     };
 
+    const createReceive = (): IReceive => {
+      const receive = this.receiveModel.execute({
+        stateVars: contract.variables || [],
+      });
+      contract.receive = receive;
+      return receive;
+    };
+
     const createConstructor = (
       scope: string,
       inputs?: Array<IInput>,
@@ -90,6 +102,7 @@ class ContractModel implements IContractModel {
         createConstructor,
         setInheritance,
         createFallback,
+        createReceive,
         toString: (): string => {
           return JSON.stringify({ contract: _obj.contract });
         },
