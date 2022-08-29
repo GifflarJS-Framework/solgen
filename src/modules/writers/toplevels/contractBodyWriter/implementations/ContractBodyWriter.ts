@@ -1,5 +1,6 @@
 import { IContractBodyItem } from "@models/toplevels/contractBody/types/IContractBodyItem";
 import { ICustomErrorWriter } from "@writers/definitions/customErrorWriter/types/ICustomErrorWriter";
+import { IEnumWriter } from "@writers/definitions/enumWriter/types/IEnumWriter";
 import { IEventWriter } from "@writers/definitions/eventWriter/types/IEventWriter";
 import { IFunctionWriter } from "@writers/definitions/functionWriter/types/IFunctionWriter";
 import { IModifierWriter } from "@writers/definitions/modifierWriter/types/IModifierWriter";
@@ -25,35 +26,43 @@ class ContractBodyWriter implements IContractBodyWriter {
     @inject("StateMappingWriter")
     private stateMappingWriter: IStateMappingWriter,
     @inject("UsingWriter")
-    private usingWriter: IUsingWriter
+    private usingWriter: IUsingWriter,
+    @inject("EnumWriter")
+    private enumWriter: IEnumWriter
   ) {}
 
   write(bodyItem: IContractBodyItem): string {
     // Usings
-    const txt_using = this.usingWriter.write(bodyItem.usings);
+    const txt_using = this.usingWriter.write(bodyItem.usings || []);
+
+    // Enums
+    const txt_enums = this.enumWriter.write(bodyItem.enums || []);
 
     // Variables
-    const txt_variables = this.stateVariableWriter.write(bodyItem.variables);
+    const txt_variables = this.stateVariableWriter.write(
+      bodyItem.variables || []
+    );
 
     // Mappings
-    const txt_mappings = this.stateMappingWriter.write(bodyItem.mappings);
+    const txt_mappings = this.stateMappingWriter.write(bodyItem.mappings || []);
 
     // Events
-    const txt_events = this.eventWriter.write(bodyItem.events);
+    const txt_events = this.eventWriter.write(bodyItem.events || []);
 
     // Modifiers
-    const txt_modifiers = this.modifierWriter.write(bodyItem.modifiers);
+    const txt_modifiers = this.modifierWriter.write(bodyItem.modifiers || []);
 
     // Custom Errors
     const txt_custom_errors = this.customErrorWriter.write(
-      bodyItem.customErrors
+      bodyItem.customErrors || []
     );
 
     // Functions
-    const txt_functions = this.functionWriter.write(bodyItem.functions);
+    const txt_functions = this.functionWriter.write(bodyItem.functions || []);
 
     const bodyText = `${
       txt_using +
+      txt_enums +
       txt_variables +
       txt_mappings +
       txt_events +

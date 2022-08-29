@@ -1,5 +1,7 @@
 import { ICustomError } from "@models/definitions/customError/types/ICustomError";
 import { ICustomErrorModel } from "@models/definitions/customError/types/ICustomErrorModel";
+import { IEnum } from "@models/definitions/enum/types/IEnum";
+import { IEnumModel } from "@models/definitions/enum/types/IEnumModel";
 import { IEvent } from "@models/definitions/event/types/IEvent";
 import IEventModel from "@models/definitions/event/types/IEventModel";
 import { IFunction } from "@models/definitions/function/types/IFunction";
@@ -41,7 +43,9 @@ class ContractBodyModel implements IContractBodyModel {
     @inject("CustomErrorModel")
     private customErrorModel: ICustomErrorModel,
     @inject("StateMappingModel")
-    private stateMappingModel: IStateMappingModel
+    private stateMappingModel: IStateMappingModel,
+    @inject("EnumModel")
+    private enumModel: IEnumModel
   ) {}
 
   execute(): IContractBody {
@@ -60,14 +64,26 @@ class ContractBodyModel implements IContractBodyModel {
         identifier,
         type: helpers.writeTypeName(type),
       });
+      if (!body.usings) body.usings = [];
       body.usings.push(using);
       return using;
     };
 
     const createEvent = (name: string, inputs: Array<IInput>): IEvent => {
       const event = this.eventModel.execute({ name, inputs });
+      if (!body.events) body.events = [];
       body.events.push(event);
       return event;
+    };
+
+    const createEnum = (
+      identifier: string,
+      identifiersOptions: string[]
+    ): IEnum => {
+      const _enum = this.enumModel.execute({ identifier, identifiersOptions });
+      if (!body.enums) body.enums = [];
+      body.enums.push(_enum);
+      return _enum;
     };
 
     const createMapping = (
@@ -82,6 +98,7 @@ class ContractBodyModel implements IContractBodyModel {
         name,
         scope,
       });
+      if (!body.mappings) body.mappings = [];
       body.mappings.push(mapping);
       return mapping;
     };
@@ -91,6 +108,7 @@ class ContractBodyModel implements IContractBodyModel {
       args: Array<IInput>
     ): ICustomError => {
       const customError = this.customErrorModel.execute({ name, args });
+      if (!body.customErrors) body.customErrors = [];
       body.customErrors.push(customError);
       return customError;
     };
@@ -107,6 +125,7 @@ class ContractBodyModel implements IContractBodyModel {
         isVirtual: options.isVirtual,
         stateVars: body.variables,
       });
+      if (!body.modifiers) body.modifiers = [];
       body.modifiers.push(modifier);
       return modifier;
     };
@@ -123,6 +142,7 @@ class ContractBodyModel implements IContractBodyModel {
         scope,
         value,
       });
+      if (!body.variables) body.variables = [];
       body.variables.push(variable);
       return variable;
     };
@@ -143,6 +163,7 @@ class ContractBodyModel implements IContractBodyModel {
         stateVars: body.variables,
         stateMutability,
       });
+      if (!body.functions) body.functions = [];
       body.functions.push(_function);
 
       return _function;
@@ -158,6 +179,7 @@ class ContractBodyModel implements IContractBodyModel {
         createModifier,
         createCustomError,
         createMapping,
+        createEnum,
       };
 
       return _obj;

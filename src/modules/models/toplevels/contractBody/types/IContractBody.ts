@@ -1,4 +1,5 @@
 import { ICustomError } from "@models/definitions/customError/types/ICustomError";
+import { IEnum } from "@models/definitions/enum/types/IEnum";
 import { IEvent } from "@models/definitions/event/types/IEvent";
 import { IFunction } from "@models/definitions/function/types/IFunction";
 import { IInput } from "@models/definitions/function/types/IInput";
@@ -27,6 +28,8 @@ export interface IContractBody {
   ): IModifier;
 
   createCustomError(name: string, args: Array<IInput>): ICustomError;
+
+  createEnum(identifier: string, identifiersOptions: string[]): IEnum;
 
   createMapping(
     type: IMappingKeyType,
