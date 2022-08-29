@@ -11,7 +11,7 @@ import { IWeb3 } from "@deployer/types/IWeb3";
 import { IContractJson } from "@models/directives/contract/types/IContractJson";
 
 @injectable()
-class GifflarContract implements IGifflarContractModel {
+class GifflarContractModel implements IGifflarContractModel {
   constructor(
     @inject("Compiler")
     private compiler: ICompiler,
@@ -105,4 +105,4 @@ class GifflarContract implements IGifflarContractModel {
   }
 }
 
-export default GifflarContract;
+export default GifflarContractModel;
