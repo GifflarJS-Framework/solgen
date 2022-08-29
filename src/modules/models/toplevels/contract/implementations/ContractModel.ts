@@ -10,6 +10,8 @@ import { IContractBodyModel } from "@models/toplevels/contractBody/types/IContra
 import { IOutput } from "@models/definitions/function/types/IOutput";
 import { IInheritsModel } from "@models/toplevels/inherits/types/IInheritsModel";
 import { IInherits } from "@models/toplevels/inherits/types/IInherits";
+import { IFallbackModel } from "@models/definitions/fallback/types/IFallbackModel";
+import { IFallback } from "@models/definitions/fallback/types/IFallback";
 
 @injectable()
 class ContractModel implements IContractModel {
@@ -19,7 +21,9 @@ class ContractModel implements IContractModel {
     @inject("InheritsModel")
     private inheritsModel: IInheritsModel,
     @inject("ContractBodyModel")
-    private contractBodyModel: IContractBodyModel
+    private contractBodyModel: IContractBodyModel,
+    @inject("FallbackModel")
+    private fallbackModel: IFallbackModel
   ) {}
 
   execute(contractName: string): IContract {
@@ -42,8 +46,18 @@ class ContractModel implements IContractModel {
       args?: Array<string>
     ): IInherits => {
       const inherits = this.inheritsModel.execute({ identifier, args });
+      if (!contract.inherits) contract.inherits = [];
       contract.inherits.push(inherits);
       return inherits;
+    };
+
+    const createFallback = (isPayable?: boolean): IFallback => {
+      const fallback = this.fallbackModel.execute({
+        isPayable,
+        stateVars: contract.variables || [],
+      });
+      contract.fallback = fallback;
+      return fallback;
     };
 
     const createConstructor = (
@@ -59,6 +73,7 @@ class ContractModel implements IContractModel {
         outputs,
         stateVars: contract.variables,
       });
+      if (!contract.functions) contract.functions = [];
       contract.functions.push(_function);
 
       return _function;
@@ -74,6 +89,7 @@ class ContractModel implements IContractModel {
         ...contractBody,
         createConstructor,
         setInheritance,
+        createFallback,
         toString: (): string => {
           return JSON.stringify({ contract: _obj.contract });
         },
