@@ -115,7 +115,7 @@ describe("Contract Manager Writer", () => {
       .endIf()
       .setReturn(["_contract"]);
 
-    const resultJson = gContractManager.contracts.map((contract) => {
+    const resultJson = gContractManager.getAllDirectives().map((contract) => {
       return JSON.parse(contract.toString());
     });
     const result = gContractManager.writeAll();

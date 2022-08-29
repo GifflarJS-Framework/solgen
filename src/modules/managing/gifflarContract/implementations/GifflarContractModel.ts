@@ -9,10 +9,19 @@ import { IContractModel } from "@models/directives/contract/types/IContractModel
 import { IGifflarContractModel } from "../types/IGifflarContractModel";
 import { IWeb3 } from "@deployer/types/IWeb3";
 import { IContractJson } from "@models/directives/contract/types/IContractJson";
+import { IImportModel } from "@models/directives/import/types/IImportModel";
+import { IImportWriter } from "@writers/directives/importWriter/types/IImportWriter";
+import { IImport } from "@models/directives/import/types/IImport";
 
 @injectable()
 class GifflarContractModel implements IGifflarContractModel {
+  private imports: Array<IImport> = [];
+
   constructor(
+    @inject("ImportModel")
+    private importModel: IImportModel,
+    @inject("ImportWriter")
+    private importWriter: IImportWriter,
     @inject("Compiler")
     private compiler: ICompiler,
     @inject("ContractWriter")
@@ -32,9 +41,26 @@ class GifflarContractModel implements IGifflarContractModel {
         gContract.contract.name = newName;
       },
 
+      getName: (): string => {
+        return gContract.contract.name;
+      },
+
+      setImport: (identifierPath: string, alias?: string): IImport => {
+        const newImport: IImport = this.importModel.execute({
+          identifierPath,
+          alias,
+        });
+        this.imports.push(newImport);
+
+        return newImport;
+      },
+
       write: (contracts?: Array<IContractJson>): string => {
         const _contracts = contracts || [gContract];
-        gContract.code = this.contractWriter.write(_contracts, () => {
+        // Writing imports
+        gContract.code = this.importWriter.write(this.imports);
+        // Writing contract
+        gContract.code += this.contractWriter.write(_contracts, () => {
           return "";
         });
         return gContract.code;

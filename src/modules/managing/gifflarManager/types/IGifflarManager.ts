@@ -1,17 +1,20 @@
 import { IWeb3 } from "@deployer/types/IWeb3";
 import { IGifflarContract } from "@managing/gifflarContract/types/IGifflarContract";
-import { IContractJson } from "@models/directives/contract/types/IContractJson";
+import { IImport } from "@models/directives/import/types/IImport";
 import { Contract } from "web3-eth-contract";
+import { IDirective } from "./IDirective";
 import { IManagerDeployDTO } from "./IManagerDeployDTO";
 
 export interface IGifflarManager {
-  contracts: Array<IGifflarContract>;
-  code: string;
-  json: any;
+  getCode(): string;
+  getCompiledJson(): any;
+  newImport(identifierPath: string, alias?: string): IImport;
   newContract(name: string): IGifflarContract;
   getContract(name: string): IGifflarContract;
+  getImports(): Array<IImport>;
+  getAllDirectives(): Array<IDirective>;
   writeAll(): string;
-  write(contracts: Array<IContractJson>): string;
+  write(directives: Array<IDirective>): string;
   written(): string | undefined;
   compileAll(callback: (errors: Array<any>) => void): any;
   compile(contractName: string, callback: (errors: Array<any>) => void): void;

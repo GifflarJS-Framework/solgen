@@ -1,11 +1,14 @@
 import { IWeb3 } from "@deployer/types/IWeb3";
 import { IContract } from "@models/directives/contract/types/IContract";
 import { IContractJson } from "@models/directives/contract/types/IContractJson";
+import { IImport } from "@models/directives/import/types/IImport";
 import { Contract } from "web3-eth-contract";
 import { IContractDeployDTO } from "./IContractDeployDTO";
 
 export interface IGifflarContract extends IContract {
   setName(newName: string): void;
+  getName(): string;
+  setImport(identifierPath: string, alias?: string): IImport;
   write(contracts?: Array<IContractJson>): string;
   compile(callback: (errors: any) => void): any;
   deploy(
