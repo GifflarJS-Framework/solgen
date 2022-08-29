@@ -5,6 +5,7 @@
       "inherits": [
         { "identifier": "InheritableInterface", "args": ["'0x0c'"] }
       ],
+      "structs": [],
       "events": [
         {
           "name": "transferedOwnership",

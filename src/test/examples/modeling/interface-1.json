@@ -3,6 +3,7 @@
     "interface": {
       "name": "MyInterface",
       "inherits": [],
+      "structs": [],
       "events": [
         {
           "name": "transferedOwnership",

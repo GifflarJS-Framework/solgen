@@ -32,7 +32,7 @@ class ContractWriter implements IContractWriter {
       const txt_start = `contract ${json.contract.name}`;
 
       // Writing inheritance
-      let txt_inherts = this.inheritsWriter.write(json.contract.inherits);
+      let txt_inherts = this.inheritsWriter.write(json.contract.inherits || []);
       if (txt_inherts) txt_inherts = ` ${txt_inherts}`;
       const txt_openBraces = `{\n`;
 

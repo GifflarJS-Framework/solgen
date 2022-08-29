@@ -3,6 +3,7 @@
     "name": "MyContract",
     "inherits": [],
     "usings": [],
+    "structs": [],
     "variables": [
       {
         "type": "string",

@@ -4,6 +4,7 @@
       "name": "DHT11",
       "inherits": [],
       "usings": [],
+      "structs": [],
       "variables": [
         {
           "type": "address",
@@ -203,6 +204,7 @@
       "name": "DHT11Controller",
       "inherits": [],
       "usings": [],
+      "structs": [],
       "variables": [
         {
           "type": "address[]",
