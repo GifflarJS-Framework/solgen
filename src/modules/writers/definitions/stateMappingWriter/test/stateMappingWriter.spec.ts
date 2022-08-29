@@ -11,8 +11,8 @@ describe("State MappingWriter", () => {
   it("Writing mapping to simple type", () => {
     const mapping = mappingModel.execute({
       name: "myMapping",
-      type: "address",
-      typeName: "uint256",
+      type: { regularType: "address" },
+      typeName: { regularType: "uint256" },
       scope: "public",
     });
 
@@ -25,8 +25,8 @@ describe("State MappingWriter", () => {
   it("Writing mapping to dynamic array", () => {
     const mapping = mappingModel.execute({
       name: "myMapping",
-      customType: "User",
-      typeName: { arrayType: "address" },
+      type: { customType: "User" },
+      typeName: { array: { arrayType: "address" } },
       scope: "private",
     });
 
@@ -39,8 +39,8 @@ describe("State MappingWriter", () => {
   it("Writing mapping to fixed array", () => {
     const mapping = mappingModel.execute({
       name: "myMapping",
-      customType: "User",
-      typeName: { arrayType: "address", arraySize: 5 },
+      type: { customType: "User" },
+      typeName: { array: { arrayType: "address", arraySize: 5 } },
       scope: "private",
     });
 
@@ -53,11 +53,12 @@ describe("State MappingWriter", () => {
   it("Writing mapping to mapping", () => {
     const mapping = mappingModel.execute({
       name: "myMapping",
-      customType: "address",
+      type: { regularType: "address" },
       typeName: {
-        statement: "nested_mapping",
-        type: "uint256",
-        typeName: "uint256",
+        nestedMapping: {
+          type: { regularType: "uint256" },
+          typeName: { regularType: "uint256" },
+        },
       },
       scope: "private",
     });
@@ -71,14 +72,16 @@ describe("State MappingWriter", () => {
   it("Writing mapping to mapping 2x", () => {
     const mapping = mappingModel.execute({
       name: "myMapping",
-      customType: "address",
+      type: { regularType: "address" },
       typeName: {
-        statement: "nested_mapping",
-        type: "uint256",
-        typeName: {
-          statement: "nested_mapping",
-          type: "address",
-          typeName: { arrayType: "uint256" },
+        nestedMapping: {
+          type: { regularType: "uint256" },
+          typeName: {
+            nestedMapping: {
+              type: { regularType: "address" },
+              typeName: { array: { arrayType: "uint256" } },
+            },
+          },
         },
       },
       scope: "private",
@@ -86,8 +89,8 @@ describe("State MappingWriter", () => {
 
     const mapping2 = mappingModel.execute({
       name: "myMapping",
-      type: "address",
-      typeName: "uint256",
+      type: { regularType: "address" },
+      typeName: { regularType: "uint256" },
       scope: "public",
     });
 

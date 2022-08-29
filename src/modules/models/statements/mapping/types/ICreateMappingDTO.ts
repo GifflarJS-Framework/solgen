@@ -1,11 +1,8 @@
-import { IArrayType } from "modules/types/IArrayType";
-import { IElementaryTypeName } from "modules/types/IElementaryTypeName";
-import { INestedMapping } from "./INestedMapping";
+import { IMappingKeyType } from "modules/types/IMappingKeyType";
+import { IMappingTypeName } from "modules/types/IMappingTypeName";
 
 export interface ICreateMappingDTO {
-  type?: IElementaryTypeName | IArrayType;
-  customType?: string;
-  typeName?: IElementaryTypeName | INestedMapping | IArrayType;
-  customTypeName?: string;
+  type: IMappingKeyType;
+  typeName: IMappingTypeName;
   name: string;
 }

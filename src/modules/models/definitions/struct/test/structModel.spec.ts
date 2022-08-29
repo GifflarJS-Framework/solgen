@@ -11,8 +11,8 @@ describe("Struct Model", () => {
       mappings: [
         {
           statement: "mapping",
-          type: "address",
-          typeName: "uint256",
+          type: { regularType: "address" },
+          typeName: { regularType: "uint256" },
           name: "balances",
         },
       ],
@@ -24,8 +24,8 @@ describe("Struct Model", () => {
       mappings: [
         {
           statement: "mapping",
-          type: "address",
-          typeName: "uint256",
+          type: { regularType: "address" },
+          typeName: { regularType: "uint256" },
           name: "balances",
         },
       ],
