@@ -1,9 +1,13 @@
+import { ICustomError } from "@models/definitions/customError/types/ICustomError";
+import { ICustomErrorModel } from "@models/definitions/customError/types/ICustomErrorModel";
 import { IEvent } from "@models/definitions/event/types/IEvent";
 import IEventModel from "@models/definitions/event/types/IEventModel";
 import { IFunction } from "@models/definitions/function/types/IFunction";
 import { IFunctionModel } from "@models/definitions/function/types/IFunctionModel";
 import { IInput } from "@models/definitions/function/types/IInput";
 import { IOutput } from "@models/definitions/function/types/IOutput";
+import { IModifier } from "@models/definitions/modifier/types/IModifier";
+import { IModifierModel } from "@models/definitions/modifier/types/IModifierModel";
 import { IStateVariable } from "@models/definitions/stateVariable/types/IStateVariable";
 import { IStateVariableModel } from "@models/definitions/stateVariable/types/IStateVariableModel";
 import { IUsing } from "@models/definitions/using/types/IUsing";
@@ -28,7 +32,11 @@ class ContractBodyModel implements IContractBodyModel {
     @inject("EventModel")
     private eventModel: IEventModel,
     @inject("UsingModel")
-    private usingModel: IUsingModel
+    private usingModel: IUsingModel,
+    @inject("ModifierModel")
+    private modifierModel: IModifierModel,
+    @inject("CustomErrorModel")
+    private customErrorModel: ICustomErrorModel
   ) {}
 
   execute(): IContractBody {
@@ -55,6 +63,31 @@ class ContractBodyModel implements IContractBodyModel {
       const event = this.eventModel.execute({ name, inputs });
       body.events.push(event);
       return event;
+    };
+
+    const createCustomError = (
+      name: string,
+      args: Array<IInput>
+    ): ICustomError => {
+      const customError = this.customErrorModel.execute({ name, args });
+      body.customErrors.push(customError);
+      return customError;
+    };
+
+    const createModifier = (
+      title: string,
+      args: Array<IInput>,
+      options: { isOverriding?: boolean; isVirtual?: boolean }
+    ): IModifier => {
+      const modifier = this.modifierModel.execute({
+        title,
+        args,
+        isOverriding: options.isOverriding,
+        isVirtual: options.isVirtual,
+        stateVars: body.variables,
+      });
+      body.modifiers.push(modifier);
+      return modifier;
     };
 
     const createVariable = (
@@ -101,6 +134,8 @@ class ContractBodyModel implements IContractBodyModel {
         createEvent,
         createVariable,
         createFunction,
+        createModifier,
+        createCustomError,
       };
 
       return _obj;
