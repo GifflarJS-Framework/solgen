@@ -1,8 +1,8 @@
 import { IWeb3 } from "@deployer/types/IWeb3";
 import { IGifflarContract } from "@managing/gifflarContract/types/IGifflarContract";
-import { IImport } from "@models/directives/import/types/IImport";
+import { IImport } from "@models/toplevels/import/types/IImport";
 import { Contract } from "web3-eth-contract";
-import { IDirective } from "./IDirective";
+import { ITopLevel } from "./ITopLevel";
 import { IManagerDeployDTO } from "./IManagerDeployDTO";
 
 export interface IGifflarManager {
@@ -12,9 +12,9 @@ export interface IGifflarManager {
   newContract(name: string): IGifflarContract;
   getContract(name: string): IGifflarContract;
   getImports(): Array<IImport>;
-  getAllDirectives(): Array<IDirective>;
+  getAllModels(): Array<ITopLevel>;
   writeAll(): string;
-  write(directives: Array<IDirective>): string;
+  write(topLevelModels: Array<ITopLevel>): string;
   written(): string | undefined;
   compileAll(callback: (errors: Array<any>) => void): any;
   compile(contractName: string, callback: (errors: Array<any>) => void): void;

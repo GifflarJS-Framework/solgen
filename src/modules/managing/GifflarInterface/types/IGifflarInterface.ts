@@ -1,6 +1,6 @@
-import { IImport } from "@models/directives/import/types/IImport";
-import { IInterface } from "@models/directives/interface/types/IInterface";
-import { IInterfaceJson } from "@models/directives/interface/types/IInterfaceJson";
+import { IImport } from "@models/toplevels/import/types/IImport";
+import { IInterface } from "@models/toplevels/interface/types/IInterface";
+import { IInterfaceJson } from "@models/toplevels/interface/types/IInterfaceJson";
 
 export interface IGifflarInterface extends IInterface {
   setName(newName: string): void;

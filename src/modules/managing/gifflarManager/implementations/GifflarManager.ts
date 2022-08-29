@@ -5,21 +5,21 @@ import { IGifflarInterface } from "@managing/GifflarInterface/types/IGifflarInte
 import { IGifflarInterfaceModel } from "@managing/GifflarInterface/types/IGifflarInterfaceModel";
 import { IGifflarLibrary } from "@managing/gifflarLibrary/types/IGifflarLibrary";
 import { IGifflarLibraryModel } from "@managing/gifflarLibrary/types/IGifflarLibraryModel";
-import { IImport } from "@models/directives/import/types/IImport";
-import { IImportModel } from "@models/directives/import/types/IImportModel";
-import { IImportWriter } from "@writers/directives/importWriter/types/IImportWriter";
+import { IImport } from "@models/toplevels/import/types/IImport";
+import { IImportModel } from "@models/toplevels/import/types/IImportModel";
+import { IImportWriter } from "@writers/toplevels/importWriter/types/IImportWriter";
 import { ICompiler } from "modules/compiler/types/ICompiler";
 import { IDeployer } from "modules/deployer/types/IDeployer";
 import { inject, injectable } from "tsyringe";
 import { Contract } from "web3-eth-contract";
-import { IDirective } from "../types/IDirective";
+import { ITopLevel } from "../types/ITopLevel";
 import { IGifflarManager } from "../types/IGifflarManager";
 import { IManagerDeployDTO } from "../types/IManagerDeployDTO";
 
 @injectable()
 class GifflarManager implements IGifflarManager {
   private imports: Array<IImport> = [];
-  private directives: Array<IDirective> = [];
+  private topLevelModels: Array<ITopLevel> = [];
   private code: string = "";
   private json: any = {};
 
@@ -40,13 +40,13 @@ class GifflarManager implements IGifflarManager {
     private compiler: ICompiler
   ) {}
 
-  private _writeDirectives(directives: Array<IDirective>): string {
+  private _writeTopLevelModels(topLevelModels: Array<ITopLevel>): string {
     // Writing imports first
     let completeCode = this.importWriter.write(this.imports);
 
-    directives.map((directive) => {
-      // Call the contract writer to write the directives code
-      const code = directive.write();
+    topLevelModels.map((topLevelModel) => {
+      // Call the contract writer to write the top level models code
+      const code = topLevelModel.write();
       completeCode += code;
     });
 
@@ -66,7 +66,7 @@ class GifflarManager implements IGifflarManager {
   newContract(name: string): IGifflarContract {
     const newcontract: IGifflarContract = this.contractModel.execute(name);
     newcontract.setName(name);
-    this.directives.push(newcontract);
+    this.topLevelModels.push(newcontract);
 
     return newcontract;
   }
@@ -74,7 +74,7 @@ class GifflarManager implements IGifflarManager {
   newLibrary(name: string): IGifflarLibrary {
     const newLibrary: IGifflarLibrary = this.libraryModel.execute(name);
     newLibrary.setName(name);
-    this.directives.push(newLibrary);
+    this.topLevelModels.push(newLibrary);
 
     return newLibrary;
   }
@@ -82,7 +82,7 @@ class GifflarManager implements IGifflarManager {
   newInterface(name: string): IGifflarInterface {
     const newInterface: IGifflarInterface = this.interfaceModel.execute(name);
     newInterface.setName(name);
-    this.directives.push(newInterface);
+    this.topLevelModels.push(newInterface);
 
     return newInterface;
   }
@@ -99,42 +99,42 @@ class GifflarManager implements IGifflarManager {
     return this.json;
   }
 
-  getAllDirectives(): Array<IDirective> {
-    return this.directives;
+  getAllModels(): Array<ITopLevel> {
+    return this.topLevelModels;
   }
 
   getContract(name: string): IGifflarContract {
-    const filteredContract: any = this.directives.filter((gDirective) => {
-      return gDirective.contract?.name === name;
+    const filteredContract: any = this.topLevelModels.filter((gTopLevel) => {
+      return gTopLevel.contract?.name === name;
     })[0];
 
     return filteredContract as IGifflarContract;
   }
 
   getLibrary(name: string): IGifflarLibrary {
-    const filteredLibrary = this.directives.filter((gDirective) => {
-      return gDirective.library?.name === name;
+    const filteredLibrary = this.topLevelModels.filter((gTopLevel) => {
+      return gTopLevel.library?.name === name;
     })[0];
 
     return filteredLibrary as IGifflarLibrary;
   }
 
   getInterface(name: string): IGifflarInterface {
-    const filteredInterface = this.directives.filter((gDirective) => {
-      return gDirective.interface?.name === name;
+    const filteredInterface = this.topLevelModels.filter((gTopLevel) => {
+      return gTopLevel.interface?.name === name;
     })[0];
 
     return filteredInterface as IGifflarInterface;
   }
 
   writeAll(): string {
-    const _code = this._writeDirectives(this.directives);
+    const _code = this._writeTopLevelModels(this.topLevelModels);
     this.code = _code;
     return this.code;
   }
 
-  write(directives: Array<IDirective>): string {
-    const _code = this._writeDirectives(directives);
+  write(topLevelModels: Array<ITopLevel>): string {
+    const _code = this._writeTopLevelModels(topLevelModels);
     this.code = _code;
     return this.code;
   }
@@ -153,7 +153,7 @@ class GifflarManager implements IGifflarManager {
     }
 
     // Updating the contract object
-    this.directives.map((gContract: IDirective) => {
+    this.topLevelModels.map((gContract: ITopLevel) => {
       const json = this.json.contracts.jsons[gContract.getName()];
       if (json) {
         // eslint-disable-next-line no-param-reassign
@@ -167,8 +167,8 @@ class GifflarManager implements IGifflarManager {
 
   compile(contractName: string, callback: (errors: Array<any>) => void): void {
     // Filtering the contract by contract name
-    const contract = this.directives.filter((gDirective) => {
-      return gDirective.getName() === contractName;
+    const contract = this.topLevelModels.filter((gTopLevel) => {
+      return gTopLevel.getName() === contractName;
     })[0];
 
     // If contract object is valid

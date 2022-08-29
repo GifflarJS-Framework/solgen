@@ -1,17 +1,17 @@
-import { IContractWriter } from "@writers/directives/contractWriter/types/IContractWriter";
+import { IContractWriter } from "@writers/toplevels/contractWriter/types/IContractWriter";
 import { ICompiler } from "modules/compiler/types/ICompiler";
 import { IDeployer } from "modules/deployer/types/IDeployer";
 import { inject, injectable } from "tsyringe";
 import { IGifflarContract } from "../types/IGifflarContract";
 import { Contract } from "web3-eth-contract";
 import { IContractDeployDTO } from "../types/IContractDeployDTO";
-import { IContractModel } from "@models/directives/contract/types/IContractModel";
+import { IContractModel } from "@models/toplevels/contract/types/IContractModel";
 import { IGifflarContractModel } from "../types/IGifflarContractModel";
 import { IWeb3 } from "@deployer/types/IWeb3";
-import { IContractJson } from "@models/directives/contract/types/IContractJson";
-import { IImportModel } from "@models/directives/import/types/IImportModel";
-import { IImportWriter } from "@writers/directives/importWriter/types/IImportWriter";
-import { IImport } from "@models/directives/import/types/IImport";
+import { IContractJson } from "@models/toplevels/contract/types/IContractJson";
+import { IImportModel } from "@models/toplevels/import/types/IImportModel";
+import { IImportWriter } from "@writers/toplevels/importWriter/types/IImportWriter";
+import { IImport } from "@models/toplevels/import/types/IImport";
 
 @injectable()
 class GifflarContractModel implements IGifflarContractModel {

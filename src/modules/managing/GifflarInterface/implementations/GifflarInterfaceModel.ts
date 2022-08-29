@@ -1,10 +1,10 @@
 import { ICompiler } from "@compiler/types/ICompiler";
-import { IImport } from "@models/directives/import/types/IImport";
-import { IImportModel } from "@models/directives/import/types/IImportModel";
-import { IInterfaceJson } from "@models/directives/interface/types/IInterfaceJson";
-import { IInterfaceModel } from "@models/directives/interface/types/IInterfaceModel";
-import { IImportWriter } from "@writers/directives/importWriter/types/IImportWriter";
-import { IInterfaceWriter } from "@writers/directives/interfaceWriter/types/IInterfaceWriter";
+import { IImport } from "@models/toplevels/import/types/IImport";
+import { IImportModel } from "@models/toplevels/import/types/IImportModel";
+import { IInterfaceJson } from "@models/toplevels/interface/types/IInterfaceJson";
+import { IInterfaceModel } from "@models/toplevels/interface/types/IInterfaceModel";
+import { IImportWriter } from "@writers/toplevels/importWriter/types/IImportWriter";
+import { IInterfaceWriter } from "@writers/toplevels/interfaceWriter/types/IInterfaceWriter";
 import { inject, injectable } from "tsyringe";
 import { IGifflarInterface } from "../types/IGifflarInterface";
 import { IGifflarInterfaceModel } from "../types/IGifflarInterfaceModel";
