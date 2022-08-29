@@ -14,7 +14,9 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var tsyringe_1 = require("tsyringe");
 var StructWriter = /** @class */ (function () {
-    function StructWriter(variableWriter, mappingWriter) {
+    function StructWriter(variableModel, mappingModel, variableWriter, mappingWriter) {
+        this.variableModel = variableModel;
+        this.mappingModel = mappingModel;
         this.variableWriter = variableWriter;
         this.mappingWriter = mappingWriter;
     }
@@ -23,13 +25,15 @@ var StructWriter = /** @class */ (function () {
         // Writing variables
         var variablesText = "";
         struct.variables.map(function (variable) {
-            var variableText = _this.variableWriter.write(variable);
+            var localVariable = _this.variableModel.execute(variable);
+            var variableText = _this.variableWriter.write(localVariable);
             variablesText = variablesText.concat("".concat(variableText, ";\n"));
         });
         // Writing mappings
         var mappingsText = "";
         struct.mappings.map(function (mapping) {
-            var mappingText = _this.mappingWriter.write(mapping);
+            var localMapping = _this.mappingModel.execute(mapping);
+            var mappingText = _this.mappingWriter.write(localMapping);
             mappingsText = mappingsText.concat("".concat(mappingText, ";\n"));
         });
         // Writing final text
@@ -38,9 +42,11 @@ var StructWriter = /** @class */ (function () {
     };
     StructWriter = __decorate([
         (0, tsyringe_1.injectable)(),
-        __param(0, (0, tsyringe_1.inject)("VariableWriter")),
-        __param(1, (0, tsyringe_1.inject)("MappingWriter")),
-        __metadata("design:paramtypes", [Object, Object])
+        __param(0, (0, tsyringe_1.inject)("VariableModel")),
+        __param(1, (0, tsyringe_1.inject)("MappingModel")),
+        __param(2, (0, tsyringe_1.inject)("VariableWriter")),
+        __param(3, (0, tsyringe_1.inject)("MappingWriter")),
+        __metadata("design:paramtypes", [Object, Object, Object, Object])
     ], StructWriter);
     return StructWriter;
 }());

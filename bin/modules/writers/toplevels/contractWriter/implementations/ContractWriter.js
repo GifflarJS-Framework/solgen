@@ -32,7 +32,7 @@ var ContractWriter = /** @class */ (function () {
             // Begining of contract
             var txt_start = "contract ".concat(json.contract.name);
             // Writing inheritance
-            var txt_inherts = _this.inheritsWriter.write(json.contract.inherits);
+            var txt_inherts = _this.inheritsWriter.write(json.contract.inherits || []);
             if (txt_inherts)
                 txt_inherts = " ".concat(txt_inherts);
             var txt_openBraces = "{\n";

@@ -6,10 +6,9 @@ describe("Struct Model", function () {
     it("Creating Struct", function () {
         var struct = structModel.execute({
             identifier: "MyType",
-            variables: [{ statement: "variable", type: "string", name: "name" }],
+            variables: [{ type: "string", name: "name" }],
             mappings: [
                 {
-                    statement: "mapping",
                     type: { regularType: "address" },
                     typeName: { regularType: "uint256" },
                     name: "balances",
@@ -18,10 +17,9 @@ describe("Struct Model", function () {
         });
         var expected = {
             identifier: "MyType",
-            variables: [{ statement: "variable", type: "string", name: "name" }],
+            variables: [{ type: "string", name: "name" }],
             mappings: [
                 {
-                    statement: "mapping",
                     type: { regularType: "address" },
                     typeName: { regularType: "uint256" },
                     name: "balances",

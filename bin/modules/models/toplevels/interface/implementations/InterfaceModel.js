@@ -51,6 +51,8 @@ var InterfaceModel = /** @class */ (function () {
         var _interface = __assign({ name: interfaceName, inherits: [] }, interfaceBody);
         var setInheritance = function (identifier, args) {
             var inherits = _this.inheritsModel.execute({ identifier: identifier, args: args });
+            if (!_interface.inherits)
+                _interface.inherits = [];
             _interface.inherits.push(inherits);
             return inherits;
         };
@@ -63,6 +65,8 @@ var InterfaceModel = /** @class */ (function () {
                 isConstructor: false,
                 stateMutability: stateMutability,
             });
+            if (!_interface.functions)
+                _interface.functions = [];
             _interface.functions.push(_function);
             return _function;
         };

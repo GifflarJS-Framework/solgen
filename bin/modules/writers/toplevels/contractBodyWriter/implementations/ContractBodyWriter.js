@@ -14,7 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var tsyringe_1 = require("tsyringe");
 var ContractBodyWriter = /** @class */ (function () {
-    function ContractBodyWriter(eventWriter, functionWriter, stateVariableWriter, modifierWriter, customErrorWriter, stateMappingWriter, usingWriter) {
+    function ContractBodyWriter(eventWriter, functionWriter, stateVariableWriter, modifierWriter, customErrorWriter, stateMappingWriter, usingWriter, enumWriter) {
         this.eventWriter = eventWriter;
         this.functionWriter = functionWriter;
         this.stateVariableWriter = stateVariableWriter;
@@ -22,23 +22,27 @@ var ContractBodyWriter = /** @class */ (function () {
         this.customErrorWriter = customErrorWriter;
         this.stateMappingWriter = stateMappingWriter;
         this.usingWriter = usingWriter;
+        this.enumWriter = enumWriter;
     }
     ContractBodyWriter.prototype.write = function (bodyItem) {
         // Usings
-        var txt_using = this.usingWriter.write(bodyItem.usings);
+        var txt_using = this.usingWriter.write(bodyItem.usings || []);
+        // Enums
+        var txt_enums = this.enumWriter.write(bodyItem.enums || []);
         // Variables
-        var txt_variables = this.stateVariableWriter.write(bodyItem.variables);
+        var txt_variables = this.stateVariableWriter.write(bodyItem.variables || []);
         // Mappings
-        var txt_mappings = this.stateMappingWriter.write(bodyItem.mappings);
+        var txt_mappings = this.stateMappingWriter.write(bodyItem.mappings || []);
         // Events
-        var txt_events = this.eventWriter.write(bodyItem.events);
+        var txt_events = this.eventWriter.write(bodyItem.events || []);
         // Modifiers
-        var txt_modifiers = this.modifierWriter.write(bodyItem.modifiers);
+        var txt_modifiers = this.modifierWriter.write(bodyItem.modifiers || []);
         // Custom Errors
-        var txt_custom_errors = this.customErrorWriter.write(bodyItem.customErrors);
+        var txt_custom_errors = this.customErrorWriter.write(bodyItem.customErrors || []);
         // Functions
-        var txt_functions = this.functionWriter.write(bodyItem.functions);
+        var txt_functions = this.functionWriter.write(bodyItem.functions || []);
         var bodyText = "".concat(txt_using +
+            txt_enums +
             txt_variables +
             txt_mappings +
             txt_events +
@@ -56,7 +60,8 @@ var ContractBodyWriter = /** @class */ (function () {
         __param(4, (0, tsyringe_1.inject)("CustomErrorWriter")),
         __param(5, (0, tsyringe_1.inject)("StateMappingWriter")),
         __param(6, (0, tsyringe_1.inject)("UsingWriter")),
-        __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object])
+        __param(7, (0, tsyringe_1.inject)("EnumWriter")),
+        __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object])
     ], ContractBodyWriter);
     return ContractBodyWriter;
 }());

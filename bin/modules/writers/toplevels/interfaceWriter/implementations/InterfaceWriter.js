@@ -35,15 +35,15 @@ var InterfaceWriter = /** @class */ (function () {
             // Begining of interface
             var txt_start = "interface ".concat(json.interface.name);
             // Writing inheritance
-            var txt_inherts = _this.inheritsWriter.write(json.interface.inherits);
+            var txt_inherts = _this.inheritsWriter.write(json.interface.inherits || []);
             if (txt_inherts)
                 txt_inherts = " ".concat(txt_inherts);
             var txt_openBraces = " {\n";
             // Writing interface body
-            var txt_events = _this.eventWriter.write(json.interface.events);
-            var txt_modifiers = _this.modifierWriter.write(json.interface.modifiers);
-            var txt_custom_errors = _this.customErrorWriter.write(json.interface.customErrors);
-            var txt_functions = _this.functionWriter.write(json.interface.functions, { onlyPrototype: true });
+            var txt_events = _this.eventWriter.write(json.interface.events || []);
+            var txt_modifiers = _this.modifierWriter.write(json.interface.modifiers || []);
+            var txt_custom_errors = _this.customErrorWriter.write(json.interface.customErrors || []);
+            var txt_functions = _this.functionWriter.write(json.interface.functions || [], { onlyPrototype: true });
             // End of interface
             var txt_close = "}\n\n";
             // Joining all texts

@@ -25,10 +25,12 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var tsyringe_1 = require("tsyringe");
 var ContractModel = /** @class */ (function () {
-    function ContractModel(functionModel, inheritsModel, contractBodyModel) {
+    function ContractModel(functionModel, inheritsModel, contractBodyModel, fallbackModel, receiveModel) {
         this.functionModel = functionModel;
         this.inheritsModel = inheritsModel;
         this.contractBodyModel = contractBodyModel;
+        this.fallbackModel = fallbackModel;
+        this.receiveModel = receiveModel;
     }
     ContractModel.prototype.execute = function (contractName) {
         var _this = this;
@@ -41,8 +43,25 @@ var ContractModel = /** @class */ (function () {
         };
         var setInheritance = function (identifier, args) {
             var inherits = _this.inheritsModel.execute({ identifier: identifier, args: args });
+            if (!contract.inherits)
+                contract.inherits = [];
             contract.inherits.push(inherits);
             return inherits;
+        };
+        var createFallback = function (isPayable) {
+            var fallback = _this.fallbackModel.execute({
+                isPayable: isPayable,
+                stateVars: contract.variables || [],
+            });
+            contract.fallback = fallback;
+            return fallback;
+        };
+        var createReceive = function () {
+            var receive = _this.receiveModel.execute({
+                stateVars: contract.variables || [],
+            });
+            contract.receive = receive;
+            return receive;
         };
         var createConstructor = function (scope, inputs, outputs) {
             var _function = _this.functionModel.execute({
@@ -53,11 +72,13 @@ var ContractModel = /** @class */ (function () {
                 outputs: outputs,
                 stateVars: contract.variables,
             });
+            if (!contract.functions)
+                contract.functions = [];
             contract.functions.push(_function);
             return _function;
         };
         var _assignFunctions = function () {
-            var _obj = __assign(__assign({ contract: contract, code: "", json: {}, instance: undefined, toJson: toJson }, contractBody), { createConstructor: createConstructor, setInheritance: setInheritance, toString: function () {
+            var _obj = __assign(__assign({ contract: contract, code: "", json: {}, instance: undefined, toJson: toJson }, contractBody), { createConstructor: createConstructor, setInheritance: setInheritance, createFallback: createFallback, createReceive: createReceive, toString: function () {
                     return JSON.stringify({ contract: _obj.contract });
                 } });
             return _obj;
@@ -70,7 +91,9 @@ var ContractModel = /** @class */ (function () {
         __param(0, (0, tsyringe_1.inject)("FunctionModel")),
         __param(1, (0, tsyringe_1.inject)("InheritsModel")),
         __param(2, (0, tsyringe_1.inject)("ContractBodyModel")),
-        __metadata("design:paramtypes", [Object, Object, Object])
+        __param(3, (0, tsyringe_1.inject)("FallbackModel")),
+        __param(4, (0, tsyringe_1.inject)("ReceiveModel")),
+        __metadata("design:paramtypes", [Object, Object, Object, Object, Object])
     ], ContractModel);
     return ContractModel;
 }());

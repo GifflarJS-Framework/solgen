@@ -18,16 +18,22 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var helpers_1 = __importDefault(require("../../../../../utils/helpers"));
 var tsyringe_1 = require("tsyringe");
 var ContractBodyModel = /** @class */ (function () {
-    function ContractBodyModel(stateVariableModel, functionModel, eventModel, usingModel) {
+    function ContractBodyModel(stateVariableModel, functionModel, eventModel, usingModel, modifierModel, customErrorModel, stateMappingModel, enumModel, structModel) {
         this.stateVariableModel = stateVariableModel;
         this.functionModel = functionModel;
         this.eventModel = eventModel;
         this.usingModel = usingModel;
+        this.modifierModel = modifierModel;
+        this.customErrorModel = customErrorModel;
+        this.stateMappingModel = stateMappingModel;
+        this.enumModel = enumModel;
+        this.structModel = structModel;
     }
     ContractBodyModel.prototype.execute = function () {
         var _this = this;
         var body = {
             usings: [],
+            structs: [],
             variables: [],
             mappings: [],
             events: [],
@@ -40,13 +46,67 @@ var ContractBodyModel = /** @class */ (function () {
                 identifier: identifier,
                 type: helpers_1.default.writeTypeName(type),
             });
+            if (!body.usings)
+                body.usings = [];
             body.usings.push(using);
             return using;
         };
         var createEvent = function (name, inputs) {
             var event = _this.eventModel.execute({ name: name, inputs: inputs });
+            if (!body.events)
+                body.events = [];
             body.events.push(event);
             return event;
+        };
+        var createStruct = function (identifier, variables, mappings) {
+            var struct = _this.structModel.execute({
+                identifier: identifier,
+                variables: variables,
+                mappings: mappings,
+            });
+            if (!body.structs)
+                body.structs = [];
+            body.structs.push(struct);
+            return struct;
+        };
+        var createEnum = function (identifier, identifiersOptions) {
+            var _enum = _this.enumModel.execute({ identifier: identifier, identifiersOptions: identifiersOptions });
+            if (!body.enums)
+                body.enums = [];
+            body.enums.push(_enum);
+            return _enum;
+        };
+        var createMapping = function (type, typeName, name, scope) {
+            var mapping = _this.stateMappingModel.execute({
+                type: type,
+                typeName: typeName,
+                name: name,
+                scope: scope,
+            });
+            if (!body.mappings)
+                body.mappings = [];
+            body.mappings.push(mapping);
+            return mapping;
+        };
+        var createCustomError = function (name, args) {
+            var customError = _this.customErrorModel.execute({ name: name, args: args });
+            if (!body.customErrors)
+                body.customErrors = [];
+            body.customErrors.push(customError);
+            return customError;
+        };
+        var createModifier = function (title, args, options) {
+            var modifier = _this.modifierModel.execute({
+                title: title,
+                args: args,
+                isOverriding: options.isOverriding,
+                isVirtual: options.isVirtual,
+                stateVars: body.variables,
+            });
+            if (!body.modifiers)
+                body.modifiers = [];
+            body.modifiers.push(modifier);
+            return modifier;
         };
         var createVariable = function (type, name, scope, value) {
             var variable = _this.stateVariableModel.execute({
@@ -55,6 +115,8 @@ var ContractBodyModel = /** @class */ (function () {
                 scope: scope,
                 value: value,
             });
+            if (!body.variables)
+                body.variables = [];
             body.variables.push(variable);
             return variable;
         };
@@ -68,6 +130,8 @@ var ContractBodyModel = /** @class */ (function () {
                 stateVars: body.variables,
                 stateMutability: stateMutability,
             });
+            if (!body.functions)
+                body.functions = [];
             body.functions.push(_function);
             return _function;
         };
@@ -78,6 +142,11 @@ var ContractBodyModel = /** @class */ (function () {
                 createEvent: createEvent,
                 createVariable: createVariable,
                 createFunction: createFunction,
+                createModifier: createModifier,
+                createCustomError: createCustomError,
+                createMapping: createMapping,
+                createEnum: createEnum,
+                createStruct: createStruct,
             };
             return _obj;
         };
@@ -90,7 +159,12 @@ var ContractBodyModel = /** @class */ (function () {
         __param(1, (0, tsyringe_1.inject)("FunctionModel")),
         __param(2, (0, tsyringe_1.inject)("EventModel")),
         __param(3, (0, tsyringe_1.inject)("UsingModel")),
-        __metadata("design:paramtypes", [Object, Object, Object, Object])
+        __param(4, (0, tsyringe_1.inject)("ModifierModel")),
+        __param(5, (0, tsyringe_1.inject)("CustomErrorModel")),
+        __param(6, (0, tsyringe_1.inject)("StateMappingModel")),
+        __param(7, (0, tsyringe_1.inject)("EnumModel")),
+        __param(8, (0, tsyringe_1.inject)("StructModel")),
+        __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object, Object])
     ], ContractBodyModel);
     return ContractBodyModel;
 }());

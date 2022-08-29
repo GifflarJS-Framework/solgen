@@ -8,6 +8,8 @@ import { IStateVariable } from "../../../definitions/stateVariable/types/IStateV
 import { ITypeName } from "modules/types/ITypeName";
 import { IVariableOptions } from "modules/types/IVariableOptions";
 import { IContractJson } from "./IContractJson";
+import { IFallback } from "../../../definitions/fallback/types/IFallback";
+import { IReceive } from "../../../definitions/receive/types/IReceive";
 export interface IContract extends IContractJson, IContractBody {
     toJson(): IContractJson;
     setInheritance(identifier: string, args?: Array<string>): IInherits;
@@ -15,5 +17,7 @@ export interface IContract extends IContractJson, IContractBody {
     createVariable(type: ITypeName, name: string, scope: string, value?: string, options?: IVariableOptions): IStateVariable;
     createConstructor(scope: string, inputs?: Array<IInput>, outputs?: Array<IOutput>): IFunction;
     createFunction(name: string, scope: string, inputs?: Array<IInput>, outputs?: Array<IOutput>): IFunction;
+    createFallback(isPayable?: boolean): IFallback;
+    createReceive(): IReceive;
     toString(): string;
 }
