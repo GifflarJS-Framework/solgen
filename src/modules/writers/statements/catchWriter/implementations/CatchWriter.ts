@@ -6,12 +6,16 @@ import { ICatchWriter } from "../types/ICatchWriter";
 
 @injectable()
 class CatchWriter implements ICatchWriter {
+  private contentWriter: IContentWriter;
+
   constructor(
     @inject("InputWriter")
-    private inputWriter: IInputWriter,
-    @inject("ContentWriter")
-    private contentWriter: IContentWriter
+    private inputWriter: IInputWriter
   ) {}
+
+  _init(contentWriter: IContentWriter): void {
+    this.contentWriter = contentWriter;
+  }
 
   write(_catch: ICatch): string {
     // Writing parameters

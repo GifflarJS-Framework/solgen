@@ -8,16 +8,20 @@ import { ITryWriter } from "../types/ITryWriter";
 
 @injectable()
 class TryWriter implements ITryWriter {
+  private contentWriter: IContentWriter;
+
   constructor(
     @inject("NewContractWriter")
     private newContractWriter: INewContractWriter,
     @inject("MethodCallWriter")
     private methodCallWriter: IMethodCallWriter,
     @inject("InputWriter")
-    private inputWriter: IInputWriter,
-    @inject("ContentWriter")
-    private contentWriter: IContentWriter
+    private inputWriter: IInputWriter
   ) {}
+
+  _init(contentWriter: IContentWriter): void {
+    this.contentWriter = contentWriter;
+  }
 
   write(_try: ITry): string {
     // Writing expression

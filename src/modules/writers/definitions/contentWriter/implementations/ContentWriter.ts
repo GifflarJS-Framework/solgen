@@ -1,5 +1,4 @@
 import { IContents } from "@models/definitions/content/types/IContents";
-import { IEventWriter } from "@writers/definitions/eventWriter/types/IEventWriter";
 import { IAssignmentWriter } from "@writers/statements/assignmentWriter/types/IAssignmentWriter";
 import { IBreakWriter } from "@writers/statements/breakWriter/types/IBreakWriter";
 import { IDoWhileWriter } from "@writers/statements/doWhileWriter/types/IDoWhileWriter";
@@ -14,11 +13,19 @@ import { IVariableWriter } from "@writers/statements/variableWriter/types/IVaria
 import { inject, injectable } from "tsyringe";
 import { IContentWriter } from "../types/IContentWriter";
 import { IReturnWriter } from "@writers/statements/returnWriter/types/IReturnWriter";
-import { IContinue } from "@models/statements/continue/types/IContinue";
+import { IAssert } from "@models/statements/assert/types/IAssert";
+import { ITryWriter } from "@writers/statements/tryWriter/types/ITryWriter";
+import { ICatchWriter } from "@writers/statements/catchWriter/types/ICatchWriter";
+import { IContinueWriter } from "@writers/statements/continueWriter/types/IContinueWriter";
+import { IExpressionWriter } from "@writers/statements/expressionWriter/types/IExpressionWriter";
+import { IMappingWriter } from "@writers/statements/mappingWriter/types/IMappingWriter";
+import { INewContractWriter } from "@writers/statements/newContractWriter/types/INewContractWriter";
 
 @injectable()
 class ContentWriter implements IContentWriter {
   constructor(
+    @inject("AssertWriter")
+    private assertWriter: IAssert,
     @inject("AssignmentWriter")
     private assignmentWriter: IAssignmentWriter,
     @inject("IfWriter")
@@ -27,8 +34,6 @@ class ContentWriter implements IContentWriter {
     private forWriter: IForWriter,
     @inject("EventCallWriter")
     private eventCallWriter: IEventCallWriter,
-    @inject("EventWriter")
-    private eventWriter: IEventWriter,
     @inject("VariableWriter")
     private variableWriter: IVariableWriter,
     @inject("MethodCallWriter")
@@ -44,19 +49,34 @@ class ContentWriter implements IContentWriter {
     @inject("DoWhileWriter")
     private doWhileWriter: IDoWhileWriter,
     @inject("ReturnWriter")
-    private returnWriter: IReturnWriter
+    private returnWriter: IReturnWriter,
+    @inject("TryWriter")
+    private tryWriter: ITryWriter,
+    @inject("CatchWriter")
+    private catchWriter: ICatchWriter,
+    @inject("ContinueWriter")
+    private continueWriter: IContinueWriter,
+    @inject("ExpressionWriter")
+    private expressionWriter: IExpressionWriter,
+    @inject("MappingWriter")
+    private mappingWriter: IMappingWriter,
+    @inject("NewContractWriter")
+    private newContractWriter: INewContractWriter
   ) {
+    // Avoiding infinite dependency injection
     ifWriter._init(this);
     forWriter._init(this);
     whileWriter._init(this);
     doWhileWriter._init(this);
+    tryWriter._init(this);
+    catchWriter._init(this);
   }
 
   statements = {
+    assert: this.assertWriter,
     assignment: this.assignmentWriter,
     if: this.ifWriter,
     for: this.forWriter,
-    event: this.eventWriter,
     event_call: this.eventCallWriter,
     variable: this.variableWriter,
     method_call: this.methodCallWriter,
@@ -66,10 +86,16 @@ class ContentWriter implements IContentWriter {
     while: this.whileWriter,
     doWhile: this.doWhileWriter,
     return: this.returnWriter,
+    try: this.tryWriter,
+    catch: this.catchWriter,
+    continue: this.continueWriter,
+    expression: this.expressionWriter,
+    mapping: this.mappingWriter,
+    newContract: this.newContractWriter,
   };
 
   // All statement control that doesn't need the ; in the end
-  controls = ["if", "for", "while"];
+  controls = ["if", "for", "while", "doWhile", "try", "catch"];
 
   write(content: Array<IContents>): string {
     let text = "";

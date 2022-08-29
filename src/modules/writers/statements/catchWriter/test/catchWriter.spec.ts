@@ -1,10 +1,18 @@
+import { IContents } from "@models/definitions/content/types/IContents";
 import { ICatchModel } from "@models/statements/catch/types/ICatchModel";
 import { container } from "tsyringe";
 import { ICatchWriter } from "../types/ICatchWriter";
 
 describe("CatchWriter", () => {
+  const contentWriterMock = {
+    write: (content: IContents[]): string => {
+      return "";
+    },
+  };
+
   const catchModel = container.resolve<ICatchModel>("CatchModel");
   const catchWriter = container.resolve<ICatchWriter>("CatchWriter");
+  catchWriter._init(contentWriterMock);
 
   it("Writing Catch", () => {
     const _catch = catchModel.execute({
