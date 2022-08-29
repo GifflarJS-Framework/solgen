@@ -33,7 +33,7 @@ describe("InterfaceModel", () => {
     const _interface = interfaceModel.execute("MyInterface");
 
     // Setting inheritance
-    _interface.setInheritance("InheritableInterface", ["arg1"]);
+    _interface.setInheritance("InheritableInterface", ["'0x0c'"]);
 
     // Creating events
     _interface.createEvent("transferedOwnership", [
