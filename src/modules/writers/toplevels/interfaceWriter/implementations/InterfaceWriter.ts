@@ -41,18 +41,22 @@ class InterfaceWriter implements IInterfaceWriter {
       const txt_start = `interface ${json.interface.name}`;
 
       // Writing inheritance
-      let txt_inherts = this.inheritsWriter.write(json.interface.inherits);
+      let txt_inherts = this.inheritsWriter.write(
+        json.interface.inherits || []
+      );
       if (txt_inherts) txt_inherts = ` ${txt_inherts}`;
       const txt_openBraces = ` {\n`;
 
       // Writing interface body
-      const txt_events = this.eventWriter.write(json.interface.events);
-      const txt_modifiers = this.modifierWriter.write(json.interface.modifiers);
+      const txt_events = this.eventWriter.write(json.interface.events || []);
+      const txt_modifiers = this.modifierWriter.write(
+        json.interface.modifiers || []
+      );
       const txt_custom_errors = this.customErrorWriter.write(
-        json.interface.customErrors
+        json.interface.customErrors || []
       );
       const txt_functions = this.functionWriter.write(
-        json.interface.functions,
+        json.interface.functions || [],
         { onlyPrototype: true }
       );
 
