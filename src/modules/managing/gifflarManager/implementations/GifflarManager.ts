@@ -1,17 +1,17 @@
 import { IWeb3 } from "@deployer/types/IWeb3";
-import { IGifflarContract } from "@managing/contract/types/IGifflarContract";
-import { IGifflarContractModel } from "@managing/contract/types/IGifflarContractModel";
+import { IGifflarContract } from "@managing/gifflarContract/types/IGifflarContract";
+import { IGifflarContractModel } from "@managing/gifflarContract/types/IGifflarContractModel";
 import { IContractJson } from "@models/directives/contract/types/IContractJson";
 import { IContractWriter } from "@writers/directives/contractWriter/types/IContractWriter";
 import { ICompiler } from "modules/compiler/types/ICompiler";
 import { IDeployer } from "modules/deployer/types/IDeployer";
 import { inject, injectable } from "tsyringe";
 import { Contract } from "web3-eth-contract";
-import { IGifflarContractManager } from "../types/IGifflarContractManager";
+import { IGifflarManager } from "../types/IGifflarManager";
 import { IManagerDeployDTO } from "../types/IManagerDeployDTO";
 
 @injectable()
-class GifflarContractManager implements IGifflarContractManager {
+class GifflarManager implements IGifflarManager {
   contracts: Array<IGifflarContract> = [];
   code: string = "";
   json: any = {};
@@ -154,4 +154,4 @@ class GifflarContractManager implements IGifflarContractManager {
   }
 }
 
-export default GifflarContractManager;
+export default GifflarManager;

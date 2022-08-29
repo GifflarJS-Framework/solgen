@@ -3,7 +3,7 @@
 import fs from "fs";
 import solc from "solc";
 import { container } from "tsyringe";
-import { IGifflarContractManager } from "../types/IGifflarContractManager";
+import { IGifflarManager } from "../types/IGifflarManager";
 
 const writing_path = `${__dirname}/../../../../test/examples/writing/`;
 const expectedJson = JSON.stringify(
@@ -19,12 +19,10 @@ beforeAll(async () => {
 });
 
 describe("Contract Manager Writer", () => {
-  const gContractManager: IGifflarContractManager = container.resolve(
-    "GifflarContractManager"
-  );
+  const gContractManager: IGifflarManager = container.resolve("GifflarManager");
   gContractManager.setWeb3(web3);
 
-  it("Writing Contract Manager", () => {
+  it("Writing Gifflar Manager", () => {
     const gContract = gContractManager.newContract("DHT11");
     const gContractController = gContractManager.newContract("Controller");
 

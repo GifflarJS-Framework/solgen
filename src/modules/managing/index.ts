@@ -1,2 +1,2 @@
-import "./contract";
-import "./contractManager";
+import "./gifflarContract";
+import "./gifflarManager";

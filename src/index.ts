@@ -1,9 +1,9 @@
 import "reflect-metadata";
 import "./modules";
 import { container } from "tsyringe";
-import { IGifflarContract } from "@managing/contract/types/IGifflarContract";
-import { IGifflarContractModel } from "@managing/contract/types/IGifflarContractModel";
-import { IGifflarContractManager } from "@managing/contractManager/types/IGifflarContractManager";
+import { IGifflarContract } from "@managing/gifflarContract/types/IGifflarContract";
+import { IGifflarContractModel } from "@managing/gifflarContract/types/IGifflarContractModel";
+import { IGifflarManager } from "@managing/gifflarManager/types/IGifflarManager";
 
 const createContract = (name: string): IGifflarContract => {
   const gifflarContractModel: IGifflarContractModel = container.resolve(
@@ -12,8 +12,8 @@ const createContract = (name: string): IGifflarContract => {
   return gifflarContractModel.execute(name);
 };
 
-const createContractManager = (): IGifflarContractManager => {
-  return container.resolve("GifflarContractManager");
+const createContractManager = (): IGifflarManager => {
+  return container.resolve("GifflarManager");
 };
 
 export { createContractManager, createContract };
