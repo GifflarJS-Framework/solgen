@@ -1,2 +1,4 @@
-import "./contract";
-import "./contractManager";
+import "./gifflarContract";
+import "./gifflarLibrary";
+import "./GifflarInterface";
+import "./gifflarManager";

@@ -1,4 +1,4 @@
-import { IEventCall } from "@models/eventCall/types/IEventCall";
+import { IEventCall } from "@models/statements/eventCall/types/IEventCall";
 import { container } from "tsyringe";
 import { IEventCallWriter } from "../types/IEventCallWriter";
 

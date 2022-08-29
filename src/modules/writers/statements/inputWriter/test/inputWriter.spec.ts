@@ -1,4 +1,4 @@
-import { IInput } from "@models/function/types/IInput";
+import { IInput } from "@models/definitions/function/types/IInput";
 import { container } from "tsyringe";
 import { IInputWriter } from "../types/IInputWriter";
 

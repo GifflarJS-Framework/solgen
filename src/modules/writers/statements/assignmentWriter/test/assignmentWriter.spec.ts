@@ -1,4 +1,4 @@
-import { IAssignment } from "@models/assignment/types/IAssignment";
+import { IAssignment } from "@models/statements/assignment/types/IAssignment";
 import { container } from "tsyringe";
 import { IAssignmentWriter } from "../types/IAssignmentWriter";
 

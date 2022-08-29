@@ -1,5 +1,5 @@
-import { IContents } from "@models/content/types/IContents";
-import { IWhileModel } from "@models/while/types/IWhileModel";
+import { IContents } from "@models/definitions/content/types/IContents";
+import { IWhileModel } from "@models/statements/while/types/IWhileModel";
 import { container } from "tsyringe";
 import { IWhileWriter } from "../types/IWhileWriter";
 

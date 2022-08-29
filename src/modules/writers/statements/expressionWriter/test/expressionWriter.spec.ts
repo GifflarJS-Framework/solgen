@@ -1,4 +1,4 @@
-import { IExpression } from "@models/expression/types/IExpression";
+import { IExpression } from "@models/statements/expression/types/IExpression";
 import { container } from "tsyringe";
 import { IExpressionWriter } from "../types/IExpressionWriter";
 

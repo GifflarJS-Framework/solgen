@@ -1,5 +1,5 @@
-import { ITry } from "@models/try/types/ITry";
-import { IContentWriter } from "@writers/contentWriter/types/IContentWriter";
+import { ITry } from "@models/statements/try/types/ITry";
+import { IContentWriter } from "@writers/definitions/contentWriter/types/IContentWriter";
 import { IInputWriter } from "@writers/statements/inputWriter/types/IInputWriter";
 import { IMethodCallWriter } from "@writers/statements/methodCallWriter/types/IMethodCallWriter";
 import { INewContractWriter } from "@writers/statements/newContractWriter/types/INewContractWriter";
@@ -8,24 +8,38 @@ import { ITryWriter } from "../types/ITryWriter";
 
 @injectable()
 class TryWriter implements ITryWriter {
+  private contentWriter: IContentWriter;
+
   constructor(
     @inject("NewContractWriter")
     private newContractWriter: INewContractWriter,
     @inject("MethodCallWriter")
     private methodCallWriter: IMethodCallWriter,
     @inject("InputWriter")
-    private inputWriter: IInputWriter,
-    @inject("ContentWriter")
-    private contentWriter: IContentWriter
+    private inputWriter: IInputWriter
   ) {}
+
+  _init(contentWriter: IContentWriter): void {
+    this.contentWriter = contentWriter;
+  }
 
   write(_try: ITry): string {
     // Writing expression
     let expressionText = ``;
-    if (_try.expression.statement === "method_call") {
-      expressionText = this.methodCallWriter.write(_try.expression);
+    if (_try.expression.methodCall) {
+      expressionText = this.methodCallWriter.write({
+        statement: "method_call",
+        ..._try.expression.methodCall,
+      });
+    } else if (_try.expression.newContract) {
+      expressionText = this.newContractWriter.write({
+        statement: "newcontract",
+        ..._try.expression.newContract,
+      });
     } else {
-      expressionText = this.newContractWriter.write(_try.expression);
+      throw new Error(
+        "Method call or New contract must be defined in Try statement creation."
+      );
     }
 
     // Writing parameters

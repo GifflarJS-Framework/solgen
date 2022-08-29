@@ -1,4 +1,4 @@
-import { IRevertModel } from "@models/revert/types/IRevertModel";
+import { IRevertModel } from "@models/statements/revert/types/IRevertModel";
 import { container } from "tsyringe";
 import { IRevertWriter } from "../types/IRevertWriter";
 

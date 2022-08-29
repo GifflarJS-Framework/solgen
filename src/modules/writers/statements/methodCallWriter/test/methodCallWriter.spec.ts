@@ -1,4 +1,4 @@
-import { IMethodCall } from "@models/methodcall/types/IMethodCall";
+import { IMethodCall } from "@models/statements/methodcall/types/IMethodCall";
 import { container } from "tsyringe";
 import { IMethodCallWriter } from "../types/IMethodCallWriter";
 

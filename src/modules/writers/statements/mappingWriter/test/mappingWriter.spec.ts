@@ -1,4 +1,4 @@
-import { IMappingModel } from "@models/mapping/types/IMappingModel";
+import { IMappingModel } from "@models/statements/mapping/types/IMappingModel";
 import { container } from "tsyringe";
 import { IMappingWriter } from "../types/IMappingWriter";
 
@@ -9,8 +9,8 @@ describe("MappingWriter", () => {
   it("Writing mapping to simple type", () => {
     const mapping = mappingModel.execute({
       name: "myMapping",
-      type: "address",
-      typeName: "uint256",
+      type: { regularType: "address" },
+      typeName: { regularType: "uint256" },
     });
 
     const result = mappingWriter.write(mapping);
@@ -22,8 +22,8 @@ describe("MappingWriter", () => {
   it("Writing mapping to dynamic array", () => {
     const mapping = mappingModel.execute({
       name: "myMapping",
-      customType: "User",
-      typeName: { arrayType: "address" },
+      type: { customType: "User" },
+      typeName: { array: { arrayType: "address" } },
     });
 
     const result = mappingWriter.write(mapping);
@@ -35,8 +35,8 @@ describe("MappingWriter", () => {
   it("Writing mapping to fixed array", () => {
     const mapping = mappingModel.execute({
       name: "myMapping",
-      customType: "User",
-      typeName: { arrayType: "address", arraySize: 5 },
+      type: { customType: "User" },
+      typeName: { array: { arrayType: "address", arraySize: 5 } },
     });
 
     const result = mappingWriter.write(mapping);
@@ -48,11 +48,12 @@ describe("MappingWriter", () => {
   it("Writing mapping to mapping", () => {
     const mapping = mappingModel.execute({
       name: "myMapping",
-      customType: "address",
+      type: { regularType: "address" },
       typeName: {
-        statement: "nested_mapping",
-        type: "uint256",
-        typeName: "uint256",
+        nestedMapping: {
+          type: { regularType: "uint256" },
+          typeName: { regularType: "uint256" },
+        },
       },
     });
 

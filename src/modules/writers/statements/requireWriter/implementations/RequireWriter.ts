@@ -1,4 +1,4 @@
-import { IRequire } from "@models/require/types/IRequire";
+import { IRequire } from "@models/statements/require/types/IRequire";
 import { IRequireWriter } from "../types/IRequireWriter";
 
 class RequireWriter implements IRequireWriter {

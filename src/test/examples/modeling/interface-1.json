@@ -5,7 +5,6 @@
       "inherits": [],
       "events": [
         {
-          "statement": "event",
           "name": "transferedOwnership",
           "inputs": [
             { "name": "oldOwner", "type": "address" },

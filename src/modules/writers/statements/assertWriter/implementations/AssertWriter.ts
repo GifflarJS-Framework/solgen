@@ -1,4 +1,4 @@
-import { IAssert } from "@models/assert/types/IAssert";
+import { IAssert } from "@models/statements/assert/types/IAssert";
 import { IAssertWriter } from "../types/IAssertWriter";
 
 class AssertWriter implements IAssertWriter {

@@ -2,10 +2,11 @@
   {
     "interface": {
       "name": "MyInterface",
-      "inherits": [{ "identifier": "InheritableInterface", "args": ["arg1"] }],
+      "inherits": [
+        { "identifier": "InheritableInterface", "args": ["'0x0c'"] }
+      ],
       "events": [
         {
-          "statement": "event",
           "name": "transferedOwnership",
           "inputs": [
             { "name": "oldOwner", "type": "address" },

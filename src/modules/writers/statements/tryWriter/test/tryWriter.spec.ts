@@ -1,18 +1,27 @@
-import { ITryModel } from "@models/try/types/ITryModel";
+import { IContents } from "@models/definitions/content/types/IContents";
+import { ITryModel } from "@models/statements/try/types/ITryModel";
 import { container } from "tsyringe";
 import { ITryWriter } from "../types/ITryWriter";
 
 describe("TryWriter", () => {
+  const contentWriterMock = {
+    write: (content: IContents[]): string => {
+      return "";
+    },
+  };
+
   const tryModel = container.resolve<ITryModel>("TryModel");
   const tryWriter = container.resolve<ITryWriter>("TryWriter");
+  tryWriter._init(contentWriterMock);
 
   it("Writing", () => {
     const _try = tryModel.execute({
       expression: {
-        statement: "method_call",
-        variable: "MyContract",
-        method: "add",
-        value: "value",
+        methodCall: {
+          variable: "MyContract",
+          method: "add",
+          value: "value",
+        },
       },
       parameters: [{ type: "uint256", name: "arg" }],
     });

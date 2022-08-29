@@ -1,4 +1,4 @@
-import { IReturn } from "@models/return/types/IReturn";
+import { IReturn } from "@models/statements/return/types/IReturn";
 import helpers from "@utils/helpers";
 import { IReturnWriter } from "../types/IReturnWriter";
 
