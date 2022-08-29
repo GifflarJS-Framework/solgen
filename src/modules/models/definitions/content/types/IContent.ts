@@ -1,4 +1,7 @@
+import { IInput } from "@models/definitions/function/types/IInput";
 import { IDataLocation } from "modules/types/IDataLocation";
+import { IMappingKeyType } from "modules/types/IMappingKeyType";
+import { IMappingTypeName } from "modules/types/IMappingTypeName";
 import { ITypeName } from "modules/types/ITypeName";
 import { IStackItem } from "./IStackItem";
 
@@ -16,6 +19,12 @@ export interface IContent extends IStackItem {
   ): IContent;
   setReturn(expressions: Array<string>): IContent;
   setContinue(): IContent;
+  setMapping(
+    type: IMappingKeyType,
+    typeName: IMappingTypeName,
+    name: string
+  ): IContent;
+  setCatch(parameters: Array<IInput>, identifier?: string): IContent;
 
   /**
    * Remember to use the "endIf" function when finishing "if" conditions actions,

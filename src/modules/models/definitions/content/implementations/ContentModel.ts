@@ -25,6 +25,9 @@ import { IDoWhile } from "@models/statements/dowhile/types/IDoWhile";
 import { IForModel } from "@models/statements/for/types/IForModel";
 import { IDataLocation } from "modules/types/IDataLocation";
 import { IFor } from "@models/statements/for/types/IFor";
+import { IMappingModel } from "@models/statements/mapping/types/IMappingModel";
+import { IMappingKeyType } from "modules/types/IMappingKeyType";
+import { IMappingTypeName } from "modules/types/IMappingTypeName";
 
 interface IIfContent extends IIf, IContent {}
 interface IDoWhileContent extends IDoWhile, IContent {}
@@ -60,7 +63,9 @@ class ContentModel {
     @inject("ReturnModel")
     private returnModel: IReturnModel,
     @inject("ForModel")
-    private forModel: IForModel
+    private forModel: IForModel,
+    @inject("MappingModel")
+    private mappingModel: IMappingModel
   ) {}
 
   execute({ stateVars = [] }: ICreateContentDTO): IContent {
@@ -176,6 +181,17 @@ class ContentModel {
       return contentItem;
     };
 
+    const setMapping = (
+      type: IMappingKeyType,
+      typeName: IMappingTypeName,
+      name: string
+    ): IContent => {
+      const _mapping = this.mappingModel.execute({ type, typeName, name });
+      stack[top].content.push(_mapping);
+      const contentItem: IContent = _assignFunctions(stack[top]);
+      return contentItem;
+    };
+
     // Decision and loop structures
 
     const beginFor = (
@@ -268,6 +284,7 @@ class ContentModel {
         setAssert,
         setBreak,
         setCatch,
+        setMapping,
       };
 
       return _obj;
