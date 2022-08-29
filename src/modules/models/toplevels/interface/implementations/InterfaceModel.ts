@@ -1,5 +1,3 @@
-
-
 import { IContractBodyModel } from "@models/toplevels/contractBody/types/IContractBodyModel";
 import { IFunction } from "@models/definitions/function/types/IFunction";
 import { IFunctionModel } from "@models/definitions/function/types/IFunctionModel";
@@ -44,6 +42,7 @@ class InterfaceModel implements IInterfaceModel {
       args?: Array<string>
     ): IInherits => {
       const inherits = this.inheritsModel.execute({ identifier, args });
+      if (!_interface.inherits) _interface.inherits = [];
       _interface.inherits.push(inherits);
       return inherits;
     };
@@ -62,6 +61,7 @@ class InterfaceModel implements IInterfaceModel {
         isConstructor: false,
         stateMutability,
       });
+      if (!_interface.functions) _interface.functions = [];
       _interface.functions.push(_function);
 
       return _function;
