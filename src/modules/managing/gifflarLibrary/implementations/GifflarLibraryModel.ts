@@ -1,14 +1,23 @@
 import { ICompiler } from "modules/compiler/types/ICompiler";
 import { inject, injectable } from "tsyringe";
 import { IGifflarLibrary } from "../types/IGifflarLibrary";
-import { ILibraryJson } from "@models/directives/library/types/ILibraryJson";
-import { ILibraryWriter } from "@writers/directives/libraryWriter/types/ILibraryWriter";
-import { ILibraryModel } from "@models/directives/library/types/ILibraryModel";
+import { ILibraryJson } from "@models/toplevels/library/types/ILibraryJson";
+import { ILibraryWriter } from "@writers/toplevels/libraryWriter/types/ILibraryWriter";
+import { ILibraryModel } from "@models/toplevels/library/types/ILibraryModel";
 import { IGifflarLibraryModel } from "../types/IGifflarLibraryModel";
+import { IImportModel } from "@models/toplevels/import/types/IImportModel";
+import { IImportWriter } from "@writers/toplevels/importWriter/types/IImportWriter";
+import { IImport } from "@models/toplevels/import/types/IImport";
 
 @injectable()
 class GifflarLibraryModel implements IGifflarLibraryModel {
+  private imports: Array<IImport> = [];
+
   constructor(
+    @inject("ImportModel")
+    private importModel: IImportModel,
+    @inject("ImportWriter")
+    private importWriter: IImportWriter,
     @inject("Compiler")
     private compiler: ICompiler,
     @inject("LibraryWriter")
@@ -26,9 +35,26 @@ class GifflarLibraryModel implements IGifflarLibraryModel {
         gLibrary.library.name = newName;
       },
 
+      getName: (): string => {
+        return gLibrary.library.name;
+      },
+
+      setImport: (identifierPath: string, alias?: string): IImport => {
+        const newImport: IImport = this.importModel.execute({
+          identifierPath,
+          alias,
+        });
+        this.imports.push(newImport);
+
+        return newImport;
+      },
+
       write: (libraries?: Array<ILibraryJson>): string => {
         const _libraries = libraries || [gLibrary];
-        gLibrary.code = this.libraryWriter.write(_libraries, () => {
+        // Writing imports
+        gLibrary.code = this.importWriter.write(this.imports);
+        // Writing library
+        gLibrary.code += this.libraryWriter.write(_libraries, () => {
           return "";
         });
         return gLibrary.code;

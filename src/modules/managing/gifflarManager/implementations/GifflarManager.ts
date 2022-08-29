@@ -1,72 +1,140 @@
 import { IWeb3 } from "@deployer/types/IWeb3";
 import { IGifflarContract } from "@managing/gifflarContract/types/IGifflarContract";
 import { IGifflarContractModel } from "@managing/gifflarContract/types/IGifflarContractModel";
-import { IContractJson } from "@models/directives/contract/types/IContractJson";
-import { IContractWriter } from "@writers/directives/contractWriter/types/IContractWriter";
+import { IGifflarInterface } from "@managing/GifflarInterface/types/IGifflarInterface";
+import { IGifflarInterfaceModel } from "@managing/GifflarInterface/types/IGifflarInterfaceModel";
+import { IGifflarLibrary } from "@managing/gifflarLibrary/types/IGifflarLibrary";
+import { IGifflarLibraryModel } from "@managing/gifflarLibrary/types/IGifflarLibraryModel";
+import { IImport } from "@models/toplevels/import/types/IImport";
+import { IImportModel } from "@models/toplevels/import/types/IImportModel";
+import { IImportWriter } from "@writers/toplevels/importWriter/types/IImportWriter";
 import { ICompiler } from "modules/compiler/types/ICompiler";
 import { IDeployer } from "modules/deployer/types/IDeployer";
 import { inject, injectable } from "tsyringe";
 import { Contract } from "web3-eth-contract";
+import { ITopLevel } from "../types/ITopLevel";
 import { IGifflarManager } from "../types/IGifflarManager";
 import { IManagerDeployDTO } from "../types/IManagerDeployDTO";
 
 @injectable()
 class GifflarManager implements IGifflarManager {
-  contracts: Array<IGifflarContract> = [];
-  code: string = "";
-  json: any = {};
+  private imports: Array<IImport> = [];
+  private topLevelModels: Array<ITopLevel> = [];
+  private code: string = "";
+  private json: any = {};
 
   constructor(
+    @inject("ImportModel")
+    private importModel: IImportModel,
+    @inject("ImportWriter")
+    private importWriter: IImportWriter,
     @inject("GifflarContractModel")
     private contractModel: IGifflarContractModel,
-    @inject("ContractWriter")
-    private contractWriter: IContractWriter,
+    @inject("GifflarLibraryModel")
+    private libraryModel: IGifflarLibraryModel,
+    @inject("GifflarInterfaceModel")
+    private interfaceModel: IGifflarInterfaceModel,
     @inject("Deployer")
     private deployer: IDeployer,
     @inject("Compiler")
     private compiler: ICompiler
   ) {}
 
-  private _writeContracts(contracts: Array<IContractJson>): string {
-    let _contracts: Array<IContractJson> = contracts;
+  private _writeTopLevelModels(topLevelModels: Array<ITopLevel>): string {
+    // Writing imports first
+    let completeCode = this.importWriter.write(this.imports);
 
-    // If contract object should be updated
-    let callback = null;
+    topLevelModels.map((topLevelModel) => {
+      // Call the contract writer to write the top level models code
+      const code = topLevelModel.write();
+      completeCode += code;
+    });
 
-    // Saving the individual code inside contract
-    callback = (individualCode: string, index: number) => {
-      // Updating individual contracts
-      _contracts[index].code = individualCode;
-    };
+    return completeCode;
+  }
 
-    // Call the contract writer to write the contracts code
-    const code = this.contractWriter.write(_contracts, callback);
+  newImport(identifierPath: string, alias?: string): IImport {
+    const newImport: IImport = this.importModel.execute({
+      identifierPath,
+      alias,
+    });
+    this.imports.push(newImport);
 
-    return code;
+    return newImport;
   }
 
   newContract(name: string): IGifflarContract {
     const newcontract: IGifflarContract = this.contractModel.execute(name);
     newcontract.setName(name);
-    this.contracts.push(newcontract);
+    this.topLevelModels.push(newcontract);
 
     return newcontract;
   }
 
+  newLibrary(name: string): IGifflarLibrary {
+    const newLibrary: IGifflarLibrary = this.libraryModel.execute(name);
+    newLibrary.setName(name);
+    this.topLevelModels.push(newLibrary);
+
+    return newLibrary;
+  }
+
+  newInterface(name: string): IGifflarInterface {
+    const newInterface: IGifflarInterface = this.interfaceModel.execute(name);
+    newInterface.setName(name);
+    this.topLevelModels.push(newInterface);
+
+    return newInterface;
+  }
+
+  getImports(): Array<IImport> {
+    return this.imports;
+  }
+
+  getCode(): string {
+    return this.code;
+  }
+
+  getCompiledJson(): any {
+    return this.json;
+  }
+
+  getAllModels(): Array<ITopLevel> {
+    return this.topLevelModels;
+  }
+
   getContract(name: string): IGifflarContract {
-    return this.contracts.filter((gContract) => {
-      return gContract.contract.name === name;
+    const filteredContract: any = this.topLevelModels.filter((gTopLevel) => {
+      return gTopLevel.contract?.name === name;
     })[0];
+
+    return filteredContract as IGifflarContract;
+  }
+
+  getLibrary(name: string): IGifflarLibrary {
+    const filteredLibrary = this.topLevelModels.filter((gTopLevel) => {
+      return gTopLevel.library?.name === name;
+    })[0];
+
+    return filteredLibrary as IGifflarLibrary;
+  }
+
+  getInterface(name: string): IGifflarInterface {
+    const filteredInterface = this.topLevelModels.filter((gTopLevel) => {
+      return gTopLevel.interface?.name === name;
+    })[0];
+
+    return filteredInterface as IGifflarInterface;
   }
 
   writeAll(): string {
-    const _code = this._writeContracts(this.contracts);
+    const _code = this._writeTopLevelModels(this.topLevelModels);
     this.code = _code;
     return this.code;
   }
 
-  write(contracts: Array<IGifflarContract>): string {
-    const _code = this._writeContracts(contracts);
+  write(topLevelModels: Array<ITopLevel>): string {
+    const _code = this._writeTopLevelModels(topLevelModels);
     this.code = _code;
     return this.code;
   }
@@ -85,8 +153,8 @@ class GifflarManager implements IGifflarManager {
     }
 
     // Updating the contract object
-    this.contracts.map((gContract: IGifflarContract) => {
-      const json = this.json.contracts.jsons[gContract.contract.name];
+    this.topLevelModels.map((gContract: ITopLevel) => {
+      const json = this.json.contracts.jsons[gContract.getName()];
       if (json) {
         // eslint-disable-next-line no-param-reassign
         gContract.json = json;
@@ -99,8 +167,8 @@ class GifflarManager implements IGifflarManager {
 
   compile(contractName: string, callback: (errors: Array<any>) => void): void {
     // Filtering the contract by contract name
-    const contract = this.contracts.filter((gContract) => {
-      return gContract.contract.name === contractName;
+    const contract = this.topLevelModels.filter((gTopLevel) => {
+      return gTopLevel.getName() === contractName;
     })[0];
 
     // If contract object is valid
@@ -116,6 +184,7 @@ class GifflarManager implements IGifflarManager {
       if (json.errors && callback) {
         callback(json.errors);
       }
+
       return json;
     }
 
