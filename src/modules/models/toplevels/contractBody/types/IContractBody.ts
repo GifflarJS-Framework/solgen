@@ -7,7 +7,10 @@ import { IOutput } from "@models/definitions/function/types/IOutput";
 import { IModifier } from "@models/definitions/modifier/types/IModifier";
 import { IStateMapping } from "@models/definitions/stateMapping/types/IStateMapping";
 import { IStateVariable } from "@models/definitions/stateVariable/types/IStateVariable";
+import { IStruct } from "@models/definitions/struct/types/IStruct";
 import { IUsing } from "@models/definitions/using/types/IUsing";
+import { ICreateMappingDTO } from "@models/statements/mapping/types/ICreateMappingDTO";
+import { ICreateVariableDTO } from "@models/statements/variable/types/ICreateVariableDTO";
 import { IMappingKeyType } from "modules/types/IMappingKeyType";
 import { IMappingTypeName } from "modules/types/IMappingTypeName";
 import { ITypeName } from "modules/types/ITypeName";
@@ -51,4 +54,10 @@ export interface IContractBody {
     inputs?: Array<IInput>,
     outputs?: Array<IOutput>
   ): IFunction;
+
+  createStruct(
+    identifier: string,
+    variables: Array<ICreateVariableDTO>,
+    mappings: Array<ICreateMappingDTO>
+  ): IStruct;
 }

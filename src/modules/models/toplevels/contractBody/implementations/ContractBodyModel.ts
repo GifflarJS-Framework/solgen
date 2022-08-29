@@ -14,8 +14,12 @@ import { IStateMapping } from "@models/definitions/stateMapping/types/IStateMapp
 import { IStateMappingModel } from "@models/definitions/stateMapping/types/IStateMappingModel";
 import { IStateVariable } from "@models/definitions/stateVariable/types/IStateVariable";
 import { IStateVariableModel } from "@models/definitions/stateVariable/types/IStateVariableModel";
+import { IStruct } from "@models/definitions/struct/types/IStruct";
+import { IStructModel } from "@models/definitions/struct/types/IStructModel";
 import { IUsing } from "@models/definitions/using/types/IUsing";
 import { IUsingModel } from "@models/definitions/using/types/IUsingModel";
+import { ICreateMappingDTO } from "@models/statements/mapping/types/ICreateMappingDTO";
+import { ICreateVariableDTO } from "@models/statements/variable/types/ICreateVariableDTO";
 import helpers from "@utils/helpers";
 import { IFunctionStateMutabilityType } from "modules/types/IFunctionStateMutabilityType";
 import { IMappingKeyType } from "modules/types/IMappingKeyType";
@@ -45,12 +49,15 @@ class ContractBodyModel implements IContractBodyModel {
     @inject("StateMappingModel")
     private stateMappingModel: IStateMappingModel,
     @inject("EnumModel")
-    private enumModel: IEnumModel
+    private enumModel: IEnumModel,
+    @inject("StructModel")
+    private structModel: IStructModel
   ) {}
 
   execute(): IContractBody {
     const body: IContractBodyItem = {
       usings: [],
+      structs: [],
       variables: [],
       mappings: [],
       events: [],
@@ -74,6 +81,21 @@ class ContractBodyModel implements IContractBodyModel {
       if (!body.events) body.events = [];
       body.events.push(event);
       return event;
+    };
+
+    const createStruct = (
+      identifier: string,
+      variables: Array<ICreateVariableDTO>,
+      mappings: Array<ICreateMappingDTO>
+    ): IStruct => {
+      const struct = this.structModel.execute({
+        identifier,
+        variables,
+        mappings,
+      });
+      if (!body.structs) body.structs = [];
+      body.structs.push(struct);
+      return struct;
     };
 
     const createEnum = (
@@ -180,6 +202,7 @@ class ContractBodyModel implements IContractBodyModel {
         createCustomError,
         createMapping,
         createEnum,
+        createStruct,
       };
 
       return _obj;

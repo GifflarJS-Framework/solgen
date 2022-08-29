@@ -9,10 +9,9 @@ describe("Struct Writer", () => {
   it("Writing", () => {
     const struct = structModel.execute({
       identifier: "MyType",
-      variables: [{ statement: "variable", type: "string", name: "name" }],
+      variables: [{ type: "string", name: "name" }],
       mappings: [
         {
-          statement: "mapping",
           type: { regularType: "address" },
           typeName: { regularType: "uint256" },
           name: "balances",
