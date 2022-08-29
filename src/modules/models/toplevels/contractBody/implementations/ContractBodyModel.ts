@@ -8,14 +8,17 @@ import { IInput } from "@models/definitions/function/types/IInput";
 import { IOutput } from "@models/definitions/function/types/IOutput";
 import { IModifier } from "@models/definitions/modifier/types/IModifier";
 import { IModifierModel } from "@models/definitions/modifier/types/IModifierModel";
+import { IStateMapping } from "@models/definitions/stateMapping/types/IStateMapping";
+import { IStateMappingModel } from "@models/definitions/stateMapping/types/IStateMappingModel";
 import { IStateVariable } from "@models/definitions/stateVariable/types/IStateVariable";
 import { IStateVariableModel } from "@models/definitions/stateVariable/types/IStateVariableModel";
 import { IUsing } from "@models/definitions/using/types/IUsing";
 import { IUsingModel } from "@models/definitions/using/types/IUsingModel";
 import helpers from "@utils/helpers";
 import { IFunctionStateMutabilityType } from "modules/types/IFunctionStateMutabilityType";
+import { IMappingKeyType } from "modules/types/IMappingKeyType";
+import { IMappingTypeName } from "modules/types/IMappingTypeName";
 import { ITypeName } from "modules/types/ITypeName";
-import { IVariableOptions } from "modules/types/IVariableOptions";
 import { IVisibility } from "modules/types/IVisibility";
 import { inject, injectable } from "tsyringe";
 import { IContractBody } from "../types/IContractBody";
@@ -36,7 +39,9 @@ class ContractBodyModel implements IContractBodyModel {
     @inject("ModifierModel")
     private modifierModel: IModifierModel,
     @inject("CustomErrorModel")
-    private customErrorModel: ICustomErrorModel
+    private customErrorModel: ICustomErrorModel,
+    @inject("StateMappingModel")
+    private stateMappingModel: IStateMappingModel
   ) {}
 
   execute(): IContractBody {
@@ -63,6 +68,22 @@ class ContractBodyModel implements IContractBodyModel {
       const event = this.eventModel.execute({ name, inputs });
       body.events.push(event);
       return event;
+    };
+
+    const createMapping = (
+      type: IMappingKeyType,
+      typeName: IMappingTypeName,
+      name: string,
+      scope?: IVisibility
+    ): IStateMapping => {
+      const mapping = this.stateMappingModel.execute({
+        type,
+        typeName,
+        name,
+        scope,
+      });
+      body.mappings.push(mapping);
+      return mapping;
     };
 
     const createCustomError = (
@@ -136,6 +157,7 @@ class ContractBodyModel implements IContractBodyModel {
         createFunction,
         createModifier,
         createCustomError,
+        createMapping,
       };
 
       return _obj;
