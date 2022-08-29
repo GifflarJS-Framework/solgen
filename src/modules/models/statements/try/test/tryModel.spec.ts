@@ -7,20 +7,22 @@ describe("TryModel", () => {
   it("Creating Try", () => {
     const _try = tryModel.execute({
       expression: {
-        statement: "method_call",
-        variable: "MyContract",
-        method: "add",
-        value: "value",
+        methodCall: {
+          variable: "MyContract",
+          method: "add",
+          value: "value",
+        },
       },
       parameters: [{ type: "uint256", name: "arg" }],
     });
     const expected = {
       statement: "try",
       expression: {
-        statement: "method_call",
-        variable: "MyContract",
-        method: "add",
-        value: "value",
+        methodCall: {
+          variable: "MyContract",
+          method: "add",
+          value: "value",
+        },
       },
       parameters: [{ type: "uint256", name: "arg" }],
       content: [],

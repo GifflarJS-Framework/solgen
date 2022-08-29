@@ -1,4 +1,5 @@
 /* eslint-disable no-use-before-define */
+import helpers from "@utils/helpers";
 import { INewContract } from "@models/statements/newcontract/types/INewContract";
 import { IVariable } from "@models/definitions/stateVariable/types/IVariable";
 import { IContent } from "../types/IContent";
@@ -15,7 +16,6 @@ import { IIf } from "@models/statements/if/types/IIf";
 import { ITypeName } from "modules/types/ITypeName";
 import { IContinueModel } from "@models/statements/continue/types/IContinueModel";
 import { IReturnModel } from "@models/statements/return/types/IReturnModel";
-import helpers from "@utils/helpers";
 import { IAssertModel } from "@models/statements/assert/types/IAssertModel";
 import { IBreakModel } from "@models/statements/break/types/IBreakModel";
 import { ICatchModel } from "@models/statements/catch/types/ICatchModel";
@@ -28,9 +28,17 @@ import { IFor } from "@models/statements/for/types/IFor";
 import { IMappingModel } from "@models/statements/mapping/types/IMappingModel";
 import { IMappingKeyType } from "modules/types/IMappingKeyType";
 import { IMappingTypeName } from "modules/types/IMappingTypeName";
+import { IRequireModel } from "@models/statements/require/types/IRequireModel";
+import { IRevertModel } from "@models/statements/revert/types/IRevertModel";
+import { ICustomErrorcall } from "@models/statements/revert/types/ICustomErrorCall";
+import { ITryModel } from "@models/statements/try/types/ITryModel";
+import { ITryExpression } from "@models/statements/try/types/ITryExpression";
+import { IWhileModel } from "@models/statements/while/types/IWhileModel";
+import { IWhile } from "@models/statements/while/types/IWhile";
 
 interface IIfContent extends IIf, IContent {}
 interface IDoWhileContent extends IDoWhile, IContent {}
+interface IWhileContent extends IWhile, IContent {}
 interface IForContent extends IFor, IContent {}
 
 @injectable()
@@ -65,7 +73,15 @@ class ContentModel {
     @inject("ForModel")
     private forModel: IForModel,
     @inject("MappingModel")
-    private mappingModel: IMappingModel
+    private mappingModel: IMappingModel,
+    @inject("RequireModel")
+    private requireModel: IRequireModel,
+    @inject("RevertModel")
+    private revertModel: IRevertModel,
+    @inject("TryModel")
+    private tryModel: ITryModel,
+    @inject("WhileModel")
+    private whileModel: IWhileModel
   ) {}
 
   execute({ stateVars = [] }: ICreateContentDTO): IContent {
@@ -87,6 +103,16 @@ class ContentModel {
     const setBreak = (): IContent => {
       const _break = this.breakModel.execute();
       stack[top].content.push(_break);
+      const contentItem: IContent = _assignFunctions(stack[top]);
+      return contentItem;
+    };
+
+    const setTry = (
+      parameters: Array<IInput>,
+      expression: ITryExpression
+    ): IContent => {
+      const _catch = this.tryModel.execute({ parameters, expression });
+      stack[top].content.push(_catch);
       const contentItem: IContent = _assignFunctions(stack[top]);
       return contentItem;
     };
@@ -192,6 +218,26 @@ class ContentModel {
       return contentItem;
     };
 
+    const setRequire = (condition: string, errorMessage?: string): IContent => {
+      const _require = this.requireModel.execute({ condition, errorMessage });
+      stack[top].content.push(_require);
+      const contentItem: IContent = _assignFunctions(stack[top]);
+      return contentItem;
+    };
+
+    const setRevert = (errorDefinition: {
+      message?: string;
+      customErrorCall?: ICustomErrorcall;
+    }): IContent => {
+      const _revert = this.revertModel.execute({
+        message: errorDefinition.message,
+        customErrorCall: errorDefinition.customErrorCall,
+      });
+      stack[top].content.push(_revert);
+      const contentItem: IContent = _assignFunctions(stack[top]);
+      return contentItem;
+    };
+
     // Decision and loop structures
 
     const beginFor = (
@@ -226,6 +272,14 @@ class ContentModel {
       return newDoWhileContent;
     };
 
+    const beginWhile = (condition: string): IContent => {
+      const newWhile = this.whileModel.execute({ condition });
+      const newWhileContent: IWhileContent = _assignFunctions(newWhile);
+      stack.push(newWhileContent);
+      top += 1;
+      return newWhileContent;
+    };
+
     const beginIf = (condition: string, onElse?: boolean): IContent => {
       const newIf = this.ifModel.execute({ condition, onElse });
       const newIfContent: IIfContent = _assignFunctions(newIf);
@@ -257,9 +311,9 @@ class ContentModel {
       return contentItem;
     };
 
-    const [endIf, endElse, endElseIf, endDoWhile, endFor] = Array<
+    const [endIf, endElse, endElseIf, endDoWhile, endWhile, endFor] = Array<
       () => IContent
-    >(5).fill(_endDecisionStructure);
+    >(6).fill(_endDecisionStructure);
 
     const _assignFunctions = <T>(obj: any): T => {
       const _obj = {
@@ -274,6 +328,7 @@ class ContentModel {
         endElse,
         endDoWhile,
         endFor,
+        endWhile,
         setEventCall,
         setAssignment,
         setVariable,
@@ -285,6 +340,10 @@ class ContentModel {
         setBreak,
         setCatch,
         setMapping,
+        setRequire,
+        setRevert,
+        setTry,
+        beginWhile,
       };
 
       return _obj;

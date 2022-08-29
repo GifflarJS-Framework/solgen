@@ -1,8 +1,7 @@
 import { IInput } from "@models/definitions/function/types/IInput";
-import { IMethodCall } from "@models/statements/methodcall/types/IMethodCall";
-import { INewContract } from "@models/statements/newcontract/types/INewContract";
+import { ITryExpression } from "./ITryExpression";
 
 export interface ICreateTryDTO {
-  expression: INewContract | IMethodCall;
+  expression: ITryExpression;
   parameters: Array<IInput>;
 }
