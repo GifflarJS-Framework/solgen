@@ -12,6 +12,9 @@ import { IContractJson } from "@models/toplevels/contract/types/IContractJson";
 import { IImportModel } from "@models/toplevels/import/types/IImportModel";
 import { IImportWriter } from "@writers/toplevels/importWriter/types/IImportWriter";
 import { IImport } from "@models/toplevels/import/types/IImport";
+import Web3 from "web3";
+import { INetworkConfig } from "@deployer/types/INetworkConfig";
+import { Account } from "web3-core";
 
 @injectable()
 class GifflarContractModel implements IGifflarContractModel {
@@ -83,6 +86,21 @@ class GifflarContractModel implements IGifflarContractModel {
 
       setWeb3: (web3: IWeb3): void => {
         this.deployer.setWeb3(web3);
+      },
+
+      getWeb3: (): Web3 | null | undefined => {
+        return this.deployer.getWeb3();
+      },
+
+      setDeployConfig: (networkConfig: INetworkConfig): Web3 | undefined => {
+        this.deployer.setNetworkConfig(networkConfig);
+        if (!this.deployer.getWeb3()) {
+          return this.deployer.createWeb3(networkConfig);
+        }
+      },
+
+      addSigner: (accountPrivateKey: string): Account => {
+        return this.deployer.addSigner(accountPrivateKey);
       },
 
       deploy: async (
