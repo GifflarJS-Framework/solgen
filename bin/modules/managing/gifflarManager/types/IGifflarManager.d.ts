@@ -4,6 +4,9 @@ import { IImport } from "../../../models/toplevels/import/types/IImport";
 import { Contract } from "web3-eth-contract";
 import { ITopLevel } from "./ITopLevel";
 import { IManagerDeployDTO } from "./IManagerDeployDTO";
+import Web3 from "web3";
+import { INetworkConfig } from "../../../deployer/types/INetworkConfig";
+import { Account } from "web3-core";
 export interface IGifflarManager {
     getCode(): string;
     getCompiledJson(): any;
@@ -20,4 +23,6 @@ export interface IGifflarManager {
     deploy(contractName: string, inputs: IManagerDeployDTO, accountPrivateKey?: string): Promise<Contract>;
     setWeb3(newWeb3: IWeb3): IWeb3;
     getWeb3(): IWeb3 | undefined | null;
+    addSigner(accountPrivateKey: string): Account;
+    setDeployConfig(networkConfig: INetworkConfig): Web3 | undefined;
 }

@@ -35,7 +35,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+var web3_1 = __importDefault(require("web3"));
 var Deployer = /** @class */ (function () {
     function Deployer() {
     }
@@ -46,25 +50,50 @@ var Deployer = /** @class */ (function () {
     Deployer.prototype.getWeb3 = function () {
         return this.web3;
     };
+    Deployer.prototype.setNetworkConfig = function (networkConfig) {
+        this.networkConfig = networkConfig;
+        if (this.web3) {
+            this.web3.setProvider(networkConfig.nodeLink);
+        }
+    };
+    Deployer.prototype.createWeb3 = function () {
+        var web3 = new web3_1.default();
+        this.web3 = web3;
+        if (this.networkConfig) {
+            this.web3.setProvider(this.networkConfig.nodeLink);
+        }
+        return web3;
+    };
+    Deployer.prototype.addSigner = function (accountPrivateKey) {
+        if (!this.web3) {
+            throw new Error("No web3 object configured.");
+        }
+        // Creating account from private key
+        var account = this.web3.eth.accounts.privateKeyToAccount(accountPrivateKey);
+        // Adding account to memory wallet
+        this.web3.eth.accounts.wallet.add(account);
+        return account;
+    };
     Deployer.prototype.deploy = function (inputs, accountPrivateKey) {
+        var _a, _b;
         return __awaiter(this, void 0, void 0, function () {
-            var account, abi, bytecode, args, from, gas, contract, e_1;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var account, abi, bytecode, args, from, gas, gasPrice, nonce, contract, e_1;
+            return __generator(this, function (_c) {
+                switch (_c.label) {
                     case 0:
                         if (!this.web3) {
                             throw new Error("No web3 object configured.");
                         }
-                        _a.label = 1;
+                        _c.label = 1;
                     case 1:
-                        _a.trys.push([1, 3, , 4]);
+                        _c.trys.push([1, 3, , 4]);
                         // Used if there is no account in memory
                         if (accountPrivateKey) {
                             account = this.web3.eth.accounts.privateKeyToAccount(accountPrivateKey);
                             // Adding account to memory wallet
                             this.web3.eth.accounts.wallet.add(account);
                         }
-                        abi = inputs.abi, bytecode = inputs.bytecode, args = inputs.args, from = inputs.from, gas = inputs.gas;
+                        abi = inputs.abi, bytecode = inputs.bytecode, args = inputs.args, from = inputs.from, gas = inputs.gas, gasPrice = inputs.gasPrice, nonce = inputs.nonce;
                         return [4 /*yield*/, new this.web3.eth.Contract(abi)
                                 // Deploy configuration
                                 .deploy({
@@ -72,14 +101,16 @@ var Deployer = /** @class */ (function () {
                                 arguments: args,
                             })
                                 .send({
-                                gas: gas,
-                                from: from,
+                                gas: gas || ((_a = this.networkConfig) === null || _a === void 0 ? void 0 : _a.gas),
+                                gasPrice: gasPrice || ((_b = this.networkConfig) === null || _b === void 0 ? void 0 : _b.gasPrice),
+                                from: from || this.web3.eth.accounts.wallet[0].address,
+                                nonce: nonce,
                             })];
                     case 2:
-                        contract = _a.sent();
+                        contract = _c.sent();
                         return [2 /*return*/, contract];
                     case 3:
-                        e_1 = _a.sent();
+                        e_1 = _c.sent();
                         throw new Error(e_1);
                     case 4: return [2 /*return*/];
                 }

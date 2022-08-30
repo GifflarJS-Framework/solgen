@@ -107,6 +107,15 @@ var GifflarContractModel = /** @class */ (function () {
                 return gContract.json;
             }, setWeb3: function (web3) {
                 _this.deployer.setWeb3(web3);
+            }, getWeb3: function () {
+                return _this.deployer.getWeb3();
+            }, setDeployConfig: function (networkConfig) {
+                _this.deployer.setNetworkConfig(networkConfig);
+                if (!_this.deployer.getWeb3()) {
+                    return _this.deployer.createWeb3(networkConfig);
+                }
+            }, addSigner: function (accountPrivateKey) {
+                return _this.deployer.addSigner(accountPrivateKey);
             }, deploy: function (inputs, accountPrivateKey, web3) { return __awaiter(_this, void 0, void 0, function () {
                 var json, _inputs, _a;
                 return __generator(this, function (_b) {

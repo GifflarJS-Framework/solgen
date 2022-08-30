@@ -14,6 +14,9 @@ import { Contract } from "web3-eth-contract";
 import { ITopLevel } from "../types/ITopLevel";
 import { IGifflarManager } from "../types/IGifflarManager";
 import { IManagerDeployDTO } from "../types/IManagerDeployDTO";
+import { INetworkConfig } from "../../../deployer/types/INetworkConfig";
+import Web3 from "web3";
+import { Account } from "web3-core";
 declare class GifflarManager implements IGifflarManager {
     private importModel;
     private importWriter;
@@ -46,6 +49,8 @@ declare class GifflarManager implements IGifflarManager {
     compile(contractName: string, callback: (errors: Array<any>) => void): void;
     deploy(contractName: string, inputs: IManagerDeployDTO, accountPrivateKey?: string): Promise<Contract>;
     setWeb3(newWeb3: IWeb3): IWeb3;
+    setDeployConfig(networkConfig: INetworkConfig): Web3 | undefined;
+    addSigner(accountPrivateKey: string): Account;
     getWeb3(): IWeb3 | null | undefined;
 }
 export default GifflarManager;

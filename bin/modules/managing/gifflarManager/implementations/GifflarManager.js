@@ -214,6 +214,15 @@ var GifflarManager = /** @class */ (function () {
         this.deployer.setWeb3(newWeb3);
         return newWeb3;
     };
+    GifflarManager.prototype.setDeployConfig = function (networkConfig) {
+        this.deployer.setNetworkConfig(networkConfig);
+        if (!this.deployer.getWeb3()) {
+            return this.deployer.createWeb3(networkConfig);
+        }
+    };
+    GifflarManager.prototype.addSigner = function (accountPrivateKey) {
+        return this.deployer.addSigner(accountPrivateKey);
+    };
     GifflarManager.prototype.getWeb3 = function () {
         return this.deployer.getWeb3();
     };
