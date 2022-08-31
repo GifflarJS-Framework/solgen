@@ -23,11 +23,12 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "declaration": true,
-    "emitDeclarationOnly": false,
     "isolatedModules": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "allowJs": true
+    "allowJs": true,
+    "emitDeclarationOnly": false,
+    "declarationDir": "./types"
   },
   "exclude": ["./bin/index.ts"],
   "include": ["node_modules/@types", "src/**/**.ts"]
