@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "module": "CommonJS",
-    "outDir": "./bin",
+    "outFile": "./types/index.d.ts",
     "rootDir": "./src",
     "strict": true,
     "strictPropertyInitialization": false,
@@ -22,23 +22,13 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-<<<<<<< HEAD
     "declaration": true,
-    "isolatedModules": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "allowJs": true,
-    "emitDeclarationOnly": false,
-    "declarationDir": "./types"
-=======
-    "declaration": false,
     "isolatedModules": false,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "allowJs": true,
-    "emitDeclarationOnly": false
->>>>>>> dev
+    "emitDeclarationOnly": true
   },
   "exclude": ["./bin/index.ts", "src/**/**.spec.ts"],
-  "include": ["node_modules/@types", "src/**/**.ts"]
+  "include": ["node_modules/@types", "src/**/**/types/*.ts"]
 }
