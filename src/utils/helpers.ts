@@ -1,6 +1,6 @@
 // const { exec } = require("child_process");
 
-import { ITypeName } from "modules/types/ITypeName";
+import { ITypeName } from "@modules/types/ITypeName";
 
 interface IObjectParameters {
   keys: Array<string>;

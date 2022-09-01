@@ -5,7 +5,7 @@ import { IInput } from "@models/definitions/function/types/IInput";
 import { IOutput } from "@models/definitions/function/types/IOutput";
 import { IInherits } from "@models/toplevels/inherits/types/IInherits";
 import { IInheritsModel } from "@models/toplevels/inherits/types/IInheritsModel";
-import { IFunctionStateMutabilityType } from "modules/types/IFunctionStateMutabilityType";
+import { IFunctionStateMutabilityType } from "@modules/types/IFunctionStateMutabilityType";
 import { inject, injectable } from "tsyringe";
 import { IInterface } from "../types/IInterface";
 import { IInterfaceItem } from "../types/IInterfaceItem";

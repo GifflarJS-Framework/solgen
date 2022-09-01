@@ -9,6 +9,7 @@
     "baseUrl": "./src",
     "types": ["jest"],
     "paths": {
+      "@modules/*": ["modules/*"],
       "@models/*": ["modules/models/*"],
       "@writers/*": ["modules/writers/*"],
       "@compiler/*": ["modules/compiler/*"],

@@ -1,6 +1,6 @@
 import { IStateMapping } from "@models/definitions/stateMapping/types/IStateMapping";
 import { ICreateNestedMapping } from "@models/statements/mapping/types/ICreateNestedMapping";
-import { IMappingTypeName } from "modules/types/IMappingTypeName";
+import { IMappingTypeName } from "@modules/types/IMappingTypeName";
 import { IStateMappingWriter } from "../types/IStateMappingWriter";
 
 class StateMappingWriter implements IStateMappingWriter {

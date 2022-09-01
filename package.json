@@ -4,7 +4,8 @@
   "description": "A smart contract generator library.",
   "main": "bin/index.js",
   "scripts": {
-    "build": "rm -r bin && tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./bin && tscpaths -p tsconfig.json -s ./src -o ./types",
+    "build": "rm -rf bin && tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./bin",
+    "build-types": "rm -rf types && tsc --project tsconfig.types.json && tscpaths -p tsconfig.types.json -s ./src -o ./types",
     "test": "jest",
     "testunit": "./node_modules/mocha/bin/mocha test/unit/**/*",
     "testfunc": "./node_modules/mocha/bin/mocha test/functional/**/*",

@@ -1,6 +1,6 @@
 import { IContractWriter } from "@writers/toplevels/contractWriter/types/IContractWriter";
-import { ICompiler } from "modules/compiler/types/ICompiler";
-import { IDeployer } from "modules/deployer/types/IDeployer";
+import { ICompiler } from "@modules/compiler/types/ICompiler";
+import { IDeployer } from "@modules/deployer/types/IDeployer";
 import { inject, injectable } from "tsyringe";
 import { IGifflarContract } from "../types/IGifflarContract";
 import { Contract } from "web3-eth-contract";

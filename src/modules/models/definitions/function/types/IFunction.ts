@@ -1,5 +1,5 @@
 import { IContent } from "@models/definitions/content/types/IContent";
-import { ITypeName } from "modules/types/ITypeName";
+import { ITypeName } from "@modules/types/ITypeName";
 import { IFunctionJson } from "./IFunctionJson";
 
 export interface IFunction extends IFunctionJson, IContent {

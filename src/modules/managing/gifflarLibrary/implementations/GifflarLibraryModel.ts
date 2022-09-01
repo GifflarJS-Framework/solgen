@@ -1,4 +1,4 @@
-import { ICompiler } from "modules/compiler/types/ICompiler";
+import { ICompiler } from "@modules/compiler/types/ICompiler";
 import { inject, injectable } from "tsyringe";
 import { IGifflarLibrary } from "../types/IGifflarLibrary";
 import { ILibraryJson } from "@models/toplevels/library/types/ILibraryJson";

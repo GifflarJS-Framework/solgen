@@ -1,6 +1,6 @@
 import { INewContract } from "@models/statements/newcontract/types/INewContract";
-import { IVariableStateMutabilityType } from "modules/types/IVariableStateMutabilityType";
-import { IVisibility } from "modules/types/IVisibility";
+import { IVariableStateMutabilityType } from "@modules/types/IVariableStateMutabilityType";
+import { IVisibility } from "@modules/types/IVisibility";
 
 export interface ICreateStateVariableDTO {
   type: string;

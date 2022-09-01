@@ -8,8 +8,8 @@ import { IGifflarLibraryModel } from "@managing/gifflarLibrary/types/IGifflarLib
 import { IImport } from "@models/toplevels/import/types/IImport";
 import { IImportModel } from "@models/toplevels/import/types/IImportModel";
 import { IImportWriter } from "@writers/toplevels/importWriter/types/IImportWriter";
-import { ICompiler } from "modules/compiler/types/ICompiler";
-import { IDeployer } from "modules/deployer/types/IDeployer";
+import { ICompiler } from "@modules/compiler/types/ICompiler";
+import { IDeployer } from "@modules/deployer/types/IDeployer";
 import { inject, injectable } from "tsyringe";
 import { Contract } from "web3-eth-contract";
 import { ITopLevel } from "../types/ITopLevel";

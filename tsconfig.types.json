@@ -2,13 +2,14 @@
   "compilerOptions": {
     "target": "es5",
     "module": "CommonJS",
-    "outFile": "./types/index.d.ts",
+    "outDir": "./bin",
     "rootDir": "./src",
     "strict": true,
     "strictPropertyInitialization": false,
     "baseUrl": "./src",
     "types": ["jest"],
     "paths": {
+      "@modules/*": ["modules/*"],
       "@models/*": ["modules/models/*"],
       "@writers/*": ["modules/writers/*"],
       "@compiler/*": ["modules/compiler/*"],
@@ -27,7 +28,8 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "allowJs": true,
-    "emitDeclarationOnly": true
+    "emitDeclarationOnly": true,
+    "declarationDir": "./types"
   },
   "exclude": ["./bin/index.ts", "src/**/**.spec.ts"],
   "include": ["node_modules/@types", "src/**/**/types/*.ts"]
