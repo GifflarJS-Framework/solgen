@@ -16,7 +16,6 @@ export interface IContract extends IContractJson, IContractBody {
     createEvent(name: string, inputs: Array<IInput>): IEvent;
     createVariable(type: ITypeName, name: string, scope: string, value?: string, options?: IVariableOptions): IStateVariable;
     createConstructor(scope: string, inputs?: Array<IInput>, outputs?: Array<IOutput>): IFunction;
-    createFunction(name: string, scope: string, inputs?: Array<IInput>, outputs?: Array<IOutput>): IFunction;
     createFallback(isPayable?: boolean): IFallback;
     createReceive(): IReceive;
     toString(): string;
