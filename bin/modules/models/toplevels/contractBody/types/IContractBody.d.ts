@@ -11,6 +11,7 @@ import { IStruct } from "../../../definitions/struct/types/IStruct";
 import { IUsing } from "../../../definitions/using/types/IUsing";
 import { ICreateMappingDTO } from "../../../statements/mapping/types/ICreateMappingDTO";
 import { ICreateVariableDTO } from "../../../statements/variable/types/ICreateVariableDTO";
+import { IFunctionStateMutabilityType } from "../../../../types/IFunctionStateMutabilityType";
 import { IMappingKeyType } from "../../../../types/IMappingKeyType";
 import { IMappingTypeName } from "../../../../types/IMappingTypeName";
 import { ITypeName } from "../../../../types/ITypeName";
@@ -28,6 +29,6 @@ export interface IContractBody {
     createEnum(identifier: string, identifiersOptions: string[]): IEnum;
     createMapping(type: IMappingKeyType, typeName: IMappingTypeName, name: string, scope?: IVisibility): IStateMapping;
     createVariable(type: ITypeName, name: string, scope: string, value?: string): IStateVariable;
-    createFunction(name: string, scope: string, inputs?: Array<IInput>, outputs?: Array<IOutput>): IFunction;
+    createFunction(name: string, scope: string, inputs?: Array<IInput>, outputs?: Array<IOutput>, stateMutability?: IFunctionStateMutabilityType): IFunction;
     createStruct(identifier: string, variables: Array<ICreateVariableDTO>, mappings: Array<ICreateMappingDTO>): IStruct;
 }
