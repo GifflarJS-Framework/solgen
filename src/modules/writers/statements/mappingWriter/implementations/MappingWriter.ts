@@ -1,6 +1,6 @@
 import { ICreateNestedMapping } from "@models/statements/mapping/types/ICreateNestedMapping";
 import { IMapping } from "@models/statements/mapping/types/IMapping";
-import { IMappingTypeName } from "modules/types/IMappingTypeName";
+import { IMappingTypeName } from "@modules/types/IMappingTypeName";
 import { IMappingWriter } from "../types/IMappingWriter";
 
 class MappingWriter implements IMappingWriter {

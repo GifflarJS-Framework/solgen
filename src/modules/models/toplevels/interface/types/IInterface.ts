@@ -3,7 +3,7 @@ import { IFunction } from "@models/definitions/function/types/IFunction";
 import { IInput } from "@models/definitions/function/types/IInput";
 import { IOutput } from "@models/definitions/function/types/IOutput";
 import { IInherits } from "@models/toplevels/inherits/types/IInherits";
-import { IFunctionStateMutabilityType } from "modules/types/IFunctionStateMutabilityType";
+import { IFunctionStateMutabilityType } from "@modules/types/IFunctionStateMutabilityType";
 import { IInterfaceJson } from "./IInterfaceJson";
 
 export interface IInterface extends IInterfaceJson {

@@ -1,10 +1,10 @@
 import { IInput } from "@models/definitions/function/types/IInput";
 import { ICustomErrorcall } from "@models/statements/revert/types/ICustomErrorCall";
 import { ITryExpression } from "@models/statements/try/types/ITryExpression";
-import { IDataLocation } from "modules/types/IDataLocation";
-import { IMappingKeyType } from "modules/types/IMappingKeyType";
-import { IMappingTypeName } from "modules/types/IMappingTypeName";
-import { ITypeName } from "modules/types/ITypeName";
+import { IDataLocation } from "@modules/types/IDataLocation";
+import { IMappingKeyType } from "@modules/types/IMappingKeyType";
+import { IMappingTypeName } from "@modules/types/IMappingTypeName";
+import { ITypeName } from "@modules/types/ITypeName";
 import { IStackItem } from "./IStackItem";
 
 export interface IContent extends IStackItem {

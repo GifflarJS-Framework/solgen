@@ -11,3 +11,4 @@ coverage/
 docs/
 dist/
 bin/
+/types

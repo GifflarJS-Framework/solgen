@@ -1,6 +1,6 @@
 import { IContentModel } from "@models/definitions/content/types/IContentModel";
 import helpers from "@utils/helpers";
-import { ITypeName } from "modules/types/ITypeName";
+import { ITypeName } from "@modules/types/ITypeName";
 import { inject, injectable } from "tsyringe";
 import { ICreateFunctionDTO } from "../types/ICreateFunctionDTO";
 import { IFunction } from "../types/IFunction";
