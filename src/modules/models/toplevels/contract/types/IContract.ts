@@ -32,13 +32,6 @@ export interface IContract extends IContractJson, IContractBody {
     outputs?: Array<IOutput>
   ): IFunction;
 
-  createFunction(
-    name: string,
-    scope: string,
-    inputs?: Array<IInput>,
-    outputs?: Array<IOutput>
-  ): IFunction;
-
   createFallback(isPayable?: boolean): IFallback;
 
   createReceive(): IReceive;
