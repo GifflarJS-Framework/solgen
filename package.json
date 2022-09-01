@@ -12,11 +12,11 @@
     "docs": "jsdoc -c jsdoc-config.json"
   },
   "bin": {
-    "gifflar": "./bin/index.js"
+    "gifflar-library": "./bin/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/gifflarsuite/gifflar"
+    "url": "git+https://gitlab.com/gifflarsuite/gifflar-library"
   },
   "keywords": [
     "blockchain",
