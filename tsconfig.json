@@ -23,7 +23,7 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "declaration": false,
+    "declaration": true,
     "isolatedModules": false,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
