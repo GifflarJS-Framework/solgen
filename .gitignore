@@ -10,9 +10,4 @@ yarn-error.log
 coverage/
 docs/
 dist/
-<<<<<<< HEAD
-# bin/
-=======
-bin/
 /types
->>>>>>> dev
