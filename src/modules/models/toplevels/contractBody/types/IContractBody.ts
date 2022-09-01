@@ -11,6 +11,7 @@ import { IStruct } from "@models/definitions/struct/types/IStruct";
 import { IUsing } from "@models/definitions/using/types/IUsing";
 import { ICreateMappingDTO } from "@models/statements/mapping/types/ICreateMappingDTO";
 import { ICreateVariableDTO } from "@models/statements/variable/types/ICreateVariableDTO";
+import { IFunctionStateMutabilityType } from "@modules/types/IFunctionStateMutabilityType";
 import { IMappingKeyType } from "@modules/types/IMappingKeyType";
 import { IMappingTypeName } from "@modules/types/IMappingTypeName";
 import { ITypeName } from "@modules/types/ITypeName";
@@ -52,7 +53,8 @@ export interface IContractBody {
     name: string,
     scope: string,
     inputs?: Array<IInput>,
-    outputs?: Array<IOutput>
+    outputs?: Array<IOutput>,
+    stateMutability?: IFunctionStateMutabilityType
   ): IFunction;
 
   createStruct(
