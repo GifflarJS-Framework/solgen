@@ -11,7 +11,11 @@ export interface IContent extends IStackItem {
   setAssert(condition: string): IContent;
   setBreak(): IContent;
   setVariable(type: ITypeName, name: string, value?: string): IContent;
-  setMethodCall(variable: string, method: string, value: string): IContent;
+  setMethodCall(
+    variable: string,
+    method: string,
+    args: Array<string>
+  ): IContent;
   setAssignment(variable: string, expression: string | undefined): IContent;
   setEventCall(name: string, inputNames: Array<string>): IContent;
   setContractVariable(

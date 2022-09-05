@@ -156,12 +156,12 @@ class ContentModel {
     const setMethodCall = (
       variable: string,
       method: string,
-      value: string
+      args: Array<string>
     ): IContent => {
       const newMethodCall = this.methodCallModel.execute({
         variable,
         method,
-        value,
+        args,
       });
       stack[top].content.push(newMethodCall);
       const contentItem: IContent = _assignFunctions(stack[top]);

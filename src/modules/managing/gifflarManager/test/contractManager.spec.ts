@@ -100,7 +100,7 @@ describe("Contract Manager Writer", () => {
       .createFunction("createContract", "public")
       .setInput({ regularType: "address" }, "_owner")
       .setContractVariable("newContract", "DHT11", ["_owner"])
-      .setMethodCall("contracts", "push", "newContract")
+      .setMethodCall("contracts", "push", ["newContract"])
       .setAssignment("counter", "counter + 1");
 
     gContractController

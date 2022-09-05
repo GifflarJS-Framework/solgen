@@ -1,6 +1,7 @@
 import { ICreateNestedMapping } from "@models/statements/mapping/types/ICreateNestedMapping";
 import { IMapping } from "@models/statements/mapping/types/IMapping";
 import { IMappingTypeName } from "@modules/types/IMappingTypeName";
+import helpers from "@utils/helpers";
 import { IMappingWriter } from "../types/IMappingWriter";
 
 class MappingWriter implements IMappingWriter {
@@ -10,7 +11,7 @@ class MappingWriter implements IMappingWriter {
     if (!mappingTypeName) {
       // If an array
       if (typeName.array) {
-        mappingTypeName = `${typeName.array.arrayType}[${
+        mappingTypeName = `${helpers.writeTypeName(typeName.array.arrayType)}[${
           typeName.array.arraySize || ""
         }]`;
       }

@@ -204,7 +204,7 @@
               "statement": "method_call",
               "variable": "contracts",
               "method": "push",
-              "value": "newContract"
+              "args": ["newContract"]
             },
             {
               "statement": "assignment",
