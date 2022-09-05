@@ -1,5 +1,5 @@
 import { IStackItem } from "@models/definitions/content/types/IStackItem";
-import { IInput } from "@models/definitions/function/types/IInput";
+import { IInput } from "@modules/types/IInput";
 import { ITryExpression } from "./ITryExpression";
 
 export interface ITry extends IStackItem {

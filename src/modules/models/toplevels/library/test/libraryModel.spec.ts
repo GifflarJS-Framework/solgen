@@ -34,8 +34,8 @@ describe("Test Library", () => {
 
     // Creating events
     libraryModelInstance.createEvent("transferedOwnership", [
-      { name: "oldOwner", type: "address" },
-      { name: "newOwner", type: "address" },
+      { name: "oldOwner", type: { regularType: "address" } },
+      { name: "newOwner", type: { regularType: "address" } },
     ]);
 
     // Creating a new function

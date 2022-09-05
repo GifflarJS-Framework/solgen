@@ -6,8 +6,8 @@ import { ICreateFunctionDTO } from "../types/ICreateFunctionDTO";
 import { IFunction } from "../types/IFunction";
 import { IFunctionJson } from "../types/IFunctionJson";
 import { IFunctionModel } from "../types/IFunctionModel";
-import { IInput } from "../types/IInput";
-import { IOutput } from "../types/IOutput";
+import { IInput } from "@modules/types/IInput";
+import { IOutput } from "@modules/types/IOutput";
 
 @injectable()
 class FunctionModel implements IFunctionModel {

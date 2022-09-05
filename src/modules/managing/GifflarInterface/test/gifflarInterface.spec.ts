@@ -15,8 +15,8 @@ describe("GifflarInterface", () => {
 
     // Creating events
     gInterface.createEvent("transferedOwnership", [
-      { name: "oldOwner", type: "address" },
-      { name: "newOwner", type: "address" },
+      { name: "oldOwner", type: { regularType: "address" } },
+      { name: "newOwner", type: { regularType: "address" } },
     ]);
 
     gInterface
@@ -54,8 +54,8 @@ describe("GifflarInterface", () => {
 
     // Creating events
     gInterface.createEvent("transferedOwnership", [
-      { name: "oldOwner", type: "address" },
-      { name: "newOwner", type: "address" },
+      { name: "oldOwner", type: { regularType: "address" } },
+      { name: "newOwner", type: { regularType: "address" } },
     ]);
 
     gInterface

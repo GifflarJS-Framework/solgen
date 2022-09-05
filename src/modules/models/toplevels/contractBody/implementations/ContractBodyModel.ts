@@ -6,8 +6,6 @@ import { IEvent } from "@models/definitions/event/types/IEvent";
 import IEventModel from "@models/definitions/event/types/IEventModel";
 import { IFunction } from "@models/definitions/function/types/IFunction";
 import { IFunctionModel } from "@models/definitions/function/types/IFunctionModel";
-import { IInput } from "@models/definitions/function/types/IInput";
-import { IOutput } from "@models/definitions/function/types/IOutput";
 import { IModifier } from "@models/definitions/modifier/types/IModifier";
 import { IModifierModel } from "@models/definitions/modifier/types/IModifierModel";
 import { IStateMapping } from "@models/definitions/stateMapping/types/IStateMapping";
@@ -30,6 +28,8 @@ import { inject, injectable } from "tsyringe";
 import { IContractBody } from "../types/IContractBody";
 import { IContractBodyItem } from "../types/IContractBodyItem";
 import { IContractBodyModel } from "../types/IContractBodyModel";
+import { ITypeNameInput } from "@modules/types/ITypeNameInput";
+import { ITypeNameOutput } from "@modules/types/ITypeNameOutput";
 
 @injectable()
 class ContractBodyModel implements IContractBodyModel {
@@ -76,8 +76,14 @@ class ContractBodyModel implements IContractBodyModel {
       return using;
     };
 
-    const createEvent = (name: string, inputs: Array<IInput>): IEvent => {
-      const event = this.eventModel.execute({ name, inputs });
+    const createEvent = (
+      name: string,
+      inputs: Array<ITypeNameInput> = []
+    ): IEvent => {
+      const event = this.eventModel.execute({
+        name,
+        inputs: helpers.castITypeNameInputsToInputs(inputs),
+      });
       if (!body.events) body.events = [];
       body.events.push(event);
       return event;
@@ -127,9 +133,12 @@ class ContractBodyModel implements IContractBodyModel {
 
     const createCustomError = (
       name: string,
-      args: Array<IInput>
+      args: Array<ITypeNameInput>
     ): ICustomError => {
-      const customError = this.customErrorModel.execute({ name, args });
+      const customError = this.customErrorModel.execute({
+        name,
+        args: helpers.castITypeNameInputsToInputs(args),
+      });
       if (!body.customErrors) body.customErrors = [];
       body.customErrors.push(customError);
       return customError;
@@ -137,12 +146,12 @@ class ContractBodyModel implements IContractBodyModel {
 
     const createModifier = (
       title: string,
-      args: Array<IInput>,
+      args: Array<ITypeNameInput>,
       options: { isOverriding?: boolean; isVirtual?: boolean }
     ): IModifier => {
       const modifier = this.modifierModel.execute({
         title,
-        args,
+        args: helpers.castITypeNameInputsToInputs(args),
         isOverriding: options.isOverriding,
         isVirtual: options.isVirtual,
         stateVars: body.variables,
@@ -172,15 +181,15 @@ class ContractBodyModel implements IContractBodyModel {
     const createFunction = (
       name: string,
       scope: string,
-      inputs: Array<IInput>,
-      outputs: Array<IOutput>,
+      inputs: Array<ITypeNameInput> = [],
+      outputs: Array<ITypeNameOutput> = [],
       stateMutability?: IFunctionStateMutabilityType
     ): IFunction => {
       const _function = this.functionModel.execute({
         name,
         scope,
-        inputs,
-        outputs,
+        inputs: helpers.castITypeNameInputsToInputs(inputs),
+        outputs: helpers.castITypeNameOutputsToOutputs(outputs),
         isConstructor: false,
         stateVars: body.variables,
         stateMutability,

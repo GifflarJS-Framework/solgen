@@ -36,12 +36,12 @@ describe("Gifflar Contract", () => {
 
     // Creating events
     gContract.createEvent("temperatureOverflow", [
-      { name: "value1", type: "uint256" },
-      { name: "max_value1", type: "uint256" },
+      { name: "value1", type: { regularType: "uint256" } },
+      { name: "max_value1", type: { regularType: "uint256" } },
     ]);
     gContract.createEvent("temperatureUnderflow", [
-      { name: "value1", type: "uint256" },
-      { name: "min_value1", type: "uint256" },
+      { name: "value1", type: { regularType: "uint256" } },
+      { name: "min_value1", type: { regularType: "uint256" } },
     ]);
 
     // Creating constructor

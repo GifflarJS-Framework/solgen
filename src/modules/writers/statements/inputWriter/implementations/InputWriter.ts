@@ -1,4 +1,4 @@
-import { IInput } from "@models/definitions/function/types/IInput";
+import { IInput } from "@modules/types/IInput";
 import { IInputWriter } from "../types/IInputWriter";
 
 class InputWriter implements IInputWriter {
