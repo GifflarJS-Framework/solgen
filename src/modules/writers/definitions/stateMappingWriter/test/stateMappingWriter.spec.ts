@@ -26,7 +26,7 @@ describe("State MappingWriter", () => {
     const mapping = mappingModel.execute({
       name: "myMapping",
       type: { customType: "User" },
-      typeName: { array: { arrayType: "address" } },
+      typeName: { array: { arrayType: { regularType: "address" } } },
       scope: "private",
     });
 
@@ -40,7 +40,9 @@ describe("State MappingWriter", () => {
     const mapping = mappingModel.execute({
       name: "myMapping",
       type: { customType: "User" },
-      typeName: { array: { arrayType: "address", arraySize: 5 } },
+      typeName: {
+        array: { arrayType: { regularType: "address" }, arraySize: 5 },
+      },
       scope: "private",
     });
 
@@ -79,7 +81,7 @@ describe("State MappingWriter", () => {
           typeName: {
             nestedMapping: {
               type: { regularType: "address" },
-              typeName: { array: { arrayType: "uint256" } },
+              typeName: { array: { arrayType: { regularType: "uint256" } } },
             },
           },
         },
