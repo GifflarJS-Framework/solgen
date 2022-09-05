@@ -1,6 +1,6 @@
 {
   "name": "gifflar-library",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha",
   "description": "A smart contract generator library.",
   "main": "bin/index.js",
   "scripts": {
