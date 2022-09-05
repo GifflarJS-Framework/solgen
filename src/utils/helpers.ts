@@ -33,8 +33,10 @@ const helpers = {
   writeTypeName: (type: ITypeName): string => {
     let _type: string | undefined = type.regularType;
     if (type.customType) _type = type.customType;
-    if (type.array)
-      _type = `${type.array.arrayType}[${type.array.arraySize || ""}]`;
+    if (type.array) {
+      const _arrayType = helpers.writeTypeName(type.array.arrayType);
+      _type = `${_arrayType}[${type.array.arraySize || ""}]`;
+    }
     if (!_type) throw new Error("Type is not defined");
     return _type;
   },

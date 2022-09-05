@@ -5,6 +5,7 @@ contract DHT11{
 address public manager;
 string public name;
 uint256 public value1;
+address[][] public value2;
 uint256 public max_value1;
 uint256 public min_value1;
 

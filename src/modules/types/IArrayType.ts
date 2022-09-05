@@ -1,6 +1,6 @@
-import { IElementaryTypeName } from "./IElementaryTypeName";
+import { ITypeName } from "./ITypeName";
 
 export interface IArrayType {
-  arrayType: IElementaryTypeName;
+  arrayType: ITypeName;
   arraySize?: number;
 }
