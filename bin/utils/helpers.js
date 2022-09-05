@@ -20,11 +20,33 @@ var helpers = {
         var _type = type.regularType;
         if (type.customType)
             _type = type.customType;
-        if (type.array)
-            _type = "".concat(type.array.arrayType, "[").concat(type.array.arraySize || "", "]");
+        if (type.array) {
+            var _arrayType = helpers.writeTypeName(type.array.arrayType);
+            _type = "".concat(_arrayType, "[").concat(type.array.arraySize || "", "]");
+        }
         if (!_type)
             throw new Error("Type is not defined");
         return _type;
+    },
+    castITypeNameInputsToInputs: function (typeNameInputs) {
+        // Casting ITypeNameInput to IInput
+        var inputs = typeNameInputs.map(function (p) {
+            return {
+                name: p.name,
+                type: helpers.writeTypeName(p.type),
+            };
+        });
+        return inputs;
+    },
+    castITypeNameOutputsToOutputs: function (typeNameOutputs) {
+        // Casting ITypeNameOutput to IOutput
+        var outputs = typeNameOutputs.map(function (p) {
+            return {
+                name: p.name,
+                type: helpers.writeTypeName(p.type),
+            };
+        });
+        return outputs;
     },
     getCommaExpression: function (list) {
         var str = "";

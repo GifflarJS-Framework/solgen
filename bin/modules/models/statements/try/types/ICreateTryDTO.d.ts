@@ -1,4 +1,4 @@
-import { IInput } from "../../../definitions/function/types/IInput";
+import { IInput } from "../../../../types/IInput";
 import { ITryExpression } from "./ITryExpression";
 export interface ICreateTryDTO {
     expression: ITryExpression;

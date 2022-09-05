@@ -1,5 +1,5 @@
 export interface ICreateMethodCallDTO {
     variable: string;
     method: string;
-    value: string;
+    args: Array<string>;
 }

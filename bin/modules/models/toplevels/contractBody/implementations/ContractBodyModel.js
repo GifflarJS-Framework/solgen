@@ -52,7 +52,11 @@ var ContractBodyModel = /** @class */ (function () {
             return using;
         };
         var createEvent = function (name, inputs) {
-            var event = _this.eventModel.execute({ name: name, inputs: inputs });
+            if (inputs === void 0) { inputs = []; }
+            var event = _this.eventModel.execute({
+                name: name,
+                inputs: helpers_1.default.castITypeNameInputsToInputs(inputs),
+            });
             if (!body.events)
                 body.events = [];
             body.events.push(event);
@@ -89,7 +93,10 @@ var ContractBodyModel = /** @class */ (function () {
             return mapping;
         };
         var createCustomError = function (name, args) {
-            var customError = _this.customErrorModel.execute({ name: name, args: args });
+            var customError = _this.customErrorModel.execute({
+                name: name,
+                args: helpers_1.default.castITypeNameInputsToInputs(args),
+            });
             if (!body.customErrors)
                 body.customErrors = [];
             body.customErrors.push(customError);
@@ -98,7 +105,7 @@ var ContractBodyModel = /** @class */ (function () {
         var createModifier = function (title, args, options) {
             var modifier = _this.modifierModel.execute({
                 title: title,
-                args: args,
+                args: helpers_1.default.castITypeNameInputsToInputs(args),
                 isOverriding: options.isOverriding,
                 isVirtual: options.isVirtual,
                 stateVars: body.variables,
@@ -121,11 +128,13 @@ var ContractBodyModel = /** @class */ (function () {
             return variable;
         };
         var createFunction = function (name, scope, inputs, outputs, stateMutability) {
+            if (inputs === void 0) { inputs = []; }
+            if (outputs === void 0) { outputs = []; }
             var _function = _this.functionModel.execute({
                 name: name,
                 scope: scope,
-                inputs: inputs,
-                outputs: outputs,
+                inputs: helpers_1.default.castITypeNameInputsToInputs(inputs),
+                outputs: helpers_1.default.castITypeNameOutputsToOutputs(outputs),
                 isConstructor: false,
                 stateVars: body.variables,
                 stateMutability: stateMutability,

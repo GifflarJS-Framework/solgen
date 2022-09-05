@@ -22,8 +22,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var tsyringe_1 = require("tsyringe");
+var helpers_1 = __importDefault(require("../../../../../utils/helpers"));
 var ContractModel = /** @class */ (function () {
     function ContractModel(functionModel, inheritsModel, contractBodyModel, fallbackModel, receiveModel) {
         this.functionModel = functionModel;
@@ -63,13 +67,13 @@ var ContractModel = /** @class */ (function () {
             contract.receive = receive;
             return receive;
         };
-        var createConstructor = function (scope, inputs, outputs) {
+        var createConstructor = function (scope, inputs) {
+            if (inputs === void 0) { inputs = []; }
             var _function = _this.functionModel.execute({
                 name: "",
                 scope: scope,
                 isConstructor: true,
-                inputs: inputs,
-                outputs: outputs,
+                inputs: helpers_1.default.castITypeNameInputsToInputs(inputs),
                 stateVars: contract.variables,
             });
             if (!contract.functions)

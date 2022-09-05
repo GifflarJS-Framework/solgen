@@ -1,29 +1,29 @@
-import { IInput } from "../../function/types/IInput";
 import { ICustomErrorcall } from "../../../statements/revert/types/ICustomErrorCall";
 import { ITryExpression } from "../../../statements/try/types/ITryExpression";
 import { IDataLocation } from "../../../../types/IDataLocation";
 import { IMappingKeyType } from "../../../../types/IMappingKeyType";
 import { IMappingTypeName } from "../../../../types/IMappingTypeName";
 import { ITypeName } from "../../../../types/ITypeName";
+import { ITypeNameInput } from "../../../../types/ITypeNameInput";
 import { IStackItem } from "./IStackItem";
 export interface IContent extends IStackItem {
     setAssert(condition: string): IContent;
     setBreak(): IContent;
     setVariable(type: ITypeName, name: string, value?: string): IContent;
-    setMethodCall(variable: string, method: string, value: string): IContent;
+    setMethodCall(variable: string, method: string, args: Array<string>): IContent;
     setAssignment(variable: string, expression: string | undefined): IContent;
     setEventCall(name: string, inputNames: Array<string>): IContent;
     setContractVariable(variable: string, contractName: string, args: Array<string>): IContent;
     setReturn(expressions: Array<string>): IContent;
     setContinue(): IContent;
     setMapping(type: IMappingKeyType, typeName: IMappingTypeName, name: string): IContent;
-    setCatch(parameters: Array<IInput>, identifier?: string): IContent;
+    setCatch(parameters: Array<ITypeNameInput>, identifier?: string): IContent;
     setRequire(condition: string, errorMessage?: string): IContent;
     setRevert(errorDefinition: {
         message?: string;
         customErrorCall?: ICustomErrorcall;
     }): IContent;
-    setTry(parameters: Array<IInput>, expression: ITryExpression): IContent;
+    setTry(parameters: Array<ITypeNameInput>, expression: ITryExpression): IContent;
     /**
      * Remember to use the "endIf" function when finishing "if" conditions actions,
      * or else all the conditions made will have any effect.
@@ -54,7 +54,7 @@ export interface IContent extends IStackItem {
      * or else all the conditions made will have any effect.
      *  */
     beginFor(variable: {
-        type: string;
+        type: ITypeName;
         name: string;
         value: string;
         dataLocation: IDataLocation;

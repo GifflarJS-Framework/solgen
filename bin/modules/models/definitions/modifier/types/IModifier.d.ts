@@ -1,5 +1,5 @@
 import { IContent } from "../../content/types/IContent";
-import { IInput } from "../../function/types/IInput";
+import { IInput } from "../../../../types/IInput";
 export interface IModifier extends IContent {
     title: string;
     args: Array<IInput>;

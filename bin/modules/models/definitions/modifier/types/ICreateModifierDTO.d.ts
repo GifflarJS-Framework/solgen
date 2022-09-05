@@ -1,4 +1,4 @@
-import { IInput } from "../../function/types/IInput";
+import { IInput } from "../../../../types/IInput";
 import { IVariable } from "../../stateVariable/types/IVariable";
 export interface ICreateModifierDTO {
     title: string;

@@ -33,8 +33,12 @@ var __rest = (this && this.__rest) || function (s, e) {
         }
     return t;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 var tsyringe_1 = require("tsyringe");
+var helpers_1 = __importDefault(require("../../../../../utils/helpers"));
 var InterfaceModel = /** @class */ (function () {
     function InterfaceModel(contractBodyModel, inheritsModel, functionModel) {
         this.contractBodyModel = contractBodyModel;
@@ -57,11 +61,13 @@ var InterfaceModel = /** @class */ (function () {
             return inherits;
         };
         var createFunction = function (name, inputs, outputs, stateMutability) {
+            if (inputs === void 0) { inputs = []; }
+            if (outputs === void 0) { outputs = []; }
             var _function = _this.functionModel.execute({
                 name: name,
                 scope: "external",
-                inputs: inputs,
-                outputs: outputs,
+                inputs: helpers_1.default.castITypeNameInputsToInputs(inputs),
+                outputs: helpers_1.default.castITypeNameOutputsToOutputs(outputs),
                 isConstructor: false,
                 stateMutability: stateMutability,
             });

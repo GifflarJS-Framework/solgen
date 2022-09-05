@@ -1,5 +1,9 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+var helpers_1 = __importDefault(require("../../../../../utils/helpers"));
 var StateMappingWriter = /** @class */ (function () {
     function StateMappingWriter() {
     }
@@ -8,7 +12,7 @@ var StateMappingWriter = /** @class */ (function () {
         if (!mappingTypeName) {
             // If an array
             if (typeName.array) {
-                mappingTypeName = "".concat(typeName.array.arrayType, "[").concat(typeName.array.arraySize || "", "]");
+                mappingTypeName = "".concat(helpers_1.default.writeTypeName(typeName.array.arrayType), "[").concat(typeName.array.arraySize || "", "]");
             }
             // If nested mapping
             if (typeName.nestedMapping) {

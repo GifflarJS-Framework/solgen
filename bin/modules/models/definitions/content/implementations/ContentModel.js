@@ -74,13 +74,23 @@ var ContentModel = /** @class */ (function () {
             return contentItem;
         };
         var setTry = function (parameters, expression) {
-            var _catch = _this.tryModel.execute({ parameters: parameters, expression: expression });
+            // Casting ITypeNameInput to IInput
+            var _parameters = helpers_1.default.castITypeNameInputsToInputs(parameters);
+            var _catch = _this.tryModel.execute({
+                parameters: _parameters,
+                expression: expression,
+            });
             stack[top].content.push(_catch);
             var contentItem = _assignFunctions(stack[top]);
             return contentItem;
         };
         var setCatch = function (parameters, identifier) {
-            var _catch = _this.catchModel.execute({ identifier: identifier, parameters: parameters });
+            // Casting ITypeNameInput to IInput
+            var _parameters = helpers_1.default.castITypeNameInputsToInputs(parameters);
+            var _catch = _this.catchModel.execute({
+                identifier: identifier,
+                parameters: _parameters,
+            });
             stack[top].content.push(_catch);
             var contentItem = _assignFunctions(stack[top]);
             return contentItem;
@@ -96,11 +106,11 @@ var ContentModel = /** @class */ (function () {
             var contentItem = _assignFunctions(stack[top]);
             return contentItem;
         };
-        var setMethodCall = function (variable, method, value) {
+        var setMethodCall = function (variable, method, args) {
             var newMethodCall = _this.methodCallModel.execute({
                 variable: variable,
                 method: method,
-                value: value,
+                args: args,
             });
             stack[top].content.push(newMethodCall);
             var contentItem = _assignFunctions(stack[top]);
@@ -167,7 +177,13 @@ var ContentModel = /** @class */ (function () {
         // Decision and loop structures
         var beginFor = function (variable, condition, expression) {
             var newFor = _this.forModel.execute({
-                variable: __assign({ statement: "variable" }, variable),
+                variable: {
+                    statement: "variable",
+                    type: helpers_1.default.writeTypeName(variable.type),
+                    name: variable.name,
+                    value: variable.value,
+                    dataLocation: variable.dataLocation,
+                },
                 condition: condition,
                 expression: { statement: "expression", value: expression },
             });

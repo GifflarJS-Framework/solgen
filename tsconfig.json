@@ -30,6 +30,6 @@
     "allowJs": true,
     "emitDeclarationOnly": false
   },
-  "exclude": ["./bin/index.ts"],
+  "exclude": ["./bin/index.ts", "src/**/**.spec.ts"],
   "include": ["node_modules/@types", "src/**/**.ts"]
 }

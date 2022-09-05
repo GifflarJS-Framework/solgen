@@ -1,4 +1,4 @@
-import { IOutput } from "../../../../models/definitions/function/types/IOutput";
+import { IOutput } from "../../../../types/IOutput";
 export interface IOutputWriter {
     write(outputs: Array<IOutput>): string;
 }
