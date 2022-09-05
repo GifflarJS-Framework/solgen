@@ -1,17 +1,21 @@
-import { IInput } from "@models/definitions/function/types/IInput";
 import { ICustomErrorcall } from "@models/statements/revert/types/ICustomErrorCall";
 import { ITryExpression } from "@models/statements/try/types/ITryExpression";
 import { IDataLocation } from "@modules/types/IDataLocation";
 import { IMappingKeyType } from "@modules/types/IMappingKeyType";
 import { IMappingTypeName } from "@modules/types/IMappingTypeName";
 import { ITypeName } from "@modules/types/ITypeName";
+import { ITypeNameInput } from "@modules/types/ITypeNameInput";
 import { IStackItem } from "./IStackItem";
 
 export interface IContent extends IStackItem {
   setAssert(condition: string): IContent;
   setBreak(): IContent;
   setVariable(type: ITypeName, name: string, value?: string): IContent;
-  setMethodCall(variable: string, method: string, value: string): IContent;
+  setMethodCall(
+    variable: string,
+    method: string,
+    args: Array<string>
+  ): IContent;
   setAssignment(variable: string, expression: string | undefined): IContent;
   setEventCall(name: string, inputNames: Array<string>): IContent;
   setContractVariable(
@@ -26,13 +30,16 @@ export interface IContent extends IStackItem {
     typeName: IMappingTypeName,
     name: string
   ): IContent;
-  setCatch(parameters: Array<IInput>, identifier?: string): IContent;
+  setCatch(parameters: Array<ITypeNameInput>, identifier?: string): IContent;
   setRequire(condition: string, errorMessage?: string): IContent;
   setRevert(errorDefinition: {
     message?: string;
     customErrorCall?: ICustomErrorcall;
   }): IContent;
-  setTry(parameters: Array<IInput>, expression: ITryExpression): IContent;
+  setTry(
+    parameters: Array<ITypeNameInput>,
+    expression: ITryExpression
+  ): IContent;
 
   /**
    * Remember to use the "endIf" function when finishing "if" conditions actions,
@@ -65,7 +72,7 @@ export interface IContent extends IStackItem {
    *  */
   beginFor(
     variable: {
-      type: string;
+      type: ITypeName;
       name: string;
       value: string;
       dataLocation: IDataLocation;

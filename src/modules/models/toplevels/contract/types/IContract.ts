@@ -1,8 +1,6 @@
 import { IContractBody } from "@models/toplevels/contractBody/types/IContractBody";
 import { IEvent } from "@models/definitions/event/types/IEvent";
 import { IFunction } from "@models/definitions/function/types/IFunction";
-import { IInput } from "@models/definitions/function/types/IInput";
-import { IOutput } from "@models/definitions/function/types/IOutput";
 import { IInherits } from "@models/toplevels/inherits/types/IInherits";
 import { IStateVariable } from "@models/definitions/stateVariable/types/IStateVariable";
 import { ITypeName } from "@modules/types/ITypeName";
@@ -10,13 +8,14 @@ import { IVariableOptions } from "@modules/types/IVariableOptions";
 import { IContractJson } from "./IContractJson";
 import { IFallback } from "@models/definitions/fallback/types/IFallback";
 import { IReceive } from "@models/definitions/receive/types/IReceive";
+import { ITypeNameInput } from "@modules/types/ITypeNameInput";
 
 export interface IContract extends IContractJson, IContractBody {
   toJson(): IContractJson;
 
   setInheritance(identifier: string, args?: Array<string>): IInherits;
 
-  createEvent(name: string, inputs: Array<IInput>): IEvent;
+  createEvent(name: string, inputs: Array<ITypeNameInput>): IEvent;
 
   createVariable(
     type: ITypeName,
@@ -26,11 +25,7 @@ export interface IContract extends IContractJson, IContractBody {
     options?: IVariableOptions
   ): IStateVariable;
 
-  createConstructor(
-    scope: string,
-    inputs?: Array<IInput>,
-    outputs?: Array<IOutput>
-  ): IFunction;
+  createConstructor(scope: string, inputs?: Array<ITypeNameInput>): IFunction;
 
   createFallback(isPayable?: boolean): IFallback;
 

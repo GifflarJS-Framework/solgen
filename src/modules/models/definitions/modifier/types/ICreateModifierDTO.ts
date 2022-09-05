@@ -1,4 +1,4 @@
-import { IInput } from "@models/definitions/function/types/IInput";
+import { IInput } from "@modules/types/IInput";
 import { IVariable } from "@models/definitions/stateVariable/types/IVariable";
 
 export interface ICreateModifierDTO {

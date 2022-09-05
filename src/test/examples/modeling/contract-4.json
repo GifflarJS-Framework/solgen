@@ -22,6 +22,11 @@
           "scope": "public"
         },
         {
+          "type": "address[][]",
+          "name": "value2",
+          "scope": "public"
+        },
+        {
           "type": "uint256",
           "name": "max_value1",
           "scope": "public"

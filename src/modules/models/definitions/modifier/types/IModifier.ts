@@ -1,5 +1,5 @@
 import { IContent } from "@models/definitions/content/types/IContent";
-import { IInput } from "@models/definitions/function/types/IInput";
+import { IInput } from "@modules/types/IInput";
 
 export interface IModifier extends IContent {
   title: string;

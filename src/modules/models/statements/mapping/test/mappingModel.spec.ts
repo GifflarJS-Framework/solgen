@@ -41,14 +41,18 @@ describe("Mapping Model", () => {
   it("Creating Mapping with array type", () => {
     const mapping = mappingModel.execute({
       type: { regularType: "address" },
-      typeName: { array: { arrayType: "uint256", arraySize: 5 } },
+      typeName: {
+        array: { arrayType: { regularType: "uint256" }, arraySize: 5 },
+      },
       name: "myMapping",
     });
 
     const expected = {
       statement: "mapping",
       type: { regularType: "address" },
-      typeName: { array: { arrayType: "uint256", arraySize: 5 } },
+      typeName: {
+        array: { arrayType: { regularType: "uint256" }, arraySize: 5 },
+      },
       name: "myMapping",
     };
 
@@ -58,14 +62,14 @@ describe("Mapping Model", () => {
   it("Creating Mapping with array type no size", () => {
     const mapping = mappingModel.execute({
       type: { regularType: "address" },
-      typeName: { array: { arrayType: "uint256" } },
+      typeName: { array: { arrayType: { regularType: "uint256" } } },
       name: "myMapping",
     });
 
     const expected = {
       statement: "mapping",
       type: { regularType: "address" },
-      typeName: { array: { arrayType: "uint256" } },
+      typeName: { array: { arrayType: { regularType: "uint256" } } },
       name: "myMapping",
     };
 

@@ -1,7 +1,7 @@
 import { IVariable } from "@models/definitions/stateVariable/types/IVariable";
-import { IInput } from "./IInput";
+import { IInput } from "@modules/types/IInput";
+import { IOutput } from "@modules/types/IOutput";
 import { IFunctionStateMutabilityType } from "../../../../types/IFunctionStateMutabilityType";
-import { IOutput } from "./IOutput";
 
 export interface ICreateFunctionDTO {
   name: string;

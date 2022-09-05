@@ -10,7 +10,7 @@ describe("TryModel", () => {
         methodCall: {
           variable: "MyContract",
           method: "add",
-          value: "value",
+          args: ["value"],
         },
       },
       parameters: [{ type: "uint256", name: "arg" }],
@@ -21,7 +21,7 @@ describe("TryModel", () => {
         methodCall: {
           variable: "MyContract",
           method: "add",
-          value: "value",
+          args: ["value"],
         },
       },
       parameters: [{ type: "uint256", name: "arg" }],

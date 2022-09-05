@@ -1,6 +1,7 @@
 import { IStateMapping } from "@models/definitions/stateMapping/types/IStateMapping";
 import { ICreateNestedMapping } from "@models/statements/mapping/types/ICreateNestedMapping";
 import { IMappingTypeName } from "@modules/types/IMappingTypeName";
+import helpers from "@utils/helpers";
 import { IStateMappingWriter } from "../types/IStateMappingWriter";
 
 class StateMappingWriter implements IStateMappingWriter {
@@ -10,7 +11,7 @@ class StateMappingWriter implements IStateMappingWriter {
     if (!mappingTypeName) {
       // If an array
       if (typeName.array) {
-        mappingTypeName = `${typeName.array.arrayType}[${
+        mappingTypeName = `${helpers.writeTypeName(typeName.array.arrayType)}[${
           typeName.array.arraySize || ""
         }]`;
       }
