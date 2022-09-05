@@ -44,6 +44,15 @@ describe("Test Contract", () => {
     gContract.createVariable({ regularType: "string" }, "name", "public");
     gContract.createVariable({ regularType: "uint256" }, "value1", "public");
     gContract.createVariable(
+      {
+        array: {
+          arrayType: { array: { arrayType: { regularType: "address" } } },
+        },
+      },
+      "value2",
+      "public"
+    );
+    gContract.createVariable(
       { regularType: "uint256" },
       "max_value1",
       "public"
@@ -56,12 +65,12 @@ describe("Test Contract", () => {
 
     // Creating events
     gContract.createEvent("temperatureOverflow", [
-      { name: "value1", type: "uint256" },
-      { name: "max_value1", type: "uint256" },
+      { name: "value1", type: { regularType: "uint256" } },
+      { name: "max_value1", type: { regularType: "uint256" } },
     ]);
     gContract.createEvent("temperatureUnderflow", [
-      { name: "value1", type: "uint256" },
-      { name: "min_value1", type: "uint256" },
+      { name: "value1", type: { regularType: "uint256" } },
+      { name: "min_value1", type: { regularType: "uint256" } },
     ]);
 
     // Creating constructor

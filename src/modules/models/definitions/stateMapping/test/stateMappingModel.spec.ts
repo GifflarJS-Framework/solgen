@@ -42,13 +42,17 @@ describe("State Mapping Model", () => {
   it("Creating State Mapping with array type", () => {
     const mapping = mappingModel.execute({
       type: { regularType: "address" },
-      typeName: { array: { arrayType: "uint256", arraySize: 5 } },
+      typeName: {
+        array: { arrayType: { regularType: "uint256" }, arraySize: 5 },
+      },
       name: "myMapping",
     });
 
     const expected = {
       type: { regularType: "address" },
-      typeName: { array: { arrayType: "uint256", arraySize: 5 } },
+      typeName: {
+        array: { arrayType: { regularType: "uint256" }, arraySize: 5 },
+      },
       name: "myMapping",
     };
 
@@ -58,13 +62,13 @@ describe("State Mapping Model", () => {
   it("Creating State Mapping with array type no size", () => {
     const mapping = mappingModel.execute({
       type: { regularType: "address" },
-      typeName: { array: { arrayType: "uint256" } },
+      typeName: { array: { arrayType: { regularType: "uint256" } } },
       name: "myMapping",
     });
 
     const expected = {
       type: { regularType: "address" },
-      typeName: { array: { arrayType: "uint256" } },
+      typeName: { array: { arrayType: { regularType: "uint256" } } },
       name: "myMapping",
     };
 

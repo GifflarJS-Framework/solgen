@@ -28,8 +28,9 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "allowJs": true,
-    "emitDeclarationOnly": false
+    "emitDeclarationOnly": true,
+    "declarationDir": "./types"
   },
-  "exclude": ["./bin/index.ts"],
-  "include": ["node_modules/@types", "src/**/**.ts"]
+  "exclude": ["./bin/index.ts", "src/**/**.spec.ts"],
+  "include": ["node_modules/@types", "src/**/**/types/*.ts"]
 }

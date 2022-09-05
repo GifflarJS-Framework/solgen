@@ -1,16 +1,17 @@
 import { IContractBodyModel } from "@models/toplevels/contractBody/types/IContractBodyModel";
 import { IFunction } from "@models/definitions/function/types/IFunction";
 import { IFunctionModel } from "@models/definitions/function/types/IFunctionModel";
-import { IInput } from "@models/definitions/function/types/IInput";
-import { IOutput } from "@models/definitions/function/types/IOutput";
 import { IInherits } from "@models/toplevels/inherits/types/IInherits";
 import { IInheritsModel } from "@models/toplevels/inherits/types/IInheritsModel";
-import { IFunctionStateMutabilityType } from "modules/types/IFunctionStateMutabilityType";
+import { IFunctionStateMutabilityType } from "@modules/types/IFunctionStateMutabilityType";
 import { inject, injectable } from "tsyringe";
 import { IInterface } from "../types/IInterface";
 import { IInterfaceItem } from "../types/IInterfaceItem";
 import { IInterfaceJson } from "../types/IInterfaceJson";
 import { IInterfaceModel } from "../types/IInterfaceModel";
+import { ITypeNameInput } from "@modules/types/ITypeNameInput";
+import helpers from "@utils/helpers";
+import { ITypeNameOutput } from "@modules/types/ITypeNameOutput";
 
 @injectable()
 class InterfaceModel implements IInterfaceModel {
@@ -49,15 +50,15 @@ class InterfaceModel implements IInterfaceModel {
 
     const createFunction = (
       name: string,
-      inputs: Array<IInput>,
-      outputs: Array<IOutput>,
+      inputs: Array<ITypeNameInput> = [],
+      outputs: Array<ITypeNameOutput> = [],
       stateMutability?: IFunctionStateMutabilityType
     ): IFunction => {
       const _function = this.functionModel.execute({
         name,
         scope: "external",
-        inputs,
-        outputs,
+        inputs: helpers.castITypeNameInputsToInputs(inputs),
+        outputs: helpers.castITypeNameOutputsToOutputs(outputs),
         isConstructor: false,
         stateMutability,
       });

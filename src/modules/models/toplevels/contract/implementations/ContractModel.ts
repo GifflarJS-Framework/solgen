@@ -1,5 +1,4 @@
 import { IFunction } from "@models/definitions/function/types/IFunction";
-import { IInput } from "@models/definitions/function/types/IInput";
 import { IContract } from "../types/IContract";
 import { IContractJson } from "../types/IContractJson";
 import { inject, injectable } from "tsyringe";
@@ -7,13 +6,14 @@ import { IFunctionModel } from "@models/definitions/function/types/IFunctionMode
 import { IContractItem } from "../types/IContractItem";
 import { IContractModel } from "../types/IContractModel";
 import { IContractBodyModel } from "@models/toplevels/contractBody/types/IContractBodyModel";
-import { IOutput } from "@models/definitions/function/types/IOutput";
 import { IInheritsModel } from "@models/toplevels/inherits/types/IInheritsModel";
 import { IInherits } from "@models/toplevels/inherits/types/IInherits";
 import { IFallbackModel } from "@models/definitions/fallback/types/IFallbackModel";
 import { IFallback } from "@models/definitions/fallback/types/IFallback";
 import { IReceiveModel } from "@models/definitions/receive/types/IReceiveModel";
 import { IReceive } from "@models/definitions/receive/types/IReceive";
+import { ITypeNameInput } from "@modules/types/ITypeNameInput";
+import helpers from "@utils/helpers";
 
 @injectable()
 class ContractModel implements IContractModel {
@@ -74,15 +74,13 @@ class ContractModel implements IContractModel {
 
     const createConstructor = (
       scope: string,
-      inputs?: Array<IInput>,
-      outputs?: Array<IOutput>
+      inputs: Array<ITypeNameInput> = []
     ): IFunction => {
       const _function = this.functionModel.execute({
         name: "",
         scope,
         isConstructor: true,
-        inputs,
-        outputs,
+        inputs: helpers.castITypeNameInputsToInputs(inputs),
         stateVars: contract.variables,
       });
       if (!contract.functions) contract.functions = [];

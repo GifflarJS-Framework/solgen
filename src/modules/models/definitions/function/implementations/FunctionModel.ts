@@ -1,13 +1,13 @@
 import { IContentModel } from "@models/definitions/content/types/IContentModel";
 import helpers from "@utils/helpers";
-import { ITypeName } from "modules/types/ITypeName";
+import { ITypeName } from "@modules/types/ITypeName";
 import { inject, injectable } from "tsyringe";
 import { ICreateFunctionDTO } from "../types/ICreateFunctionDTO";
 import { IFunction } from "../types/IFunction";
 import { IFunctionJson } from "../types/IFunctionJson";
 import { IFunctionModel } from "../types/IFunctionModel";
-import { IInput } from "../types/IInput";
-import { IOutput } from "../types/IOutput";
+import { IInput } from "@modules/types/IInput";
+import { IOutput } from "@modules/types/IOutput";
 
 @injectable()
 class FunctionModel implements IFunctionModel {

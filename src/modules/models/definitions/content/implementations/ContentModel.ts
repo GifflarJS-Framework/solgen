@@ -13,21 +13,20 @@ import { IMethodCallModel } from "@models/statements/methodcall/types/IMethodCal
 import { IEventCallModel } from "@models/statements/eventCall/types/IEventCallModel";
 import { ICreateContentDTO } from "../types/ICreateContentDTO";
 import { IIf } from "@models/statements/if/types/IIf";
-import { ITypeName } from "modules/types/ITypeName";
+import { ITypeName } from "@modules/types/ITypeName";
 import { IContinueModel } from "@models/statements/continue/types/IContinueModel";
 import { IReturnModel } from "@models/statements/return/types/IReturnModel";
 import { IAssertModel } from "@models/statements/assert/types/IAssertModel";
 import { IBreakModel } from "@models/statements/break/types/IBreakModel";
 import { ICatchModel } from "@models/statements/catch/types/ICatchModel";
-import { IInput } from "@models/definitions/function/types/IInput";
 import { IDoWhileModel } from "@models/statements/dowhile/types/IDoWhileModel";
 import { IDoWhile } from "@models/statements/dowhile/types/IDoWhile";
 import { IForModel } from "@models/statements/for/types/IForModel";
-import { IDataLocation } from "modules/types/IDataLocation";
+import { IDataLocation } from "@modules/types/IDataLocation";
 import { IFor } from "@models/statements/for/types/IFor";
 import { IMappingModel } from "@models/statements/mapping/types/IMappingModel";
-import { IMappingKeyType } from "modules/types/IMappingKeyType";
-import { IMappingTypeName } from "modules/types/IMappingTypeName";
+import { IMappingKeyType } from "@modules/types/IMappingKeyType";
+import { IMappingTypeName } from "@modules/types/IMappingTypeName";
 import { IRequireModel } from "@models/statements/require/types/IRequireModel";
 import { IRevertModel } from "@models/statements/revert/types/IRevertModel";
 import { ICustomErrorcall } from "@models/statements/revert/types/ICustomErrorCall";
@@ -35,6 +34,7 @@ import { ITryModel } from "@models/statements/try/types/ITryModel";
 import { ITryExpression } from "@models/statements/try/types/ITryExpression";
 import { IWhileModel } from "@models/statements/while/types/IWhileModel";
 import { IWhile } from "@models/statements/while/types/IWhile";
+import { ITypeNameInput } from "@modules/types/ITypeNameInput";
 
 interface IIfContent extends IIf, IContent {}
 interface IDoWhileContent extends IDoWhile, IContent {}
@@ -108,20 +108,30 @@ class ContentModel {
     };
 
     const setTry = (
-      parameters: Array<IInput>,
+      parameters: Array<ITypeNameInput>,
       expression: ITryExpression
     ): IContent => {
-      const _catch = this.tryModel.execute({ parameters, expression });
+      // Casting ITypeNameInput to IInput
+      const _parameters = helpers.castITypeNameInputsToInputs(parameters);
+      const _catch = this.tryModel.execute({
+        parameters: _parameters,
+        expression,
+      });
       stack[top].content.push(_catch);
       const contentItem: IContent = _assignFunctions(stack[top]);
       return contentItem;
     };
 
     const setCatch = (
-      parameters: Array<IInput>,
+      parameters: Array<ITypeNameInput>,
       identifier?: string
     ): IContent => {
-      const _catch = this.catchModel.execute({ identifier, parameters });
+      // Casting ITypeNameInput to IInput
+      const _parameters = helpers.castITypeNameInputsToInputs(parameters);
+      const _catch = this.catchModel.execute({
+        identifier,
+        parameters: _parameters,
+      });
       stack[top].content.push(_catch);
       const contentItem: IContent = _assignFunctions(stack[top]);
       return contentItem;
@@ -146,12 +156,12 @@ class ContentModel {
     const setMethodCall = (
       variable: string,
       method: string,
-      value: string
+      args: Array<string>
     ): IContent => {
       const newMethodCall = this.methodCallModel.execute({
         variable,
         method,
-        value,
+        args,
       });
       stack[top].content.push(newMethodCall);
       const contentItem: IContent = _assignFunctions(stack[top]);
@@ -242,7 +252,7 @@ class ContentModel {
 
     const beginFor = (
       variable: {
-        type: string;
+        type: ITypeName;
         name: string;
         value: string;
         dataLocation: IDataLocation;
@@ -253,7 +263,10 @@ class ContentModel {
       const newFor = this.forModel.execute({
         variable: {
           statement: "variable",
-          ...variable,
+          type: helpers.writeTypeName(variable.type),
+          name: variable.name,
+          value: variable.value,
+          dataLocation: variable.dataLocation,
         },
         condition,
         expression: { statement: "expression", value: expression },

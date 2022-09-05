@@ -1,4 +1,4 @@
-import { IOutput } from "@models/definitions/function/types/IOutput";
+import { IOutput } from "@modules/types/IOutput";
 import { IOutputWriter } from "../types/IOutputWriter";
 
 class OutputWriter implements IOutputWriter {

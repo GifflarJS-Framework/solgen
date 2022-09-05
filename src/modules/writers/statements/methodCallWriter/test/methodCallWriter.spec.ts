@@ -11,7 +11,7 @@ describe("Method Call Writer", () => {
       statement: "method_call",
       variable: "person",
       method: "setAge",
-      value: "20",
+      args: ["20"],
     };
 
     const expected = "person.setAge(20)";

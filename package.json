@@ -4,18 +4,19 @@
   "description": "A smart contract generator library.",
   "main": "bin/index.js",
   "scripts": {
-    "build": "rm -r bin && tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./bin",
+    "build": "rm -rf bin && tsc --project tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./bin",
+    "build-types": "rm -rf types && tsc --project tsconfig.types.json && tscpaths -p tsconfig.types.json -s ./src -o ./types",
     "test": "jest",
     "testunit": "./node_modules/mocha/bin/mocha test/unit/**/*",
     "testfunc": "./node_modules/mocha/bin/mocha test/functional/**/*",
     "docs": "jsdoc -c jsdoc-config.json"
   },
   "bin": {
-    "gifflar": "./bin/index.js"
+    "gifflar-library": "./bin/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/gifflarsuite/gifflar"
+    "url": "git+https://github.com/GifflarJS-Framework/gifflar-library.git"
   },
   "keywords": [
     "blockchain",
@@ -28,9 +29,9 @@
   "author": "Levy Santiago",
   "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.com/gifflarsuite/gifflar/issues"
+    "url": "https://github.com/GifflarJS-Framework/gifflar-library/issues"
   },
-  "homepage": "https://gitlab.com/gifflarsuite/gifflar#readme",
+  "homepage": "https://github.com/GifflarJS-Framework/gifflar-library#readme",
   "devDependencies": {
     "@smartdec/smartcheck": "^2.0.1",
     "@types/jest": "26.0.16",
