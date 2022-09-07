@@ -35,6 +35,7 @@ import { ITryExpression } from "@models/statements/try/types/ITryExpression";
 import { IWhileModel } from "@models/statements/while/types/IWhileModel";
 import { IWhile } from "@models/statements/while/types/IWhile";
 import { ITypeNameInput } from "@modules/types/ITypeNameInput";
+import { IExpression } from "@modules/models/statements/expression/types/IExpression";
 
 interface IIfContent extends IIf, IContent {}
 interface IDoWhileContent extends IDoWhile, IContent {}
@@ -146,6 +147,25 @@ class ContentModel {
         type: helpers.writeTypeName(type),
         name,
         value,
+      });
+      contentVars.push(newVariable);
+      stack[top].content.push(newVariable);
+      const contentItem: IContent = _assignFunctions(stack[top]);
+      return contentItem;
+    };
+
+    const setVariable2 = (
+      type: ITypeName,
+      name: string,
+      expression: string,
+    ): IContent => {
+      const expressionModel = this.expressionModel.execute({
+        value: expression,
+      });
+      const newVariable = this.variableModel.execute({
+        type: helpers.writeTypeName(type),
+        name,
+        value: expressionModel.value,
       });
       contentVars.push(newVariable);
       stack[top].content.push(newVariable);
