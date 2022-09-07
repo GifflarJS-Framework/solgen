@@ -58,27 +58,27 @@
             {
               "statement": "assignment",
               "variable": "manager",
-              "value": "_owner"
+              "expressionValue": { "customExpression": "_owner" }
             },
             {
               "statement": "assignment",
               "variable": "maxTemperature",
-              "value": "10"
+              "expressionValue": { "customExpression": "10" }
             },
             {
               "statement": "assignment",
               "variable": "minTemperature",
-              "value": "0"
+              "expressionValue": { "customExpression": "0" }
             },
             {
               "statement": "assignment",
               "variable": "maxHumidity",
-              "value": "10"
+              "expressionValue": { "customExpression": "10" }
             },
             {
               "statement": "assignment",
               "variable": "minHumidity",
-              "value": "0"
+              "expressionValue": { "customExpression": "0" }
             }
           ]
         },
@@ -105,7 +105,7 @@
             {
               "statement": "assignment",
               "variable": "temperature",
-              "value": "_temperature"
+              "expressionValue": { "customExpression": "_temperature" }
             },
             {
               "statement": "if",
@@ -158,7 +158,7 @@
             {
               "statement": "assignment",
               "variable": "humidity",
-              "value": "_humidity"
+              "expressionValue": { "customExpression": "_humidity" }
             },
             {
               "statement": "if",
@@ -237,8 +237,7 @@
               "type": "address",
               "name": "newContract",
               "expressionValue": {
-                "statement": "expression",
-                "value": "new DHT11(_owner)"
+                "newContract": { "contractName": "DHT11", "args": ["_owner"] }
               }
             },
             {
@@ -250,7 +249,7 @@
             {
               "statement": "assignment",
               "variable": "counter",
-              "value": "counter + 1"
+              "expressionValue": { "customExpression": "counter + 1" }
             }
           ]
         },
@@ -266,8 +265,7 @@
               "type": "address",
               "name": "lastContract",
               "expressionValue": {
-                "statement": "expression",
-                "value": "address(0)"
+                "customExpression": "address(0)"
               }
             },
             {
@@ -278,7 +276,9 @@
                 {
                   "statement": "assignment",
                   "variable": "lastContract",
-                  "value": "contracts[counter - 1]"
+                  "expressionValue": {
+                    "customExpression": "contracts[counter - 1]"
+                  }
                 }
               ]
             },
@@ -290,7 +290,7 @@
                 {
                   "statement": "assignment",
                   "variable": "lastContract",
-                  "value": "contracts[0]"
+                  "expressionValue": { "customExpression": "contracts[0]" }
                 }
               ]
             }

@@ -11,7 +11,7 @@ describe("Content Writer", () => {
         statement: "variable",
         type: "uint",
         name: "age",
-        expressionValue: { statement: "expression", value: "20" },
+        expressionValue: { customExpression: "20" },
       },
       {
         statement: "if",
@@ -20,7 +20,9 @@ describe("Content Writer", () => {
           {
             statement: "assignment",
             variable: "age",
-            value: { statement: "expression", value: "30" },
+            expressionValue: {
+              customExpression: "30",
+            },
           },
           {
             statement: "event_call",

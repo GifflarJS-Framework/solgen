@@ -19,7 +19,9 @@ describe("Contract Writer", () => {
           statement: "variable",
           name: "age",
           type: "uint",
-          expressionValue: { statement: "expression", value: "18" },
+          expressionValue: {
+            customExpression: "18",
+          },
         },
       ],
     };

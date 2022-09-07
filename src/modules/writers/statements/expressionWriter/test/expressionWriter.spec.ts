@@ -8,7 +8,7 @@ describe("Expression Writer", () => {
       container.resolve("ExpressionWriter");
     const expression: IExpression = {
       statement: "expression",
-      value: "!((val+1)+(val+1))",
+      value: { customExpression: "!((val+1)+(val+1))" },
     };
 
     const expected = "!((val+1)+(val+1))";

@@ -41,14 +41,13 @@
               "statement": "variable",
               "type": "address",
               "name": "oldOwner",
-              "expressionValue": { "statement": "expression", "value": "owner" }
+              "expressionValue": { "customExpression": "owner" }
             },
             {
               "statement": "assignment",
               "variable": "owner",
-              "value": {
-                "statement": "expression",
-                "value": "newOwner"
+              "expressionValue": {
+                "customExpression": "newOwner"
               }
             },
             {

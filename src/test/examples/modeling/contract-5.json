@@ -68,12 +68,16 @@
             {
               "statement": "assignment",
               "variable": "manager",
-              "value": { "statement": "expression", "value": "_owner" }
+              "expressionValue": {
+                "customExpression": "_owner"
+              }
             },
             {
               "statement": "assignment",
               "variable": "name",
-              "value": { "statement": "expression", "value": "\"DHT11\"" }
+              "expressionValue": {
+                "customExpression": "\"DHT11\""
+              }
             }
           ]
         },
@@ -102,7 +106,9 @@
                 {
                   "statement": "assignment",
                   "variable": "value1",
-                  "value": { "statement": "expression", "value": "_val" }
+                  "expressionValue": {
+                    "customExpression": "_val"
+                  }
                 },
                 {
                   "statement": "if",
@@ -143,9 +149,8 @@
             {
               "statement": "assignment",
               "variable": "name",
-              "value": {
-                "statement": "expression",
-                "value": "_name"
+              "expressionValue": {
+                "customExpression": "_name"
               }
             }
           ]
@@ -169,7 +174,9 @@
           "type": "uint256",
           "name": "counter",
           "scope": "private",
-          "expressionValue": { "statement": "expression", "value": "0" }
+          "expressionValue": {
+            "customExpression": "0"
+          }
         }
       ],
       "mappings": [],
@@ -195,8 +202,7 @@
               "type": "DHT11",
               "name": "newContract",
               "expressionValue": {
-                "statement": "expression",
-                "value": "new DHT11(_owner)"
+                "newContract": { "contractName": "DHT11", "args": ["_owner"] }
               }
             },
             {
@@ -208,7 +214,9 @@
             {
               "statement": "assignment",
               "variable": "counter",
-              "value": { "statement": "expression", "value": "counter + 1" }
+              "expressionValue": {
+                "customExpression": "counter + 1"
+              }
             }
           ]
         },
@@ -233,9 +241,8 @@
                 {
                   "statement": "assignment",
                   "variable": "_contract",
-                  "value": {
-                    "statement": "expression",
-                    "value": "contracts[counter - 1]"
+                  "expressionValue": {
+                    "customExpression": "contracts[counter - 1]"
                   }
                 }
               ]
@@ -248,9 +255,8 @@
                 {
                   "statement": "assignment",
                   "variable": "_contract",
-                  "value": {
-                    "statement": "expression",
-                    "value": "contracts[0]"
+                  "expressionValue": {
+                    "customExpression": "contracts[0]"
                   }
                 }
               ]

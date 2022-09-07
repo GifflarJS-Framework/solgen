@@ -19,9 +19,9 @@ describe("Function Model", () => {
     myFunction
       .setInput({ regularType: "string" }, "_message")
       .setOutput({ regularType: "string" })
-      .setAssignment("message", "_message")
+      .setAssignment("message", { customExpression: "_message" })
       .beginIf("val == 1")
-      .setAssignment("message", "_message")
+      .setAssignment("message", { customExpression: "_message" })
       .endIf();
 
     // Asserting result

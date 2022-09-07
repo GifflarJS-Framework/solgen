@@ -11,10 +11,14 @@ describe("Test For Model", () => {
         statement: "variable",
         type: "uint",
         name: "i",
-        expressionValue: { statement: "expression", value: "0" },
+        expressionValue: {
+          customExpression: "0",
+        },
       },
       condition: "i < 100",
-      expression: { statement: "expression", value: "i++" },
+      expressionValue: {
+        customExpression: "i++",
+      },
       content: [],
     };
 
@@ -23,10 +27,14 @@ describe("Test For Model", () => {
         statement: "variable",
         type: "uint",
         name: "i",
-        expressionValue: { statement: "expression", value: "0" },
+        expressionValue: {
+          customExpression: "0",
+        },
       },
       condition: "i < 100",
-      expression: { statement: "expression", value: "i++" },
+      expressionValue: {
+        customExpression: "i++",
+      },
     });
 
     expect(JSON.stringify(result)).toEqual(JSON.stringify(expected));
@@ -36,13 +44,17 @@ describe("Test For Model", () => {
     const expected = {
       statement: "for",
       condition: "i < 100",
-      expression: { statement: "expression", value: "i++" },
+      expressionValue: {
+        customExpression: "i++",
+      },
       content: [],
     };
 
     const result = forModel.execute({
       condition: "i < 100",
-      expression: { statement: "expression", value: "i++" },
+      expressionValue: {
+        customExpression: "i++",
+      },
     });
 
     expect(JSON.stringify(result)).toEqual(JSON.stringify(expected));
@@ -55,9 +67,13 @@ describe("Test For Model", () => {
         statement: "variable",
         type: "uint",
         name: "i",
-        expressionValue: { statement: "expression", value: "0" },
+        expressionValue: {
+          customExpression: "0",
+        },
       },
-      expression: { statement: "expression", value: "i++" },
+      expressionValue: {
+        customExpression: "i++",
+      },
       content: [],
     };
 
@@ -66,9 +82,13 @@ describe("Test For Model", () => {
         statement: "variable",
         type: "uint",
         name: "i",
-        expressionValue: { statement: "expression", value: "0" },
+        expressionValue: {
+          customExpression: "0",
+        },
       },
-      expression: { statement: "expression", value: "i++" },
+      expressionValue: {
+        customExpression: "i++",
+      },
     });
 
     expect(JSON.stringify(result)).toEqual(JSON.stringify(expected));
@@ -81,7 +101,9 @@ describe("Test For Model", () => {
         statement: "variable",
         type: "uint",
         name: "i",
-        expressionValue: { statement: "expression", value: "0" },
+        expressionValue: {
+          customExpression: "0",
+        },
       },
       condition: "i < 100",
       content: [],
@@ -92,7 +114,9 @@ describe("Test For Model", () => {
         statement: "variable",
         type: "uint",
         name: "i",
-        expressionValue: { statement: "expression", value: "0" },
+        expressionValue: {
+          customExpression: "0",
+        },
       },
       condition: "i < 100",
     });

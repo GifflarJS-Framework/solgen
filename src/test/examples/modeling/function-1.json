@@ -14,9 +14,8 @@
     {
       "statement": "assignment",
       "variable": "message",
-      "value": {
-        "statement": "expression",
-        "value": "_message"
+      "expressionValue": {
+        "customExpression": "_message"
       }
     },
     {
@@ -27,9 +26,8 @@
         {
           "statement": "assignment",
           "variable": "message",
-          "value": {
-            "statement": "expression",
-            "value": "_message"
+          "expressionValue": {
+            "customExpression": "_message"
           }
         }
       ]

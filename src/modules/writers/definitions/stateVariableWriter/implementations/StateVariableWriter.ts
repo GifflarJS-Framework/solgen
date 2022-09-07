@@ -1,4 +1,5 @@
 import { IStateVariable } from "@models/definitions/stateVariable/types/IStateVariable";
+import { IExpressionModel } from "@modules/models/statements/expression/types/IExpressionModel";
 import { IExpressionWriter } from "@modules/writers/statements/expressionWriter/types/IExpressionWriter";
 import { inject, injectable } from "tsyringe";
 import { IStateVariableWriter } from "../types/IStateVariableWriter";
@@ -7,7 +8,9 @@ import { IStateVariableWriter } from "../types/IStateVariableWriter";
 class StateVariableWriter implements IStateVariableWriter {
   constructor(
     @inject("ExpressionWriter")
-    private expressionWriter: IExpressionWriter
+    private expressionWriter: IExpressionWriter,
+    @inject("ExpressionModel")
+    private expressionModel: IExpressionModel
   ) {}
 
   write(variables: Array<IStateVariable>): string {
@@ -28,8 +31,12 @@ class StateVariableWriter implements IStateVariableWriter {
       variableText += ` ${v.name}`;
 
       // Value
-      if (v.expressionValue)
-        variableText += ` = ${this.expressionWriter.write(v.expressionValue)}`;
+      if (v.expressionValue) {
+        const expression = this.expressionModel.execute({
+          value: v.expressionValue,
+        });
+        variableText += ` = ${this.expressionWriter.write(expression)}`;
+      }
 
       text += `${variableText};\n`;
 

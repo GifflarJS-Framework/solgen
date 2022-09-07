@@ -59,8 +59,8 @@ describe("Contract Manager Writer", () => {
     gContract
       .createConstructor("public")
       .setInput({ regularType: "address" }, "_owner")
-      .setAssignment("manager", "_owner")
-      .setAssignment("name", '"DHT11"');
+      .setAssignment("manager", { customExpression: "_owner" })
+      .setAssignment("name", { customExpression: '"DHT11"' });
 
     // Creating a new function
     gContract
@@ -68,7 +68,7 @@ describe("Contract Manager Writer", () => {
       .setInput({ regularType: "uint256" }, "_val")
       .setInput({ regularType: "uint256" }, "_valueId")
       .beginIf("_valueId == 1")
-      .setAssignment("value1", "_val")
+      .setAssignment("value1", { customExpression: "_val" })
       .beginIf("value1 >= max_value1")
       .setEventCall("temperatureOverflow", ["value1", "max_value1"])
       .endIf()
@@ -80,7 +80,7 @@ describe("Contract Manager Writer", () => {
     gContract
       .createFunction("setName", "public")
       .setInput({ regularType: "string" }, "_name")
-      .setAssignment("name", "_name");
+      .setAssignment("name", { customExpression: "_name" });
 
     // Modeling Variables
     gContractController.createVariable(
@@ -92,26 +92,30 @@ describe("Contract Manager Writer", () => {
       { regularType: "uint256" },
       "counter",
       "private",
-      "0"
+      { customExpression: "0" }
     );
 
     // Modeling Functions
     gContractController
       .createFunction("createContract", "public")
       .setInput({ regularType: "address" }, "_owner")
-      .setContractVariable("newContract", "DHT11", ["_owner"])
+      .setVariable({ customType: "DHT11" }, "newContract", {
+        newContract: { contractName: "DHT11", args: ["_owner"] },
+      })
       .setMethodCall("contracts", "push", ["newContract"])
-      .setAssignment("counter", "counter + 1");
+      .setAssignment("counter", { customExpression: "counter + 1" });
 
     gContractController
       .createFunction("getLastContract", "public")
       .setOutput({ customType: "DHT11" })
       .setVariable({ customType: "DHT11" }, "_contract")
       .beginIf("counter > 0")
-      .setAssignment("_contract", "contracts[counter - 1]")
+      .setAssignment("_contract", {
+        customExpression: "contracts[counter - 1]",
+      })
       .endIf()
       .beginElse()
-      .setAssignment("_contract", "contracts[0]")
+      .setAssignment("_contract", { customExpression: "contracts[0]" })
       .endIf()
       .setReturn(["_contract"]);
 

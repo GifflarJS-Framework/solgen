@@ -20,12 +20,13 @@ describe("For Writer", () => {
         statement: "variable",
         type: "uint",
         name: "i",
-        expressionValue: { statement: "expression", value: "0" },
+        expressionValue: {
+          customExpression: "0",
+        },
       },
       condition: "i < 100",
-      expression: {
-        statement: "expression",
-        value: "i++",
+      expressionValue: {
+        customExpression: "i++",
       },
       content: [],
     };
@@ -43,9 +44,8 @@ describe("For Writer", () => {
     const myfor: IFor = {
       statement: "for",
       condition: "i < 100",
-      expression: {
-        statement: "expression",
-        value: "i++",
+      expressionValue: {
+        customExpression: "i++",
       },
       content: [],
     };
@@ -66,11 +66,12 @@ describe("For Writer", () => {
         statement: "variable",
         type: "uint",
         name: "i",
-        expressionValue: { statement: "expression", value: "0" },
+        expressionValue: {
+          customExpression: "0",
+        },
       },
-      expression: {
-        statement: "expression",
-        value: "i++",
+      expressionValue: {
+        customExpression: "i++",
       },
       content: [],
     };
@@ -91,7 +92,9 @@ describe("For Writer", () => {
         statement: "variable",
         type: "uint",
         name: "i",
-        expressionValue: { statement: "expression", value: "0" },
+        expressionValue: {
+          customExpression: "0",
+        },
       },
       condition: "i < 100",
       content: [],

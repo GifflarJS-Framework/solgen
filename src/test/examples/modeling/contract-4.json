@@ -73,17 +73,15 @@
             {
               "statement": "assignment",
               "variable": "manager",
-              "value": {
-                "statement": "expression",
-                "value": "_owner"
+              "expressionValue": {
+                "customExpression": "_owner"
               }
             },
             {
               "statement": "assignment",
               "variable": "name",
-              "value": {
-                "statement": "expression",
-                "value": "\"DHT11\""
+              "expressionValue": {
+                "customExpression": "\"DHT11\""
               }
             }
           ]
@@ -113,9 +111,8 @@
                 {
                   "statement": "assignment",
                   "variable": "value1",
-                  "value": {
-                    "statement": "expression",
-                    "value": "_val"
+                  "expressionValue": {
+                    "customExpression": "_val"
                   }
                 },
                 {
@@ -157,9 +154,8 @@
             {
               "statement": "assignment",
               "variable": "name",
-              "value": {
-                "statement": "expression",
-                "value": "_name"
+              "expressionValue": {
+                "customExpression": "_name"
               }
             }
           ]
