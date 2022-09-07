@@ -236,7 +236,10 @@
               "statement": "variable",
               "type": "address",
               "name": "newContract",
-              "value": "new DHT11(_owner)"
+              "expressionValue": {
+                "statement": "expression",
+                "value": "new DHT11(_owner)"
+              }
             },
             {
               "statement": "method_call",
@@ -262,7 +265,10 @@
               "statement": "variable",
               "type": "address",
               "name": "lastContract",
-              "value": "address(0)"
+              "expressionValue": {
+                "statement": "expression",
+                "value": "address(0)"
+              }
             },
             {
               "statement": "if",

@@ -1,7 +1,7 @@
-import { INewContract } from "@models/statements/newcontract/types/INewContract";
+import { IExpression } from "@modules/models/statements/expression/types/IExpression";
 
 export interface IVariable {
   type: string;
   name: string;
-  value?: string | INewContract;
+  expressionValue?: IExpression;
 }

@@ -11,7 +11,7 @@ describe("Content Writer", () => {
         statement: "variable",
         type: "uint",
         name: "age",
-        value: "20",
+        expressionValue: { statement: "expression", value: "20" },
       },
       {
         statement: "if",

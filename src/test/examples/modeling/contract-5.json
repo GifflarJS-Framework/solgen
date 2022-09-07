@@ -169,7 +169,7 @@
           "type": "uint256",
           "name": "counter",
           "scope": "private",
-          "value": "0"
+          "expressionValue": { "statement": "expression", "value": "0" }
         }
       ],
       "mappings": [],
@@ -194,10 +194,9 @@
               "statement": "variable",
               "type": "DHT11",
               "name": "newContract",
-              "value": {
-                "statement": "newcontract",
-                "contractName": "DHT11",
-                "args": ["_owner"]
+              "expressionValue": {
+                "statement": "expression",
+                "value": "new DHT11(_owner)"
               }
             },
             {

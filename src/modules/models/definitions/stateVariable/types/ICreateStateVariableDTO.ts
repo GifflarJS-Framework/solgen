@@ -1,4 +1,4 @@
-import { INewContract } from "@models/statements/newcontract/types/INewContract";
+import { IExpression } from "@modules/models/statements/expression/types/IExpression";
 import { IVariableStateMutabilityType } from "@modules/types/IVariableStateMutabilityType";
 import { IVisibility } from "@modules/types/IVisibility";
 
@@ -7,5 +7,5 @@ export interface ICreateStateVariableDTO {
   name: string;
   scope: IVisibility | undefined;
   stateMutability?: IVariableStateMutabilityType;
-  value?: string | INewContract;
+  expressionValue?: IExpression;
 }

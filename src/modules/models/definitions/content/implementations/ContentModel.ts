@@ -35,7 +35,7 @@ import { ITryExpression } from "@models/statements/try/types/ITryExpression";
 import { IWhileModel } from "@models/statements/while/types/IWhileModel";
 import { IWhile } from "@models/statements/while/types/IWhile";
 import { ITypeNameInput } from "@modules/types/ITypeNameInput";
-import { IExpression } from "@modules/models/statements/expression/types/IExpression";
+import { INewContractWriter } from "@modules/writers/statements/newContractWriter/types/INewContractWriter";
 
 interface IIfContent extends IIf, IContent {}
 interface IDoWhileContent extends IDoWhile, IContent {}
@@ -59,6 +59,8 @@ class ContentModel {
     private variableModel: IVariableModel,
     @inject("NewContractModel")
     private newContractModel: INewContractModel,
+    @inject("NewContractWriter")
+    private newContractWriter: INewContractWriter,
     @inject("IfModel")
     private ifModel: IIfModel,
     @inject("MethodCallModel")
@@ -141,31 +143,18 @@ class ContentModel {
     const setVariable = (
       type: ITypeName,
       name: string,
-      value?: string | INewContract
+      expression?: string
     ): IContent => {
+      let expressionModel;
+      if (expression) {
+        expressionModel = this.expressionModel.execute({
+          value: expression,
+        });
+      }
       const newVariable = this.variableModel.execute({
         type: helpers.writeTypeName(type),
         name,
-        value,
-      });
-      contentVars.push(newVariable);
-      stack[top].content.push(newVariable);
-      const contentItem: IContent = _assignFunctions(stack[top]);
-      return contentItem;
-    };
-
-    const setVariable2 = (
-      type: ITypeName,
-      name: string,
-      expression: string,
-    ): IContent => {
-      const expressionModel = this.expressionModel.execute({
-        value: expression,
-      });
-      const newVariable = this.variableModel.execute({
-        type: helpers.writeTypeName(type),
-        name,
-        value: expressionModel.value,
+        expressionValue: expressionModel,
       });
       contentVars.push(newVariable);
       stack[top].content.push(newVariable);
@@ -220,7 +209,13 @@ class ContentModel {
       args: Array<string>
     ): IContent => {
       const newContract = this.newContractModel.execute({ contractName, args });
-      return setVariable({ customType: contractName }, variable, newContract);
+      // TODO: update this line when updating Expression interface
+      const newContractText = this.newContractWriter.write(newContract);
+      return setVariable(
+        { customType: contractName },
+        variable,
+        newContractText
+      );
     };
 
     const setContinue = (): IContent => {
@@ -274,7 +269,7 @@ class ContentModel {
       variable: {
         type: ITypeName;
         name: string;
-        value: string;
+        expression: string;
         dataLocation: IDataLocation;
       },
       condition: string,
@@ -285,7 +280,10 @@ class ContentModel {
           statement: "variable",
           type: helpers.writeTypeName(variable.type),
           name: variable.name,
-          value: variable.value,
+          expressionValue: {
+            statement: "expression",
+            value: variable.expression,
+          },
           dataLocation: variable.dataLocation,
         },
         condition,

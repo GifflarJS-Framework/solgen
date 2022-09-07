@@ -20,7 +20,7 @@ describe("For Writer", () => {
         statement: "variable",
         type: "uint",
         name: "i",
-        value: "0",
+        expressionValue: { statement: "expression", value: "0" },
       },
       condition: "i < 100",
       expression: {
@@ -66,7 +66,7 @@ describe("For Writer", () => {
         statement: "variable",
         type: "uint",
         name: "i",
-        value: "0",
+        expressionValue: { statement: "expression", value: "0" },
       },
       expression: {
         statement: "expression",
@@ -91,7 +91,7 @@ describe("For Writer", () => {
         statement: "variable",
         type: "uint",
         name: "i",
-        value: "0",
+        expressionValue: { statement: "expression", value: "0" },
       },
       condition: "i < 100",
       content: [],

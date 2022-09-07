@@ -11,7 +11,7 @@ describe("State Variable Writer", () => {
     const variable: IStateVariable = {
       name: "age",
       type: "uint",
-      value: "20",
+      expressionValue: { statement: "expression", value: "20" },
       scope: "private",
     };
 
@@ -27,13 +27,12 @@ describe("State Variable Writer", () => {
       {
         name: "age",
         type: "uint",
-        value: "20",
+        expressionValue: { statement: "expression", value: "20" },
         scope: "private",
       },
       {
         name: "name",
         type: "string",
-        value: "",
         scope: "public",
       },
     ];
@@ -50,7 +49,7 @@ describe("State Variable Writer", () => {
       {
         name: "age",
         type: "uint",
-        value: "20",
+        expressionValue: { statement: "expression", value: "20" },
         scope: "private",
         stateMutability: "constant",
       },

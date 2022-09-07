@@ -41,7 +41,7 @@
               "statement": "variable",
               "type": "address",
               "name": "oldOwner",
-              "value": "owner"
+              "expressionValue": { "statement": "expression", "value": "owner" }
             },
             {
               "statement": "assignment",

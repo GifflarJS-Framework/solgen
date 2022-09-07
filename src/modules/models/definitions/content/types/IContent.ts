@@ -10,7 +10,7 @@ import { IStackItem } from "./IStackItem";
 export interface IContent extends IStackItem {
   setAssert(condition: string): IContent;
   setBreak(): IContent;
-  setVariable(type: ITypeName, name: string, value?: string): IContent;
+  setVariable(type: ITypeName, name: string, expression?: string): IContent;
   setMethodCall(
     variable: string,
     method: string,

@@ -75,7 +75,7 @@
             "statement": "variable",
             "type": "string",
             "name": "tmp",
-            "value": "\"asd\""
+            "expressionValue": { "statement": "expression", "value": "\"asd\"" }
           },
           {
             "statement": "assignment",

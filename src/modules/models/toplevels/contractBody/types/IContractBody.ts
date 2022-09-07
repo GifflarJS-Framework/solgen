@@ -46,7 +46,7 @@ export interface IContractBody {
     type: ITypeName,
     name: string,
     scope: string,
-    value?: string
+    expression?: string
   ): IStateVariable;
 
   createFunction(

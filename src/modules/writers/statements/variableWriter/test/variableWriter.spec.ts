@@ -10,7 +10,7 @@ describe.only("Variable Writer", () => {
       statement: "variable",
       name: "age",
       type: "uint",
-      value: "20",
+      expressionValue: { statement: "expression", value: "20" },
     };
 
     const expected = "uint age = 20";
@@ -25,7 +25,7 @@ describe.only("Variable Writer", () => {
       name: "age",
       type: "uint",
       dataLocation: "memory",
-      value: "20",
+      expressionValue: { statement: "expression", value: "20" },
     };
 
     const expected = "uint memory age = 20";
