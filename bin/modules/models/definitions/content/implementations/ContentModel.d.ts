@@ -1,8 +1,6 @@
 import { IContent } from "../types/IContent";
 import { IAssignmentModel } from "../../../statements/assignment/types/IAssignmentModel";
-import { IExpressionModel } from "../../../statements/expression/types/IExpressionModel";
 import { IVariableModel } from "../../../statements/variable/types/IVariableModel";
-import { INewContractModel } from "../../../statements/newcontract/types/INewContractModel";
 import { IIfModel } from "../../../statements/if/types/IIfModel";
 import { IMethodCallModel } from "../../../statements/methodcall/types/IMethodCallModel";
 import { IEventCallModel } from "../../../statements/eventCall/types/IEventCallModel";
@@ -24,9 +22,7 @@ declare class ContentModel {
     private breakModel;
     private catchModel;
     private assignmnetModel;
-    private expressionModel;
     private variableModel;
-    private newContractModel;
     private ifModel;
     private methodCallModel;
     private eventCallModel;
@@ -39,7 +35,7 @@ declare class ContentModel {
     private revertModel;
     private tryModel;
     private whileModel;
-    constructor(assertModel: IAssertModel, breakModel: IBreakModel, catchModel: ICatchModel, assignmnetModel: IAssignmentModel, expressionModel: IExpressionModel, variableModel: IVariableModel, newContractModel: INewContractModel, ifModel: IIfModel, methodCallModel: IMethodCallModel, eventCallModel: IEventCallModel, continueModel: IContinueModel, doWhileModel: IDoWhileModel, returnModel: IReturnModel, forModel: IForModel, mappingModel: IMappingModel, requireModel: IRequireModel, revertModel: IRevertModel, tryModel: ITryModel, whileModel: IWhileModel);
+    constructor(assertModel: IAssertModel, breakModel: IBreakModel, catchModel: ICatchModel, assignmnetModel: IAssignmentModel, variableModel: IVariableModel, ifModel: IIfModel, methodCallModel: IMethodCallModel, eventCallModel: IEventCallModel, continueModel: IContinueModel, doWhileModel: IDoWhileModel, returnModel: IReturnModel, forModel: IForModel, mappingModel: IMappingModel, requireModel: IRequireModel, revertModel: IRevertModel, tryModel: ITryModel, whileModel: IWhileModel);
     execute({ stateVars }: ICreateContentDTO): IContent;
 }
 export default ContentModel;

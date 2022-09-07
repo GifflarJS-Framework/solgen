@@ -1,6 +1,6 @@
-import { INewContract } from "../../../statements/newcontract/types/INewContract";
+import { IExpressionValue } from "../../../statements/expression/types/IExpressionValue";
 export interface IVariable {
     type: string;
     name: string;
-    value?: string | INewContract;
+    expressionValue?: IExpressionValue;
 }

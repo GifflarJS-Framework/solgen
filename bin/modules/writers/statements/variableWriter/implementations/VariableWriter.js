@@ -14,29 +14,10 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var tsyringe_1 = require("tsyringe");
 var VariableWriter = /** @class */ (function () {
-    function VariableWriter(newContractWriter) {
-        this.newContractWriter = newContractWriter;
-        this.statements = {
-            newcontract: this.newContractWriter.write,
-        };
+    function VariableWriter(expressionModel, expressionWriter) {
+        this.expressionModel = expressionModel;
+        this.expressionWriter = expressionWriter;
     }
-    VariableWriter.prototype._handleValue = function (value) {
-        // If the value is a statement
-        if (typeof value !== "string") {
-            var key = value.statement;
-            var handler = this.statements[key];
-            // If the statement was found
-            if (handler) {
-                return handler(value);
-            }
-            // If not found throw error
-            throw Error("Invalid statement inside variable.");
-        }
-        // If value is not a statement, return the same value
-        else {
-            return value;
-        }
-    };
     VariableWriter.prototype.write = function (variable) {
         var text = "";
         // Writing data location text
@@ -46,8 +27,11 @@ var VariableWriter = /** @class */ (function () {
         }
         // Writing value text
         var valueText = "";
-        if (variable.value) {
-            var value = this._handleValue(variable.value);
+        if (variable.expressionValue) {
+            var expression = this.expressionModel.execute({
+                value: variable.expressionValue,
+            });
+            var value = this.expressionWriter.write(expression);
             valueText = " = ".concat(value);
         }
         // Writing final text
@@ -56,8 +40,9 @@ var VariableWriter = /** @class */ (function () {
     };
     VariableWriter = __decorate([
         (0, tsyringe_1.injectable)(),
-        __param(0, (0, tsyringe_1.inject)("NewContractWriter")),
-        __metadata("design:paramtypes", [Object])
+        __param(0, (0, tsyringe_1.inject)("ExpressionModel")),
+        __param(1, (0, tsyringe_1.inject)("ExpressionWriter")),
+        __metadata("design:paramtypes", [Object, Object])
     ], VariableWriter);
     return VariableWriter;
 }());

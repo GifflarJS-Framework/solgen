@@ -14,9 +14,10 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var tsyringe_1 = require("tsyringe");
 var ForWriter = /** @class */ (function () {
-    function ForWriter(variableWriter, expressionWriter) {
+    function ForWriter(variableWriter, expressionWriter, expressionModel) {
         this.variableWriter = variableWriter;
         this.expressionWriter = expressionWriter;
+        this.expressionModel = expressionModel;
     }
     ForWriter.prototype._init = function (contentWriter) {
         this.contentWriter = contentWriter;
@@ -33,8 +34,11 @@ var ForWriter = /** @class */ (function () {
             txt_condition = json.condition;
         }
         var txt_expression = "";
-        if (json.expression) {
-            txt_expression = this.expressionWriter.write(json.expression);
+        if (json.expressionValue) {
+            var expression = this.expressionModel.execute({
+                value: json.expressionValue,
+            });
+            txt_expression = this.expressionWriter.write(expression);
         }
         var text = "for(".concat(txt_variable, ";").concat(txt_condition, ";").concat(txt_expression, ")");
         text += "{\n";
@@ -46,7 +50,8 @@ var ForWriter = /** @class */ (function () {
         (0, tsyringe_1.injectable)(),
         __param(0, (0, tsyringe_1.inject)("VariableWriter")),
         __param(1, (0, tsyringe_1.inject)("ExpressionWriter")),
-        __metadata("design:paramtypes", [Object, Object])
+        __param(2, (0, tsyringe_1.inject)("ExpressionModel")),
+        __metadata("design:paramtypes", [Object, Object, Object])
     ], ForWriter);
     return ForWriter;
 }());

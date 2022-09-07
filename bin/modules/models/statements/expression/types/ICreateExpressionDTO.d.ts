@@ -1,3 +1,4 @@
+import { IExpressionValue } from "./IExpressionValue";
 export interface ICreateExpressionDTO {
-    value: string;
+    value: IExpressionValue;
 }

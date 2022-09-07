@@ -17,6 +17,7 @@ import { ITypeNameInput } from "../../../../types/ITypeNameInput";
 import { IVisibility } from "../../../../types/IVisibility";
 import { IContractBodyItem } from "./IContractBodyItem";
 import { ITypeNameOutput } from "../../../../types/ITypeNameOutput";
+import { IExpressionValue } from "../../../statements/expression/types/IExpressionValue";
 export interface IContractBody {
     body: IContractBodyItem;
     createUsing(identifier: string, type: ITypeName): IUsing;
@@ -28,7 +29,7 @@ export interface IContractBody {
     createCustomError(name: string, args: Array<ITypeNameInput>): ICustomError;
     createEnum(identifier: string, identifiersOptions: string[]): IEnum;
     createMapping(type: IMappingKeyType, typeName: IMappingTypeName, name: string, scope?: IVisibility): IStateMapping;
-    createVariable(type: ITypeName, name: string, scope: string, value?: string): IStateVariable;
+    createVariable(type: ITypeName, name: string, scope: string, expression?: IExpressionValue): IStateVariable;
     createFunction(name: string, scope: string, inputs?: Array<ITypeNameInput>, outputs?: Array<ITypeNameOutput>, stateMutability?: IFunctionStateMutabilityType): IFunction;
     createStruct(identifier: string, variables: Array<ICreateVariableDTO>, mappings: Array<ICreateMappingDTO>): IStruct;
 }

@@ -30,14 +30,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var helpers_1 = __importDefault(require("../../../../../utils/helpers"));
 var tsyringe_1 = require("tsyringe");
 var ContentModel = /** @class */ (function () {
-    function ContentModel(assertModel, breakModel, catchModel, assignmnetModel, expressionModel, variableModel, newContractModel, ifModel, methodCallModel, eventCallModel, continueModel, doWhileModel, returnModel, forModel, mappingModel, requireModel, revertModel, tryModel, whileModel) {
+    function ContentModel(assertModel, breakModel, catchModel, assignmnetModel, variableModel, ifModel, methodCallModel, eventCallModel, continueModel, doWhileModel, returnModel, forModel, mappingModel, requireModel, revertModel, tryModel, whileModel) {
         this.assertModel = assertModel;
         this.breakModel = breakModel;
         this.catchModel = catchModel;
         this.assignmnetModel = assignmnetModel;
-        this.expressionModel = expressionModel;
         this.variableModel = variableModel;
-        this.newContractModel = newContractModel;
         this.ifModel = ifModel;
         this.methodCallModel = methodCallModel;
         this.eventCallModel = eventCallModel;
@@ -95,11 +93,11 @@ var ContentModel = /** @class */ (function () {
             var contentItem = _assignFunctions(stack[top]);
             return contentItem;
         };
-        var setVariable = function (type, name, value) {
+        var setVariable = function (type, name, expression) {
             var newVariable = _this.variableModel.execute({
                 type: helpers_1.default.writeTypeName(type),
                 name: name,
-                value: value,
+                expressionValue: expression,
             });
             contentVars.push(newVariable);
             stack[top].content.push(newVariable);
@@ -116,13 +114,10 @@ var ContentModel = /** @class */ (function () {
             var contentItem = _assignFunctions(stack[top]);
             return contentItem;
         };
-        var setAssignment = function (variable, expression) {
-            var expressionModel = _this.expressionModel.execute({
-                value: expression,
-            });
+        var setAssignment = function (variable, expressionValue) {
             var newAssignment = _this.assignmnetModel.execute({
                 variable: variable,
-                value: expressionModel,
+                expressionValue: expressionValue,
             });
             stack[top].content.push(newAssignment);
             var contentItem = _assignFunctions(stack[top]);
@@ -137,10 +132,20 @@ var ContentModel = /** @class */ (function () {
             var contentItem = _assignFunctions(stack[top]);
             return contentItem;
         };
-        var setContractVariable = function (variable, contractName, args) {
-            var newContract = _this.newContractModel.execute({ contractName: contractName, args: args });
-            return setVariable({ customType: contractName }, variable, newContract);
-        };
+        // const setContractVariable = (
+        //   variable: string,
+        //   contractName: string,
+        //   args: Array<string>
+        // ): IContent => {
+        //   const newContract = this.newContractModel.execute({ contractName, args });
+        //   // TODO: update this line when updating Expression interface
+        //   const newContractText = this.newContractWriter.write(newContract);
+        //   return setVariable(
+        //     { customType: contractName },
+        //     variable,
+        //     newContractText
+        //   );
+        // };
         var setContinue = function () {
             var _continue = _this.continueModel.execute();
             stack[top].content.push(_continue);
@@ -175,17 +180,17 @@ var ContentModel = /** @class */ (function () {
             return contentItem;
         };
         // Decision and loop structures
-        var beginFor = function (variable, condition, expression) {
+        var beginFor = function (variable, condition, expressionValue) {
             var newFor = _this.forModel.execute({
                 variable: {
                     statement: "variable",
                     type: helpers_1.default.writeTypeName(variable.type),
                     name: variable.name,
-                    value: variable.value,
+                    expressionValue: variable.expression,
                     dataLocation: variable.dataLocation,
                 },
                 condition: condition,
-                expression: { statement: "expression", value: expression },
+                expressionValue: expressionValue,
             });
             var newForContent = _assignFunctions(newFor);
             stack.push(newForContent);
@@ -235,7 +240,7 @@ var ContentModel = /** @class */ (function () {
         };
         var _c = Array(6).fill(_endDecisionStructure), endIf = _c[0], endElse = _c[1], endElseIf = _c[2], endDoWhile = _c[3], endWhile = _c[4], endFor = _c[5];
         var _assignFunctions = function (obj) {
-            var _obj = __assign(__assign({}, obj), { beginIf: beginIf, beginElse: beginElse, beginElseIf: beginElseIf, beginDoWhile: beginDoWhile, beginFor: beginFor, endIf: endIf, endElseIf: endElseIf, endElse: endElse, endDoWhile: endDoWhile, endFor: endFor, endWhile: endWhile, setEventCall: setEventCall, setAssignment: setAssignment, setVariable: setVariable, setMethodCall: setMethodCall, setContractVariable: setContractVariable, setContinue: setContinue, setReturn: setReturn, setAssert: setAssert, setBreak: setBreak, setCatch: setCatch, setMapping: setMapping, setRequire: setRequire, setRevert: setRevert, setTry: setTry, beginWhile: beginWhile });
+            var _obj = __assign(__assign({}, obj), { beginIf: beginIf, beginElse: beginElse, beginElseIf: beginElseIf, beginDoWhile: beginDoWhile, beginFor: beginFor, endIf: endIf, endElseIf: endElseIf, endElse: endElse, endDoWhile: endDoWhile, endFor: endFor, endWhile: endWhile, setEventCall: setEventCall, setAssignment: setAssignment, setVariable: setVariable, setMethodCall: setMethodCall, setContinue: setContinue, setReturn: setReturn, setAssert: setAssert, setBreak: setBreak, setCatch: setCatch, setMapping: setMapping, setRequire: setRequire, setRevert: setRevert, setTry: setTry, beginWhile: beginWhile });
             return _obj;
         };
         var json = _assignFunctions(stack[top]);
@@ -247,22 +252,20 @@ var ContentModel = /** @class */ (function () {
         __param(1, (0, tsyringe_1.inject)("BreakModel")),
         __param(2, (0, tsyringe_1.inject)("CatchModel")),
         __param(3, (0, tsyringe_1.inject)("AssignmentModel")),
-        __param(4, (0, tsyringe_1.inject)("ExpressionModel")),
-        __param(5, (0, tsyringe_1.inject)("VariableModel")),
-        __param(6, (0, tsyringe_1.inject)("NewContractModel")),
-        __param(7, (0, tsyringe_1.inject)("IfModel")),
-        __param(8, (0, tsyringe_1.inject)("MethodCallModel")),
-        __param(9, (0, tsyringe_1.inject)("EventCallModel")),
-        __param(10, (0, tsyringe_1.inject)("ContinueModel")),
-        __param(11, (0, tsyringe_1.inject)("DoWhileModel")),
-        __param(12, (0, tsyringe_1.inject)("ReturnModel")),
-        __param(13, (0, tsyringe_1.inject)("ForModel")),
-        __param(14, (0, tsyringe_1.inject)("MappingModel")),
-        __param(15, (0, tsyringe_1.inject)("RequireModel")),
-        __param(16, (0, tsyringe_1.inject)("RevertModel")),
-        __param(17, (0, tsyringe_1.inject)("TryModel")),
-        __param(18, (0, tsyringe_1.inject)("WhileModel")),
-        __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object])
+        __param(4, (0, tsyringe_1.inject)("VariableModel")),
+        __param(5, (0, tsyringe_1.inject)("IfModel")),
+        __param(6, (0, tsyringe_1.inject)("MethodCallModel")),
+        __param(7, (0, tsyringe_1.inject)("EventCallModel")),
+        __param(8, (0, tsyringe_1.inject)("ContinueModel")),
+        __param(9, (0, tsyringe_1.inject)("DoWhileModel")),
+        __param(10, (0, tsyringe_1.inject)("ReturnModel")),
+        __param(11, (0, tsyringe_1.inject)("ForModel")),
+        __param(12, (0, tsyringe_1.inject)("MappingModel")),
+        __param(13, (0, tsyringe_1.inject)("RequireModel")),
+        __param(14, (0, tsyringe_1.inject)("RevertModel")),
+        __param(15, (0, tsyringe_1.inject)("TryModel")),
+        __param(16, (0, tsyringe_1.inject)("WhileModel")),
+        __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object])
     ], ContentModel);
     return ContentModel;
 }());

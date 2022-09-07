@@ -115,12 +115,12 @@ var ContractBodyModel = /** @class */ (function () {
             body.modifiers.push(modifier);
             return modifier;
         };
-        var createVariable = function (type, name, scope, value) {
+        var createVariable = function (type, name, scope, expression) {
             var variable = _this.stateVariableModel.execute({
                 type: helpers_1.default.writeTypeName(type),
                 name: name,
                 scope: scope,
-                value: value,
+                expressionValue: expression,
             });
             if (!body.variables)
                 body.variables = [];

@@ -1,5 +1,5 @@
-import { IExpression } from "../../expression/types/IExpression";
+import { IExpressionValue } from "../../expression/types/IExpressionValue";
 export interface IAssignmentDTO {
     variable: string;
-    value: IExpression;
+    expressionValue: IExpressionValue;
 }

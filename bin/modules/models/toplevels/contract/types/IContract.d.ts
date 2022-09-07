@@ -9,11 +9,12 @@ import { IContractJson } from "./IContractJson";
 import { IFallback } from "../../../definitions/fallback/types/IFallback";
 import { IReceive } from "../../../definitions/receive/types/IReceive";
 import { ITypeNameInput } from "../../../../types/ITypeNameInput";
+import { IExpressionValue } from "../../../statements/expression/types/IExpressionValue";
 export interface IContract extends IContractJson, IContractBody {
     toJson(): IContractJson;
     setInheritance(identifier: string, args?: Array<string>): IInherits;
     createEvent(name: string, inputs: Array<ITypeNameInput>): IEvent;
-    createVariable(type: ITypeName, name: string, scope: string, value?: string, options?: IVariableOptions): IStateVariable;
+    createVariable(type: ITypeName, name: string, scope: string, value?: IExpressionValue, options?: IVariableOptions): IStateVariable;
     createConstructor(scope: string, inputs?: Array<ITypeNameInput>): IFunction;
     createFallback(isPayable?: boolean): IFallback;
     createReceive(): IReceive;

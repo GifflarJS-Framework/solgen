@@ -1,7 +1,7 @@
-import { IExpression } from "../../expression/types/IExpression";
 import { ILocalVariable } from "../../variable/types/ILocalVariable";
+import { IExpressionValue } from "../../expression/types/IExpressionValue";
 export interface ICreateForDTO {
     variable?: ILocalVariable;
     condition?: string;
-    expression?: IExpression;
+    expressionValue?: IExpressionValue;
 }

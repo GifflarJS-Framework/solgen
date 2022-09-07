@@ -14,15 +14,18 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var tsyringe_1 = require("tsyringe");
 var AssignmentWriter = /** @class */ (function () {
-    function AssignmentWriter(expressionWriter) {
+    function AssignmentWriter(expressionModel, expressionWriter) {
+        this.expressionModel = expressionModel;
         this.expressionWriter = expressionWriter;
     }
     AssignmentWriter.prototype.write = function (json) {
-        var expression = json.value;
         // if (typeof expressionValue === "object") {
         // const expression: IExpression = createExpressionModel({
         //   value: expressionValue.value,
         // });
+        var expression = this.expressionModel.execute({
+            value: json.expressionValue,
+        });
         var expressionText = this.expressionWriter.write(expression);
         // }
         var text = "".concat(json.variable, " = ").concat(expressionText);
@@ -30,8 +33,9 @@ var AssignmentWriter = /** @class */ (function () {
     };
     AssignmentWriter = __decorate([
         (0, tsyringe_1.injectable)(),
-        __param(0, (0, tsyringe_1.inject)("ExpressionWriter")),
-        __metadata("design:paramtypes", [Object])
+        __param(0, (0, tsyringe_1.inject)("ExpressionModel")),
+        __param(1, (0, tsyringe_1.inject)("ExpressionWriter")),
+        __metadata("design:paramtypes", [Object, Object])
     ], AssignmentWriter);
     return AssignmentWriter;
 }());

@@ -4,13 +4,13 @@ var VariableModel = /** @class */ (function () {
     function VariableModel() {
     }
     VariableModel.prototype.execute = function (_a) {
-        var type = _a.type, dataLocation = _a.dataLocation, name = _a.name, value = _a.value;
+        var type = _a.type, dataLocation = _a.dataLocation, name = _a.name, expressionValue = _a.expressionValue;
         var variable = {
             statement: "variable",
             type: type,
             dataLocation: dataLocation,
             name: name,
-            value: value,
+            expressionValue: expressionValue,
         };
         return variable;
     };

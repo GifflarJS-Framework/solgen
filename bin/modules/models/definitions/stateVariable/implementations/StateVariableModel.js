@@ -4,15 +4,15 @@ var StateVariableModel = /** @class */ (function () {
     function StateVariableModel() {
     }
     StateVariableModel.prototype.execute = function (_a) {
-        var type = _a.type, name = _a.name, scope = _a.scope, stateMutability = _a.stateMutability, value = _a.value;
-        if (stateMutability === "constant" && !value)
+        var type = _a.type, name = _a.name, scope = _a.scope, stateMutability = _a.stateMutability, expressionValue = _a.expressionValue;
+        if (stateMutability === "constant" && !expressionValue)
             throw Error("A constant must have an initial value.");
         var stateVariable = {
             type: type,
             name: name,
             scope: scope || "",
             stateMutability: stateMutability,
-            value: value,
+            expressionValue: expressionValue,
         };
         return stateVariable;
     };

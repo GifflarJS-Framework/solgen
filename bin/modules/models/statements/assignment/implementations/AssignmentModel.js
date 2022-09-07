@@ -4,11 +4,11 @@ var AssignmentModel = /** @class */ (function () {
     function AssignmentModel() {
     }
     AssignmentModel.prototype.execute = function (_a) {
-        var variable = _a.variable, value = _a.value;
+        var variable = _a.variable, expressionValue = _a.expressionValue;
         var assignment = {
             statement: "assignment",
             variable: variable,
-            value: value,
+            expressionValue: expressionValue,
         };
         return assignment;
     };

@@ -1,5 +1,6 @@
 import { ICustomErrorcall } from "../../../statements/revert/types/ICustomErrorCall";
 import { ITryExpression } from "../../../statements/try/types/ITryExpression";
+import { IExpressionValue } from "../../../statements/expression/types/IExpressionValue";
 import { IDataLocation } from "../../../../types/IDataLocation";
 import { IMappingKeyType } from "../../../../types/IMappingKeyType";
 import { IMappingTypeName } from "../../../../types/IMappingTypeName";
@@ -9,11 +10,10 @@ import { IStackItem } from "./IStackItem";
 export interface IContent extends IStackItem {
     setAssert(condition: string): IContent;
     setBreak(): IContent;
-    setVariable(type: ITypeName, name: string, value?: string): IContent;
+    setVariable(type: ITypeName, name: string, expression?: IExpressionValue): IContent;
     setMethodCall(variable: string, method: string, args: Array<string>): IContent;
-    setAssignment(variable: string, expression: string | undefined): IContent;
+    setAssignment(variable: string, expressionValue: IExpressionValue | undefined): IContent;
     setEventCall(name: string, inputNames: Array<string>): IContent;
-    setContractVariable(variable: string, contractName: string, args: Array<string>): IContent;
     setReturn(expressions: Array<string>): IContent;
     setContinue(): IContent;
     setMapping(type: IMappingKeyType, typeName: IMappingTypeName, name: string): IContent;
@@ -56,9 +56,9 @@ export interface IContent extends IStackItem {
     beginFor(variable: {
         type: ITypeName;
         name: string;
-        value: string;
+        value: IExpressionValue;
         dataLocation: IDataLocation;
-    }, condition: string, expression: string): IContent;
+    }, condition: string, expressionValue: IExpressionValue): IContent;
     endIf(): IContent;
     endElseIf(): IContent;
     endElse(): IContent;
