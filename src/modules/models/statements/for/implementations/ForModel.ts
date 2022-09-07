@@ -3,12 +3,12 @@ import { IFor } from "../types/IFor";
 import { IForModel } from "../types/IForModel";
 
 class ForModel implements IForModel {
-  execute({ variable, condition, expression }: ICreateForDTO): IFor {
+  execute({ variable, condition, expressionValue }: ICreateForDTO): IFor {
     const _for: IFor = {
       statement: "for",
       variable,
       condition,
-      expression,
+      expressionValue,
       content: [],
     };
 

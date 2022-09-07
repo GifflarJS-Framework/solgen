@@ -8,9 +8,9 @@ class StateVariableModel implements IStateVariableModel {
     name,
     scope,
     stateMutability,
-    value,
+    expressionValue,
   }: ICreateStateVariableDTO): IStateVariable {
-    if (stateMutability === "constant" && !value)
+    if (stateMutability === "constant" && !expressionValue)
       throw Error("A constant must have an initial value.");
 
     const stateVariable: IStateVariable = {
@@ -18,7 +18,7 @@ class StateVariableModel implements IStateVariableModel {
       name,
       scope: scope || "",
       stateMutability,
-      value,
+      expressionValue,
     };
 
     return stateVariable;

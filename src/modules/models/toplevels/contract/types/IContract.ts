@@ -9,6 +9,7 @@ import { IContractJson } from "./IContractJson";
 import { IFallback } from "@models/definitions/fallback/types/IFallback";
 import { IReceive } from "@models/definitions/receive/types/IReceive";
 import { ITypeNameInput } from "@modules/types/ITypeNameInput";
+import { IExpressionValue } from "@modules/models/statements/expression/types/IExpressionValue";
 
 export interface IContract extends IContractJson, IContractBody {
   toJson(): IContractJson;
@@ -21,7 +22,7 @@ export interface IContract extends IContractJson, IContractBody {
     type: ITypeName,
     name: string,
     scope: string,
-    value?: string,
+    value?: IExpressionValue,
     options?: IVariableOptions
   ): IStateVariable;
 

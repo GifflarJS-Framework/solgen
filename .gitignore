@@ -11,3 +11,8 @@ coverage/
 docs/
 dist/
 /types
+
+docs/
+doc/
+jsdoc-config.json
+assets

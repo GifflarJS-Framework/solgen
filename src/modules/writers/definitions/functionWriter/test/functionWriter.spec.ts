@@ -15,7 +15,14 @@ describe("Contract Writer", () => {
       modifiers: [],
       outputs: [{ type: "uint" }],
       content: [
-        { statement: "variable", name: "age", type: "uint", value: "18" },
+        {
+          statement: "variable",
+          name: "age",
+          type: "uint",
+          expressionValue: {
+            customExpression: "18",
+          },
+        },
       ],
     };
 

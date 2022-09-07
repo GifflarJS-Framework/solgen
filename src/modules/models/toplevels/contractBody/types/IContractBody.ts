@@ -17,6 +17,7 @@ import { ITypeNameInput } from "@modules/types/ITypeNameInput";
 import { IVisibility } from "@modules/types/IVisibility";
 import { IContractBodyItem } from "./IContractBodyItem";
 import { ITypeNameOutput } from "@modules/types/ITypeNameOutput";
+import { IExpressionValue } from "@modules/models/statements/expression/types/IExpressionValue";
 
 export interface IContractBody {
   body: IContractBodyItem;
@@ -46,7 +47,7 @@ export interface IContractBody {
     type: ITypeName,
     name: string,
     scope: string,
-    value?: string
+    expression?: IExpressionValue
   ): IStateVariable;
 
   createFunction(

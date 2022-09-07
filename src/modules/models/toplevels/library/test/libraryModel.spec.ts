@@ -42,8 +42,10 @@ describe("Test Library", () => {
     libraryModelInstance
       .createFunction("setOwner", "public")
       .setInput({ regularType: "address" }, "newOwner")
-      .setVariable({ regularType: "address" }, "oldOwner", "owner")
-      .setAssignment("owner", "newOwner")
+      .setVariable({ regularType: "address" }, "oldOwner", {
+        customExpression: "owner",
+      })
+      .setAssignment("owner", { customExpression: "newOwner" })
       .setEventCall("transferedOwnership", ["oldOwner", "owner"]);
 
     // Asserting the result

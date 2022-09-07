@@ -30,6 +30,7 @@ import { IContractBodyItem } from "../types/IContractBodyItem";
 import { IContractBodyModel } from "../types/IContractBodyModel";
 import { ITypeNameInput } from "@modules/types/ITypeNameInput";
 import { ITypeNameOutput } from "@modules/types/ITypeNameOutput";
+import { IExpressionValue } from "@modules/models/statements/expression/types/IExpressionValue";
 
 @injectable()
 class ContractBodyModel implements IContractBodyModel {
@@ -165,13 +166,13 @@ class ContractBodyModel implements IContractBodyModel {
       type: ITypeName,
       name: string,
       scope: IVisibility,
-      value?: string
+      expression?: IExpressionValue
     ): IStateVariable => {
       const variable = this.stateVariableModel.execute({
         type: helpers.writeTypeName(type),
         name,
         scope,
-        value,
+        expressionValue: expression,
       });
       if (!body.variables) body.variables = [];
       body.variables.push(variable);

@@ -1,13 +1,11 @@
 /* eslint-disable no-use-before-define */
 import helpers from "@utils/helpers";
-import { INewContract } from "@models/statements/newcontract/types/INewContract";
 import { IVariable } from "@models/definitions/stateVariable/types/IVariable";
 import { IContent } from "../types/IContent";
 import { inject, injectable } from "tsyringe";
 import { IAssignmentModel } from "@models/statements/assignment/types/IAssignmentModel";
 import { IExpressionModel } from "@models/statements/expression/types/IExpressionModel";
 import { IVariableModel } from "@models/statements/variable/types/IVariableModel";
-import { INewContractModel } from "@models/statements/newcontract/types/INewContractModel";
 import { IIfModel } from "@models/statements/if/types/IIfModel";
 import { IMethodCallModel } from "@models/statements/methodcall/types/IMethodCallModel";
 import { IEventCallModel } from "@models/statements/eventCall/types/IEventCallModel";
@@ -35,6 +33,7 @@ import { ITryExpression } from "@models/statements/try/types/ITryExpression";
 import { IWhileModel } from "@models/statements/while/types/IWhileModel";
 import { IWhile } from "@models/statements/while/types/IWhile";
 import { ITypeNameInput } from "@modules/types/ITypeNameInput";
+import { IExpressionValue } from "@modules/models/statements/expression/types/IExpressionValue";
 
 interface IIfContent extends IIf, IContent {}
 interface IDoWhileContent extends IDoWhile, IContent {}
@@ -52,12 +51,8 @@ class ContentModel {
     private catchModel: ICatchModel,
     @inject("AssignmentModel")
     private assignmnetModel: IAssignmentModel,
-    @inject("ExpressionModel")
-    private expressionModel: IExpressionModel,
     @inject("VariableModel")
     private variableModel: IVariableModel,
-    @inject("NewContractModel")
-    private newContractModel: INewContractModel,
     @inject("IfModel")
     private ifModel: IIfModel,
     @inject("MethodCallModel")
@@ -140,12 +135,12 @@ class ContentModel {
     const setVariable = (
       type: ITypeName,
       name: string,
-      value?: string | INewContract
+      expression?: IExpressionValue
     ): IContent => {
       const newVariable = this.variableModel.execute({
         type: helpers.writeTypeName(type),
         name,
-        value,
+        expressionValue: expression,
       });
       contentVars.push(newVariable);
       stack[top].content.push(newVariable);
@@ -168,13 +163,13 @@ class ContentModel {
       return contentItem;
     };
 
-    const setAssignment = (variable: string, expression: string): IContent => {
-      const expressionModel = this.expressionModel.execute({
-        value: expression,
-      });
+    const setAssignment = (
+      variable: string,
+      expressionValue: IExpressionValue
+    ): IContent => {
       const newAssignment = this.assignmnetModel.execute({
         variable,
-        value: expressionModel,
+        expressionValue,
       });
       stack[top].content.push(newAssignment);
       const contentItem: IContent = _assignFunctions(stack[top]);
@@ -194,14 +189,20 @@ class ContentModel {
       return contentItem;
     };
 
-    const setContractVariable = (
-      variable: string,
-      contractName: string,
-      args: Array<string>
-    ): IContent => {
-      const newContract = this.newContractModel.execute({ contractName, args });
-      return setVariable({ customType: contractName }, variable, newContract);
-    };
+    // const setContractVariable = (
+    //   variable: string,
+    //   contractName: string,
+    //   args: Array<string>
+    // ): IContent => {
+    //   const newContract = this.newContractModel.execute({ contractName, args });
+    //   // TODO: update this line when updating Expression interface
+    //   const newContractText = this.newContractWriter.write(newContract);
+    //   return setVariable(
+    //     { customType: contractName },
+    //     variable,
+    //     newContractText
+    //   );
+    // };
 
     const setContinue = (): IContent => {
       const _continue = this.continueModel.execute();
@@ -254,22 +255,22 @@ class ContentModel {
       variable: {
         type: ITypeName;
         name: string;
-        value: string;
+        expression: IExpressionValue;
         dataLocation: IDataLocation;
       },
       condition: string,
-      expression: string
+      expressionValue: IExpressionValue
     ): IContent => {
       const newFor = this.forModel.execute({
         variable: {
           statement: "variable",
           type: helpers.writeTypeName(variable.type),
           name: variable.name,
-          value: variable.value,
+          expressionValue: variable.expression,
           dataLocation: variable.dataLocation,
         },
         condition,
-        expression: { statement: "expression", value: expression },
+        expressionValue,
       });
       const newForContent: IForContent = _assignFunctions(newFor);
       stack.push(newForContent);
@@ -346,7 +347,6 @@ class ContentModel {
         setAssignment,
         setVariable,
         setMethodCall,
-        setContractVariable,
         setContinue,
         setReturn,
         setAssert,

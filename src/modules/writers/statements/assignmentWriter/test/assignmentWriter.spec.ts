@@ -9,9 +9,8 @@ describe("Assignment Writer", () => {
     const assignment: IAssignment = {
       statement: "assignment",
       variable: "age",
-      value: {
-        statement: "expression",
-        value: "20",
+      expressionValue: {
+        customExpression: "20",
       },
     };
 

@@ -1,6 +1,6 @@
-import { IExpression } from "@models/statements/expression/types/IExpression";
+import { IExpressionValue } from "../../expression/types/IExpressionValue";
 
 export interface IAssignmentDTO {
   variable: string;
-  value: IExpression;
+  expressionValue: IExpressionValue;
 }

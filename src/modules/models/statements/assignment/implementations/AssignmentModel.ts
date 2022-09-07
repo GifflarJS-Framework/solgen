@@ -3,11 +3,11 @@ import { IAssignmentDTO } from "../types/IAssignmentDTO";
 import { IAssignmentModel } from "../types/IAssignmentModel";
 
 class AssignmentModel implements IAssignmentModel {
-  execute({ variable, value }: IAssignmentDTO): IAssignment {
+  execute({ variable, expressionValue }: IAssignmentDTO): IAssignment {
     const assignment: IAssignment = {
       statement: "assignment",
       variable,
-      value,
+      expressionValue,
     };
 
     return assignment;

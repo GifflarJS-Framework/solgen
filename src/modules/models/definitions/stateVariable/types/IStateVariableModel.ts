@@ -6,6 +6,6 @@ export interface IStateVariableModel {
     type,
     name,
     scope,
-    value,
+    expressionValue,
   }: ICreateStateVariableDTO): IStateVariable;
 }

@@ -48,8 +48,8 @@ describe("Gifflar Contract", () => {
     gContract
       .createConstructor("public")
       .setInput({ regularType: "address" }, "_owner")
-      .setAssignment("manager", "_owner")
-      .setAssignment("name", '"DHT11"');
+      .setAssignment("manager", { customExpression: "_owner" })
+      .setAssignment("name", { customExpression: '"DHT11"' });
 
     // Creating a new function
     gContract
@@ -57,7 +57,7 @@ describe("Gifflar Contract", () => {
       .setInput({ regularType: "uint256" }, "_val")
       .setInput({ regularType: "uint256" }, "_valueId")
       .beginIf("_valueId == 1")
-      .setAssignment("value1", "_val")
+      .setAssignment("value1", { customExpression: "_val" })
       .beginIf("value1 >= max_value1")
       .setEventCall("temperatureOverflow", ["value1", "max_value1"])
       .endIf()
@@ -69,7 +69,7 @@ describe("Gifflar Contract", () => {
     gContract
       .createFunction("setName", "public")
       .setInput({ regularType: "string" }, "_name")
-      .setAssignment("name", "_name");
+      .setAssignment("name", { customExpression: "_name" });
 
     const resultJson = gContract.toString();
     const result = gContract.write();

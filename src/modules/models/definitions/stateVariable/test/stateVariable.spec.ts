@@ -11,13 +11,17 @@ describe("State Variable Model", () => {
       type: "uint",
       name: "age",
       scope: "private",
-      value: "20",
+      expressionValue: {
+        customExpression: "20",
+      },
     };
     const model = stateVariableModel.execute({
       name: "age",
       scope: "private",
       type: "uint",
-      value: "20",
+      expressionValue: {
+        customExpression: "20",
+      },
     });
 
     const result = JSON.stringify(model);
@@ -31,13 +35,17 @@ describe("State Variable Model", () => {
       name: "age",
       scope: "private",
       stateMutability: "constant",
-      value: "20",
+      expressionValue: {
+        customExpression: "20",
+      },
     };
     const model = stateVariableModel.execute({
       name: "age",
       scope: "private",
       type: "uint",
-      value: "20",
+      expressionValue: {
+        customExpression: "20",
+      },
       stateMutability: "constant",
     });
 
