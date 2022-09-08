@@ -14,12 +14,11 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var tsyringe_1 = require("tsyringe");
 var ContractBodyWriter = /** @class */ (function () {
-    function ContractBodyWriter(eventWriter, functionWriter, stateVariableWriter, modifierWriter, customErrorWriter, stateMappingWriter, usingWriter, enumWriter) {
+    function ContractBodyWriter(eventWriter, functionWriter, stateVariableWriter, modifierWriter, stateMappingWriter, usingWriter, enumWriter) {
         this.eventWriter = eventWriter;
         this.functionWriter = functionWriter;
         this.stateVariableWriter = stateVariableWriter;
         this.modifierWriter = modifierWriter;
-        this.customErrorWriter = customErrorWriter;
         this.stateMappingWriter = stateMappingWriter;
         this.usingWriter = usingWriter;
         this.enumWriter = enumWriter;
@@ -38,7 +37,10 @@ var ContractBodyWriter = /** @class */ (function () {
         // Modifiers
         var txt_modifiers = this.modifierWriter.write(bodyItem.modifiers || []);
         // Custom Errors
-        var txt_custom_errors = this.customErrorWriter.write(bodyItem.customErrors || []);
+        // *Custom errors are only available starting from v0.8.4 solidity version
+        // const txt_custom_errors = this.customErrorWriter.write(
+        //   bodyItem.customErrors || []
+        // );
         // Functions
         var txt_functions = this.functionWriter.write(bodyItem.functions || []);
         var bodyText = "".concat(txt_using +
@@ -47,7 +49,6 @@ var ContractBodyWriter = /** @class */ (function () {
             txt_mappings +
             txt_events +
             txt_modifiers +
-            txt_custom_errors +
             txt_functions);
         return bodyText;
     };
@@ -57,11 +58,10 @@ var ContractBodyWriter = /** @class */ (function () {
         __param(1, (0, tsyringe_1.inject)("FunctionWriter")),
         __param(2, (0, tsyringe_1.inject)("StateVariableWriter")),
         __param(3, (0, tsyringe_1.inject)("ModifierWriter")),
-        __param(4, (0, tsyringe_1.inject)("CustomErrorWriter")),
-        __param(5, (0, tsyringe_1.inject)("StateMappingWriter")),
-        __param(6, (0, tsyringe_1.inject)("UsingWriter")),
-        __param(7, (0, tsyringe_1.inject)("EnumWriter")),
-        __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object])
+        __param(4, (0, tsyringe_1.inject)("StateMappingWriter")),
+        __param(5, (0, tsyringe_1.inject)("UsingWriter")),
+        __param(6, (0, tsyringe_1.inject)("EnumWriter")),
+        __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object])
     ], ContractBodyWriter);
     return ContractBodyWriter;
 }());

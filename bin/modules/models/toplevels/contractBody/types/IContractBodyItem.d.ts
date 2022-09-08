@@ -1,4 +1,3 @@
-import { ICustomError } from "../../../definitions/customError/types/ICustomError";
 import { IEnum } from "../../../definitions/enum/types/IEnum";
 import { IEvent } from "../../../definitions/event/types/IEvent";
 import { IFunction } from "../../../definitions/function/types/IFunction";
@@ -15,6 +14,5 @@ export interface IContractBodyItem {
     mappings?: Array<IStateMapping>;
     events?: Array<IEvent>;
     modifiers?: Array<IModifier>;
-    customErrors?: Array<ICustomError>;
     functions?: Array<IFunction>;
 }

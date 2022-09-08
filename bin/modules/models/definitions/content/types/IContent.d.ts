@@ -1,4 +1,3 @@
-import { ICustomErrorcall } from "../../../statements/revert/types/ICustomErrorCall";
 import { ITryExpression } from "../../../statements/try/types/ITryExpression";
 import { IExpressionValue } from "../../../statements/expression/types/IExpressionValue";
 import { IDataLocation } from "../../../../types/IDataLocation";
@@ -21,7 +20,6 @@ export interface IContent extends IStackItem {
     setRequire(condition: string, errorMessage?: string): IContent;
     setRevert(errorDefinition: {
         message?: string;
-        customErrorCall?: ICustomErrorcall;
     }): IContent;
     setTry(parameters: Array<ITypeNameInput>, expression: ITryExpression): IContent;
     /**

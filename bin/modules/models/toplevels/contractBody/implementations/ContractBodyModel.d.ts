@@ -1,4 +1,3 @@
-import { ICustomErrorModel } from "../../../definitions/customError/types/ICustomErrorModel";
 import { IEnumModel } from "../../../definitions/enum/types/IEnumModel";
 import IEventModel from "../../../definitions/event/types/IEventModel";
 import { IFunctionModel } from "../../../definitions/function/types/IFunctionModel";
@@ -15,11 +14,10 @@ declare class ContractBodyModel implements IContractBodyModel {
     private eventModel;
     private usingModel;
     private modifierModel;
-    private customErrorModel;
     private stateMappingModel;
     private enumModel;
     private structModel;
-    constructor(stateVariableModel: IStateVariableModel, functionModel: IFunctionModel, eventModel: IEventModel, usingModel: IUsingModel, modifierModel: IModifierModel, customErrorModel: ICustomErrorModel, stateMappingModel: IStateMappingModel, enumModel: IEnumModel, structModel: IStructModel);
+    constructor(stateVariableModel: IStateVariableModel, functionModel: IFunctionModel, eventModel: IEventModel, usingModel: IUsingModel, modifierModel: IModifierModel, stateMappingModel: IStateMappingModel, enumModel: IEnumModel, structModel: IStructModel);
     execute(): IContractBody;
 }
 export default ContractBodyModel;

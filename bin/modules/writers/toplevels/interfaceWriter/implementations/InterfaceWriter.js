@@ -14,10 +14,9 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var tsyringe_1 = require("tsyringe");
 var InterfaceWriter = /** @class */ (function () {
-    function InterfaceWriter(eventWriter, modifierWriter, customErrorWriter, functionWriter, inheritsWriter) {
+    function InterfaceWriter(eventWriter, modifierWriter, functionWriter, inheritsWriter) {
         this.eventWriter = eventWriter;
         this.modifierWriter = modifierWriter;
-        this.customErrorWriter = customErrorWriter;
         this.functionWriter = functionWriter;
         this.inheritsWriter = inheritsWriter;
     }
@@ -42,7 +41,10 @@ var InterfaceWriter = /** @class */ (function () {
             // Writing interface body
             var txt_events = _this.eventWriter.write(json.interface.events || []);
             var txt_modifiers = _this.modifierWriter.write(json.interface.modifiers || []);
-            var txt_custom_errors = _this.customErrorWriter.write(json.interface.customErrors || []);
+            //*Custom errors are only available starting from v0.8.4 solidity version
+            // const txt_custom_errors = this.customErrorWriter.write(
+            //   json.interface.customErrors || []
+            // );
             var txt_functions = _this.functionWriter.write(json.interface.functions || [], { onlyPrototype: true });
             // End of interface
             var txt_close = "}\n\n";
@@ -53,7 +55,6 @@ var InterfaceWriter = /** @class */ (function () {
                 txt_openBraces +
                 txt_events +
                 txt_modifiers +
-                txt_custom_errors +
                 txt_functions +
                 txt_close;
             // Sending the contract code to callback
@@ -70,10 +71,9 @@ var InterfaceWriter = /** @class */ (function () {
         (0, tsyringe_1.injectable)(),
         __param(0, (0, tsyringe_1.inject)("EventWriter")),
         __param(1, (0, tsyringe_1.inject)("ModifierWriter")),
-        __param(2, (0, tsyringe_1.inject)("CustomErrorWriter")),
-        __param(3, (0, tsyringe_1.inject)("FunctionWriter")),
-        __param(4, (0, tsyringe_1.inject)("InheritsWriter")),
-        __metadata("design:paramtypes", [Object, Object, Object, Object, Object])
+        __param(2, (0, tsyringe_1.inject)("FunctionWriter")),
+        __param(3, (0, tsyringe_1.inject)("InheritsWriter")),
+        __metadata("design:paramtypes", [Object, Object, Object, Object])
     ], InterfaceWriter);
     return InterfaceWriter;
 }());

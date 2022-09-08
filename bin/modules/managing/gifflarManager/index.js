@@ -8,4 +8,4 @@ var GifflarManager_1 = __importDefault(require("./implementations/GifflarManager
 var implementations = {
     default: GifflarManager_1.default,
 };
-tsyringe_1.container.registerSingleton("GifflarManager", implementations.default);
+tsyringe_1.container.register("GifflarManager", implementations.default);

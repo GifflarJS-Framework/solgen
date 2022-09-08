@@ -1,4 +1,3 @@
-import { ICustomError } from "../../../definitions/customError/types/ICustomError";
 import { IEnum } from "../../../definitions/enum/types/IEnum";
 import { IEvent } from "../../../definitions/event/types/IEvent";
 import { IFunction } from "../../../definitions/function/types/IFunction";
@@ -26,7 +25,9 @@ export interface IContractBody {
         isOverriding?: boolean;
         isVirtual?: boolean;
     }): IModifier;
-    createCustomError(name: string, args: Array<ITypeNameInput>): ICustomError;
+    /**
+     * *Custom errors are only available starting from v0.8.4 solidity version
+     */
     createEnum(identifier: string, identifiersOptions: string[]): IEnum;
     createMapping(type: IMappingKeyType, typeName: IMappingTypeName, name: string, scope?: IVisibility): IStateMapping;
     createVariable(type: ITypeName, name: string, scope: string, expression?: IExpressionValue): IStateVariable;

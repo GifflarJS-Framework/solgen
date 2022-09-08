@@ -132,20 +132,6 @@ var ContentModel = /** @class */ (function () {
             var contentItem = _assignFunctions(stack[top]);
             return contentItem;
         };
-        // const setContractVariable = (
-        //   variable: string,
-        //   contractName: string,
-        //   args: Array<string>
-        // ): IContent => {
-        //   const newContract = this.newContractModel.execute({ contractName, args });
-        //   // TODO: update this line when updating Expression interface
-        //   const newContractText = this.newContractWriter.write(newContract);
-        //   return setVariable(
-        //     { customType: contractName },
-        //     variable,
-        //     newContractText
-        //   );
-        // };
         var setContinue = function () {
             var _continue = _this.continueModel.execute();
             stack[top].content.push(_continue);
@@ -173,7 +159,6 @@ var ContentModel = /** @class */ (function () {
         var setRevert = function (errorDefinition) {
             var _revert = _this.revertModel.execute({
                 message: errorDefinition.message,
-                customErrorCall: errorDefinition.customErrorCall,
             });
             stack[top].content.push(_revert);
             var contentItem = _assignFunctions(stack[top]);

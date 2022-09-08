@@ -18,13 +18,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var helpers_1 = __importDefault(require("../../../../../utils/helpers"));
 var tsyringe_1 = require("tsyringe");
 var ContractBodyModel = /** @class */ (function () {
-    function ContractBodyModel(stateVariableModel, functionModel, eventModel, usingModel, modifierModel, customErrorModel, stateMappingModel, enumModel, structModel) {
+    function ContractBodyModel(stateVariableModel, functionModel, eventModel, usingModel, modifierModel, stateMappingModel, enumModel, structModel) {
         this.stateVariableModel = stateVariableModel;
         this.functionModel = functionModel;
         this.eventModel = eventModel;
         this.usingModel = usingModel;
         this.modifierModel = modifierModel;
-        this.customErrorModel = customErrorModel;
         this.stateMappingModel = stateMappingModel;
         this.enumModel = enumModel;
         this.structModel = structModel;
@@ -38,7 +37,6 @@ var ContractBodyModel = /** @class */ (function () {
             mappings: [],
             events: [],
             modifiers: [],
-            customErrors: [],
             functions: [],
         };
         var createUsing = function (identifier, type) {
@@ -92,16 +90,21 @@ var ContractBodyModel = /** @class */ (function () {
             body.mappings.push(mapping);
             return mapping;
         };
-        var createCustomError = function (name, args) {
-            var customError = _this.customErrorModel.execute({
-                name: name,
-                args: helpers_1.default.castITypeNameInputsToInputs(args),
-            });
-            if (!body.customErrors)
-                body.customErrors = [];
-            body.customErrors.push(customError);
-            return customError;
-        };
+        /**
+         * *Custom errors are only available starting from v0.8.4 solidity version
+         */
+        // const createCustomError = (
+        //   name: string,
+        //   args: Array<ITypeNameInput>
+        // ): ICustomError => {
+        //   const customError = this.customErrorModel.execute({
+        //     name,
+        //     args: helpers.castITypeNameInputsToInputs(args),
+        //   });
+        //   if (!body.customErrors) body.customErrors = [];
+        //   body.customErrors.push(customError);
+        //   return customError;
+        // };
         var createModifier = function (title, args, options) {
             var modifier = _this.modifierModel.execute({
                 title: title,
@@ -152,7 +155,6 @@ var ContractBodyModel = /** @class */ (function () {
                 createVariable: createVariable,
                 createFunction: createFunction,
                 createModifier: createModifier,
-                createCustomError: createCustomError,
                 createMapping: createMapping,
                 createEnum: createEnum,
                 createStruct: createStruct,
@@ -169,11 +171,10 @@ var ContractBodyModel = /** @class */ (function () {
         __param(2, (0, tsyringe_1.inject)("EventModel")),
         __param(3, (0, tsyringe_1.inject)("UsingModel")),
         __param(4, (0, tsyringe_1.inject)("ModifierModel")),
-        __param(5, (0, tsyringe_1.inject)("CustomErrorModel")),
-        __param(6, (0, tsyringe_1.inject)("StateMappingModel")),
-        __param(7, (0, tsyringe_1.inject)("EnumModel")),
-        __param(8, (0, tsyringe_1.inject)("StructModel")),
-        __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object, Object])
+        __param(5, (0, tsyringe_1.inject)("StateMappingModel")),
+        __param(6, (0, tsyringe_1.inject)("EnumModel")),
+        __param(7, (0, tsyringe_1.inject)("StructModel")),
+        __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object])
     ], ContractBodyModel);
     return ContractBodyModel;
 }());

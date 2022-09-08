@@ -60,12 +60,13 @@ var InterfaceModel = /** @class */ (function () {
             _interface.inherits.push(inherits);
             return inherits;
         };
-        var createFunction = function (name, inputs, outputs, stateMutability) {
+        var createFunction = function (name, scope, inputs, outputs, stateMutability) {
+            if (scope === void 0) { scope = "external"; }
             if (inputs === void 0) { inputs = []; }
             if (outputs === void 0) { outputs = []; }
             var _function = _this.functionModel.execute({
                 name: name,
-                scope: "external",
+                scope: scope,
                 inputs: helpers_1.default.castITypeNameInputsToInputs(inputs),
                 outputs: helpers_1.default.castITypeNameOutputsToOutputs(outputs),
                 isConstructor: false,
@@ -88,6 +89,9 @@ var InterfaceModel = /** @class */ (function () {
                 setInheritance: setInheritance,
                 createEvent: contractBody.createEvent,
                 createFunction: createFunction,
+                createEnum: contractBody.createEnum,
+                createModifier: contractBody.createModifier,
+                createStruct: contractBody.createStruct,
                 toJson: toJson,
                 toString: function () {
                     return JSON.stringify({ interface: _obj.interface });
