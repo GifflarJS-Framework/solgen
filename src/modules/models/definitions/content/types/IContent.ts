@@ -1,4 +1,3 @@
-import { ICustomErrorcall } from "@models/statements/revert/types/ICustomErrorCall";
 import { ITryExpression } from "@models/statements/try/types/ITryExpression";
 import { IExpressionValue } from "@modules/models/statements/expression/types/IExpressionValue";
 import { IDataLocation } from "@modules/types/IDataLocation";
@@ -35,10 +34,7 @@ export interface IContent extends IStackItem {
   ): IContent;
   setCatch(parameters: Array<ITypeNameInput>, identifier?: string): IContent;
   setRequire(condition: string, errorMessage?: string): IContent;
-  setRevert(errorDefinition: {
-    message?: string;
-    customErrorCall?: ICustomErrorcall;
-  }): IContent;
+  setRevert(errorDefinition: { message?: string }): IContent;
   setTry(
     parameters: Array<ITypeNameInput>,
     expression: ITryExpression

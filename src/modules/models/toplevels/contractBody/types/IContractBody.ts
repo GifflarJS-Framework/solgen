@@ -1,4 +1,3 @@
-import { ICustomError } from "@models/definitions/customError/types/ICustomError";
 import { IEnum } from "@models/definitions/enum/types/IEnum";
 import { IEvent } from "@models/definitions/event/types/IEvent";
 import { IFunction } from "@models/definitions/function/types/IFunction";
@@ -32,7 +31,10 @@ export interface IContractBody {
     options: { isOverriding?: boolean; isVirtual?: boolean }
   ): IModifier;
 
-  createCustomError(name: string, args: Array<ITypeNameInput>): ICustomError;
+  /**
+   * *Custom errors are only available starting from v0.8.4 solidity version
+   */
+  // createCustomError(name: string, args: Array<ITypeNameInput>): ICustomError;
 
   createEnum(identifier: string, identifiersOptions: string[]): IEnum;
 

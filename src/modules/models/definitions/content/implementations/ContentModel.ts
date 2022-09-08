@@ -4,7 +4,6 @@ import { IVariable } from "@models/definitions/stateVariable/types/IVariable";
 import { IContent } from "../types/IContent";
 import { inject, injectable } from "tsyringe";
 import { IAssignmentModel } from "@models/statements/assignment/types/IAssignmentModel";
-import { IExpressionModel } from "@models/statements/expression/types/IExpressionModel";
 import { IVariableModel } from "@models/statements/variable/types/IVariableModel";
 import { IIfModel } from "@models/statements/if/types/IIfModel";
 import { IMethodCallModel } from "@models/statements/methodcall/types/IMethodCallModel";
@@ -27,7 +26,6 @@ import { IMappingKeyType } from "@modules/types/IMappingKeyType";
 import { IMappingTypeName } from "@modules/types/IMappingTypeName";
 import { IRequireModel } from "@models/statements/require/types/IRequireModel";
 import { IRevertModel } from "@models/statements/revert/types/IRevertModel";
-import { ICustomErrorcall } from "@models/statements/revert/types/ICustomErrorCall";
 import { ITryModel } from "@models/statements/try/types/ITryModel";
 import { ITryExpression } from "@models/statements/try/types/ITryExpression";
 import { IWhileModel } from "@models/statements/while/types/IWhileModel";
@@ -189,21 +187,6 @@ class ContentModel {
       return contentItem;
     };
 
-    // const setContractVariable = (
-    //   variable: string,
-    //   contractName: string,
-    //   args: Array<string>
-    // ): IContent => {
-    //   const newContract = this.newContractModel.execute({ contractName, args });
-    //   // TODO: update this line when updating Expression interface
-    //   const newContractText = this.newContractWriter.write(newContract);
-    //   return setVariable(
-    //     { customType: contractName },
-    //     variable,
-    //     newContractText
-    //   );
-    // };
-
     const setContinue = (): IContent => {
       const _continue = this.continueModel.execute();
       stack[top].content.push(_continue);
@@ -236,13 +219,9 @@ class ContentModel {
       return contentItem;
     };
 
-    const setRevert = (errorDefinition: {
-      message?: string;
-      customErrorCall?: ICustomErrorcall;
-    }): IContent => {
+    const setRevert = (errorDefinition: { message?: string }): IContent => {
       const _revert = this.revertModel.execute({
         message: errorDefinition.message,
-        customErrorCall: errorDefinition.customErrorCall,
       });
       stack[top].content.push(_revert);
       const contentItem: IContent = _assignFunctions(stack[top]);

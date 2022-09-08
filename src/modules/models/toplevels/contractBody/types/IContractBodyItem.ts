@@ -1,4 +1,3 @@
-import { ICustomError } from "@models/definitions/customError/types/ICustomError";
 import { IEnum } from "@models/definitions/enum/types/IEnum";
 import { IEvent } from "@models/definitions/event/types/IEvent";
 import { IFunction } from "@models/definitions/function/types/IFunction";
@@ -16,6 +15,6 @@ export interface IContractBodyItem {
   mappings?: Array<IStateMapping>;
   events?: Array<IEvent>;
   modifiers?: Array<IModifier>;
-  customErrors?: Array<ICustomError>;
+  // customErrors?: Array<ICustomError>;
   functions?: Array<IFunction>;
 }

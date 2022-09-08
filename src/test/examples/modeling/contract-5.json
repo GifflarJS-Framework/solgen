@@ -50,7 +50,6 @@
         }
       ],
       "modifiers": [],
-      "customErrors": [],
       "functions": [
         {
           "name": "",
@@ -182,7 +181,6 @@
       "mappings": [],
       "events": [],
       "modifiers": [],
-      "customErrors": [],
       "functions": [
         {
           "name": "createContract",
