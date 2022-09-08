@@ -142,8 +142,16 @@ var GifflarManager = /** @class */ (function () {
         this.code = _code;
         return this.code;
     };
-    GifflarManager.prototype.written = function () {
-        return this.code;
+    GifflarManager.prototype.written = function (componentName) {
+        if (!componentName) {
+            return this.code;
+        }
+        var gTopLevel = this.topLevelModels.filter(function (gTopLevel) {
+            return gTopLevel.getName() === componentName;
+        })[0];
+        if (!gTopLevel)
+            return undefined;
+        return gTopLevel.code;
     };
     GifflarManager.prototype.compileAll = function (callback) {
         var _this = this;
@@ -164,17 +172,17 @@ var GifflarManager = /** @class */ (function () {
         });
         return this.json;
     };
-    GifflarManager.prototype.compile = function (contractName, callback) {
-        // Filtering the contract by contract name
-        var contract = this.topLevelModels.filter(function (gTopLevel) {
-            return gTopLevel.getName() === contractName;
+    GifflarManager.prototype.compile = function (componentName, callback) {
+        // Filtering the component by component name
+        var component = this.topLevelModels.filter(function (gTopLevel) {
+            return gTopLevel.getName() === componentName;
         })[0];
-        // If contract object is valid
-        if (contract &&
-            contract.compile &&
-            typeof contract.compile === "function") {
-            // Compiling contract
-            var json = contract.compile(function (errors) {
+        // If component object is valid
+        if (component &&
+            component.compile &&
+            typeof component.compile === "function") {
+            // Compiling component
+            var json = component.compile(function (errors) {
                 callback(errors);
             });
             if (json.errors && callback) {
@@ -184,6 +192,19 @@ var GifflarManager = /** @class */ (function () {
         }
         callback([]);
         throw new Error("Unable to compile contract");
+    };
+    GifflarManager.prototype.compiled = function (componentName) {
+        if (!componentName) {
+            return this.json;
+        }
+        if (this.json) {
+            var gTopLevel = this.topLevelModels.filter(function (gTopLevel) {
+                return gTopLevel.getName() === componentName;
+            })[0];
+            if (!gTopLevel)
+                return undefined;
+            return this.json.contracts.jsons[gTopLevel.getName()];
+        }
     };
     GifflarManager.prototype.deploy = function (contractName, inputs, accountPrivateKey) {
         return __awaiter(this, void 0, void 0, function () {
@@ -201,6 +222,8 @@ var GifflarManager = /** @class */ (function () {
                             args: inputs.args,
                             from: inputs.from,
                             gas: inputs.gas,
+                            gasPrice: inputs.gasPrice,
+                            nonce: inputs.nonce,
                         };
                         return [4 /*yield*/, this.deployer.deploy(_inputs, accountPrivateKey)];
                     case 1:
@@ -210,6 +233,19 @@ var GifflarManager = /** @class */ (function () {
             });
         });
     };
+    GifflarManager.prototype.deployed = function (componentName) {
+        if (!componentName) {
+            return this.json;
+        }
+        if (this.json) {
+            var gTopLevel = this.topLevelModels.filter(function (gTopLevel) {
+                return gTopLevel.getName() === componentName;
+            })[0];
+            if (!gTopLevel)
+                return undefined;
+            return gTopLevel.instance;
+        }
+    };
     GifflarManager.prototype.setWeb3 = function (newWeb3) {
         this.deployer.setWeb3(newWeb3);
         return newWeb3;
@@ -217,7 +253,7 @@ var GifflarManager = /** @class */ (function () {
     GifflarManager.prototype.setDeployConfig = function (networkConfig) {
         this.deployer.setNetworkConfig(networkConfig);
         if (!this.deployer.getWeb3()) {
-            return this.deployer.createWeb3(networkConfig);
+            return this.deployer.createWeb3();
         }
     };
     GifflarManager.prototype.addSigner = function (accountPrivateKey) {

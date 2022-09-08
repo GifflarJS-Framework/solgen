@@ -2,6 +2,6 @@ export interface IManagerDeployDTO {
     args: any[];
     from?: string;
     gas?: number;
-    gasPrice?: number;
+    gasPrice?: string;
     nonce?: number;
 }

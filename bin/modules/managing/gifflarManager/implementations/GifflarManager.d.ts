@@ -44,10 +44,12 @@ declare class GifflarManager implements IGifflarManager {
     getInterface(name: string): IGifflarInterface;
     writeAll(): string;
     write(topLevelModels: Array<ITopLevel>): string;
-    written(): string | undefined;
+    written(componentName?: string): string | undefined;
     compileAll(callback: (errors: Array<any>) => void): any;
-    compile(contractName: string, callback: (errors: Array<any>) => void): void;
+    compile(componentName: string, callback: (errors: Array<any>) => void): any;
+    compiled(componentName?: string): any | undefined;
     deploy(contractName: string, inputs: IManagerDeployDTO, accountPrivateKey?: string): Promise<Contract>;
+    deployed(componentName: string): Contract | undefined;
     setWeb3(newWeb3: IWeb3): IWeb3;
     setDeployConfig(networkConfig: INetworkConfig): Web3 | undefined;
     addSigner(accountPrivateKey: string): Account;

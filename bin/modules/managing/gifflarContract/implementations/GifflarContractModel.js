@@ -112,23 +112,15 @@ var GifflarContractModel = /** @class */ (function () {
             }, setDeployConfig: function (networkConfig) {
                 _this.deployer.setNetworkConfig(networkConfig);
                 if (!_this.deployer.getWeb3()) {
-                    return _this.deployer.createWeb3(networkConfig);
+                    return _this.deployer.createWeb3();
                 }
             }, addSigner: function (accountPrivateKey) {
                 return _this.deployer.addSigner(accountPrivateKey);
-            }, deploy: function (inputs, accountPrivateKey, web3) { return __awaiter(_this, void 0, void 0, function () {
+            }, deploy: function (inputs, accountPrivateKey) { return __awaiter(_this, void 0, void 0, function () {
                 var json, _inputs, _a;
                 return __generator(this, function (_b) {
                     switch (_b.label) {
                         case 0:
-                            if (!this.deployer.getWeb3()) {
-                                if (web3) {
-                                    this.deployer.setWeb3(web3);
-                                }
-                                else {
-                                    throw Error("Web3 is not defined");
-                                }
-                            }
                             json = gContract.json.contracts.jsons[gContract.contract.name];
                             if (!json) {
                                 throw new Error("Failed to find compiled contract.");
@@ -139,6 +131,8 @@ var GifflarContractModel = /** @class */ (function () {
                                 args: inputs.args,
                                 from: inputs.from,
                                 gas: inputs.gas,
+                                gasPrice: inputs.gasPrice,
+                                nonce: inputs.nonce,
                             };
                             _a = gContract;
                             return [4 /*yield*/, this.deployer.deploy(_inputs, accountPrivateKey)];
