@@ -6,7 +6,4 @@ const implementations = {
   default: GifflarManager,
 };
 
-container.registerSingleton<IGifflarManager>(
-  "GifflarManager",
-  implementations.default
-);
+container.register<IGifflarManager>("GifflarManager", implementations.default);
