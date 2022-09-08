@@ -1,5 +1,4 @@
 import { IInterfaceJson } from "@models/toplevels/interface/types/IInterfaceJson";
-import { ICustomErrorWriter } from "@writers/definitions/customErrorWriter/types/ICustomErrorWriter";
 import { IEventWriter } from "@writers/definitions/eventWriter/types/IEventWriter";
 import { IFunctionWriter } from "@writers/definitions/functionWriter/types/IFunctionWriter";
 import { IInheritsWriter } from "@writers/toplevels/inheritsWriter/types/IInheritsWriter";
@@ -14,8 +13,6 @@ class InterfaceWriter implements IInterfaceWriter {
     private eventWriter: IEventWriter,
     @inject("ModifierWriter")
     private modifierWriter: IModifierWriter,
-    @inject("CustomErrorWriter")
-    private customErrorWriter: ICustomErrorWriter,
     @inject("FunctionWriter")
     private functionWriter: IFunctionWriter,
     @inject("InheritsWriter")
@@ -52,9 +49,11 @@ class InterfaceWriter implements IInterfaceWriter {
       const txt_modifiers = this.modifierWriter.write(
         json.interface.modifiers || []
       );
-      const txt_custom_errors = this.customErrorWriter.write(
-        json.interface.customErrors || []
-      );
+
+      //*Custom errors are only available starting from v0.8.4 solidity version
+      // const txt_custom_errors = this.customErrorWriter.write(
+      //   json.interface.customErrors || []
+      // );
       const txt_functions = this.functionWriter.write(
         json.interface.functions || [],
         { onlyPrototype: true }
@@ -71,7 +70,6 @@ class InterfaceWriter implements IInterfaceWriter {
         txt_openBraces +
         txt_events +
         txt_modifiers +
-        txt_custom_errors +
         txt_functions +
         txt_close;
 

@@ -22,7 +22,6 @@
         }
       ],
       "modifiers": [],
-      "customErrors": [],
       "functions": [
         {
           "name": "setOwner",
