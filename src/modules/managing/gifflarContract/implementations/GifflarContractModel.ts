@@ -95,7 +95,7 @@ class GifflarContractModel implements IGifflarContractModel {
       setDeployConfig: (networkConfig: INetworkConfig): Web3 | undefined => {
         this.deployer.setNetworkConfig(networkConfig);
         if (!this.deployer.getWeb3()) {
-          return this.deployer.createWeb3(networkConfig);
+          return this.deployer.createWeb3();
         }
       },
 
@@ -105,16 +105,8 @@ class GifflarContractModel implements IGifflarContractModel {
 
       deploy: async (
         inputs: IContractDeployDTO,
-        accountPrivateKey?: string,
-        web3?: IWeb3
+        accountPrivateKey?: string
       ): Promise<Contract> => {
-        if (!this.deployer.getWeb3()) {
-          if (web3) {
-            this.deployer.setWeb3(web3);
-          } else {
-            throw Error("Web3 is not defined");
-          }
-        }
         const json = gContract.json.contracts.jsons[gContract.contract.name];
         if (!json) {
           throw new Error("Failed to find compiled contract.");
@@ -125,6 +117,8 @@ class GifflarContractModel implements IGifflarContractModel {
           args: inputs.args,
           from: inputs.from,
           gas: inputs.gas,
+          gasPrice: inputs.gasPrice,
+          nonce: inputs.nonce,
         };
         gContract.instance = await this.deployer.deploy(
           _inputs,

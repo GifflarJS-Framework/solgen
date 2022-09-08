@@ -142,8 +142,17 @@ class GifflarManager implements IGifflarManager {
     return this.code;
   }
 
-  written(): string | undefined {
-    return this.code;
+  written(componentName?: string): string | undefined {
+    if (!componentName) {
+      return this.code;
+    }
+
+    const gTopLevel = this.topLevelModels.filter((gTopLevel) => {
+      return gTopLevel.getName() === componentName;
+    })[0];
+    if (!gTopLevel) return undefined;
+
+    return gTopLevel.code;
   }
 
   compileAll(callback: (errors: Array<any>) => void): any {
@@ -168,20 +177,20 @@ class GifflarManager implements IGifflarManager {
     return this.json;
   }
 
-  compile(contractName: string, callback: (errors: Array<any>) => void): void {
-    // Filtering the contract by contract name
-    const contract = this.topLevelModels.filter((gTopLevel) => {
-      return gTopLevel.getName() === contractName;
+  compile(componentName: string, callback: (errors: Array<any>) => void): any {
+    // Filtering the component by component name
+    const component = this.topLevelModels.filter((gTopLevel) => {
+      return gTopLevel.getName() === componentName;
     })[0];
 
-    // If contract object is valid
+    // If component object is valid
     if (
-      contract &&
-      contract.compile &&
-      typeof contract.compile === "function"
+      component &&
+      component.compile &&
+      typeof component.compile === "function"
     ) {
-      // Compiling contract
-      const json = contract.compile((errors) => {
+      // Compiling component
+      const json = component.compile((errors) => {
         callback(errors);
       });
       if (json.errors && callback) {
@@ -193,6 +202,20 @@ class GifflarManager implements IGifflarManager {
 
     callback([]);
     throw new Error("Unable to compile contract");
+  }
+
+  compiled(componentName?: string): any | undefined {
+    if (!componentName) {
+      return this.json;
+    }
+
+    if (this.json) {
+      const gTopLevel = this.topLevelModels.filter((gTopLevel) => {
+        return gTopLevel.getName() === componentName;
+      })[0];
+      if (!gTopLevel) return undefined;
+      return this.json.contracts.jsons[gTopLevel.getName()];
+    }
   }
 
   async deploy(
@@ -211,9 +234,25 @@ class GifflarManager implements IGifflarManager {
       args: inputs.args,
       from: inputs.from,
       gas: inputs.gas,
+      gasPrice: inputs.gasPrice,
+      nonce: inputs.nonce,
     };
     const contract = await this.deployer.deploy(_inputs, accountPrivateKey);
     return contract;
+  }
+
+  deployed(componentName: string): Contract | undefined {
+    if (!componentName) {
+      return this.json;
+    }
+
+    if (this.json) {
+      const gTopLevel = this.topLevelModels.filter((gTopLevel) => {
+        return gTopLevel.getName() === componentName;
+      })[0];
+      if (!gTopLevel) return undefined;
+      return gTopLevel.instance;
+    }
   }
 
   setWeb3(newWeb3: IWeb3): IWeb3 {
@@ -224,7 +263,7 @@ class GifflarManager implements IGifflarManager {
   setDeployConfig(networkConfig: INetworkConfig): Web3 | undefined {
     this.deployer.setNetworkConfig(networkConfig);
     if (!this.deployer.getWeb3()) {
-      return this.deployer.createWeb3(networkConfig);
+      return this.deployer.createWeb3();
     }
   }
 
