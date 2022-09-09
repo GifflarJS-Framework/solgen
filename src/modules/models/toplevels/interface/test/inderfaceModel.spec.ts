@@ -16,7 +16,7 @@ describe("InterfaceModel", () => {
     ]);
 
     _interface
-      .createFunction("setOwner")
+      .createFunction("setOwner", "external")
       .setInput({ regularType: "address" }, "newOwner")
       .setOutput({ regularType: "bool" });
 
@@ -42,7 +42,7 @@ describe("InterfaceModel", () => {
     ]);
 
     _interface
-      .createFunction("setOwner")
+      .createFunction("setOwner", "external")
       .setInput({ regularType: "address" }, "newOwner")
       .setOutput({ regularType: "bool" });
 

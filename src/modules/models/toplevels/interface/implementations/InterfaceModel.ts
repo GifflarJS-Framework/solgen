@@ -50,13 +50,14 @@ class InterfaceModel implements IInterfaceModel {
 
     const createFunction = (
       name: string,
+      scope = "external",
       inputs: Array<ITypeNameInput> = [],
       outputs: Array<ITypeNameOutput> = [],
       stateMutability?: IFunctionStateMutabilityType
     ): IFunction => {
       const _function = this.functionModel.execute({
         name,
-        scope: "external",
+        scope,
         inputs: helpers.castITypeNameInputsToInputs(inputs),
         outputs: helpers.castITypeNameOutputsToOutputs(outputs),
         isConstructor: false,
@@ -81,6 +82,9 @@ class InterfaceModel implements IInterfaceModel {
         setInheritance,
         createEvent: contractBody.createEvent,
         createFunction,
+        createEnum: contractBody.createEnum,
+        createModifier: contractBody.createModifier,
+        createStruct: contractBody.createStruct,
         toJson,
         toString: (): string => {
           return JSON.stringify({ interface: _obj.interface });

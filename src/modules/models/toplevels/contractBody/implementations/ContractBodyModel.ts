@@ -1,5 +1,3 @@
-import { ICustomError } from "@models/definitions/customError/types/ICustomError";
-import { ICustomErrorModel } from "@models/definitions/customError/types/ICustomErrorModel";
 import { IEnum } from "@models/definitions/enum/types/IEnum";
 import { IEnumModel } from "@models/definitions/enum/types/IEnumModel";
 import { IEvent } from "@models/definitions/event/types/IEvent";
@@ -30,6 +28,7 @@ import { IContractBodyItem } from "../types/IContractBodyItem";
 import { IContractBodyModel } from "../types/IContractBodyModel";
 import { ITypeNameInput } from "@modules/types/ITypeNameInput";
 import { ITypeNameOutput } from "@modules/types/ITypeNameOutput";
+import { IExpressionValue } from "@modules/models/statements/expression/types/IExpressionValue";
 
 @injectable()
 class ContractBodyModel implements IContractBodyModel {
@@ -44,8 +43,6 @@ class ContractBodyModel implements IContractBodyModel {
     private usingModel: IUsingModel,
     @inject("ModifierModel")
     private modifierModel: IModifierModel,
-    @inject("CustomErrorModel")
-    private customErrorModel: ICustomErrorModel,
     @inject("StateMappingModel")
     private stateMappingModel: IStateMappingModel,
     @inject("EnumModel")
@@ -62,7 +59,6 @@ class ContractBodyModel implements IContractBodyModel {
       mappings: [],
       events: [],
       modifiers: [],
-      customErrors: [],
       functions: [],
     };
 
@@ -131,18 +127,21 @@ class ContractBodyModel implements IContractBodyModel {
       return mapping;
     };
 
-    const createCustomError = (
-      name: string,
-      args: Array<ITypeNameInput>
-    ): ICustomError => {
-      const customError = this.customErrorModel.execute({
-        name,
-        args: helpers.castITypeNameInputsToInputs(args),
-      });
-      if (!body.customErrors) body.customErrors = [];
-      body.customErrors.push(customError);
-      return customError;
-    };
+    /**
+     * *Custom errors are only available starting from v0.8.4 solidity version
+     */
+    // const createCustomError = (
+    //   name: string,
+    //   args: Array<ITypeNameInput>
+    // ): ICustomError => {
+    //   const customError = this.customErrorModel.execute({
+    //     name,
+    //     args: helpers.castITypeNameInputsToInputs(args),
+    //   });
+    //   if (!body.customErrors) body.customErrors = [];
+    //   body.customErrors.push(customError);
+    //   return customError;
+    // };
 
     const createModifier = (
       title: string,
@@ -165,13 +164,13 @@ class ContractBodyModel implements IContractBodyModel {
       type: ITypeName,
       name: string,
       scope: IVisibility,
-      value?: string
+      expression?: IExpressionValue
     ): IStateVariable => {
       const variable = this.stateVariableModel.execute({
         type: helpers.writeTypeName(type),
         name,
         scope,
-        value,
+        expressionValue: expression,
       });
       if (!body.variables) body.variables = [];
       body.variables.push(variable);
@@ -208,7 +207,6 @@ class ContractBodyModel implements IContractBodyModel {
         createVariable,
         createFunction,
         createModifier,
-        createCustomError,
         createMapping,
         createEnum,
         createStruct,

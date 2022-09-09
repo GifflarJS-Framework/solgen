@@ -1,4 +1,3 @@
-import { ICustomError } from "@models/definitions/customError/types/ICustomError";
 import { IEnum } from "@models/definitions/enum/types/IEnum";
 import { IEvent } from "@models/definitions/event/types/IEvent";
 import { IFunction } from "@models/definitions/function/types/IFunction";
@@ -17,6 +16,7 @@ import { ITypeNameInput } from "@modules/types/ITypeNameInput";
 import { IVisibility } from "@modules/types/IVisibility";
 import { IContractBodyItem } from "./IContractBodyItem";
 import { ITypeNameOutput } from "@modules/types/ITypeNameOutput";
+import { IExpressionValue } from "@modules/models/statements/expression/types/IExpressionValue";
 
 export interface IContractBody {
   body: IContractBodyItem;
@@ -31,7 +31,10 @@ export interface IContractBody {
     options: { isOverriding?: boolean; isVirtual?: boolean }
   ): IModifier;
 
-  createCustomError(name: string, args: Array<ITypeNameInput>): ICustomError;
+  /**
+   * *Custom errors are only available starting from v0.8.4 solidity version
+   */
+  // createCustomError(name: string, args: Array<ITypeNameInput>): ICustomError;
 
   createEnum(identifier: string, identifiersOptions: string[]): IEnum;
 
@@ -46,7 +49,7 @@ export interface IContractBody {
     type: ITypeName,
     name: string,
     scope: string,
-    value?: string
+    expression?: IExpressionValue
   ): IStateVariable;
 
   createFunction(

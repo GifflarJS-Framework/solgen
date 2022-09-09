@@ -1,5 +1,5 @@
-import { ICustomErrorcall } from "@models/statements/revert/types/ICustomErrorCall";
 import { ITryExpression } from "@models/statements/try/types/ITryExpression";
+import { IExpressionValue } from "@modules/models/statements/expression/types/IExpressionValue";
 import { IDataLocation } from "@modules/types/IDataLocation";
 import { IMappingKeyType } from "@modules/types/IMappingKeyType";
 import { IMappingTypeName } from "@modules/types/IMappingTypeName";
@@ -10,19 +10,21 @@ import { IStackItem } from "./IStackItem";
 export interface IContent extends IStackItem {
   setAssert(condition: string): IContent;
   setBreak(): IContent;
-  setVariable(type: ITypeName, name: string, value?: string): IContent;
+  setVariable(
+    type: ITypeName,
+    name: string,
+    expression?: IExpressionValue
+  ): IContent;
   setMethodCall(
     variable: string,
     method: string,
     args: Array<string>
   ): IContent;
-  setAssignment(variable: string, expression: string | undefined): IContent;
-  setEventCall(name: string, inputNames: Array<string>): IContent;
-  setContractVariable(
+  setAssignment(
     variable: string,
-    contractName: string,
-    args: Array<string>
+    expressionValue: IExpressionValue | undefined
   ): IContent;
+  setEventCall(name: string, inputNames: Array<string>): IContent;
   setReturn(expressions: Array<string>): IContent;
   setContinue(): IContent;
   setMapping(
@@ -32,10 +34,7 @@ export interface IContent extends IStackItem {
   ): IContent;
   setCatch(parameters: Array<ITypeNameInput>, identifier?: string): IContent;
   setRequire(condition: string, errorMessage?: string): IContent;
-  setRevert(errorDefinition: {
-    message?: string;
-    customErrorCall?: ICustomErrorcall;
-  }): IContent;
+  setRevert(errorDefinition: { message?: string }): IContent;
   setTry(
     parameters: Array<ITypeNameInput>,
     expression: ITryExpression
@@ -74,11 +73,11 @@ export interface IContent extends IStackItem {
     variable: {
       type: ITypeName;
       name: string;
-      value: string;
+      value: IExpressionValue;
       dataLocation: IDataLocation;
     },
     condition: string,
-    expression: string
+    expressionValue: IExpressionValue
   ): IContent;
 
   endIf(): IContent;

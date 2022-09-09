@@ -1,5 +1,4 @@
 import { IContractBodyItem } from "@models/toplevels/contractBody/types/IContractBodyItem";
-import { ICustomErrorWriter } from "@writers/definitions/customErrorWriter/types/ICustomErrorWriter";
 import { IEnumWriter } from "@writers/definitions/enumWriter/types/IEnumWriter";
 import { IEventWriter } from "@writers/definitions/eventWriter/types/IEventWriter";
 import { IFunctionWriter } from "@writers/definitions/functionWriter/types/IFunctionWriter";
@@ -21,8 +20,6 @@ class ContractBodyWriter implements IContractBodyWriter {
     private stateVariableWriter: IStateVariableWriter,
     @inject("ModifierWriter")
     private modifierWriter: IModifierWriter,
-    @inject("CustomErrorWriter")
-    private customErrorWriter: ICustomErrorWriter,
     @inject("StateMappingWriter")
     private stateMappingWriter: IStateMappingWriter,
     @inject("UsingWriter")
@@ -53,9 +50,10 @@ class ContractBodyWriter implements IContractBodyWriter {
     const txt_modifiers = this.modifierWriter.write(bodyItem.modifiers || []);
 
     // Custom Errors
-    const txt_custom_errors = this.customErrorWriter.write(
-      bodyItem.customErrors || []
-    );
+    // *Custom errors are only available starting from v0.8.4 solidity version
+    // const txt_custom_errors = this.customErrorWriter.write(
+    //   bodyItem.customErrors || []
+    // );
 
     // Functions
     const txt_functions = this.functionWriter.write(bodyItem.functions || []);
@@ -67,7 +65,6 @@ class ContractBodyWriter implements IContractBodyWriter {
       txt_mappings +
       txt_events +
       txt_modifiers +
-      txt_custom_errors +
       txt_functions
     }`;
 

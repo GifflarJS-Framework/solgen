@@ -22,7 +22,6 @@
         }
       ],
       "modifiers": [],
-      "customErrors": [],
       "functions": [
         {
           "name": "setOwner",
@@ -41,14 +40,13 @@
               "statement": "variable",
               "type": "address",
               "name": "oldOwner",
-              "value": "owner"
+              "expressionValue": { "customExpression": "owner" }
             },
             {
               "statement": "assignment",
               "variable": "owner",
-              "value": {
-                "statement": "expression",
-                "value": "newOwner"
+              "expressionValue": {
+                "customExpression": "newOwner"
               }
             },
             {

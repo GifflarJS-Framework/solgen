@@ -33,12 +33,12 @@
           {
             "statement": "assignment",
             "variable": "message",
-            "value": "_message"
+            "expressionValue": { "customExpression": "_message" }
           },
           {
             "statement": "assignment",
             "variable": "messages",
-            "value": "[]"
+            "expressionValue": { "customExpression": "[]" }
           },
           {
             "statement": "push",
@@ -48,9 +48,8 @@
           {
             "statement": "assignment",
             "variable": "message",
-            "value": {
-              "statement": "expression",
-              "value": "val++"
+            "expressionValue": {
+              "customExpression": "val++"
             }
           }
         ]
@@ -75,12 +74,14 @@
             "statement": "variable",
             "type": "string",
             "name": "tmp",
-            "value": "\"asd\""
+            "expressionValue": {
+              "customExpression": "\"asd\""
+            }
           },
           {
             "statement": "assignment",
             "variable": "message",
-            "value": "_message"
+            "expressionValue": { "customExpression": "_message" }
           },
           {
             "statement": "if",
@@ -118,7 +119,7 @@
               {
                 "statement": "assignment",
                 "variable": "message",
-                "value": "_message"
+                "expressionValue": { "customExpression": "_message" }
               }
             ]
           }

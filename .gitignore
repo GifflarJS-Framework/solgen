@@ -12,3 +12,8 @@ docs/
 dist/
 bin/
 /types
+
+docs/
+doc/
+jsdoc-config.json
+assets

@@ -24,7 +24,7 @@
           {
             "statement": "assignment",
             "variable": "message",
-            "value": "_message"
+            "expressionValue": { "customExpression": "_message" }
           }
         ]
       }

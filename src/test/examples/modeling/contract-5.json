@@ -50,7 +50,6 @@
         }
       ],
       "modifiers": [],
-      "customErrors": [],
       "functions": [
         {
           "name": "",
@@ -68,12 +67,16 @@
             {
               "statement": "assignment",
               "variable": "manager",
-              "value": { "statement": "expression", "value": "_owner" }
+              "expressionValue": {
+                "customExpression": "_owner"
+              }
             },
             {
               "statement": "assignment",
               "variable": "name",
-              "value": { "statement": "expression", "value": "\"DHT11\"" }
+              "expressionValue": {
+                "customExpression": "\"DHT11\""
+              }
             }
           ]
         },
@@ -102,7 +105,9 @@
                 {
                   "statement": "assignment",
                   "variable": "value1",
-                  "value": { "statement": "expression", "value": "_val" }
+                  "expressionValue": {
+                    "customExpression": "_val"
+                  }
                 },
                 {
                   "statement": "if",
@@ -143,9 +148,8 @@
             {
               "statement": "assignment",
               "variable": "name",
-              "value": {
-                "statement": "expression",
-                "value": "_name"
+              "expressionValue": {
+                "customExpression": "_name"
               }
             }
           ]
@@ -169,13 +173,14 @@
           "type": "uint256",
           "name": "counter",
           "scope": "private",
-          "value": "0"
+          "expressionValue": {
+            "customExpression": "0"
+          }
         }
       ],
       "mappings": [],
       "events": [],
       "modifiers": [],
-      "customErrors": [],
       "functions": [
         {
           "name": "createContract",
@@ -194,10 +199,8 @@
               "statement": "variable",
               "type": "DHT11",
               "name": "newContract",
-              "value": {
-                "statement": "newcontract",
-                "contractName": "DHT11",
-                "args": ["_owner"]
+              "expressionValue": {
+                "newContract": { "contractName": "DHT11", "args": ["_owner"] }
               }
             },
             {
@@ -209,7 +212,9 @@
             {
               "statement": "assignment",
               "variable": "counter",
-              "value": { "statement": "expression", "value": "counter + 1" }
+              "expressionValue": {
+                "customExpression": "counter + 1"
+              }
             }
           ]
         },
@@ -234,9 +239,8 @@
                 {
                   "statement": "assignment",
                   "variable": "_contract",
-                  "value": {
-                    "statement": "expression",
-                    "value": "contracts[counter - 1]"
+                  "expressionValue": {
+                    "customExpression": "contracts[counter - 1]"
                   }
                 }
               ]
@@ -249,9 +253,8 @@
                 {
                   "statement": "assignment",
                   "variable": "_contract",
-                  "value": {
-                    "statement": "expression",
-                    "value": "contracts[0]"
+                  "expressionValue": {
+                    "customExpression": "contracts[0]"
                   }
                 }
               ]

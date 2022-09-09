@@ -1,4 +1,5 @@
 import { IFor } from "@models/statements/for/types/IFor";
+import { IExpressionModel } from "@modules/models/statements/expression/types/IExpressionModel";
 import { IContentWriter } from "@writers/definitions/contentWriter/types/IContentWriter";
 import { IExpressionWriter } from "@writers/statements/expressionWriter/types/IExpressionWriter";
 import { IVariableWriter } from "@writers/statements/variableWriter/types/IVariableWriter";
@@ -13,7 +14,9 @@ class ForWriter implements IForWriter {
     @inject("VariableWriter")
     private variableWriter: IVariableWriter,
     @inject("ExpressionWriter")
-    private expressionWriter: IExpressionWriter
+    private expressionWriter: IExpressionWriter,
+    @inject("ExpressionModel")
+    private expressionModel: IExpressionModel
   ) {}
 
   _init(contentWriter: IContentWriter): void {
@@ -34,8 +37,11 @@ class ForWriter implements IForWriter {
     }
 
     let txt_expression = ``;
-    if (json.expression) {
-      txt_expression = this.expressionWriter.write(json.expression);
+    if (json.expressionValue) {
+      const expression = this.expressionModel.execute({
+        value: json.expressionValue,
+      });
+      txt_expression = this.expressionWriter.write(expression);
     }
 
     let text = `for(${txt_variable};${txt_condition};${txt_expression})`;
