@@ -30,3 +30,4 @@ A framework that allows to generate, compile and deploy smart contracts on the f
 | While Loops          | :heavy_check_mark: | `while(a != b){...}`                                  |
 | Do/While Loops       | :heavy_check_mark: | `do{...}while(a != b);`                               |
 | Inheritance          | :heavy_check_mark: | `contract Dog is Animal{...}`                         |
+| Inline Assembly      |        :x:         | `assembly {...}`                                      |
