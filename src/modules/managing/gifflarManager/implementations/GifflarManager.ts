@@ -200,6 +200,7 @@ class GifflarManager implements IGifflarManager {
       // Inserting contract name in compiled json
       component.json.contracts.jsons[component.getName()] = {
         contractName: component.getName(),
+        ...component.json.contracts.jsons[component.getName()],
       };
       // Inserting contract networks in compiled json
       component.json.contracts.jsons[component.getName()]["networks"] = {};
