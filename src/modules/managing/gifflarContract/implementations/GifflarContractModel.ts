@@ -81,6 +81,14 @@ class GifflarContractModel implements IGifflarContractModel {
 
           callback(errors);
         }
+
+        // Inserting contract name in compiled json
+        gContract.json.contracts.jsons[gContract.getName()] = {
+          contractName: gContract.getName(),
+        };
+        // Inserting contract networks in compiled json
+        gContract.json.contracts.jsons[gContract.getName()]["networks"] = {};
+
         return gContract.json;
       },
 
@@ -101,6 +109,28 @@ class GifflarContractModel implements IGifflarContractModel {
 
       addSigner: (accountPrivateKey: string): Account => {
         return this.deployer.addSigner(accountPrivateKey);
+      },
+
+      recoverInstance: (): Contract | undefined => {
+        const web3 = this.deployer.getWeb3();
+        const networkConfig = this.deployer.getNetworkConfig();
+        if (!web3 || !networkConfig) return undefined;
+        if (!gContract.json.contracts) {
+          throw new Error("Contract is not compiled");
+        }
+        const abi = gContract.json.contracts.jsons[gContract.getName()].abi;
+        const address =
+          gContract.json.contracts.jsons[gContract.getName()].networks[
+            networkConfig.networkId
+          ].address;
+        if (!address) return undefined;
+
+        // Recovering instance
+        const instance = new web3.eth.Contract(abi);
+        // Defining contract model instance
+        gContract.instance = instance;
+
+        return instance;
       },
 
       deploy: async (
@@ -124,6 +154,15 @@ class GifflarContractModel implements IGifflarContractModel {
           _inputs,
           accountPrivateKey
         );
+        // Inserting contract address to compilation json
+        const networkConfig = this.deployer.getNetworkConfig();
+        if (networkConfig) {
+          if (!json["networks"][networkConfig.networkId])
+            json["networks"][networkConfig.networkId] = {};
+          json["networks"][networkConfig.networkId] = {
+            address: gContract.instance.options.address,
+          };
+        }
         return gContract.instance;
       },
       written: (): string | undefined => {
