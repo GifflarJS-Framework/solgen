@@ -259,19 +259,18 @@ var GifflarManager = /** @class */ (function () {
         });
     };
     GifflarManager.prototype.deployed = function (componentName) {
-        if (!componentName) {
-            return this.json;
-        }
-        if (this.json) {
-            var gTopLevel = this.topLevelModels.filter(function (gTopLevel) {
-                return gTopLevel.getName() === componentName;
-            })[0];
-            if (!gTopLevel)
-                return undefined;
-            if (gTopLevel.recoverInstance)
-                gTopLevel.recoverInstance();
-            return gTopLevel.instance;
-        }
+        if (!componentName)
+            return undefined;
+        // Filtering component
+        var gTopLevel = this.topLevelModels.filter(function (gTopLevel) {
+            return gTopLevel.getName() === componentName;
+        })[0];
+        if (!gTopLevel)
+            return undefined;
+        // Returning instance if deployed
+        if (gTopLevel.deployed)
+            return gTopLevel.deployed();
+        return undefined;
     };
     GifflarManager.prototype.setWeb3 = function (newWeb3) {
         this.deployer.setWeb3(newWeb3);
