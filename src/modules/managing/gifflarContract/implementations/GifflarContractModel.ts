@@ -83,9 +83,9 @@ class GifflarContractModel implements IGifflarContractModel {
         }
 
         // Inserting contract name in compiled json
-        gContract.json.contracts.jsons[gContract.getName()] = {
-          contractName: gContract.getName(),
-        };
+        gContract.json.contracts.jsons[gContract.getName()].contractName =
+          gContract.getName();
+
         // Inserting contract networks in compiled json
         gContract.json.contracts.jsons[gContract.getName()]["networks"] = {};
 
