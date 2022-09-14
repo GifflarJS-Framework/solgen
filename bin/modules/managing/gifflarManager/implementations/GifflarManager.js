@@ -221,12 +221,18 @@ var GifflarManager = /** @class */ (function () {
             return this.json.contracts.jsons[gTopLevel.getName()];
         }
     };
-    GifflarManager.prototype.deploy = function (contractName, inputs, accountPrivateKey) {
+    GifflarManager.prototype.deploy = function (contractName, inputs, options) {
+        var _a;
         return __awaiter(this, void 0, void 0, function () {
-            var json, _inputs, instance, gContract, networkConfig;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
+            var gContract, json, _inputs, instance, networkConfig;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
                     case 0:
+                        gContract = this.getContract(contractName);
+                        // Avoiding contract to be deployed more than once. But can still be forced
+                        if (gContract.deployed() && !(options === null || options === void 0 ? void 0 : options.force)) {
+                            throw new Error("".concat(gContract.getName(), " is already deployed at address '").concat((_a = gContract.deployed()) === null || _a === void 0 ? void 0 : _a.options.address, "'"));
+                        }
                         json = this.json.contracts.jsons[contractName];
                         if (!json) {
                             throw new Error("Contract wasn't compiled yet.");
@@ -240,10 +246,9 @@ var GifflarManager = /** @class */ (function () {
                             gasPrice: inputs.gasPrice,
                             nonce: inputs.nonce,
                         };
-                        return [4 /*yield*/, this.deployer.deploy(_inputs, accountPrivateKey)];
+                        return [4 /*yield*/, this.deployer.deploy(_inputs)];
                     case 1:
-                        instance = _a.sent();
-                        gContract = this.getContract(contractName);
+                        instance = _b.sent();
                         gContract.instance = instance;
                         networkConfig = this.deployer.getNetworkConfig();
                         if (networkConfig) {

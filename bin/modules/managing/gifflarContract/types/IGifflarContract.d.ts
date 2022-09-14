@@ -13,7 +13,9 @@ export interface IGifflarContract extends IContract {
     setImport(identifierPath: string, alias?: string): IImport;
     write(contracts?: Array<IContractJson>): string;
     compile(callback: (errors: any) => void): any;
-    deploy(inputs: IContractDeployDTO, accountPrivateKey?: string, web3?: IWeb3): Promise<Contract>;
+    deploy(inputs: IContractDeployDTO, options?: {
+        force?: boolean;
+    }): Promise<Contract>;
     written(): string | undefined;
     compiled(): any | undefined;
     setWeb3(web3: IWeb3): void;

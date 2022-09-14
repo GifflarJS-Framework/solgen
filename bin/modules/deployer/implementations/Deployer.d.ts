@@ -14,7 +14,7 @@ declare class Deployer implements IDeployer {
     getNetworkConfig(): INetworkConfig | undefined;
     createWeb3(): IWeb3;
     addSigner(accountPrivateKey: string): Account;
-    deploy(inputs: IDeployerInputs, accountPrivateKey?: string): Promise<Contract>;
+    deploy(inputs: IDeployerInputs): Promise<Contract>;
     retrieve(abi: IAbiItem, address: string): Promise<Contract>;
 }
 export default Deployer;

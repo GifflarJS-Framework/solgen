@@ -77,7 +77,7 @@ var Deployer = /** @class */ (function () {
         this.web3.eth.accounts.wallet.add(account);
         return account;
     };
-    Deployer.prototype.deploy = function (inputs, accountPrivateKey) {
+    Deployer.prototype.deploy = function (inputs) {
         var _a, _b;
         return __awaiter(this, void 0, void 0, function () {
             var account, abi, bytecode, args, from, gas, gasPrice, nonce, contract, e_1;
@@ -91,8 +91,8 @@ var Deployer = /** @class */ (function () {
                     case 1:
                         _c.trys.push([1, 3, , 4]);
                         // Used if there is no account in memory
-                        if (accountPrivateKey) {
-                            account = this.web3.eth.accounts.privateKeyToAccount(accountPrivateKey);
+                        if (inputs.accountPrivateKey) {
+                            account = this.web3.eth.accounts.privateKeyToAccount(inputs.accountPrivateKey);
                             // Adding account to memory wallet
                             this.web3.eth.accounts.wallet.add(account);
                         }

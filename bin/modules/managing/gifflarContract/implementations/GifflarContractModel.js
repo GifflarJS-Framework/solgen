@@ -120,12 +120,15 @@ var GifflarContractModel = /** @class */ (function () {
                 }
             }, addSigner: function (accountPrivateKey) {
                 return _this.deployer.addSigner(accountPrivateKey);
-            }, deploy: function (inputs, accountPrivateKey) { return __awaiter(_this, void 0, void 0, function () {
+            }, deploy: function (inputs, options) { return __awaiter(_this, void 0, void 0, function () {
                 var json, _inputs, _a, networkConfig;
-                return __generator(this, function (_b) {
-                    switch (_b.label) {
+                var _b;
+                return __generator(this, function (_c) {
+                    switch (_c.label) {
                         case 0:
-                            if (gContract.deployed()) {
+                            // Avoiding contract to be deployed more than once. But can still be forced
+                            if (gContract.deployed() && !(options === null || options === void 0 ? void 0 : options.force)) {
+                                throw new Error("".concat(gContract.getName(), " is already deployed at address '").concat((_b = gContract.deployed()) === null || _b === void 0 ? void 0 : _b.options.address, "'"));
                             }
                             json = gContract.json.contracts.jsons[gContract.contract.name];
                             if (!json) {
@@ -141,9 +144,9 @@ var GifflarContractModel = /** @class */ (function () {
                                 nonce: inputs.nonce,
                             };
                             _a = gContract;
-                            return [4 /*yield*/, this.deployer.deploy(_inputs, accountPrivateKey)];
+                            return [4 /*yield*/, this.deployer.deploy(_inputs)];
                         case 1:
-                            _a.instance = _b.sent();
+                            _a.instance = _c.sent();
                             networkConfig = this.deployer.getNetworkConfig();
                             if (networkConfig) {
                                 if (!json["networks"][networkConfig.networkId])

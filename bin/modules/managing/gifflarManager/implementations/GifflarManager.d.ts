@@ -48,7 +48,9 @@ declare class GifflarManager implements IGifflarManager {
     compileAll(callback: (errors: Array<any>) => void): any;
     compile(componentName: string, callback: (errors: Array<any>) => void): any;
     compiled(componentName?: string): any | undefined;
-    deploy(contractName: string, inputs: IManagerDeployDTO, accountPrivateKey?: string): Promise<Contract>;
+    deploy(contractName: string, inputs: IManagerDeployDTO, options?: {
+        force?: boolean;
+    }): Promise<Contract>;
     deployed(componentName: string): Contract | undefined;
     setWeb3(newWeb3: IWeb3): IWeb3;
     setDeployConfig(networkConfig: INetworkConfig): Web3 | undefined;
