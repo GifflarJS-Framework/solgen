@@ -14,8 +14,6 @@ export interface IGifflarContract extends IContract {
   setImport(identifierPath: string, alias?: string): IImport;
   write(contracts?: Array<IContractJson>): string;
   compile(callback: (errors: any) => void): any;
-  /** It recovers the instance and also updates the contract model instance. */
-  recoverInstance(): Contract | undefined;
   deploy(
     inputs: IContractDeployDTO,
     accountPrivateKey?: string,
