@@ -55,19 +55,17 @@ class Deployer implements IDeployer {
     return account;
   }
 
-  async deploy(
-    inputs: IDeployerInputs,
-    accountPrivateKey?: string
-  ): Promise<Contract> {
+  async deploy(inputs: IDeployerInputs): Promise<Contract> {
     if (!this.web3) {
       throw new Error("No web3 object configured.");
     }
     try {
       // Used if there is no account in memory
-      if (accountPrivateKey) {
+      if (inputs.accountPrivateKey) {
         // Creating account from private key
-        const account =
-          this.web3.eth.accounts.privateKeyToAccount(accountPrivateKey);
+        const account = this.web3.eth.accounts.privateKeyToAccount(
+          inputs.accountPrivateKey
+        );
 
         // Adding account to memory wallet
         this.web3.eth.accounts.wallet.add(account);

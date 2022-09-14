@@ -115,9 +115,15 @@ class GifflarContractModel implements IGifflarContractModel {
 
       deploy: async (
         inputs: IContractDeployDTO,
-        accountPrivateKey?: string
+        options?: { force?: boolean }
       ): Promise<Contract> => {
-        if (gContract.deployed()) {
+        // Avoiding contract to be deployed more than once. But can still be forced
+        if (gContract.deployed() && !options?.force) {
+          throw new Error(
+            `${gContract.getName()} is already deployed at address '${
+              gContract.deployed()?.options.address
+            }'`
+          );
         }
 
         const json = gContract.json.contracts.jsons[gContract.contract.name];
@@ -133,10 +139,7 @@ class GifflarContractModel implements IGifflarContractModel {
           gasPrice: inputs.gasPrice,
           nonce: inputs.nonce,
         };
-        gContract.instance = await this.deployer.deploy(
-          _inputs,
-          accountPrivateKey
-        );
+        gContract.instance = await this.deployer.deploy(_inputs);
         // Inserting contract address to compilation json
         const networkConfig = this.deployer.getNetworkConfig();
         if (networkConfig) {
