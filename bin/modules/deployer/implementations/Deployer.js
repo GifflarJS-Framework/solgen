@@ -56,6 +56,9 @@ var Deployer = /** @class */ (function () {
             this.web3.setProvider(networkConfig.nodeLink);
         }
     };
+    Deployer.prototype.getNetworkConfig = function () {
+        return this.networkConfig;
+    };
     Deployer.prototype.createWeb3 = function () {
         var web3 = new web3_1.default();
         this.web3 = web3;

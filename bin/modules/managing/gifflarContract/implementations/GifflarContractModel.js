@@ -104,6 +104,12 @@ var GifflarContractModel = /** @class */ (function () {
                     }
                     callback(errors);
                 }
+                // Inserting contract name in compiled json
+                gContract.json.contracts.jsons[gContract.getName()] = {
+                    contractName: gContract.getName(),
+                };
+                // Inserting contract networks in compiled json
+                gContract.json.contracts.jsons[gContract.getName()]["networks"] = {};
                 return gContract.json;
             }, setWeb3: function (web3) {
                 _this.deployer.setWeb3(web3);
@@ -116,8 +122,25 @@ var GifflarContractModel = /** @class */ (function () {
                 }
             }, addSigner: function (accountPrivateKey) {
                 return _this.deployer.addSigner(accountPrivateKey);
+            }, recoverInstance: function () {
+                var web3 = _this.deployer.getWeb3();
+                var networkConfig = _this.deployer.getNetworkConfig();
+                if (!web3 || !networkConfig)
+                    return undefined;
+                if (!gContract.json.contracts) {
+                    throw new Error("Contract is not compiled");
+                }
+                var abi = gContract.json.contracts.jsons[gContract.getName()].abi;
+                var address = gContract.json.contracts.jsons[gContract.getName()].networks[networkConfig.networkId].address;
+                if (!address)
+                    return undefined;
+                // Recovering instance
+                var instance = new web3.eth.Contract(abi);
+                // Defining contract model instance
+                gContract.instance = instance;
+                return instance;
             }, deploy: function (inputs, accountPrivateKey) { return __awaiter(_this, void 0, void 0, function () {
-                var json, _inputs, _a;
+                var json, _inputs, _a, networkConfig;
                 return __generator(this, function (_b) {
                     switch (_b.label) {
                         case 0:
@@ -138,6 +161,14 @@ var GifflarContractModel = /** @class */ (function () {
                             return [4 /*yield*/, this.deployer.deploy(_inputs, accountPrivateKey)];
                         case 1:
                             _a.instance = _b.sent();
+                            networkConfig = this.deployer.getNetworkConfig();
+                            if (networkConfig) {
+                                if (!json["networks"][networkConfig.networkId])
+                                    json["networks"][networkConfig.networkId] = {};
+                                json["networks"][networkConfig.networkId] = {
+                                    address: gContract.instance.options.address,
+                                };
+                            }
                             return [2 /*return*/, gContract.instance];
                     }
                 });

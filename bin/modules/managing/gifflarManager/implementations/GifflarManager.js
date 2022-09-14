@@ -188,6 +188,12 @@ var GifflarManager = /** @class */ (function () {
             if (json.errors && callback) {
                 callback(json.errors);
             }
+            // Inserting contract name in compiled json
+            component.json.contracts.jsons[component.getName()] = {
+                contractName: component.getName(),
+            };
+            // Inserting contract networks in compiled json
+            component.json.contracts.jsons[component.getName()]["networks"] = {};
             return json;
         }
         callback([]);
@@ -208,7 +214,7 @@ var GifflarManager = /** @class */ (function () {
     };
     GifflarManager.prototype.deploy = function (contractName, inputs, accountPrivateKey) {
         return __awaiter(this, void 0, void 0, function () {
-            var json, _inputs, contract;
+            var json, _inputs, instance, gContract, networkConfig;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -227,8 +233,18 @@ var GifflarManager = /** @class */ (function () {
                         };
                         return [4 /*yield*/, this.deployer.deploy(_inputs, accountPrivateKey)];
                     case 1:
-                        contract = _a.sent();
-                        return [2 /*return*/, contract];
+                        instance = _a.sent();
+                        gContract = this.getContract(contractName);
+                        gContract.instance = instance;
+                        networkConfig = this.deployer.getNetworkConfig();
+                        if (networkConfig) {
+                            if (!json["networks"][networkConfig.networkId])
+                                json["networks"][networkConfig.networkId] = {};
+                            json["networks"][networkConfig.networkId] = {
+                                address: gContract.instance.options.address,
+                            };
+                        }
+                        return [2 /*return*/, instance];
                 }
             });
         });
@@ -243,6 +259,8 @@ var GifflarManager = /** @class */ (function () {
             })[0];
             if (!gTopLevel)
                 return undefined;
+            if (gTopLevel.recoverInstance)
+                gTopLevel.recoverInstance();
             return gTopLevel.instance;
         }
     };
