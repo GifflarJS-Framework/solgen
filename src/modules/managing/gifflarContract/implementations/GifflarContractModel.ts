@@ -126,10 +126,10 @@ class GifflarContractModel implements IGifflarContractModel {
           );
         }
 
-        const json = gContract.json.contracts.jsons[gContract.contract.name];
-        if (!json) {
+        if (!gContract.json.contracts) {
           throw new Error("Failed to find compiled contract.");
         }
+        const json = gContract.json.contracts.jsons[gContract.getName()];
         const _inputs = {
           abi: json.abi,
           bytecode: json.evm.bytecode.object,
@@ -167,13 +167,16 @@ class GifflarContractModel implements IGifflarContractModel {
         const networkConfig = this.deployer.getNetworkConfig();
         if (!web3 || !networkConfig) return undefined;
         if (!gContract.json.contracts) return undefined;
+        const networkInfo =
+          gContract.json.contracts.jsons[gContract.getName()].networks[
+            networkConfig.networkId
+          ];
+        if (!networkInfo) return undefined;
+
         // Obtaining ABI from compiled JSON
         const abi = gContract.json.contracts.jsons[gContract.getName()].abi;
         // Obtaining contract address from compiled JSON
-        const address =
-          gContract.json.contracts.jsons[gContract.getName()].networks[
-            networkConfig.networkId
-          ].address;
+        const address = networkInfo.address;
         if (!address) return undefined;
 
         // Recovering instance
