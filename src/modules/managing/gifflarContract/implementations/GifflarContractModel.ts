@@ -113,32 +113,13 @@ class GifflarContractModel implements IGifflarContractModel {
         return this.deployer.addSigner(accountPrivateKey);
       },
 
-      recoverInstance: (): Contract | undefined => {
-        const web3 = this.deployer.getWeb3();
-        const networkConfig = this.deployer.getNetworkConfig();
-        if (!web3 || !networkConfig) return undefined;
-        if (!gContract.json.contracts) {
-          throw new Error("Contract is not compiled");
-        }
-        const abi = gContract.json.contracts.jsons[gContract.getName()].abi;
-        const address =
-          gContract.json.contracts.jsons[gContract.getName()].networks[
-            networkConfig.networkId
-          ].address;
-        if (!address) return undefined;
-
-        // Recovering instance
-        const instance = new web3.eth.Contract(abi);
-        // Defining contract model instance
-        gContract.instance = instance;
-
-        return instance;
-      },
-
       deploy: async (
         inputs: IContractDeployDTO,
         accountPrivateKey?: string
       ): Promise<Contract> => {
+        if (gContract.deployed()) {
+        }
+
         const json = gContract.json.contracts.jsons[gContract.contract.name];
         if (!json) {
           throw new Error("Failed to find compiled contract.");
@@ -176,7 +157,28 @@ class GifflarContractModel implements IGifflarContractModel {
       },
 
       deployed: (): Contract | undefined => {
-        return gContract.instance;
+        // If instance in memory, just return
+        if (gContract.instance) return gContract.instance;
+
+        const web3 = this.deployer.getWeb3();
+        const networkConfig = this.deployer.getNetworkConfig();
+        if (!web3 || !networkConfig) return undefined;
+        if (!gContract.json.contracts) return undefined;
+        // Obtaining ABI from compiled JSON
+        const abi = gContract.json.contracts.jsons[gContract.getName()].abi;
+        // Obtaining contract address from compiled JSON
+        const address =
+          gContract.json.contracts.jsons[gContract.getName()].networks[
+            networkConfig.networkId
+          ].address;
+        if (!address) return undefined;
+
+        // Recovering instance
+        const instance = new web3.eth.Contract(abi);
+        // Defining contract model instance
+        gContract.instance = instance;
+
+        return instance;
       },
     };
 

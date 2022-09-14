@@ -263,18 +263,15 @@ class GifflarManager implements IGifflarManager {
   }
 
   deployed(componentName: string): Contract | undefined {
-    if (!componentName) {
-      return this.json;
-    }
-
-    if (this.json) {
-      const gTopLevel = this.topLevelModels.filter((gTopLevel) => {
-        return gTopLevel.getName() === componentName;
-      })[0];
-      if (!gTopLevel) return undefined;
-      if (gTopLevel.recoverInstance) gTopLevel.recoverInstance();
-      return gTopLevel.instance;
-    }
+    if (!componentName) return undefined;
+    // Filtering component
+    const gTopLevel = this.topLevelModels.filter((gTopLevel) => {
+      return gTopLevel.getName() === componentName;
+    })[0];
+    if (!gTopLevel) return undefined;
+    // Returning instance if deployed
+    if (gTopLevel.deployed) return gTopLevel.deployed();
+    return undefined;
   }
 
   setWeb3(newWeb3: IWeb3): IWeb3 {
