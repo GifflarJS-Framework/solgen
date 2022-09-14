@@ -130,10 +130,10 @@ var GifflarContractModel = /** @class */ (function () {
                             if (gContract.deployed() && !(options === null || options === void 0 ? void 0 : options.force)) {
                                 throw new Error("".concat(gContract.getName(), " is already deployed at address '").concat((_b = gContract.deployed()) === null || _b === void 0 ? void 0 : _b.options.address, "'"));
                             }
-                            json = gContract.json.contracts.jsons[gContract.contract.name];
-                            if (!json) {
+                            if (!gContract.json.contracts) {
                                 throw new Error("Failed to find compiled contract.");
                             }
+                            json = gContract.json.contracts.jsons[gContract.getName()];
                             _inputs = {
                                 abi: json.abi,
                                 bytecode: json.evm.bytecode.object,
@@ -172,10 +172,13 @@ var GifflarContractModel = /** @class */ (function () {
                     return undefined;
                 if (!gContract.json.contracts)
                     return undefined;
+                var networkInfo = gContract.json.contracts.jsons[gContract.getName()].networks[networkConfig.networkId];
+                if (!networkInfo)
+                    return undefined;
                 // Obtaining ABI from compiled JSON
                 var abi = gContract.json.contracts.jsons[gContract.getName()].abi;
                 // Obtaining contract address from compiled JSON
-                var address = gContract.json.contracts.jsons[gContract.getName()].networks[networkConfig.networkId].address;
+                var address = networkInfo.address;
                 if (!address)
                     return undefined;
                 // Recovering instance
