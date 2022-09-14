@@ -9,7 +9,7 @@ import Web3 from "web3";
 
 class Deployer implements IDeployer {
   private web3: IWeb3 | undefined | null;
-  private networkConfig: INetworkConfig;
+  private networkConfig: INetworkConfig | undefined;
 
   setWeb3(newWeb3: IWeb3): IWeb3 {
     this.web3 = newWeb3;
@@ -25,6 +25,10 @@ class Deployer implements IDeployer {
     if (this.web3) {
       this.web3.setProvider(networkConfig.nodeLink);
     }
+  }
+
+  getNetworkConfig(): INetworkConfig | undefined {
+    return this.networkConfig;
   }
 
   createWeb3(): IWeb3 {

@@ -13,4 +13,5 @@ export interface ITopLevel {
   getName(): string;
   compile(callback: (errors: any) => void): any;
   write(): string;
+  recoverInstance?(): Contract | undefined;
 }

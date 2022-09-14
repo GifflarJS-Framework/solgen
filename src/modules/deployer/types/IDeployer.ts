@@ -9,6 +9,7 @@ export interface IDeployer {
   setWeb3(newWeb3: IWeb3): IWeb3;
   getWeb3(): IWeb3 | undefined | null;
   setNetworkConfig(networkConfig: INetworkConfig): void;
+  getNetworkConfig(): INetworkConfig | undefined;
   createWeb3(): IWeb3;
   addSigner(accountPrivateKey: string): Account;
   deploy(

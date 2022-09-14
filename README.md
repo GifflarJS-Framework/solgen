@@ -6,27 +6,28 @@
 
 # Gifflar.js
 
-Um framework para gerar, compilar e implementar contratos inteligentes em tempo de execução.
+A framework that allows to generate, compile and deploy smart contracts on the fly.
 
-## Status de projeto
+## Project Status
 
-**Em desenvolvimento**
+**In development**
 
-## Propriedades suportadas
+## Supported properties
 
-| Propriedade             |      Suporta       | Exemplo                                               |
-| ----------------------- | :----------------: | ----------------------------------------------------- |
-| Declaração de Variáveis | :heavy_check_mark: | `string name;`<br/> `string name = "Bob";`            |
-| Atribuição              | :heavy_check_mark: | `name = "Bob"`<br/> `name = _name`<br/> `val++`       |
-| Estruturas              | :heavy_check_mark: | `struct Person {string name;}`                        |
-| Modificadores           | :heavy_check_mark: | `modifier onlyOwner(){`<br/>`[...];`<br/>`_;`<br/>`}` |
-| Criação de eventos      | :heavy_check_mark: | `event myEvent(string name);`                         |
-| Chamada de eventos      | :heavy_check_mark: | `emit myEvent(_name);`                                |
-| Criação de Funções      | :heavy_check_mark: | `function myFuntion() public {...}`                   |
-| Criação de Construtor   | :heavy_check_mark: | `function constructor() public {...}`                 |
-| Estrutura IF/Else       | :heavy_check_mark: | `if(count == 1){...}else{...}`                        |
-| IFs aninhados           | :heavy_check_mark: | `if(){if(){...}}`                                     |
-| Loops For               | :heavy_check_mark: | `for(i=0;i<count;i++){...}`                           |
-| Loops While             | :heavy_check_mark: | `while(a != b){...}`                                  |
-| Loops Do/While          | :heavy_check_mark: | `do{...}while(a != b);`                               |
-| Herança                 | :heavy_check_mark: | `contract Dog is Animal{...}`                         |
+| Property             |      Support       | Example                                               |
+| -------------------- | :----------------: | ----------------------------------------------------- |
+| Variable Declaration | :heavy_check_mark: | `string name;`<br/> `string name = "Bob";`            |
+| Assignment           | :heavy_check_mark: | `name = "Bob"`<br/> `name = _name`<br/> `val++`       |
+| Structs              | :heavy_check_mark: | `struct Person {string name;}`                        |
+| Modifiers            | :heavy_check_mark: | `modifier onlyOwner(){`<br/>`[...];`<br/>`_;`<br/>`}` |
+| Events declaration   | :heavy_check_mark: | `event myEvent(string name);`                         |
+| Events emission      | :heavy_check_mark: | `emit myEvent(_name);`                                |
+| Functions creation   | :heavy_check_mark: | `function myFuntion() public {...}`                   |
+| Constructor creation | :heavy_check_mark: | `function constructor() public {...}`                 |
+| IF/Else structures   | :heavy_check_mark: | `if(count == 1){...}else{...}`                        |
+| Nested IFs           | :heavy_check_mark: | `if(){if(){...}}`                                     |
+| For Loops            | :heavy_check_mark: | `for(i=0;i<count;i++){...}`                           |
+| While Loops          | :heavy_check_mark: | `while(a != b){...}`                                  |
+| Do/While Loops       | :heavy_check_mark: | `do{...}while(a != b);`                               |
+| Inheritance          | :heavy_check_mark: | `contract Dog is Animal{...}`                         |
+| Inline Assembly      |        :x:         | `assembly {...}`                                      |

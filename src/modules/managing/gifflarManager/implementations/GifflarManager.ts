@@ -197,6 +197,13 @@ class GifflarManager implements IGifflarManager {
         callback(json.errors);
       }
 
+      // Inserting contract name in compiled json
+      component.json.contracts.jsons[component.getName()] = {
+        contractName: component.getName(),
+      };
+      // Inserting contract networks in compiled json
+      component.json.contracts.jsons[component.getName()]["networks"] = {};
+
       return json;
     }
 
@@ -237,8 +244,21 @@ class GifflarManager implements IGifflarManager {
       gasPrice: inputs.gasPrice,
       nonce: inputs.nonce,
     };
-    const contract = await this.deployer.deploy(_inputs, accountPrivateKey);
-    return contract;
+    const instance = await this.deployer.deploy(_inputs, accountPrivateKey);
+    const gContract = this.getContract(contractName);
+    gContract.instance = instance;
+
+    // Inserting contract address to compilation json
+    const networkConfig = this.deployer.getNetworkConfig();
+    if (networkConfig) {
+      if (!json["networks"][networkConfig.networkId])
+        json["networks"][networkConfig.networkId] = {};
+      json["networks"][networkConfig.networkId] = {
+        address: gContract.instance.options.address,
+      };
+    }
+
+    return instance;
   }
 
   deployed(componentName: string): Contract | undefined {
@@ -251,6 +271,7 @@ class GifflarManager implements IGifflarManager {
         return gTopLevel.getName() === componentName;
       })[0];
       if (!gTopLevel) return undefined;
+      if (gTopLevel.recoverInstance) gTopLevel.recoverInstance();
       return gTopLevel.instance;
     }
   }
