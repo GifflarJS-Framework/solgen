@@ -8,4 +8,5 @@ export interface IDeployerInputs {
   gas?: number;
   gasPrice?: string;
   nonce?: number;
+  accountPrivateKey?: string;
 }

@@ -229,8 +229,19 @@ class GifflarManager implements IGifflarManager {
   async deploy(
     contractName: string,
     inputs: IManagerDeployDTO,
-    accountPrivateKey?: string
+    options?: { force?: boolean }
   ): Promise<Contract> {
+    const gContract = this.getContract(contractName);
+
+    // Avoiding contract to be deployed more than once. But can still be forced
+    if (gContract.deployed() && !options?.force) {
+      throw new Error(
+        `${gContract.getName()} is already deployed at address '${
+          gContract.deployed()?.options.address
+        }'`
+      );
+    }
+
     // Obtaining the contract JSON
     const json = this.json.contracts.jsons[contractName];
     if (!json) {
@@ -245,8 +256,7 @@ class GifflarManager implements IGifflarManager {
       gasPrice: inputs.gasPrice,
       nonce: inputs.nonce,
     };
-    const instance = await this.deployer.deploy(_inputs, accountPrivateKey);
-    const gContract = this.getContract(contractName);
+    const instance = await this.deployer.deploy(_inputs);
     gContract.instance = instance;
 
     // Inserting contract address to compilation json

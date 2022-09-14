@@ -12,9 +12,6 @@ export interface IDeployer {
   getNetworkConfig(): INetworkConfig | undefined;
   createWeb3(): IWeb3;
   addSigner(accountPrivateKey: string): Account;
-  deploy(
-    inputs: IDeployerInputs,
-    accountPrivateKey?: string
-  ): Promise<Contract>;
+  deploy(inputs: IDeployerInputs): Promise<Contract>;
   retrieve(abi: AbiItem, address: string): Promise<Contract>;
 }

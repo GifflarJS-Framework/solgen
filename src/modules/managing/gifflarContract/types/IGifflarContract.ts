@@ -16,8 +16,7 @@ export interface IGifflarContract extends IContract {
   compile(callback: (errors: any) => void): any;
   deploy(
     inputs: IContractDeployDTO,
-    accountPrivateKey?: string,
-    web3?: IWeb3
+    options?: { force?: boolean }
   ): Promise<Contract>;
   written(): string | undefined;
   compiled(): any | undefined;
