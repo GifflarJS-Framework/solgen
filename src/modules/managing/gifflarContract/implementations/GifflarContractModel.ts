@@ -180,7 +180,12 @@ class GifflarContractModel implements IGifflarContractModel {
         if (!address) return undefined;
 
         // Recovering instance
-        const instance = new web3.eth.Contract(abi);
+        const instance = new web3.eth.Contract(abi, address);
+        if (!instance) {
+          throw new Error(
+            "Failed to obtain instance. Please verify if the network provider is correct."
+          );
+        }
         // Defining contract model instance
         gContract.instance = instance;
 

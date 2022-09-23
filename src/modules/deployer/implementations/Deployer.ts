@@ -88,12 +88,10 @@ class Deployer implements IDeployer {
           },
           (error, trxHash) => {
             if (error) {
-              console.log(`${error.name}:${error.message}`);
-              throw new Error(error.name);
+              throw new Error(`${error.name}:${error.message}`);
             }
           }
         );
-
       return contract;
     } catch (e: any) {
       throw new Error(e);
