@@ -79,12 +79,20 @@ class Deployer implements IDeployer {
           data: bytecode,
           arguments: args,
         })
-        .send({
-          gas: gas || this.networkConfig?.gas,
-          gasPrice: gasPrice || this.networkConfig?.gasPrice,
-          from: from || this.web3.eth.accounts.wallet[0].address,
-          nonce,
-        });
+        .send(
+          {
+            gas: gas || this.networkConfig?.gas,
+            gasPrice: gasPrice || this.networkConfig?.gasPrice,
+            from: from || this.web3.eth.accounts.wallet[0].address,
+            nonce,
+          },
+          (error, trxHash) => {
+            if (error) {
+              console.log(`${error.name}:${error.message}`);
+              throw new Error(error.name);
+            }
+          }
+        );
 
       return contract;
     } catch (e: any) {
