@@ -110,8 +110,7 @@ var Deployer = /** @class */ (function () {
                                 nonce: nonce,
                             }, function (error, trxHash) {
                                 if (error) {
-                                    console.log("".concat(error.name, ":").concat(error.message));
-                                    throw new Error(error.name);
+                                    throw new Error("".concat(error.name, ":").concat(error.message));
                                 }
                             })];
                     case 2:
