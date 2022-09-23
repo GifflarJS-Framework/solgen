@@ -108,6 +108,11 @@ var Deployer = /** @class */ (function () {
                                 gasPrice: gasPrice || ((_b = this.networkConfig) === null || _b === void 0 ? void 0 : _b.gasPrice),
                                 from: from || this.web3.eth.accounts.wallet[0].address,
                                 nonce: nonce,
+                            }, function (error, trxHash) {
+                                if (error) {
+                                    console.log("".concat(error.name, ":").concat(error.message));
+                                    throw new Error(error.name);
+                                }
                             })];
                     case 2:
                         contract = _c.sent();
