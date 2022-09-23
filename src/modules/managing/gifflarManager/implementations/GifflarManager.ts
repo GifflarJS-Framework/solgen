@@ -169,7 +169,19 @@ class GifflarManager implements IGifflarManager {
       const json = this.json.contracts.jsons[gContract.getName()];
       if (json) {
         // eslint-disable-next-line no-param-reassign
-        gContract.json = json;
+        gContract.json = { contracts: { jsons: {} } };
+        gContract.json.contracts.jsons[gContract.getName()] = json;
+
+        // Inserting contract name in compiled json
+        gContract.json.contracts.jsons[gContract.getName()] = {
+          contractName: gContract.getName(),
+          ...gContract.json.contracts.jsons[gContract.getName()],
+        };
+        // Inserting contract networks in compiled json
+        gContract.json.contracts.jsons[gContract.getName()]["networks"] = {};
+
+        this.json.contracts.jsons[gContract.getName()] =
+          gContract.json.contracts.jsons[gContract.getName()];
       }
       return json;
     });
@@ -204,6 +216,13 @@ class GifflarManager implements IGifflarManager {
       };
       // Inserting contract networks in compiled json
       component.json.contracts.jsons[component.getName()]["networks"] = {};
+
+      if (!this.json.contracts) {
+        const jsons: any = {};
+        jsons[component.getName()] =
+          component.json.contracts.jsons[component.getName()];
+        this.json.contracts = { jsons };
+      }
 
       return json;
     }
@@ -267,6 +286,7 @@ class GifflarManager implements IGifflarManager {
       json["networks"][networkConfig.networkId] = {
         address: gContract.instance.options.address,
       };
+      // console.log(gContract.json);
     }
 
     return instance;
