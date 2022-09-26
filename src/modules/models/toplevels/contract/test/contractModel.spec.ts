@@ -75,7 +75,7 @@ describe("Test Contract", () => {
 
     // Creating constructor
     gContract
-      .createConstructor("public")
+      .createConstructor()
       .setInput({ regularType: "address" }, "_owner")
       .setAssignment("manager", { customExpression: "_owner" })
       .setAssignment("name", { customExpression: '"DHT11"' });

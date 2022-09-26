@@ -29,6 +29,7 @@ import { IContractBodyModel } from "../types/IContractBodyModel";
 import { ITypeNameInput } from "@modules/types/ITypeNameInput";
 import { ITypeNameOutput } from "@modules/types/ITypeNameOutput";
 import { IExpressionValue } from "@modules/models/statements/expression/types/IExpressionValue";
+import { IVariableStateMutabilityType } from "@modules/types/IVariableStateMutabilityType";
 
 @injectable()
 class ContractBodyModel implements IContractBodyModel {
@@ -164,12 +165,14 @@ class ContractBodyModel implements IContractBodyModel {
       type: ITypeName,
       name: string,
       scope: IVisibility,
-      expression?: IExpressionValue
+      expression?: IExpressionValue,
+      stateMutability?: IVariableStateMutabilityType
     ): IStateVariable => {
       const variable = this.stateVariableModel.execute({
         type: helpers.writeTypeName(type),
         name,
         scope,
+        stateMutability: stateMutability,
         expressionValue: expression,
       });
       if (!body.variables) body.variables = [];
@@ -179,7 +182,7 @@ class ContractBodyModel implements IContractBodyModel {
 
     const createFunction = (
       name: string,
-      scope: string,
+      scope: IVisibility,
       inputs: Array<ITypeNameInput> = [],
       outputs: Array<ITypeNameOutput> = [],
       stateMutability?: IFunctionStateMutabilityType

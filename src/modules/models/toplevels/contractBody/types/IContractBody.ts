@@ -17,6 +17,7 @@ import { IVisibility } from "@modules/types/IVisibility";
 import { IContractBodyItem } from "./IContractBodyItem";
 import { ITypeNameOutput } from "@modules/types/ITypeNameOutput";
 import { IExpressionValue } from "@modules/models/statements/expression/types/IExpressionValue";
+import { IVariableStateMutabilityType } from "@modules/types/IVariableStateMutabilityType";
 
 export interface IContractBody {
   body: IContractBodyItem;
@@ -48,13 +49,14 @@ export interface IContractBody {
   createVariable(
     type: ITypeName,
     name: string,
-    scope: string,
-    expression?: IExpressionValue
+    scope: IVisibility,
+    expression?: IExpressionValue,
+    stateMutability?: IVariableStateMutabilityType
   ): IStateVariable;
 
   createFunction(
     name: string,
-    scope: string,
+    scope: IVisibility,
     inputs?: Array<ITypeNameInput>,
     outputs?: Array<ITypeNameOutput>,
     stateMutability?: IFunctionStateMutabilityType
