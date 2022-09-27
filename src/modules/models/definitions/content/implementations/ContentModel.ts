@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 import helpers from "@utils/helpers";
 import { IVariable } from "@models/definitions/stateVariable/types/IVariable";
 import { IContent } from "../types/IContent";
@@ -21,9 +20,6 @@ import { IDoWhile } from "@models/statements/dowhile/types/IDoWhile";
 import { IForModel } from "@models/statements/for/types/IForModel";
 import { IDataLocation } from "@modules/types/IDataLocation";
 import { IFor } from "@models/statements/for/types/IFor";
-import { IMappingModel } from "@models/statements/mapping/types/IMappingModel";
-import { IMappingKeyType } from "@modules/types/IMappingKeyType";
-import { IMappingTypeName } from "@modules/types/IMappingTypeName";
 import { IRequireModel } from "@models/statements/require/types/IRequireModel";
 import { IRevertModel } from "@models/statements/revert/types/IRevertModel";
 import { ITryModel } from "@models/statements/try/types/ITryModel";
@@ -65,8 +61,6 @@ class ContentModel {
     private returnModel: IReturnModel,
     @inject("ForModel")
     private forModel: IForModel,
-    @inject("MappingModel")
-    private mappingModel: IMappingModel,
     @inject("RequireModel")
     private requireModel: IRequireModel,
     @inject("RevertModel")
@@ -201,17 +195,6 @@ class ContentModel {
       return contentItem;
     };
 
-    const setMapping = (
-      type: IMappingKeyType,
-      typeName: IMappingTypeName,
-      name: string
-    ): IContent => {
-      const _mapping = this.mappingModel.execute({ type, typeName, name });
-      stack[top].content.push(_mapping);
-      const contentItem: IContent = _assignFunctions(stack[top]);
-      return contentItem;
-    };
-
     const setRequire = (condition: string, errorMessage?: string): IContent => {
       const _require = this.requireModel.execute({ condition, errorMessage });
       stack[top].content.push(_require);
@@ -219,9 +202,9 @@ class ContentModel {
       return contentItem;
     };
 
-    const setRevert = (errorDefinition: { message?: string }): IContent => {
+    const setRevert = (errorMessage: string): IContent => {
       const _revert = this.revertModel.execute({
-        message: errorDefinition.message,
+        message: errorMessage,
       });
       stack[top].content.push(_revert);
       const contentItem: IContent = _assignFunctions(stack[top]);
@@ -234,22 +217,22 @@ class ContentModel {
       variable: {
         type: ITypeName;
         name: string;
-        expression: IExpressionValue;
+        expressionValue: IExpressionValue;
         dataLocation: IDataLocation;
       },
       condition: string,
-      expressionValue: IExpressionValue
+      expression: string
     ): IContent => {
       const newFor = this.forModel.execute({
         variable: {
           statement: "variable",
           type: helpers.writeTypeName(variable.type),
           name: variable.name,
-          expressionValue: variable.expression,
+          expressionValue: variable.expressionValue,
           dataLocation: variable.dataLocation,
         },
         condition,
-        expressionValue,
+        expression,
       });
       const newForContent: IForContent = _assignFunctions(newFor);
       stack.push(newForContent);
@@ -273,7 +256,7 @@ class ContentModel {
       return newWhileContent;
     };
 
-    const beginIf = (condition: string, onElse?: boolean): IContent => {
+    const _beginIf = (condition: string, onElse: boolean): IContent => {
       const newIf = this.ifModel.execute({ condition, onElse });
       const newIfContent: IIfContent = _assignFunctions(newIf);
       stack.push(newIfContent);
@@ -281,15 +264,19 @@ class ContentModel {
       return newIfContent;
     };
 
+    const beginIf = (condition: string): IContent => {
+      return _beginIf(condition, false);
+    };
+
     const beginElseIf = (condition: string): IContent => {
       if (!condition) {
         throw new Error("Condition cannot be ommited.");
       }
-      return beginIf(condition, true);
+      return _beginIf(condition, true);
     };
 
     const beginElse = (): IContent => {
-      return beginIf("", true);
+      return _beginIf("", true);
     };
 
     const _endDecisionStructure = (): IContent => {
@@ -331,7 +318,6 @@ class ContentModel {
         setAssert,
         setBreak,
         setCatch,
-        setMapping,
         setRequire,
         setRevert,
         setTry,

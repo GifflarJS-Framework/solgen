@@ -120,7 +120,7 @@ export interface IGifflarContract extends IContract {
 
   /**
    * Adds a default transaction signer for next deployments with this Gifflar Contract.
-   * @param accountPrivateKey
+   * @param accountPrivateKey The account's private key.
    */
   addSigner(accountPrivateKey: string): Account;
 

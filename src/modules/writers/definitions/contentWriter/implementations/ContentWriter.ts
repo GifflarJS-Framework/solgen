@@ -18,7 +18,6 @@ import { ITryWriter } from "@writers/statements/tryWriter/types/ITryWriter";
 import { ICatchWriter } from "@writers/statements/catchWriter/types/ICatchWriter";
 import { IContinueWriter } from "@writers/statements/continueWriter/types/IContinueWriter";
 import { IExpressionWriter } from "@writers/statements/expressionWriter/types/IExpressionWriter";
-import { IMappingWriter } from "@writers/statements/mappingWriter/types/IMappingWriter";
 import { INewContractWriter } from "@writers/statements/newContractWriter/types/INewContractWriter";
 
 @injectable()
@@ -58,8 +57,6 @@ class ContentWriter implements IContentWriter {
     private continueWriter: IContinueWriter,
     @inject("ExpressionWriter")
     private expressionWriter: IExpressionWriter,
-    @inject("MappingWriter")
-    private mappingWriter: IMappingWriter,
     @inject("NewContractWriter")
     private newContractWriter: INewContractWriter
   ) {
@@ -90,7 +87,6 @@ class ContentWriter implements IContentWriter {
     catch: this.catchWriter,
     continue: this.continueWriter,
     expression: this.expressionWriter,
-    mapping: this.mappingWriter,
     newContract: this.newContractWriter,
   };
 
