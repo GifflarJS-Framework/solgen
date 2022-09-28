@@ -69,17 +69,12 @@ class GifflarContractModel implements IGifflarContractModel {
         return gContract.code;
       },
 
-      compile: (callback: (errors: any) => void): any => {
-        let errors;
+      compile: (callback?: (errors: any) => void): any => {
         if (gContract.code) {
           gContract.json = this.compiler.compile(gContract.code);
         }
-        if (callback) {
-          if (gContract.json.errors) {
-            errors = gContract.json.errors;
-          }
-
-          callback(errors);
+        if (gContract.json.errors) {
+          if (callback) callback(gContract.json.errors);
           return {};
         }
 

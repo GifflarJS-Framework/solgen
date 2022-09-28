@@ -60,19 +60,15 @@ class GifflarInterfaceModel implements IGifflarInterfaceModel {
         return gInterface.code;
       },
 
-      compile: (callback: (errors: any) => void): any => {
-        let errors;
+      compile: (callback?: (errors: any[]) => void): any => {
         if (gInterface.code) {
           gInterface.json = this.compiler.compile(gInterface.code);
         }
-        if (callback) {
-          if (gInterface.json.errors) {
-            errors = gInterface.json.errors;
-          }
-
-          callback(errors);
+        if (gInterface.json.errors) {
+          if (callback) callback(gInterface.json.errors);
           return {};
         }
+
         return gInterface.json;
       },
 
