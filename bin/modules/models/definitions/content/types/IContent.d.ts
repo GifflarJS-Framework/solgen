@@ -61,6 +61,8 @@ export interface IContent extends IStackItem {
      * uint256 balance = 100000;
      * // [...]
      * ```
+     *
+     * OBS: For 'string' types the keyword 'memory' is automatically set.
      */
     setVariable(type: ITypeName, name: string, expression?: IExpressionValue): IContent;
     /**
