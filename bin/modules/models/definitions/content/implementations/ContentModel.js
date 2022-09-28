@@ -91,11 +91,12 @@ var ContentModel = /** @class */ (function () {
             var contentItem = _assignFunctions(stack[top]);
             return contentItem;
         };
-        var setVariable = function (type, name, expression) {
+        var setVariable = function (type, name, options) {
             var newVariable = _this.variableModel.execute({
                 type: helpers_1.default.writeTypeName(type),
                 name: name,
-                expressionValue: expression,
+                expressionValue: options === null || options === void 0 ? void 0 : options.expressionValue,
+                dataLocation: options === null || options === void 0 ? void 0 : options.dataLocation,
             });
             contentVars.push(newVariable);
             stack[top].content.push(newVariable);

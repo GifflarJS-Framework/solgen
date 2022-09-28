@@ -3,6 +3,7 @@ import { IExpressionValue } from "../../../statements/expression/types/IExpressi
 import { IDataLocation } from "../../../../types/IDataLocation";
 import { ITypeName } from "../../../../types/ITypeName";
 import { ITypeNameInput } from "../../../../types/ITypeNameInput";
+import { IVariableDataLocation } from "../../../../types/IVariableDataLocation";
 import { IStackItem } from "./IStackItem";
 export interface IContent extends IStackItem {
     /**
@@ -46,12 +47,15 @@ export interface IContent extends IStackItem {
      * Defines a new local variable statement.
      * @param type The variable type
      * @param name The variable name
-     * @param expression The expression to assign to variable initial value
+     * @param options.expressionValue The expression to assign to variable initial value (optional)
+     * @param options.dataLocation The location where the variable will be stored: 'memory' | 'storage'. (optional)
      * @example
      * ```ts
      * gContract.createFunction(...)
      *   // .[...]
-     *   .setVariable({ regularType: "uint256" }, "balance", "100000");
+     *   .setVariable({ regularType: "uint256" }, "balance", {
+     *     expressionValue: { customExpression: "100000" },
+     *   });
      *   // .[...]
      * ```
      *
@@ -61,10 +65,11 @@ export interface IContent extends IStackItem {
      * uint256 balance = 100000;
      * // [...]
      * ```
-     *
-     * OBS: For 'string' types the keyword 'memory' is automatically set.
      */
-    setVariable(type: ITypeName, name: string, expression?: IExpressionValue): IContent;
+    setVariable(type: ITypeName, name: string, options?: {
+        expressionValue?: IExpressionValue;
+        dataLocation?: IVariableDataLocation;
+    }): IContent;
     /**
      * Defines a new Method call statement
      * @param variable The name of the object that contains the method
