@@ -198,7 +198,7 @@ export interface IContractBody {
    *     []
    *   )
    *    // setting function content
-   *   .setRequire("owner != address(0)", "Invalid address")
+   *   .setRequire("_owner != address(0)", "Invalid address")
    *   .setAssignment("owner", { customExpression: "_owner" });
    *   //[...]
    *
@@ -213,11 +213,12 @@ export interface IContractBody {
    *
    * ```solidity
    * function setOwner(address _owner) public{
-   *   require(owner != address(0), "Invalid address");
+   *   require(_owner != address(0), "Invalid address");
    *   owner = _owner;
    * }
    * ```
    *
+   * OBS: For 'string' inputs, the 'memory' keywork will automatically be set.
    */
   createFunction(
     name: string,
