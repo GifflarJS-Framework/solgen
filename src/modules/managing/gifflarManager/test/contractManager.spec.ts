@@ -99,7 +99,7 @@ describe("Contract Manager Writer", () => {
       { regularType: "uint256" },
       "counter",
       "private",
-      { customExpression: "0" }
+      { expressionValue: { customExpression: "0" } }
     );
 
     // Modeling Functions
@@ -107,7 +107,9 @@ describe("Contract Manager Writer", () => {
       .createFunction("createContract", "public")
       .setInput({ regularType: "address" }, "_owner")
       .setVariable({ customType: "DHT11" }, "newContract", {
-        newContract: { contractName: "DHT11", args: ["_owner"] },
+        expressionValue: {
+          newContract: { contractName: "DHT11", args: ["_owner"] },
+        },
       })
       .setMethodCall("contracts", "push", ["newContract"])
       .setAssignment("counter", { customExpression: "counter + 1" });

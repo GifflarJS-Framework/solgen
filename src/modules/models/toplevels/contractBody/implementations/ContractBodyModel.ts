@@ -165,15 +165,17 @@ class ContractBodyModel implements IContractBodyModel {
       type: ITypeName,
       name: string,
       scope: IVisibility,
-      expression?: IExpressionValue,
-      stateMutability?: IVariableStateMutabilityType
+      options?: {
+        expressionValue?: IExpressionValue;
+        stateMutability?: IVariableStateMutabilityType;
+      }
     ): IStateVariable => {
       const variable = this.stateVariableModel.execute({
         type: helpers.writeTypeName(type),
         name,
         scope,
-        stateMutability: stateMutability,
-        expressionValue: expression,
+        stateMutability: options?.stateMutability,
+        expressionValue: options?.expressionValue,
       });
       if (!body.variables) body.variables = [];
       body.variables.push(variable);

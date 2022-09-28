@@ -147,16 +147,18 @@ export interface IContractBody {
    * @param type Variable type
    * @param name Variable name
    * @param scope Variable scope
-   * @param expressionValue Variable expression value to assign (optional)
-   * @param stateMutability Variable state mutability type (optional)
+   * @param options.expressionValue Variable expression value to assign (optional)
+   * @param options.stateMutability Variable state mutability type (optional)
    * @example
    * ```ts
    * gContract.createVariable(
    *   { regularType: "address" },
    *   "owner",
    *   "public",
-   *   "0x0000000000000000000000000000000000000000",
-   *   "constant"
+   *   {
+   *     expressionValue: "0x0000000000000000000000000000000000000000",
+   *     stateMutability: "constant",
+   *   }
    * );
    *
    * gContract.createVariable(
@@ -177,8 +179,10 @@ export interface IContractBody {
     type: ITypeName,
     name: string,
     scope: IVisibility,
-    expressionValue?: IExpressionValue,
-    stateMutability?: IVariableStateMutabilityType
+    options?: {
+      expressionValue?: IExpressionValue;
+      stateMutability?: IVariableStateMutabilityType;
+    }
   ): IStateVariable;
 
   /**

@@ -1,10 +1,9 @@
 import { ITryExpression } from "@models/statements/try/types/ITryExpression";
 import { IExpressionValue } from "@modules/models/statements/expression/types/IExpressionValue";
 import { IDataLocation } from "@modules/types/IDataLocation";
-import { IMappingKeyType } from "@modules/types/IMappingKeyType";
-import { IMappingTypeName } from "@modules/types/IMappingTypeName";
 import { ITypeName } from "@modules/types/ITypeName";
 import { ITypeNameInput } from "@modules/types/ITypeNameInput";
+import { IVariableDataLocation } from "@modules/types/IVariableDataLocation";
 import { IStackItem } from "./IStackItem";
 
 export interface IContent extends IStackItem {
@@ -51,12 +50,15 @@ export interface IContent extends IStackItem {
    * Defines a new local variable statement.
    * @param type The variable type
    * @param name The variable name
-   * @param expression The expression to assign to variable initial value
+   * @param options.expressionValue The expression to assign to variable initial value (optional)
+   * @param options.dataLocation The location where the variable will be stored: 'memory' | 'storage'. (optional)
    * @example
    * ```ts
    * gContract.createFunction(...)
    *   // .[...]
-   *   .setVariable({ regularType: "uint256" }, "balance", "100000");
+   *   .setVariable({ regularType: "uint256" }, "balance", {
+   *     expressionValue: { customExpression: "100000" },
+   *   });
    *   // .[...]
    * ```
    *
@@ -66,13 +68,14 @@ export interface IContent extends IStackItem {
    * uint256 balance = 100000;
    * // [...]
    * ```
-   *
-   * OBS: For 'string' types the keyword 'memory' is automatically set.
    */
   setVariable(
     type: ITypeName,
     name: string,
-    expression?: IExpressionValue
+    options?: {
+      expressionValue?: IExpressionValue;
+      dataLocation?: IVariableDataLocation;
+    }
   ): IContent;
 
   /**
