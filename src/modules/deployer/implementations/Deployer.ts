@@ -94,7 +94,9 @@ class Deployer implements IDeployer {
         );
       return contract;
     } catch (e: any) {
-      throw new Error(e);
+      throw new Error(
+        `Error: ${e.message}. Please, verify if the arguments and node link are correct.`
+      );
     }
   }
 
