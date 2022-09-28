@@ -67,11 +67,11 @@ var ContractModel = /** @class */ (function () {
             contract.receive = receive;
             return receive;
         };
-        var createConstructor = function (scope, inputs) {
+        var createConstructor = function (inputs) {
             if (inputs === void 0) { inputs = []; }
             var _function = _this.functionModel.execute({
                 name: "",
-                scope: scope,
+                scope: "public",
                 isConstructor: true,
                 inputs: helpers_1.default.castITypeNameInputsToInputs(inputs),
                 stateVars: contract.variables,

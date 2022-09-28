@@ -4,12 +4,12 @@ var ForModel = /** @class */ (function () {
     function ForModel() {
     }
     ForModel.prototype.execute = function (_a) {
-        var variable = _a.variable, condition = _a.condition, expressionValue = _a.expressionValue;
+        var variable = _a.variable, condition = _a.condition, expression = _a.expression;
         var _for = {
             statement: "for",
             variable: variable,
             condition: condition,
-            expressionValue: expressionValue,
+            expression: expression,
             content: [],
         };
         return _for;

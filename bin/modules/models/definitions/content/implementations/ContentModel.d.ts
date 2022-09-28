@@ -12,7 +12,6 @@ import { IBreakModel } from "../../../statements/break/types/IBreakModel";
 import { ICatchModel } from "../../../statements/catch/types/ICatchModel";
 import { IDoWhileModel } from "../../../statements/dowhile/types/IDoWhileModel";
 import { IForModel } from "../../../statements/for/types/IForModel";
-import { IMappingModel } from "../../../statements/mapping/types/IMappingModel";
 import { IRequireModel } from "../../../statements/require/types/IRequireModel";
 import { IRevertModel } from "../../../statements/revert/types/IRevertModel";
 import { ITryModel } from "../../../statements/try/types/ITryModel";
@@ -30,12 +29,11 @@ declare class ContentModel {
     private doWhileModel;
     private returnModel;
     private forModel;
-    private mappingModel;
     private requireModel;
     private revertModel;
     private tryModel;
     private whileModel;
-    constructor(assertModel: IAssertModel, breakModel: IBreakModel, catchModel: ICatchModel, assignmnetModel: IAssignmentModel, variableModel: IVariableModel, ifModel: IIfModel, methodCallModel: IMethodCallModel, eventCallModel: IEventCallModel, continueModel: IContinueModel, doWhileModel: IDoWhileModel, returnModel: IReturnModel, forModel: IForModel, mappingModel: IMappingModel, requireModel: IRequireModel, revertModel: IRevertModel, tryModel: ITryModel, whileModel: IWhileModel);
+    constructor(assertModel: IAssertModel, breakModel: IBreakModel, catchModel: ICatchModel, assignmnetModel: IAssignmentModel, variableModel: IVariableModel, ifModel: IIfModel, methodCallModel: IMethodCallModel, eventCallModel: IEventCallModel, continueModel: IContinueModel, doWhileModel: IDoWhileModel, returnModel: IReturnModel, forModel: IForModel, requireModel: IRequireModel, revertModel: IRevertModel, tryModel: ITryModel, whileModel: IWhileModel);
     execute({ stateVars }: ICreateContentDTO): IContent;
 }
 export default ContentModel;

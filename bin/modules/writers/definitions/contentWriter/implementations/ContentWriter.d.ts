@@ -17,7 +17,6 @@ import { ITryWriter } from "../../../statements/tryWriter/types/ITryWriter";
 import { ICatchWriter } from "../../../statements/catchWriter/types/ICatchWriter";
 import { IContinueWriter } from "../../../statements/continueWriter/types/IContinueWriter";
 import { IExpressionWriter } from "../../../statements/expressionWriter/types/IExpressionWriter";
-import { IMappingWriter } from "../../../statements/mappingWriter/types/IMappingWriter";
 import { INewContractWriter } from "../../../statements/newContractWriter/types/INewContractWriter";
 declare class ContentWriter implements IContentWriter {
     private assertWriter;
@@ -37,9 +36,8 @@ declare class ContentWriter implements IContentWriter {
     private catchWriter;
     private continueWriter;
     private expressionWriter;
-    private mappingWriter;
     private newContractWriter;
-    constructor(assertWriter: IAssert, assignmentWriter: IAssignmentWriter, ifWriter: IIfWriter, forWriter: IForWriter, eventCallWriter: IEventCallWriter, variableWriter: IVariableWriter, methodCallWriter: IMethodCallWriter, requireWriter: IRequireWriter, revertWriter: IRevertWriter, breakWriter: IBreakWriter, whileWriter: IWhileWriter, doWhileWriter: IDoWhileWriter, returnWriter: IReturnWriter, tryWriter: ITryWriter, catchWriter: ICatchWriter, continueWriter: IContinueWriter, expressionWriter: IExpressionWriter, mappingWriter: IMappingWriter, newContractWriter: INewContractWriter);
+    constructor(assertWriter: IAssert, assignmentWriter: IAssignmentWriter, ifWriter: IIfWriter, forWriter: IForWriter, eventCallWriter: IEventCallWriter, variableWriter: IVariableWriter, methodCallWriter: IMethodCallWriter, requireWriter: IRequireWriter, revertWriter: IRevertWriter, breakWriter: IBreakWriter, whileWriter: IWhileWriter, doWhileWriter: IDoWhileWriter, returnWriter: IReturnWriter, tryWriter: ITryWriter, catchWriter: ICatchWriter, continueWriter: IContinueWriter, expressionWriter: IExpressionWriter, newContractWriter: INewContractWriter);
     statements: {
         assert: IAssert;
         assignment: IAssignmentWriter;
@@ -58,7 +56,6 @@ declare class ContentWriter implements IContentWriter {
         catch: ICatchWriter;
         continue: IContinueWriter;
         expression: IExpressionWriter;
-        mapping: IMappingWriter;
         newContract: INewContractWriter;
     };
     controls: string[];

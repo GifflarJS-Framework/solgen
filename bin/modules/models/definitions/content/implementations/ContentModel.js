@@ -26,11 +26,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-/* eslint-disable no-use-before-define */
 var helpers_1 = __importDefault(require("../../../../../utils/helpers"));
 var tsyringe_1 = require("tsyringe");
 var ContentModel = /** @class */ (function () {
-    function ContentModel(assertModel, breakModel, catchModel, assignmnetModel, variableModel, ifModel, methodCallModel, eventCallModel, continueModel, doWhileModel, returnModel, forModel, mappingModel, requireModel, revertModel, tryModel, whileModel) {
+    function ContentModel(assertModel, breakModel, catchModel, assignmnetModel, variableModel, ifModel, methodCallModel, eventCallModel, continueModel, doWhileModel, returnModel, forModel, requireModel, revertModel, tryModel, whileModel) {
         this.assertModel = assertModel;
         this.breakModel = breakModel;
         this.catchModel = catchModel;
@@ -43,7 +42,6 @@ var ContentModel = /** @class */ (function () {
         this.doWhileModel = doWhileModel;
         this.returnModel = returnModel;
         this.forModel = forModel;
-        this.mappingModel = mappingModel;
         this.requireModel = requireModel;
         this.revertModel = revertModel;
         this.tryModel = tryModel;
@@ -144,38 +142,32 @@ var ContentModel = /** @class */ (function () {
             var contentItem = _assignFunctions(stack[top]);
             return contentItem;
         };
-        var setMapping = function (type, typeName, name) {
-            var _mapping = _this.mappingModel.execute({ type: type, typeName: typeName, name: name });
-            stack[top].content.push(_mapping);
-            var contentItem = _assignFunctions(stack[top]);
-            return contentItem;
-        };
         var setRequire = function (condition, errorMessage) {
             var _require = _this.requireModel.execute({ condition: condition, errorMessage: errorMessage });
             stack[top].content.push(_require);
             var contentItem = _assignFunctions(stack[top]);
             return contentItem;
         };
-        var setRevert = function (errorDefinition) {
+        var setRevert = function (errorMessage) {
             var _revert = _this.revertModel.execute({
-                message: errorDefinition.message,
+                message: errorMessage,
             });
             stack[top].content.push(_revert);
             var contentItem = _assignFunctions(stack[top]);
             return contentItem;
         };
         // Decision and loop structures
-        var beginFor = function (variable, condition, expressionValue) {
+        var beginFor = function (variable, condition, expression) {
             var newFor = _this.forModel.execute({
                 variable: {
                     statement: "variable",
                     type: helpers_1.default.writeTypeName(variable.type),
                     name: variable.name,
-                    expressionValue: variable.expression,
+                    expressionValue: variable.expressionValue,
                     dataLocation: variable.dataLocation,
                 },
                 condition: condition,
-                expressionValue: expressionValue,
+                expression: expression,
             });
             var newForContent = _assignFunctions(newFor);
             stack.push(newForContent);
@@ -196,21 +188,24 @@ var ContentModel = /** @class */ (function () {
             top += 1;
             return newWhileContent;
         };
-        var beginIf = function (condition, onElse) {
+        var _beginIf = function (condition, onElse) {
             var newIf = _this.ifModel.execute({ condition: condition, onElse: onElse });
             var newIfContent = _assignFunctions(newIf);
             stack.push(newIfContent);
             top += 1;
             return newIfContent;
         };
+        var beginIf = function (condition) {
+            return _beginIf(condition, false);
+        };
         var beginElseIf = function (condition) {
             if (!condition) {
                 throw new Error("Condition cannot be ommited.");
             }
-            return beginIf(condition, true);
+            return _beginIf(condition, true);
         };
         var beginElse = function () {
-            return beginIf("", true);
+            return _beginIf("", true);
         };
         var _endDecisionStructure = function () {
             if (stack.length > 1) {
@@ -225,7 +220,7 @@ var ContentModel = /** @class */ (function () {
         };
         var _c = Array(6).fill(_endDecisionStructure), endIf = _c[0], endElse = _c[1], endElseIf = _c[2], endDoWhile = _c[3], endWhile = _c[4], endFor = _c[5];
         var _assignFunctions = function (obj) {
-            var _obj = __assign(__assign({}, obj), { beginIf: beginIf, beginElse: beginElse, beginElseIf: beginElseIf, beginDoWhile: beginDoWhile, beginFor: beginFor, endIf: endIf, endElseIf: endElseIf, endElse: endElse, endDoWhile: endDoWhile, endFor: endFor, endWhile: endWhile, setEventCall: setEventCall, setAssignment: setAssignment, setVariable: setVariable, setMethodCall: setMethodCall, setContinue: setContinue, setReturn: setReturn, setAssert: setAssert, setBreak: setBreak, setCatch: setCatch, setMapping: setMapping, setRequire: setRequire, setRevert: setRevert, setTry: setTry, beginWhile: beginWhile });
+            var _obj = __assign(__assign({}, obj), { beginIf: beginIf, beginElse: beginElse, beginElseIf: beginElseIf, beginDoWhile: beginDoWhile, beginFor: beginFor, endIf: endIf, endElseIf: endElseIf, endElse: endElse, endDoWhile: endDoWhile, endFor: endFor, endWhile: endWhile, setEventCall: setEventCall, setAssignment: setAssignment, setVariable: setVariable, setMethodCall: setMethodCall, setContinue: setContinue, setReturn: setReturn, setAssert: setAssert, setBreak: setBreak, setCatch: setCatch, setRequire: setRequire, setRevert: setRevert, setTry: setTry, beginWhile: beginWhile });
             return _obj;
         };
         var json = _assignFunctions(stack[top]);
@@ -245,12 +240,11 @@ var ContentModel = /** @class */ (function () {
         __param(9, (0, tsyringe_1.inject)("DoWhileModel")),
         __param(10, (0, tsyringe_1.inject)("ReturnModel")),
         __param(11, (0, tsyringe_1.inject)("ForModel")),
-        __param(12, (0, tsyringe_1.inject)("MappingModel")),
-        __param(13, (0, tsyringe_1.inject)("RequireModel")),
-        __param(14, (0, tsyringe_1.inject)("RevertModel")),
-        __param(15, (0, tsyringe_1.inject)("TryModel")),
-        __param(16, (0, tsyringe_1.inject)("WhileModel")),
-        __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object])
+        __param(12, (0, tsyringe_1.inject)("RequireModel")),
+        __param(13, (0, tsyringe_1.inject)("RevertModel")),
+        __param(14, (0, tsyringe_1.inject)("TryModel")),
+        __param(15, (0, tsyringe_1.inject)("WhileModel")),
+        __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object])
     ], ContentModel);
     return ContentModel;
 }());

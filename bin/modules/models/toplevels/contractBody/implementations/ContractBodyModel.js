@@ -63,8 +63,8 @@ var ContractBodyModel = /** @class */ (function () {
         var createStruct = function (identifier, variables, mappings) {
             var struct = _this.structModel.execute({
                 identifier: identifier,
-                variables: variables,
-                mappings: mappings,
+                variables: variables || [],
+                mappings: mappings || [],
             });
             if (!body.structs)
                 body.structs = [];
@@ -109,8 +109,8 @@ var ContractBodyModel = /** @class */ (function () {
             var modifier = _this.modifierModel.execute({
                 title: title,
                 args: helpers_1.default.castITypeNameInputsToInputs(args),
-                isOverriding: options.isOverriding,
-                isVirtual: options.isVirtual,
+                isOverriding: options === null || options === void 0 ? void 0 : options.isOverriding,
+                isVirtual: options === null || options === void 0 ? void 0 : options.isVirtual,
                 stateVars: body.variables,
             });
             if (!body.modifiers)
@@ -118,11 +118,12 @@ var ContractBodyModel = /** @class */ (function () {
             body.modifiers.push(modifier);
             return modifier;
         };
-        var createVariable = function (type, name, scope, expression) {
+        var createVariable = function (type, name, scope, expression, stateMutability) {
             var variable = _this.stateVariableModel.execute({
                 type: helpers_1.default.writeTypeName(type),
                 name: name,
                 scope: scope,
+                stateMutability: stateMutability,
                 expressionValue: expression,
             });
             if (!body.variables)

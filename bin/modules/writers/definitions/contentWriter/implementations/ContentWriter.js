@@ -14,7 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var tsyringe_1 = require("tsyringe");
 var ContentWriter = /** @class */ (function () {
-    function ContentWriter(assertWriter, assignmentWriter, ifWriter, forWriter, eventCallWriter, variableWriter, methodCallWriter, requireWriter, revertWriter, breakWriter, whileWriter, doWhileWriter, returnWriter, tryWriter, catchWriter, continueWriter, expressionWriter, mappingWriter, newContractWriter) {
+    function ContentWriter(assertWriter, assignmentWriter, ifWriter, forWriter, eventCallWriter, variableWriter, methodCallWriter, requireWriter, revertWriter, breakWriter, whileWriter, doWhileWriter, returnWriter, tryWriter, catchWriter, continueWriter, expressionWriter, newContractWriter) {
         this.assertWriter = assertWriter;
         this.assignmentWriter = assignmentWriter;
         this.ifWriter = ifWriter;
@@ -32,7 +32,6 @@ var ContentWriter = /** @class */ (function () {
         this.catchWriter = catchWriter;
         this.continueWriter = continueWriter;
         this.expressionWriter = expressionWriter;
-        this.mappingWriter = mappingWriter;
         this.newContractWriter = newContractWriter;
         this.statements = {
             assert: this.assertWriter,
@@ -52,7 +51,6 @@ var ContentWriter = /** @class */ (function () {
             catch: this.catchWriter,
             continue: this.continueWriter,
             expression: this.expressionWriter,
-            mapping: this.mappingWriter,
             newContract: this.newContractWriter,
         };
         // All statement control that doesn't need the ; in the end
@@ -101,9 +99,8 @@ var ContentWriter = /** @class */ (function () {
         __param(14, (0, tsyringe_1.inject)("CatchWriter")),
         __param(15, (0, tsyringe_1.inject)("ContinueWriter")),
         __param(16, (0, tsyringe_1.inject)("ExpressionWriter")),
-        __param(17, (0, tsyringe_1.inject)("MappingWriter")),
-        __param(18, (0, tsyringe_1.inject)("NewContractWriter")),
-        __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object])
+        __param(17, (0, tsyringe_1.inject)("NewContractWriter")),
+        __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object])
     ], ContentWriter);
     return ContentWriter;
 }());
