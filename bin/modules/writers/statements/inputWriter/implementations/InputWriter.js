@@ -12,8 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var InputWriter = /** @class */ (function () {
     function InputWriter() {
     }
-    InputWriter.prototype.write = function (inputs, typeon) {
+    InputWriter.prototype.write = function (inputs, typeon, handleDataLocation) {
         if (typeon === void 0) { typeon = true; }
+        if (handleDataLocation === void 0) { handleDataLocation = true; }
         var text = "";
         var _inputs = __spreadArray([], inputs, true);
         var memoryList = ["string", "bytes"];
@@ -25,7 +26,7 @@ var InputWriter = /** @class */ (function () {
         var firstinput = _inputs[0];
         if (typeon) {
             text += "".concat(firstinput.type, " ");
-            if (memoryList.includes(firstinput.type)) {
+            if (handleDataLocation && memoryList.includes(firstinput.type)) {
                 text += "memory ";
             }
         }
@@ -37,7 +38,7 @@ var InputWriter = /** @class */ (function () {
             text += ", ";
             if (typeon) {
                 text += "".concat(input.type, " ");
-                if (memoryList.includes(input.type)) {
+                if (handleDataLocation && memoryList.includes(input.type)) {
                     text += "memory ";
                 }
             }

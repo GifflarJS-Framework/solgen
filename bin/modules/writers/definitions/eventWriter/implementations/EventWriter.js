@@ -21,7 +21,7 @@ var EventWriter = /** @class */ (function () {
         var _this = this;
         var text = "";
         events.map(function (event) {
-            text += "event ".concat(event.name, "(").concat(_this.inputWriter.write(event.inputs), ");\n");
+            text += "event ".concat(event.name, "(").concat(_this.inputWriter.write(event.inputs, true, false), ");\n");
             return text;
         });
         if (text) {
