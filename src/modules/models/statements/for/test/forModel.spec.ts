@@ -16,9 +16,7 @@ describe("Test For Model", () => {
         },
       },
       condition: "i < 100",
-      expressionValue: {
-        customExpression: "i++",
-      },
+      expression: "i++",
       content: [],
     };
 
@@ -32,9 +30,7 @@ describe("Test For Model", () => {
         },
       },
       condition: "i < 100",
-      expressionValue: {
-        customExpression: "i++",
-      },
+      expression: "i++",
     });
 
     expect(JSON.stringify(result)).toEqual(JSON.stringify(expected));
@@ -44,17 +40,13 @@ describe("Test For Model", () => {
     const expected = {
       statement: "for",
       condition: "i < 100",
-      expressionValue: {
-        customExpression: "i++",
-      },
+      expression: "i++",
       content: [],
     };
 
     const result = forModel.execute({
       condition: "i < 100",
-      expressionValue: {
-        customExpression: "i++",
-      },
+      expression: "i++",
     });
 
     expect(JSON.stringify(result)).toEqual(JSON.stringify(expected));
@@ -71,9 +63,7 @@ describe("Test For Model", () => {
           customExpression: "0",
         },
       },
-      expressionValue: {
-        customExpression: "i++",
-      },
+      expression: "i++",
       content: [],
     };
 
@@ -86,9 +76,7 @@ describe("Test For Model", () => {
           customExpression: "0",
         },
       },
-      expressionValue: {
-        customExpression: "i++",
-      },
+      expression: "i++",
     });
 
     expect(JSON.stringify(result)).toEqual(JSON.stringify(expected));

@@ -73,12 +73,11 @@ class ContractModel implements IContractModel {
     };
 
     const createConstructor = (
-      scope: string,
       inputs: Array<ITypeNameInput> = []
     ): IFunction => {
       const _function = this.functionModel.execute({
         name: "",
-        scope,
+        scope: "public",
         isConstructor: true,
         inputs: helpers.castITypeNameInputsToInputs(inputs),
         stateVars: contract.variables,
