@@ -28,6 +28,7 @@ import { IWhileModel } from "@models/statements/while/types/IWhileModel";
 import { IWhile } from "@models/statements/while/types/IWhile";
 import { ITypeNameInput } from "@modules/types/ITypeNameInput";
 import { IExpressionValue } from "@modules/models/statements/expression/types/IExpressionValue";
+import { IVariableDataLocation } from "@modules/types/IVariableDataLocation";
 
 interface IIfContent extends IIf, IContent {}
 interface IDoWhileContent extends IDoWhile, IContent {}
@@ -127,12 +128,16 @@ class ContentModel {
     const setVariable = (
       type: ITypeName,
       name: string,
-      expression?: IExpressionValue
+      options?: {
+        expressionValue?: IExpressionValue;
+        dataLocation?: IVariableDataLocation;
+      }
     ): IContent => {
       const newVariable = this.variableModel.execute({
         type: helpers.writeTypeName(type),
         name,
-        expressionValue: expression,
+        expressionValue: options?.expressionValue,
+        dataLocation: options?.dataLocation,
       });
       contentVars.push(newVariable);
       stack[top].content.push(newVariable);

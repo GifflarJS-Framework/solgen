@@ -30,7 +30,9 @@ describe("LibraryWriter", () => {
       .createFunction("setOwner", "public")
       .setInput({ regularType: "address" }, "newOwner")
       .setVariable({ regularType: "address" }, "oldOwner", {
-        customExpression: "owner",
+        expressionValue: {
+          customExpression: "owner",
+        },
       })
       .setAssignment("owner", { customExpression: "newOwner" })
       .setEventCall("transferedOwnership", ["oldOwner", "owner"]);
