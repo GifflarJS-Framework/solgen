@@ -137,7 +137,7 @@ export interface IContractBody {
      * @example
      * ```ts
      * gContract.createVariable(
-     *   "address",
+     *   { regularType: "address" },
      *   "owner",
      *   "public",
      *   "0x0000000000000000000000000000000000000000",
@@ -145,7 +145,7 @@ export interface IContractBody {
      * );
      *
      * gContract.createVariable(
-     *   "address",
+     *   { regularType: "address" },
      *   "manager",
      *   "public",
      * );
