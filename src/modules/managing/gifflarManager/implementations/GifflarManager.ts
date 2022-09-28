@@ -189,7 +189,7 @@ class GifflarManager implements IGifflarManager {
     return this.json;
   }
 
-  compile(componentName: string, callback: (errors: Array<any>) => void): any {
+  compile(componentName: string, callback?: (errors: any[]) => void): any {
     // Filtering the component by component name
     const component = this.topLevelModels.filter((gTopLevel) => {
       return gTopLevel.getName() === componentName;
@@ -202,11 +202,8 @@ class GifflarManager implements IGifflarManager {
       typeof component.compile === "function"
     ) {
       // Compiling component
-      const json = component.compile((errors) => {
-        callback(errors);
-      });
-      if (json.errors && callback) {
-        callback(json.errors);
+      const json = component.compile(callback);
+      if (!json.contracts) {
         return {};
       }
 
@@ -228,7 +225,6 @@ class GifflarManager implements IGifflarManager {
       return json;
     }
 
-    callback([]);
     throw new Error("Unable to compile contract");
   }
 

@@ -11,7 +11,7 @@ export interface ITopLevel {
   code?: string;
   instance?: Contract;
   getName(): string;
-  compile(callback: (errors: any) => void): any;
+  compile(callback?: (errors: any[]) => void): any;
   write(): string;
   deployed?(): Contract | undefined;
 }

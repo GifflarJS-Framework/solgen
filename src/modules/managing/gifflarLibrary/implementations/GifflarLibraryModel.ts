@@ -60,19 +60,15 @@ class GifflarLibraryModel implements IGifflarLibraryModel {
         return gLibrary.code;
       },
 
-      compile: (callback: (errors: any) => void): any => {
-        let errors;
+      compile: (callback?: (errors: any[]) => void): any => {
         if (gLibrary.code) {
           gLibrary.json = this.compiler.compile(gLibrary.code);
         }
-        if (callback) {
-          if (gLibrary.json.errors) {
-            errors = gLibrary.json.errors;
-          }
-
-          callback(errors);
+        if (gLibrary.json.errors) {
+          if (callback) callback(gLibrary.json.errors);
           return {};
         }
+
         return gLibrary.json;
       },
 
