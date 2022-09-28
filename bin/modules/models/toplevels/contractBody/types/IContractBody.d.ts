@@ -42,9 +42,9 @@ export interface IContractBody {
      * @example
      * ```ts
      * gContract.createEvent("Transfer", [
-     *   { type: "address", name: "from" },
-     *   { type: "address", name: "to" },
-     *   { type: "uint256", name: "amount" },
+     *   { type: { regularType: "address" }, name: "from" },
+     *   { type: { regularType: "address" }, name: "to" },
+     *   { type: { regularType: "uint256" }, name: "amount" },
      * ]);
      * ```
      * // Example in solidiy
