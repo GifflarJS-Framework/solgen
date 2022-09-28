@@ -71,6 +71,7 @@ class GifflarLibraryModel implements IGifflarLibraryModel {
           }
 
           callback(errors);
+          return {};
         }
         return gLibrary.json;
       },
