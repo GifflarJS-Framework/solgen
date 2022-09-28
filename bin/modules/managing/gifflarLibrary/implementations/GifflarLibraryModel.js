@@ -66,6 +66,7 @@ var GifflarLibraryModel = /** @class */ (function () {
                         errors = gLibrary.json.errors;
                     }
                     callback(errors);
+                    return {};
                 }
                 return gLibrary.json;
             }, written: function () {

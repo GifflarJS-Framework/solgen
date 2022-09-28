@@ -103,6 +103,7 @@ var GifflarContractModel = /** @class */ (function () {
                         errors = gContract.json.errors;
                     }
                     callback(errors);
+                    return {};
                 }
                 // Inserting contract name in compiled json
                 gContract.json.contracts.jsons[gContract.getName()] = __assign({ contractName: gContract.getName() }, gContract.json.contracts.jsons[gContract.getName()]);

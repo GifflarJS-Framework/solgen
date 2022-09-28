@@ -205,6 +205,7 @@ var GifflarManager = /** @class */ (function () {
             });
             if (json.errors && callback) {
                 callback(json.errors);
+                return {};
             }
             // Inserting contract name in compiled json
             component.json.contracts.jsons[component.getName()] = __assign({ contractName: component.getName() }, component.json.contracts.jsons[component.getName()]);

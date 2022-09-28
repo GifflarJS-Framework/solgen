@@ -66,6 +66,7 @@ var GifflarInterfaceModel = /** @class */ (function () {
                         errors = gInterface.json.errors;
                     }
                     callback(errors);
+                    return {};
                 }
                 return gInterface.json;
             }, written: function () {
