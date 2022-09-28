@@ -63,12 +63,12 @@ describe("State Variable Writer", () => {
         name: "name",
         type: "string",
         scope: "public",
-        stateMutability: "immutable",
+        stateMutability: "constant",
       },
     ];
 
     const expected =
-      "//VARIABLES\nuint private constant age = 20;\nstring public immutable name;";
+      "//VARIABLES\nuint private constant age = 20;\nstring public constant name;";
 
     const result = variableWriter.write(variables);
 

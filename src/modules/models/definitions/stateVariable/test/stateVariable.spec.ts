@@ -64,23 +64,4 @@ describe("State Variable Model", () => {
       });
     }).toThrow("A constant must have an initial value.");
   });
-
-  it("Creating immutable", () => {
-    const expected: IStateVariable = {
-      type: "uint",
-      name: "age",
-      scope: "private",
-      stateMutability: "immutable",
-    };
-    const model = stateVariableModel.execute({
-      name: "age",
-      type: "uint",
-      scope: "private",
-      stateMutability: "immutable",
-    });
-
-    const result = JSON.stringify(model);
-
-    expect(result).toEqual(JSON.stringify(expected));
-  });
 });
