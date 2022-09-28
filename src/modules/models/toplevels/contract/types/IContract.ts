@@ -17,9 +17,19 @@ export interface IContract extends IContractJson, IContractBody {
   /**
    * Defines a contract inheritance.
    * @param identifier The parent's name
-   * @param args Any argument that might be needed
+   * @param args Any argument that might be needed (optional)
    * @example
+   * ```ts
    * gContract.setInheritance("Ownable", ["0x0000000000000000000000000000000000000000"])
+   * ```
+   *
+   * // Example in solidity
+   *
+   * ```solidity
+   * contract MyContract is Ownable("0x0000000000000000000000000000000000000000"){
+   *   // [...]
+   * }
+   * ```
    */
   setInheritance(identifier: string, args?: Array<string>): IInherits;
 
@@ -27,9 +37,10 @@ export interface IContract extends IContractJson, IContractBody {
    * Defines a contract constructor function.
    * @param inputs The constructor inputs
    * @example
+   * ```ts
    * gContract.createConstructor([{ type: { regularType: "address" }, name: "_owner" }])
    *   // setting function content
-   *   .setRequire("owner != address(0)", "Invalid address")
+   *   .setRequire("_owner != address(0)", "Invalid address")
    *   .setAssignment("owner", { customExpression: "_owner" });
    *   //[...]
    *
@@ -38,6 +49,17 @@ export interface IContract extends IContractJson, IContractBody {
    * gContract.createConstructor()
    *   .setInput({ type: { regularType: "address" }, name: "_owner" });
    *   //[...]
+   * ```
+   *
+   * // Example in solidity
+   * ```solidity
+   * constructor(address _owner){
+   *   require(_owner != address(0), "Invalid address");
+   *   owner = _owner;
+   * }
+   * ```
+   *
+   * OBS: For 'string' inputs, the 'memory' keywork will automatically be set.
    */
   createConstructor(inputs?: Array<ITypeNameInput>): IFunction;
 
@@ -45,18 +67,42 @@ export interface IContract extends IContractJson, IContractBody {
    * Defines a contract fallback function.
    * @param isPayable If the function state mutability is payable or not. Default is 'false'.
    * @example
+   * ```ts
    * gContract.createFallback(true)
    *   .setRequire("msg.value > 10000", "Invalid value");
    *   //[...]
+   * ```
+   *
+   * // Example in solidity
+   *
+   * ```solidity
+   * function () external payable{
+   *   require(msg.value > 10000, "Invalid value");
+   * }
+   * ```
+   *
+   * OBS: The 'external' is automatically set.
    */
   createFallback(isPayable?: boolean): IFallback;
 
   /**
    * Defines a contract receive function.
    * @example
+   * ```ts
    * gContract.createReceive()
    *   .setRequire("msg.sender != owner", "Sender must not be the owner");
    *   //[...]
+   * ```
+   *
+   * // Example in solidity
+   *
+   * ```solidity
+   * receive() external payable{
+   *   require(msg.sender != owner, "Sender must not be the owner");
+   * }
+   * ```
+   *
+   * OBS: The 'external' and 'payable' are automatically set.
    */
   createReceive(): IReceive;
 
