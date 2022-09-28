@@ -71,6 +71,7 @@ class GifflarInterfaceModel implements IGifflarInterfaceModel {
           }
 
           callback(errors);
+          return {};
         }
         return gInterface.json;
       },

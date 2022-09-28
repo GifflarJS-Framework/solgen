@@ -207,6 +207,7 @@ class GifflarManager implements IGifflarManager {
       });
       if (json.errors && callback) {
         callback(json.errors);
+        return {};
       }
 
       // Inserting contract name in compiled json

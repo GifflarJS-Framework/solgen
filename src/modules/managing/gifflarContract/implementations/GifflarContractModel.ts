@@ -80,6 +80,7 @@ class GifflarContractModel implements IGifflarContractModel {
           }
 
           callback(errors);
+          return {};
         }
 
         // Inserting contract name in compiled json
