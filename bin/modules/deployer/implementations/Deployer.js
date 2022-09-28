@@ -118,7 +118,7 @@ var Deployer = /** @class */ (function () {
                         return [2 /*return*/, contract];
                     case 3:
                         e_1 = _c.sent();
-                        throw new Error(e_1);
+                        throw new Error("Error: ".concat(e_1.message, ". Please, verify if the arguments and node link are correct."));
                     case 4: return [2 /*return*/];
                 }
             });
