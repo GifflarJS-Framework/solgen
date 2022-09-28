@@ -6,7 +6,7 @@ export interface IGifflarInterface extends IInterface {
     getName(): string;
     setImport(identifierPath: string, alias?: string): IImport;
     write(contracts?: Array<IInterfaceJson>): string;
-    compile(callback: (errors: any) => void): any;
+    compile(callback?: (errors: any[]) => void): any;
     written(): string | undefined;
     compiled(): any | undefined;
 }

@@ -6,7 +6,7 @@ export interface IGifflarLibrary extends ILibrary {
     getName(): string;
     setImport(identifierPath: string, alias?: string): IImport;
     write(contracts?: Array<ILibraryJson>): string;
-    compile(callback: (errors: any) => void): any;
+    compile(callback?: (errors: any[]) => void): any;
     written(): string | undefined;
     compiled(): any | undefined;
 }

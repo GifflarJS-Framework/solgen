@@ -57,15 +57,12 @@ var GifflarLibraryModel = /** @class */ (function () {
                 });
                 return gLibrary.code;
             }, compile: function (callback) {
-                var errors;
                 if (gLibrary.code) {
                     gLibrary.json = _this.compiler.compile(gLibrary.code);
                 }
-                if (callback) {
-                    if (gLibrary.json.errors) {
-                        errors = gLibrary.json.errors;
-                    }
-                    callback(errors);
+                if (gLibrary.json.errors) {
+                    if (callback)
+                        callback(gLibrary.json.errors);
                     return {};
                 }
                 return gLibrary.json;

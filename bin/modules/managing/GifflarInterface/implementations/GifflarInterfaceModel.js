@@ -57,15 +57,12 @@ var GifflarInterfaceModel = /** @class */ (function () {
                 });
                 return gInterface.code;
             }, compile: function (callback) {
-                var errors;
                 if (gInterface.code) {
                     gInterface.json = _this.compiler.compile(gInterface.code);
                 }
-                if (callback) {
-                    if (gInterface.json.errors) {
-                        errors = gInterface.json.errors;
-                    }
-                    callback(errors);
+                if (gInterface.json.errors) {
+                    if (callback)
+                        callback(gInterface.json.errors);
                     return {};
                 }
                 return gInterface.json;

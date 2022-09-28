@@ -200,11 +200,8 @@ var GifflarManager = /** @class */ (function () {
             component.compile &&
             typeof component.compile === "function") {
             // Compiling component
-            var json = component.compile(function (errors) {
-                callback(errors);
-            });
-            if (json.errors && callback) {
-                callback(json.errors);
+            var json = component.compile(callback);
+            if (!json.contracts) {
                 return {};
             }
             // Inserting contract name in compiled json
@@ -219,7 +216,6 @@ var GifflarManager = /** @class */ (function () {
             }
             return json;
         }
-        callback([]);
         throw new Error("Unable to compile contract");
     };
     GifflarManager.prototype.compiled = function (componentName) {

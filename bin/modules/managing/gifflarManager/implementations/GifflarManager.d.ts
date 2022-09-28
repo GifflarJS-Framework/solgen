@@ -46,7 +46,7 @@ declare class GifflarManager implements IGifflarManager {
     write(topLevelModels: Array<ITopLevel>): string;
     written(componentName?: string): string | undefined;
     compileAll(callback: (errors: Array<any>) => void): any;
-    compile(componentName: string, callback: (errors: Array<any>) => void): any;
+    compile(componentName: string, callback?: (errors: any[]) => void): any;
     compiled(componentName?: string): any | undefined;
     deploy(contractName: string, inputs: IManagerDeployDTO, options?: {
         force?: boolean;

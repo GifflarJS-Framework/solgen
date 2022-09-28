@@ -46,10 +46,10 @@ export interface IGifflarContract extends IContract {
      * @returns The compiled json generated.
      * @example
      * gContract.compile((errors) => {
-     *   if (error) console.log(erorrs);
+     *   if (errors) errors.map((e) => console.log(e));
      * });
      */
-    compile(callback: (errors: any) => void): any;
+    compile(callback?: (errors: any[]) => void): any;
     /**
      * Deploys the Gifflar contract to blockchain network.
      * @param inputs The arguments for deployment

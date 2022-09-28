@@ -94,15 +94,12 @@ var GifflarContractModel = /** @class */ (function () {
                 });
                 return gContract.code;
             }, compile: function (callback) {
-                var errors;
                 if (gContract.code) {
                     gContract.json = _this.compiler.compile(gContract.code);
                 }
-                if (callback) {
-                    if (gContract.json.errors) {
-                        errors = gContract.json.errors;
-                    }
-                    callback(errors);
+                if (gContract.json.errors) {
+                    if (callback)
+                        callback(gContract.json.errors);
                     return {};
                 }
                 // Inserting contract name in compiled json
