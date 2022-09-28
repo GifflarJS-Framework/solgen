@@ -29,7 +29,7 @@ export interface IContractBody {
      * gContract.createUsing("SafeMath", { regularType: "uint" });
      * ```
      *
-     * // Generate in solidity
+     * // Example in solidiy
      * ```solidity
      * using SafeMath for uint;
      * ```
@@ -40,11 +40,17 @@ export interface IContractBody {
      * @param name Event name
      * @param inputs Inputs of this event
      * @example
+     * ```ts
      * gContract.createEvent("Transfer", [
      *   { type: "address", name: "from" },
      *   { type: "address", name: "to" },
      *   { type: "uint256", name: "amount" },
      * ]);
+     * ```
+     * // Example in solidiy
+     * ```solidity
+     * event Transfer(address from, address to, uint256 amount);
+     * ```
      */
     createEvent(name: string, inputs: Array<ITypeNameInput>): IEvent;
     /**
@@ -61,7 +67,18 @@ export interface IContractBody {
      *     isOverriding: true, // If this modifier is overriding an inherited one
      *     isVirtual: false // If is virtual
      *   }
-     * );
+     * )
+     *  // setting modifier content
+     *  .setRequire("owner != address(0)", "Forbidden");
+     *  // .[...]
+     * ```
+     *
+     * // Example in solidiy
+     * ```solidity
+     * modifier onlyOwner(address from) override {
+     *   require(from == owner, "Forbidden");
+     *   _;
+     * }
      * ```
      */
     createModifier(name: string, args: Array<ITypeNameInput>, options?: {
@@ -76,7 +93,15 @@ export interface IContractBody {
      * @param identifier The enum identifier
      * @param identifiersOptions The enum options
      * @example
+     * ```ts
      * gContract.createEnum("Status", ["ON", "OFF"]);
+     * ```
+     *
+     * // Example in solidity
+     *
+     * ```solidity
+     * enum Status{ ON, OFF }
+     * ```
      */
     createEnum(identifier: string, identifiersOptions: string[]): IEnum;
     /**
@@ -86,12 +111,20 @@ export interface IContractBody {
      * @param name Mapping name
      * @param scope Mapping scope (public, private...)
      * @example
+     * ```ts
      * gContract.createMapping(
      *   { regularType: "address" },
      *   { regularType: "uint256" },
      *   "balances",
      *   "public"
      * );
+     * ```
+     *
+     * // Example in solidity
+     *
+     * ```solidity
+     * mapping(address => uint256) public balances;
+     * ```
      */
     createMapping(type: IMappingKeyType, typeName: IMappingTypeName, name: string, scope?: IVisibility): IStateMapping;
     /**
@@ -99,17 +132,33 @@ export interface IContractBody {
      * @param type Variable type
      * @param name Variable name
      * @param scope Variable scope
-     * @param value Variable expression value to assign
+     * @param expressionValue Variable expression value to assign (optional)
+     * @param stateMutability Variable state mutability type (optional)
      * @example
+     * ```ts
      * gContract.createVariable(
      *   "address",
      *   "owner",
      *   "public",
      *   "0x0000000000000000000000000000000000000000",
-     *   "immutable"
+     *   "constant"
      * );
+     *
+     * gContract.createVariable(
+     *   "address",
+     *   "manager",
+     *   "public",
+     * );
+     * ```
+     *
+     * // Example in solidity
+     *
+     * ```solidity
+     * address public constant owner = "0x0000000000000000000000000000000000000000";
+     * address public manager;
+     * ```
      */
-    createVariable(type: ITypeName, name: string, scope: IVisibility, expression?: IExpressionValue, stateMutability?: IVariableStateMutabilityType): IStateVariable;
+    createVariable(type: ITypeName, name: string, scope: IVisibility, expressionValue?: IExpressionValue, stateMutability?: IVariableStateMutabilityType): IStateVariable;
     /**
      * Defines a contract function.
      * @param name Function name
@@ -118,6 +167,7 @@ export interface IContractBody {
      * @param outputs Function outputs
      * @param stateMutability Function stateMutability (view, pure, payable...)
      * @example
+     * ```ts
      * gContract
      *   .createFunction(
      *     "setOwner",
@@ -135,6 +185,17 @@ export interface IContractBody {
      * gContract.createFunction("setOwner", "public")
      *   .setInput({ type: { regularType: "address" }, name: "_owner" });
      *   //[...]
+     * ```
+     *
+     * // Example in solidity
+     *
+     * ```solidity
+     * function setOwner(address _owner) public{
+     *   require(owner != address(0), "Invalid address");
+     *   owner = _owner;
+     * }
+     * ```
+     *
      */
     createFunction(name: string, scope: IVisibility, inputs?: Array<ITypeNameInput>, outputs?: Array<ITypeNameOutput>, stateMutability?: IFunctionStateMutabilityType): IFunction;
     /**
@@ -150,7 +211,7 @@ export interface IContractBody {
      * ]);
      * ```
      *
-     * // This represents in solidity:
+     * // Example in solidity:
      *
      * ```solidity
      * struct Person {

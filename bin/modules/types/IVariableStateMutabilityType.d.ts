@@ -1,1 +1,1 @@
-export declare type IVariableStateMutabilityType = "constant" | "immutable";
+export declare type IVariableStateMutabilityType = "constant";
