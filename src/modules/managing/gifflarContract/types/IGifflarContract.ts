@@ -61,7 +61,7 @@ export interface IGifflarContract extends IContract {
    * @param inputs The arguments for deployment
    * @param options Opitional options to change function behaviour.
    * @example
-   * gContract.deploy(
+   * await gContract.deploy(
    *  {
    *    args: [], // Arguments for contracts constructor
    *    from: "0x123...", // Account that will execute the deploy, if not set before (optional)
@@ -71,7 +71,7 @@ export interface IGifflarContract extends IContract {
    *    accountPrivateKey: "0x321...", // Account private key, if not set before (optional)
    *  },
    *  {
-   *    force: true // To force deployment even if the contract was already deployed.
+   *    force: true // To force deployment even if the contract was already deployed. (optional)
    *  }
    *);
    */
