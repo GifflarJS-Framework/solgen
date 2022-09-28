@@ -2,7 +2,7 @@ import { IInput } from "@modules/types/IInput";
 import { IInputWriter } from "../types/IInputWriter";
 
 class InputWriter implements IInputWriter {
-  write(inputs: Array<IInput>, typeon = true) {
+  write(inputs: Array<IInput>, typeon = true, handleDataLocation = true) {
     let text = "";
     const _inputs = [...inputs];
     const memoryList = ["string", "bytes"];
@@ -16,7 +16,7 @@ class InputWriter implements IInputWriter {
     const firstinput = _inputs[0];
     if (typeon) {
       text += `${firstinput.type} `;
-      if (memoryList.includes(firstinput.type)) {
+      if (handleDataLocation && memoryList.includes(firstinput.type)) {
         text += "memory ";
       }
     }
@@ -30,7 +30,7 @@ class InputWriter implements IInputWriter {
       text += ", ";
       if (typeon) {
         text += `${input.type} `;
-        if (memoryList.includes(input.type)) {
+        if (handleDataLocation && memoryList.includes(input.type)) {
           text += "memory ";
         }
       }

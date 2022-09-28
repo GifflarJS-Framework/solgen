@@ -14,7 +14,11 @@ class EventWriter implements IEventWriter {
     let text = "";
 
     events.map((event) => {
-      text += `event ${event.name}(${this.inputWriter.write(event.inputs)});\n`;
+      text += `event ${event.name}(${this.inputWriter.write(
+        event.inputs,
+        true,
+        false
+      )});\n`;
       return text;
     });
 
