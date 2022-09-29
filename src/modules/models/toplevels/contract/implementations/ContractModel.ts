@@ -14,6 +14,7 @@ import { IReceiveModel } from "@models/definitions/receive/types/IReceiveModel";
 import { IReceive } from "@models/definitions/receive/types/IReceive";
 import { ITypeNameInput } from "@modules/types/ITypeNameInput";
 import helpers from "@utils/helpers";
+import { IModifierInvocation } from "@modules/models/definitions/function/types/IModifierInvocation";
 
 @injectable()
 class ContractModel implements IContractModel {
@@ -55,9 +56,17 @@ class ContractModel implements IContractModel {
       return inherits;
     };
 
-    const createFallback = (isPayable?: boolean): IFallback => {
+    const createFallback = (options: {
+      isPayable?: boolean;
+      modifiers?: IModifierInvocation[];
+      overrides?: boolean;
+      virtual?: boolean;
+    }): IFallback => {
       const fallback = this.fallbackModel.execute({
-        isPayable,
+        isPayable: options.isPayable,
+        modifiers: options.modifiers,
+        overrides: options.overrides,
+        virtual: options.virtual,
         stateVars: contract.variables || [],
       });
       contract.fallback = fallback;

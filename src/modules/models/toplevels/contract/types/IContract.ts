@@ -5,6 +5,7 @@ import { IContractJson } from "./IContractJson";
 import { IFallback } from "@models/definitions/fallback/types/IFallback";
 import { IReceive } from "@models/definitions/receive/types/IReceive";
 import { ITypeNameInput } from "@modules/types/ITypeNameInput";
+import { IModifierInvocation } from "@modules/models/definitions/function/types/IModifierInvocation";
 
 export interface IContract extends IContractJson, IContractBody {
   /**
@@ -65,7 +66,10 @@ export interface IContract extends IContractJson, IContractBody {
 
   /**
    * Defines a contract fallback function.
-   * @param isPayable If the function state mutability is payable or not. Default is 'false'.
+   * @param options.isPayable If the function state mutability is payable or not. Default is 'false'.(optional)
+   * @param options.modifiers The fallback modifiers. (optional)
+   * @param options.overrides If the fallback overrides another implementation. (optional)
+   * @param options.virtual If the fallback can be overridden by other implementations. (optional)
    * @example
    * ```ts
    * gContract.createFallback(true)
@@ -83,7 +87,12 @@ export interface IContract extends IContractJson, IContractBody {
    *
    * OBS: The 'external' is automatically set.
    */
-  createFallback(isPayable?: boolean): IFallback;
+  createFallback(options: {
+    isPayable?: boolean;
+    modifiers?: IModifierInvocation[];
+    overrides?: boolean;
+    virtual?: boolean;
+  }): IFallback;
 
   /**
    * Defines a contract receive function.
