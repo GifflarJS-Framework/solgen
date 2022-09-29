@@ -35,8 +35,11 @@ export interface IContract extends IContractJson, IContractBody {
   setInheritance(identifier: string, args?: Array<string>): IInherits;
 
   /**
-   * Defines a contract constructor function.
-   * @param inputs The constructor inputs
+   * Defines a contract 'constructor' function.
+   * @param inputs The 'constructor' inputs
+   * @param options.modifiers The 'constructor' modifiers. (optional)
+   * @param options.overrides If the 'constructor' overrides another implementation. (optional)
+   * @param options.virtual If the 'constructor' can be overridden by other implementations. (optional)
    * @example
    * ```ts
    * gContract.createConstructor([{ type: { regularType: "address" }, name: "_owner" }])
@@ -60,9 +63,16 @@ export interface IContract extends IContractJson, IContractBody {
    * }
    * ```
    *
-   * OBS: For 'string' inputs, the 'memory' keywork will automatically be set.
+   * OBS: For 'string' and 'bytes' inputs, the 'memory' keywork will automatically be set.
    */
-  createConstructor(inputs?: Array<ITypeNameInput>): IFunction;
+  createConstructor(
+    inputs?: Array<ITypeNameInput>,
+    options?: {
+      overrides?: boolean;
+      virtual?: boolean;
+      modifiers?: IModifierInvocation[];
+    }
+  ): IFunction;
 
   /**
    * Defines a contract 'fallback' function.

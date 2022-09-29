@@ -232,7 +232,7 @@ export interface IContractBody {
    * }
    * ```
    *
-   * OBS: For 'string' inputs, the 'memory' keywork will automatically be set.
+   * OBS: For 'string' and 'bytes' inputs, the 'memory' keywork will automatically be set.
    */
   createFunction(
     name: string,
