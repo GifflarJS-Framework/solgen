@@ -11,7 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+var helpers_1 = __importDefault(require("../../../../../utils/helpers"));
 var tsyringe_1 = require("tsyringe");
 var FunctionWriter = /** @class */ (function () {
     function FunctionWriter(contentWriter, inputWriter, outputWriter) {
@@ -48,19 +52,31 @@ var FunctionWriter = /** @class */ (function () {
             if (f.stateMutability) {
                 stateMutability = " ".concat(f.stateMutability);
             }
+            // Override text
+            var txt_override = "";
+            if (f.overrides)
+                txt_override = " override";
+            // Virtual text
+            var txt_virtual = "";
+            if (f.virtual)
+                txt_virtual = " virtual";
             // Closing inputs and setting scope
-            text += ")".concat(scope).concat(stateMutability);
+            text += ")".concat(scope).concat(stateMutability).concat(txt_override).concat(txt_virtual);
             if (!options || !options.onlyPrototype) {
                 // Organizing all modifiers
-                var modifiers_1 = "";
+                var txt_modifiers_1 = "";
                 if (f.modifiers) {
                     f.modifiers.map(function (modifier) {
-                        modifiers_1 += " ".concat(modifier);
+                        txt_modifiers_1 += " ".concat(modifier.name);
+                        if (modifier.args.length) {
+                            // Modifier args
+                            txt_modifiers_1 += "(".concat(helpers_1.default.getCommaExpression(modifier.args), ")");
+                        }
                         return modifier;
                     });
                 }
                 // Setting modifiers to main text
-                text += "".concat(modifiers_1);
+                text += "".concat(txt_modifiers_1);
             }
             // Setting the returns text
             if (text_returns) {

@@ -52,4 +52,24 @@ export interface IFunction extends IFunctionJson, IContent {
      * ```
      */
     setOutput: (type: ITypeName, name?: string) => IFunction;
+    /**
+     * sets a new modifier to the function.
+     * @param name The modifier name.
+     * @param args The modifier parameters. (optional)
+     * @example
+     * ```ts
+     * gFunction
+     *   .setModifiers("onlyOwner")
+     *   .setModifiers("expired", ["timestamp"])
+     * ```
+     *
+     * // Example in solidity
+     *
+     * ```solidity
+     * function myFunction(uint256 timestamp) public onlyOwner expired(timestamp) {
+     *   //[...]
+     * }
+     * ```
+     */
+    setModifier(name: string, args: string[]): IFunction;
 }

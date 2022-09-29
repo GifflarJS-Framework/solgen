@@ -69,27 +69,29 @@ var ContentModel = /** @class */ (function () {
             var contentItem = _assignFunctions(stack[top]);
             return contentItem;
         };
-        var setTry = function (parameters, expression) {
+        var beginTry = function (expression, parameters) {
             // Casting ITypeNameInput to IInput
             var _parameters = helpers_1.default.castITypeNameInputsToInputs(parameters);
-            var _catch = _this.tryModel.execute({
+            var _try = _this.tryModel.execute({
                 parameters: _parameters,
                 expression: expression,
             });
-            stack[top].content.push(_catch);
-            var contentItem = _assignFunctions(stack[top]);
-            return contentItem;
+            var newTryContent = _assignFunctions(_try);
+            stack.push(newTryContent);
+            top += 1;
+            return newTryContent;
         };
-        var setCatch = function (parameters, identifier) {
+        var beginCatch = function (parameters, identifier) {
             // Casting ITypeNameInput to IInput
             var _parameters = helpers_1.default.castITypeNameInputsToInputs(parameters);
             var _catch = _this.catchModel.execute({
-                identifier: identifier,
                 parameters: _parameters,
+                identifier: identifier,
             });
-            stack[top].content.push(_catch);
-            var contentItem = _assignFunctions(stack[top]);
-            return contentItem;
+            var newCatchContent = _assignFunctions(_catch);
+            stack.push(newCatchContent);
+            top += 1;
+            return newCatchContent;
         };
         var setVariable = function (type, name, options) {
             var newVariable = _this.variableModel.execute({
@@ -208,7 +210,7 @@ var ContentModel = /** @class */ (function () {
         var beginElse = function () {
             return _beginIf("", true);
         };
-        var _endDecisionStructure = function () {
+        var _endContentStructure = function () {
             if (stack.length > 1) {
                 var json_1 = stack.pop();
                 top -= 1;
@@ -219,9 +221,9 @@ var ContentModel = /** @class */ (function () {
             var contentItem = _assignFunctions(stack[top]);
             return contentItem;
         };
-        var _c = Array(6).fill(_endDecisionStructure), endIf = _c[0], endElse = _c[1], endElseIf = _c[2], endDoWhile = _c[3], endWhile = _c[4], endFor = _c[5];
+        var _c = Array(6).fill(_endContentStructure), endTry = _c[0], endCatch = _c[1], endIf = _c[2], endElse = _c[3], endElseIf = _c[4], endDoWhile = _c[5], endWhile = _c[6], endFor = _c[7];
         var _assignFunctions = function (obj) {
-            var _obj = __assign(__assign({}, obj), { beginIf: beginIf, beginElse: beginElse, beginElseIf: beginElseIf, beginDoWhile: beginDoWhile, beginFor: beginFor, endIf: endIf, endElseIf: endElseIf, endElse: endElse, endDoWhile: endDoWhile, endFor: endFor, endWhile: endWhile, setEventCall: setEventCall, setAssignment: setAssignment, setVariable: setVariable, setMethodCall: setMethodCall, setContinue: setContinue, setReturn: setReturn, setAssert: setAssert, setBreak: setBreak, setCatch: setCatch, setRequire: setRequire, setRevert: setRevert, setTry: setTry, beginWhile: beginWhile });
+            var _obj = __assign(__assign({}, obj), { beginTry: beginTry, beginCatch: beginCatch, beginIf: beginIf, beginElse: beginElse, beginElseIf: beginElseIf, beginDoWhile: beginDoWhile, beginFor: beginFor, endTry: endTry, endCatch: endCatch, endIf: endIf, endElseIf: endElseIf, endElse: endElse, endDoWhile: endDoWhile, endFor: endFor, endWhile: endWhile, setEventCall: setEventCall, setAssignment: setAssignment, setVariable: setVariable, setMethodCall: setMethodCall, setContinue: setContinue, setReturn: setReturn, setAssert: setAssert, setBreak: setBreak, setRequire: setRequire, setRevert: setRevert, beginWhile: beginWhile });
             return _obj;
         };
         var json = _assignFunctions(stack[top]);

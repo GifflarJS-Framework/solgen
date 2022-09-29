@@ -29,9 +29,14 @@ var FallbackModel = /** @class */ (function () {
         this.contentModel = contentModel;
     }
     FallbackModel.prototype.execute = function (_a) {
-        var _b = _a.stateVars, stateVars = _b === void 0 ? [] : _b, _c = _a.isPayable, isPayable = _c === void 0 ? false : _c;
+        var _b = _a.stateVars, stateVars = _b === void 0 ? [] : _b, _c = _a.isPayable, isPayable = _c === void 0 ? false : _c, modifiers = _a.modifiers, overrides = _a.overrides, virtual = _a.virtual;
         var content_json = this.contentModel.execute({ stateVars: stateVars });
-        var fallback = __assign({ isPayable: isPayable }, content_json);
+        var fallback = __assign(__assign({ isPayable: isPayable, modifiers: modifiers, overrides: overrides, virtual: virtual }, content_json), { setModifier: function (name, args) {
+                if (!fallback.modifiers)
+                    fallback.modifiers = [];
+                fallback.modifiers.push({ name: name, args: args || [] });
+                return this;
+            } });
         return fallback;
     };
     FallbackModel = __decorate([

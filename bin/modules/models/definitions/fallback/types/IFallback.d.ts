@@ -1,4 +1,5 @@
 import { IContent } from "../../content/types/IContent";
-export interface IFallback extends IContent {
-    isPayable: boolean;
+import { IFallbackJson } from "./IFallbackJson";
+export interface IFallback extends IFallbackJson, IContent {
+    setModifier(name: string, args?: string[]): IFallback;
 }

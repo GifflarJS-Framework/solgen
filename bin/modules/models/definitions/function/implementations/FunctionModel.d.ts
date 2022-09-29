@@ -5,6 +5,6 @@ import { IFunctionModel } from "../types/IFunctionModel";
 declare class FunctionModel implements IFunctionModel {
     private contentModel;
     constructor(contentModel: IContentModel);
-    execute({ name, scope, isConstructor, stateMutability, inputs, outputs, stateVars, }: ICreateFunctionDTO): IFunction;
+    execute({ name, scope, isConstructor, stateMutability, inputs, outputs, stateVars, modifiers, overrides, virtual, }: ICreateFunctionDTO): IFunction;
 }
 export default FunctionModel;

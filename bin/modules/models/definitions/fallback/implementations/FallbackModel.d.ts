@@ -5,6 +5,6 @@ import { IFallbackModel } from "../types/IFallbackModel";
 declare class FallbackModel implements IFallbackModel {
     private contentModel;
     constructor(contentModel: IContentModel);
-    execute({ stateVars, isPayable, }: ICreateFallbackDTO): IFallback;
+    execute({ stateVars, isPayable, modifiers, overrides, virtual, }: ICreateFallbackDTO): IFallback;
 }
 export default FallbackModel;

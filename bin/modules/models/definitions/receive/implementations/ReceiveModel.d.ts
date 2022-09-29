@@ -5,6 +5,6 @@ import { IReceiveModel } from "../types/IReceiveModel";
 declare class ReceiveModel implements IReceiveModel {
     private contentModel;
     constructor(contentModel: IContentModel);
-    execute({ stateVars }: ICreateReceiveDTO): IReceive;
+    execute({ stateVars, modifiers, overrides, virtual, }: ICreateReceiveDTO): IReceive;
 }
 export default ReceiveModel;

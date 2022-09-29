@@ -33,9 +33,9 @@ var FunctionModel = /** @class */ (function () {
         this.contentModel = contentModel;
     }
     FunctionModel.prototype.execute = function (_a) {
-        var name = _a.name, scope = _a.scope, _b = _a.isConstructor, isConstructor = _b === void 0 ? false : _b, stateMutability = _a.stateMutability, inputs = _a.inputs, outputs = _a.outputs, _c = _a.stateVars, stateVars = _c === void 0 ? [] : _c;
+        var name = _a.name, scope = _a.scope, _b = _a.isConstructor, isConstructor = _b === void 0 ? false : _b, stateMutability = _a.stateMutability, inputs = _a.inputs, outputs = _a.outputs, _c = _a.stateVars, stateVars = _c === void 0 ? [] : _c, _d = _a.modifiers, modifiers = _d === void 0 ? [] : _d, overrides = _a.overrides, virtual = _a.virtual;
         var content_json = this.contentModel.execute({ stateVars: stateVars });
-        var myFunction = __assign(__assign({ name: name, scope: scope, isConstructor: isConstructor || false, stateMutability: stateMutability, inputs: inputs || [], outputs: outputs || [], modifiers: [] }, content_json), { json: function () {
+        var myFunction = __assign(__assign({ name: name, scope: scope, isConstructor: isConstructor || false, stateMutability: stateMutability, inputs: inputs || [], outputs: outputs || [], modifiers: modifiers, overrides: overrides, virtual: virtual }, content_json), { json: function () {
                 var jsonfunction = JSON.stringify(this);
                 return JSON.parse(jsonfunction);
             }, toString: function () {
@@ -56,6 +56,9 @@ var FunctionModel = /** @class */ (function () {
                 if (variable)
                     newOutput.name = variable;
                 this.outputs.push(newOutput);
+                return this;
+            }, setModifier: function (name, args) {
+                myFunction.modifiers.push({ name: name, args: args || [] });
                 return this;
             } });
         return myFunction;

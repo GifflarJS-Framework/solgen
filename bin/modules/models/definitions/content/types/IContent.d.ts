@@ -171,8 +171,67 @@ export interface IContent extends IStackItem {
      * ```
      */
     setContinue(): IContent;
-    setTry(parameters: Array<ITypeNameInput>, expression: ITryExpression): IContent;
-    setCatch(parameters: Array<ITypeNameInput>, identifier?: string): IContent;
+    /**
+     * Defines the begining of a try statement. Remember to use the "endTry" method when finishing "try" content definition,
+     * or else all the conditions made will have any effect.
+     *
+     * Also remember that try/catch statements are used only for external function calls and contract creation calls.
+     *
+     * @param expression The expression you will try to execute.
+     * @param returnVariables The return variables matching the types returned by the expression execution.
+     * @example
+     * ```ts
+     * gContract.createFunction(...)
+     *   // .[...]
+     *   .beginTry(
+     *     {
+     *       methodCall: { variable: "feed", method: "getData", args: ["token"] },
+     *     },
+     *     [{ type: { regularType: "uint", name: "value" } }]
+     *   )
+     *   // .[...] (Content inside 'try')
+     *   .endTry();
+     *   // .[...]
+     * ```
+     *
+     * // Example in solidity
+     *
+     * ```solidity
+     * try feed.getData(token) returns (uint value) {
+     *   // [...] (Content inside 'try')
+     * }
+     * ```
+     */
+    beginTry(expression: ITryExpression, returnVariables: Array<ITypeNameInput>): IContent;
+    /**
+     * Defines the begining of a catch statement. Remember to use the "endCatch" method when finishing "catch" content definition,
+     * or else all the conditions made will have any effect.
+     *
+     * Also remember that try/catch statements are used only for external function calls and contract creation calls.
+     * @param parameters The 'catch' block parameters.
+     * @param identifier The error identifier, if any. (optional)
+     * @example
+     * ```ts
+     * gContract.createFunction(...)
+     *   // .[...]
+     *   .beginCatch(
+     *     [{ type: { regularType: "string", name: "reason" } }],
+     *     "Error"
+     *   )
+     *   // .[...] (Content inside 'catch')
+     *   .endCatch();
+     *   // .[...]
+     * ```
+     *
+     * // Example in solidity
+     *
+     * ```solidity
+     * catch Error(bytes memory reason) {
+     *   // [...] (Content inside 'catch')
+     * }
+     * ```
+     */
+    beginCatch(parameters: Array<ITypeNameInput>, identifier?: string): IContent;
     /**
      * Defines a 'require' statement.
      * @param condition The 'require' condition
@@ -213,7 +272,7 @@ export interface IContent extends IStackItem {
      */
     setRevert(errorMessage: string): IContent;
     /**
-     * Defines a 'if' statement. Remember to use the "endIf" function when finishing "if" conditions actions,
+     * Defines the begining of a 'if' statement. Remember to use the "endIf" function when finishing "if" content definition,
      * or else all the conditions made will have any effect.
      * @param condition The condition to enter the 'if'
      * @example
@@ -238,7 +297,7 @@ export interface IContent extends IStackItem {
      **/
     beginIf(condition: string): IContent;
     /**
-     * Defines a 'else if' statement. Remember to use the "endElseIf" function when finishing "else if" conditions actions,
+     * Defines the begining of a 'else if' statement. Remember to use the "endElseIf" function when finishing "else if" content definition,
      * or else all the conditions made will have any effect.
      * @param condition The condition to enter the 'else if'
      * @example
@@ -263,7 +322,7 @@ export interface IContent extends IStackItem {
      **/
     beginElseIf(condition: string): IContent;
     /**
-     * Defines a 'else' statement. Remember to use the "endElse" function when finishing "else" conditions actions,
+     * Defines the begining of a 'else' statement. Remember to use the "endElse" function when finishing "else" content definition,
      * or else all the conditions made will have any effect.
      * @example
      * ```ts
@@ -287,7 +346,7 @@ export interface IContent extends IStackItem {
      **/
     beginElse(): IContent;
     /**
-     * Defines a 'do while' statement. Remember to use the "endDoWhile" function when finishing "do while" conditions actions,
+     * Defines the begining of a 'do while' statement. Remember to use the "endDoWhile" function when finishing "do while" content definition,
      * or else all the conditions made will have any effect.
      * @param condition The condition to stop the 'do while' loop when false
      * @example
@@ -312,7 +371,7 @@ export interface IContent extends IStackItem {
      **/
     beginDoWhile(condition: string): IContent;
     /**
-     * Defines a 'while' statement. Remember to use the "endWhile" function when finishing "while" conditions actions,
+     * Defines the begining of a 'while' statement. Remember to use the "endWhile" function when finishing "while" content definition,
      * or else all the conditions made will have any effect.
      * @param condition The condition to stop the 'while' loop when false
      * @example
@@ -337,7 +396,7 @@ export interface IContent extends IStackItem {
      **/
     beginWhile(condition: string): IContent;
     /**
-     * Defines a 'for' statement. Remember to use the "endFor" function when finishing "for" conditions actions,
+     * Defines the begining of a 'for' statement. Remember to use the "endFor" function when finishing "for" content definition,
      * or else all the conditions made will have any effect.
      * @param condition The condition to stop the 'for' loop when false
      * @example
@@ -375,6 +434,14 @@ export interface IContent extends IStackItem {
         expressionValue: IExpressionValue;
         dataLocation: IDataLocation;
     }, condition: string, expression: string): IContent;
+    /**
+     * Defines the end of 'try' statement.
+     */
+    endTry(): IContent;
+    /**
+     * Defines the end of 'catch' statement.
+     */
+    endCatch(): IContent;
     /**
      * Defines the end of 'if' statement.
      */

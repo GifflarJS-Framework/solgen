@@ -29,9 +29,14 @@ var ReceiveModel = /** @class */ (function () {
         this.contentModel = contentModel;
     }
     ReceiveModel.prototype.execute = function (_a) {
-        var stateVars = _a.stateVars;
+        var _b = _a.stateVars, stateVars = _b === void 0 ? [] : _b, modifiers = _a.modifiers, overrides = _a.overrides, virtual = _a.virtual;
         var content_json = this.contentModel.execute({ stateVars: stateVars });
-        var receive = __assign({}, content_json);
+        var receive = __assign(__assign({}, content_json), { modifiers: modifiers, overrides: overrides, virtual: virtual, setModifier: function (name, args) {
+                if (!receive.modifiers)
+                    receive.modifiers = [];
+                receive.modifiers.push({ name: name, args: args || [] });
+                return this;
+            } });
         return receive;
     };
     ReceiveModel = __decorate([

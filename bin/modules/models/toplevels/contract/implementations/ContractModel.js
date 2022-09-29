@@ -52,22 +52,28 @@ var ContractModel = /** @class */ (function () {
             contract.inherits.push(inherits);
             return inherits;
         };
-        var createFallback = function (isPayable) {
+        var createFallback = function (options) {
             var fallback = _this.fallbackModel.execute({
-                isPayable: isPayable,
+                isPayable: options === null || options === void 0 ? void 0 : options.isPayable,
+                modifiers: options === null || options === void 0 ? void 0 : options.modifiers,
+                overrides: options === null || options === void 0 ? void 0 : options.overrides,
+                virtual: options === null || options === void 0 ? void 0 : options.virtual,
                 stateVars: contract.variables || [],
             });
             contract.fallback = fallback;
             return fallback;
         };
-        var createReceive = function () {
+        var createReceive = function (options) {
             var receive = _this.receiveModel.execute({
-                stateVars: contract.variables || [],
+                stateVars: (contract === null || contract === void 0 ? void 0 : contract.variables) || [],
+                modifiers: options === null || options === void 0 ? void 0 : options.modifiers,
+                overrides: options === null || options === void 0 ? void 0 : options.overrides,
+                virtual: options === null || options === void 0 ? void 0 : options.virtual,
             });
             contract.receive = receive;
             return receive;
         };
-        var createConstructor = function (inputs) {
+        var createConstructor = function (inputs, options) {
             if (inputs === void 0) { inputs = []; }
             var _function = _this.functionModel.execute({
                 name: "",
@@ -75,6 +81,9 @@ var ContractModel = /** @class */ (function () {
                 isConstructor: true,
                 inputs: helpers_1.default.castITypeNameInputsToInputs(inputs),
                 stateVars: contract.variables,
+                overrides: options === null || options === void 0 ? void 0 : options.overrides,
+                virtual: options === null || options === void 0 ? void 0 : options.virtual,
+                modifiers: options === null || options === void 0 ? void 0 : options.modifiers,
             });
             if (!contract.functions)
                 contract.functions = [];

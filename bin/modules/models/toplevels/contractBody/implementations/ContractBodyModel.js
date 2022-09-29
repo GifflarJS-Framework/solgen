@@ -131,7 +131,7 @@ var ContractBodyModel = /** @class */ (function () {
             body.variables.push(variable);
             return variable;
         };
-        var createFunction = function (name, scope, inputs, outputs, stateMutability) {
+        var createFunction = function (name, scope, inputs, outputs, options) {
             if (inputs === void 0) { inputs = []; }
             if (outputs === void 0) { outputs = []; }
             var _function = _this.functionModel.execute({
@@ -141,7 +141,10 @@ var ContractBodyModel = /** @class */ (function () {
                 outputs: helpers_1.default.castITypeNameOutputsToOutputs(outputs),
                 isConstructor: false,
                 stateVars: body.variables,
-                stateMutability: stateMutability,
+                stateMutability: options === null || options === void 0 ? void 0 : options.stateMutability,
+                modifiers: options === null || options === void 0 ? void 0 : options.modifiers,
+                overrides: options === null || options === void 0 ? void 0 : options.overrides,
+                virtual: options === null || options === void 0 ? void 0 : options.virtual,
             });
             if (!body.functions)
                 body.functions = [];

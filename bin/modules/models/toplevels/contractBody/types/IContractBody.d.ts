@@ -18,6 +18,7 @@ import { IContractBodyItem } from "./IContractBodyItem";
 import { ITypeNameOutput } from "../../../../types/ITypeNameOutput";
 import { IExpressionValue } from "../../../statements/expression/types/IExpressionValue";
 import { IVariableStateMutabilityType } from "../../../../types/IVariableStateMutabilityType";
+import { IModifierInvocation } from "../../../definitions/function/types/IModifierInvocation";
 export interface IContractBody {
     body: IContractBodyItem;
     /**
@@ -168,9 +169,12 @@ export interface IContractBody {
      * Defines a contract function.
      * @param name Function name
      * @param scope Function scope
-     * @param inputs Function inputs
-     * @param outputs Function outputs
-     * @param stateMutability Function stateMutability (view, pure, payable...)
+     * @param inputs Function inputs (optional)
+     * @param outputs Function outputs (optional)
+     * @param options.stateMutability Function stateMutability (view, pure, payable...). (optional)
+     * @param options.modifiers The function modifiers. (optional)
+     * @param options.overrides If the function overrides another implementation. (optional)
+     * @param options.virtual If the function can be overridden by other implementations. (optional)
      * @example
      * ```ts
      * gContract
@@ -178,32 +182,43 @@ export interface IContractBody {
      *     "setOwner",
      *     "public",
      *     [{ type: { regularType: "address" }, name: "_owner" }],
-     *     []
+     *     [{ type: { regularType: "address" } }],
+     *     { modifiers: [{ name: "onlyOwner" }] }
      *   )
      *    // setting function content
      *   .setRequire("_owner != address(0)", "Invalid address")
      *   .setAssignment("owner", { customExpression: "_owner" });
+     *   .setReturn(["owner"]);
      *   //[...]
      *
-     * // or you can set the inputs sepparately
+     * // or you can set the inputs, outputs and modifiers sepparately
      *
      * gContract.createFunction("setOwner", "public")
      *   .setInput({ type: { regularType: "address" }, name: "_owner" });
+     *   .setOutput({ type: { regularType: "address" } });
+     *   .setModifiers("onlyOwner");
      *   //[...]
      * ```
      *
      * // Example in solidity
      *
      * ```solidity
-     * function setOwner(address _owner) public{
+     * function setOwner(address _owner) public onyOwner returns (address){
      *   require(_owner != address(0), "Invalid address");
      *   owner = _owner;
+     *   return (owner);
+     *   // [...]
      * }
      * ```
      *
-     * OBS: For 'string' inputs, the 'memory' keywork will automatically be set.
+     * OBS: For 'string' and 'bytes' inputs, the 'memory' keywork will automatically be set.
      */
-    createFunction(name: string, scope: IVisibility, inputs?: Array<ITypeNameInput>, outputs?: Array<ITypeNameOutput>, stateMutability?: IFunctionStateMutabilityType): IFunction;
+    createFunction(name: string, scope: IVisibility, inputs?: Array<ITypeNameInput>, outputs?: Array<ITypeNameOutput>, options?: {
+        stateMutability?: IFunctionStateMutabilityType;
+        modifiers?: IModifierInvocation[];
+        overrides?: boolean;
+        virtual?: boolean;
+    }): IFunction;
     /**
      * Defines a contract structure.
      * @param identifier The struct identifier
