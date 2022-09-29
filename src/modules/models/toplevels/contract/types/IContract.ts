@@ -87,7 +87,7 @@ export interface IContract extends IContractJson, IContractBody {
    *
    * OBS: The 'external' is automatically set.
    */
-  createFallback(options: {
+  createFallback(options?: {
     isPayable?: boolean;
     modifiers?: IModifierInvocation[];
     overrides?: boolean;
@@ -116,7 +116,7 @@ export interface IContract extends IContractJson, IContractBody {
    *
    * OBS: The 'external' and 'payable' are automatically set.
    */
-  createReceive(options: {
+  createReceive(options?: {
     modifiers?: IModifierInvocation[];
     overrides?: boolean;
     virtual?: boolean;
