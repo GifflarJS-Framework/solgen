@@ -7,12 +7,17 @@ describe("ReceiveWriter", () => {
   const receiveWriter = container.resolve<IReceiveWriter>("ReceiveWriter");
 
   it("Writing Receive Function", () => {
-    const receive = receiveModel.execute({ stateVars: [] });
+    const receive = receiveModel.execute({
+      stateVars: [],
+      modifiers: [{ name: "onlyOwner", args: ["msg.sender"] }],
+      overrides: true,
+      virtual: true,
+    });
     receive.setEventCall("MyEvent", ["msg.sender", "msg.value"]);
 
     const result = receiveWriter.write(receive);
 
-    const expected = `receive() external payable{\nemit MyEvent(msg.sender, msg.value);\n}\n\n`;
+    const expected = `receive() external payable override virtual onlyOwner(msg.sender){\nemit MyEvent(msg.sender, msg.value);\n}\n\n`;
 
     expect(result).toEqual(expected);
   });

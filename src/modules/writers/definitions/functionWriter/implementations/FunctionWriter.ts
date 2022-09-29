@@ -59,8 +59,16 @@ class FunctionWriter implements IFunctionWriter {
         stateMutability = ` ${f.stateMutability}`;
       }
 
+      // Override text
+      let txt_override = "";
+      if (f.overrides) txt_override = ` override`;
+
+      // Virtual text
+      let txt_virtual = "";
+      if (f.virtual) txt_virtual = ` virtual`;
+
       // Closing inputs and setting scope
-      text += `)${scope}${stateMutability}`;
+      text += `)${scope}${stateMutability}${txt_override}${txt_virtual}`;
 
       if (!options || !options.onlyPrototype) {
         // Organizing all modifiers

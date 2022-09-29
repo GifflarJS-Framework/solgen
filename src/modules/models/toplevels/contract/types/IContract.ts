@@ -65,11 +65,11 @@ export interface IContract extends IContractJson, IContractBody {
   createConstructor(inputs?: Array<ITypeNameInput>): IFunction;
 
   /**
-   * Defines a contract fallback function.
+   * Defines a contract 'fallback' function.
    * @param options.isPayable If the function state mutability is payable or not. Default is 'false'.(optional)
-   * @param options.modifiers The fallback modifiers. (optional)
-   * @param options.overrides If the fallback overrides another implementation. (optional)
-   * @param options.virtual If the fallback can be overridden by other implementations. (optional)
+   * @param options.modifiers The 'fallback' modifiers. (optional)
+   * @param options.overrides If the 'fallback' overrides another implementation. (optional)
+   * @param options.virtual If the 'fallback' can be overridden by other implementations. (optional)
    * @example
    * ```ts
    * gContract.createFallback(true)
@@ -95,7 +95,10 @@ export interface IContract extends IContractJson, IContractBody {
   }): IFallback;
 
   /**
-   * Defines a contract receive function.
+   * Defines a contract 'receive' function.
+   * @param options.modifiers The 'receive' modifiers. (optional)
+   * @param options.overrides If the 'receive' overrides another implementation. (optional)
+   * @param options.virtual If the 'receive' can be overridden by other implementations. (optional)
    * @example
    * ```ts
    * gContract.createReceive()
@@ -113,7 +116,11 @@ export interface IContract extends IContractJson, IContractBody {
    *
    * OBS: The 'external' and 'payable' are automatically set.
    */
-  createReceive(): IReceive;
+  createReceive(options: {
+    modifiers?: IModifierInvocation[];
+    overrides?: boolean;
+    virtual?: boolean;
+  }): IReceive;
 
   /**
    * Stringify the contract content

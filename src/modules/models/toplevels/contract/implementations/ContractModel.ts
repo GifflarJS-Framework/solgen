@@ -73,9 +73,16 @@ class ContractModel implements IContractModel {
       return fallback;
     };
 
-    const createReceive = (): IReceive => {
+    const createReceive = (options: {
+      modifiers?: IModifierInvocation[];
+      overrides?: boolean;
+      virtual?: boolean;
+    }): IReceive => {
       const receive = this.receiveModel.execute({
         stateVars: contract.variables || [],
+        modifiers: options.modifiers,
+        overrides: options.overrides,
+        virtual: options.virtual,
       });
       contract.receive = receive;
       return receive;

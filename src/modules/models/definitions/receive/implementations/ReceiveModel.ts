@@ -11,11 +11,25 @@ class ReceiveModel implements IReceiveModel {
     private contentModel: IContentModel
   ) {}
 
-  execute({ stateVars }: ICreateReceiveDTO): IReceive {
+  execute({
+    stateVars = [],
+    modifiers,
+    overrides,
+    virtual,
+  }: ICreateReceiveDTO): IReceive {
     const content_json = this.contentModel.execute({ stateVars });
 
     const receive: IReceive = {
       ...content_json,
+      modifiers,
+      overrides,
+      virtual,
+
+      setModifier(name: string, args?: string[]): IReceive {
+        if (!receive.modifiers) receive.modifiers = [];
+        receive.modifiers.push({ name, args: args || [] });
+        return this;
+      },
     };
 
     return receive;

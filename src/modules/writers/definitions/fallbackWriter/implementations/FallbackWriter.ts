@@ -16,6 +16,14 @@ class FallbackWriter implements IFallbackWriter {
     let txt_payable = "";
     if (fallback.isPayable) txt_payable = " payable";
 
+    // Override text
+    let txt_override = "";
+    if (fallback.overrides) txt_override = ` override`;
+
+    // Virtual text
+    let txt_virtual = "";
+    if (fallback.virtual) txt_virtual = ` virtual`;
+
     // Preparing modifiers text
     let txt_modifiers = "";
     if (fallback.modifiers) {
@@ -33,7 +41,7 @@ class FallbackWriter implements IFallbackWriter {
     const txt_content = this.contentWriter.write(fallback.content);
 
     // Final text
-    const text = `fallback() external${txt_payable}${txt_modifiers}{\n${txt_content}}\n\n`;
+    const text = `fallback() external${txt_payable}${txt_override}${txt_virtual}${txt_modifiers}{\n${txt_content}}\n\n`;
 
     return text;
   }
