@@ -10,5 +10,8 @@ export interface IFunctionModel {
     outputs,
     stateVars,
     stateMutability,
+    modifiers,
+    overrides,
+    virtual,
   }: ICreateFunctionDTO): IFunction;
 }

@@ -29,7 +29,11 @@ import { IWhile } from "@models/statements/while/types/IWhile";
 import { ITypeNameInput } from "@modules/types/ITypeNameInput";
 import { IExpressionValue } from "@modules/models/statements/expression/types/IExpressionValue";
 import { IVariableDataLocation } from "@modules/types/IVariableDataLocation";
+import { ITry } from "@modules/models/statements/try/types/ITry";
+import { ICatch } from "@modules/models/statements/catch/types/ICatch";
 
+interface ITryContent extends ITry, IContent {}
+interface ICatchContent extends ICatch, IContent {}
 interface IIfContent extends IIf, IContent {}
 interface IDoWhileContent extends IDoWhile, IContent {}
 interface IWhileContent extends IWhile, IContent {}
@@ -95,34 +99,36 @@ class ContentModel {
       return contentItem;
     };
 
-    const setTry = (
-      parameters: Array<ITypeNameInput>,
-      expression: ITryExpression
+    const beginTry = (
+      expression: ITryExpression,
+      parameters: Array<ITypeNameInput>
     ): IContent => {
       // Casting ITypeNameInput to IInput
       const _parameters = helpers.castITypeNameInputsToInputs(parameters);
-      const _catch = this.tryModel.execute({
+      const _try = this.tryModel.execute({
         parameters: _parameters,
         expression,
       });
-      stack[top].content.push(_catch);
-      const contentItem: IContent = _assignFunctions(stack[top]);
-      return contentItem;
+      const newTryContent: IContent = _assignFunctions(_try);
+      stack.push(newTryContent);
+      top += 1;
+      return newTryContent;
     };
 
-    const setCatch = (
+    const beginCatch = (
       parameters: Array<ITypeNameInput>,
       identifier?: string
     ): IContent => {
       // Casting ITypeNameInput to IInput
       const _parameters = helpers.castITypeNameInputsToInputs(parameters);
       const _catch = this.catchModel.execute({
-        identifier,
         parameters: _parameters,
+        identifier,
       });
-      stack[top].content.push(_catch);
-      const contentItem: IContent = _assignFunctions(stack[top]);
-      return contentItem;
+      const newCatchContent: IContent = _assignFunctions(_catch);
+      stack.push(newCatchContent);
+      top += 1;
+      return newCatchContent;
     };
 
     const setVariable = (
@@ -284,7 +290,7 @@ class ContentModel {
       return _beginIf("", true);
     };
 
-    const _endDecisionStructure = (): IContent => {
+    const _endContentStructure = (): IContent => {
       if (stack.length > 1) {
         const json = stack.pop();
         top -= 1;
@@ -296,18 +302,29 @@ class ContentModel {
       return contentItem;
     };
 
-    const [endIf, endElse, endElseIf, endDoWhile, endWhile, endFor] = Array<
-      () => IContent
-    >(6).fill(_endDecisionStructure);
+    const [
+      endTry,
+      endCatch,
+      endIf,
+      endElse,
+      endElseIf,
+      endDoWhile,
+      endWhile,
+      endFor,
+    ] = Array<() => IContent>(6).fill(_endContentStructure);
 
     const _assignFunctions = <T>(obj: any): T => {
       const _obj = {
         ...obj,
+        beginTry,
+        beginCatch,
         beginIf,
         beginElse,
         beginElseIf,
         beginDoWhile,
         beginFor,
+        endTry,
+        endCatch,
         endIf,
         endElseIf,
         endElse,
@@ -322,10 +339,8 @@ class ContentModel {
         setReturn,
         setAssert,
         setBreak,
-        setCatch,
         setRequire,
         setRevert,
-        setTry,
         beginWhile,
       };
 

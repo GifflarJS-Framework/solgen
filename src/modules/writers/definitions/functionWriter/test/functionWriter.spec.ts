@@ -12,7 +12,7 @@ describe("Contract Writer", () => {
       isConstructor: false,
       stateMutability: "view",
       inputs: [],
-      modifiers: [],
+      modifiers: [{ name: "onlyOwner", args: [] }],
       outputs: [{ type: "uint" }],
       content: [
         {
@@ -27,7 +27,7 @@ describe("Contract Writer", () => {
     };
 
     const expected =
-      "//FUNCTIONS\nfunction MyFunction() public view returns(uint){\nuint age = 18;\n}\n\n";
+      "//FUNCTIONS\nfunction MyFunction() public view onlyOwner returns(uint){\nuint age = 18;\n}\n\n";
     const result = functionWriter.write([myFunction]);
 
     expect(result).toMatch(expected);

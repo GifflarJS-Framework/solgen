@@ -5,6 +5,7 @@ import { IContractJson } from "./IContractJson";
 import { IFallback } from "@models/definitions/fallback/types/IFallback";
 import { IReceive } from "@models/definitions/receive/types/IReceive";
 import { ITypeNameInput } from "@modules/types/ITypeNameInput";
+import { IModifierInvocation } from "@modules/models/definitions/function/types/IModifierInvocation";
 
 export interface IContract extends IContractJson, IContractBody {
   /**
@@ -34,8 +35,11 @@ export interface IContract extends IContractJson, IContractBody {
   setInheritance(identifier: string, args?: Array<string>): IInherits;
 
   /**
-   * Defines a contract constructor function.
-   * @param inputs The constructor inputs
+   * Defines a contract 'constructor' function.
+   * @param inputs The 'constructor' inputs
+   * @param options.modifiers The 'constructor' modifiers. (optional)
+   * @param options.overrides If the 'constructor' overrides another implementation. (optional)
+   * @param options.virtual If the 'constructor' can be overridden by other implementations. (optional)
    * @example
    * ```ts
    * gContract.createConstructor([{ type: { regularType: "address" }, name: "_owner" }])
@@ -59,13 +63,23 @@ export interface IContract extends IContractJson, IContractBody {
    * }
    * ```
    *
-   * OBS: For 'string' inputs, the 'memory' keywork will automatically be set.
+   * OBS: For 'string' and 'bytes' inputs, the 'memory' keywork will automatically be set.
    */
-  createConstructor(inputs?: Array<ITypeNameInput>): IFunction;
+  createConstructor(
+    inputs?: Array<ITypeNameInput>,
+    options?: {
+      overrides?: boolean;
+      virtual?: boolean;
+      modifiers?: IModifierInvocation[];
+    }
+  ): IFunction;
 
   /**
-   * Defines a contract fallback function.
-   * @param isPayable If the function state mutability is payable or not. Default is 'false'.
+   * Defines a contract 'fallback' function.
+   * @param options.isPayable If the function state mutability is payable or not. Default is 'false'.(optional)
+   * @param options.modifiers The 'fallback' modifiers. (optional)
+   * @param options.overrides If the 'fallback' overrides another implementation. (optional)
+   * @param options.virtual If the 'fallback' can be overridden by other implementations. (optional)
    * @example
    * ```ts
    * gContract.createFallback(true)
@@ -83,10 +97,18 @@ export interface IContract extends IContractJson, IContractBody {
    *
    * OBS: The 'external' is automatically set.
    */
-  createFallback(isPayable?: boolean): IFallback;
+  createFallback(options?: {
+    isPayable?: boolean;
+    modifiers?: IModifierInvocation[];
+    overrides?: boolean;
+    virtual?: boolean;
+  }): IFallback;
 
   /**
-   * Defines a contract receive function.
+   * Defines a contract 'receive' function.
+   * @param options.modifiers The 'receive' modifiers. (optional)
+   * @param options.overrides If the 'receive' overrides another implementation. (optional)
+   * @param options.virtual If the 'receive' can be overridden by other implementations. (optional)
    * @example
    * ```ts
    * gContract.createReceive()
@@ -104,7 +126,11 @@ export interface IContract extends IContractJson, IContractBody {
    *
    * OBS: The 'external' and 'payable' are automatically set.
    */
-  createReceive(): IReceive;
+  createReceive(options?: {
+    modifiers?: IModifierInvocation[];
+    overrides?: boolean;
+    virtual?: boolean;
+  }): IReceive;
 
   /**
    * Stringify the contract content
