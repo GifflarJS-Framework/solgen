@@ -24,6 +24,9 @@ class FunctionModel implements IFunctionModel {
     inputs,
     outputs,
     stateVars = [],
+    modifiers = [],
+    overrides,
+    virtual,
   }: ICreateFunctionDTO): IFunction {
     const content_json = this.contentModel.execute({ stateVars });
 
@@ -34,7 +37,9 @@ class FunctionModel implements IFunctionModel {
       stateMutability,
       inputs: inputs || [],
       outputs: outputs || [],
-      modifiers: [],
+      modifiers: modifiers,
+      overrides,
+      virtual,
       ...content_json,
 
       json(): IFunctionJson {
@@ -65,6 +70,11 @@ class FunctionModel implements IFunctionModel {
         if (variable) newOutput.name = variable;
         this.outputs.push(newOutput);
 
+        return this;
+      },
+
+      setModifier(name: string, args?: string[]): IFunction {
+        myFunction.modifiers.push({ name, args: args || [] });
         return this;
       },
     };

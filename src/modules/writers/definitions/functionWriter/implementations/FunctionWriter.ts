@@ -1,6 +1,7 @@
 import { IContents } from "@models/definitions/content/types/IContents";
 import { IFunctionJson } from "@models/definitions/function/types/IFunctionJson";
 import { ILocalVariable } from "@models/statements/variable/types/ILocalVariable";
+import helpers from "@utils/helpers";
 import { IContentWriter } from "@writers/definitions/contentWriter/types/IContentWriter";
 import { IInputWriter } from "@writers/statements/inputWriter/types/IInputWriter";
 import { IOutputWriter } from "@writers/statements/outputWriter/types/IOutputWriter";
@@ -63,16 +64,20 @@ class FunctionWriter implements IFunctionWriter {
 
       if (!options || !options.onlyPrototype) {
         // Organizing all modifiers
-        let modifiers = "";
+        let txt_modifiers = "";
         if (f.modifiers) {
           f.modifiers.map((modifier) => {
-            modifiers += ` ${modifier}`;
+            txt_modifiers += ` ${modifier.name}`;
+            if (modifier.args.length) {
+              // Modifier args
+              txt_modifiers += `(${helpers.getCommaExpression(modifier.args)})`;
+            }
             return modifier;
           });
         }
 
         // Setting modifiers to main text
-        text += `${modifiers}`;
+        text += `${txt_modifiers}`;
       }
 
       // Setting the returns text
