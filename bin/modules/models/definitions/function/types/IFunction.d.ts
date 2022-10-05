@@ -11,8 +11,8 @@ export interface IFunction extends IFunctionJson, IContent {
      * @example
      * ```ts
      * gFunction
-     *   .setInput({ regularType: "address", name: "to" })
-     *   .setInput({ regularType: "uint256", name: "amount" });
+     *   .setInput({ regularType: "address" }, "to")
+     *   .setInput({ regularType: "uint256" }, "amount");
      * ```
      *
      * // Example in solidity
@@ -30,8 +30,8 @@ export interface IFunction extends IFunctionJson, IContent {
      * @example
      * ```ts
      * gFunction
-     *   .setOutput({ regularType: "address", name: "to" })
-     *   .setOutput({ regularType: "uint256", name: "amount" });
+     *   .setOutput({ regularType: "address" }, "to")
+     *   .setOutput({ regularType: "uint256" }, "amount");
      *
      * // or
      *
