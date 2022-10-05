@@ -51,7 +51,7 @@ export interface IContract extends IContractJson, IContractBody {
    * // or you can set the inputs sepparately
    *
    * gContract.createConstructor()
-   *   .setInput({ type: { regularType: "address" }, name: "_owner" });
+   *   .setInput({ regularType: "address" }, "_owner");
    *   //[...]
    * ```
    *
@@ -63,7 +63,7 @@ export interface IContract extends IContractJson, IContractBody {
    * }
    * ```
    *
-   * OBS: For 'string' and 'bytes' inputs, the 'memory' keywork will automatically be set.
+   * OBS: For 'string' and 'bytes' inputs, the 'memory' keyword will automatically be set.
    */
   createConstructor(
     inputs?: Array<ITypeNameInput>,
@@ -95,7 +95,7 @@ export interface IContract extends IContractJson, IContractBody {
    * }
    * ```
    *
-   * OBS: The 'external' is automatically set.
+   * OBS: The 'external' keyword is automatically set.
    */
   createFallback(options?: {
     isPayable?: boolean;
@@ -124,7 +124,7 @@ export interface IContract extends IContractJson, IContractBody {
    * }
    * ```
    *
-   * OBS: The 'external' and 'payable' are automatically set.
+   * OBS: The 'external' and 'payable' keywords are automatically set.
    */
   createReceive(options?: {
     modifiers?: IModifierInvocation[];

@@ -215,8 +215,8 @@ export interface IContractBody {
    * // or you can set the inputs, outputs and modifiers sepparately
    *
    * gContract.createFunction("setOwner", "public")
-   *   .setInput({ type: { regularType: "address" }, name: "_owner" });
-   *   .setOutput({ type: { regularType: "address" } });
+   *   .setInput({ regularType: "address" }, "_owner" );
+   *   .setOutput({ regularType: "address" });
    *   .setModifiers("onlyOwner");
    *   //[...]
    * ```
@@ -232,7 +232,7 @@ export interface IContractBody {
    * }
    * ```
    *
-   * OBS: For 'string' and 'bytes' inputs, the 'memory' keywork will automatically be set.
+   * OBS: For 'string' and 'bytes' inputs, the 'memory' keyword will automatically be set.
    */
   createFunction(
     name: string,
