@@ -59,8 +59,8 @@ export interface IFunction extends IFunctionJson, IContent {
      * @example
      * ```ts
      * gFunction
-     *   .setModifiers("onlyOwner")
-     *   .setModifiers("expired", ["timestamp"])
+     *   .setModifier("onlyOwner")
+     *   .setModifier("expired", ["timestamp"])
      * ```
      *
      * // Example in solidity
@@ -71,5 +71,5 @@ export interface IFunction extends IFunctionJson, IContent {
      * }
      * ```
      */
-    setModifier(name: string, args: string[]): IFunction;
+    setModifier(name: string, args?: string[]): IFunction;
 }

@@ -142,7 +142,7 @@ export interface IContractBody {
      *   "owner",
      *   "public",
      *   {
-     *     expressionValue: "0x0000000000000000000000000000000000000000",
+     *     expressionValue: { customExpression: "0x0000000000000000000000000000000000000000" },
      *     stateMutability: "constant",
      *   }
      * );
@@ -183,7 +183,7 @@ export interface IContractBody {
      *     "public",
      *     [{ type: { regularType: "address" }, name: "_owner" }],
      *     [{ type: { regularType: "address" } }],
-     *     { modifiers: [{ name: "onlyOwner" }] }
+     *     { modifiers: [{ name: "onlyOwner", args: [] }] }
      *   )
      *    // setting function content
      *   .setRequire("_owner != address(0)", "Invalid address")
@@ -196,7 +196,7 @@ export interface IContractBody {
      * gContract.createFunction("setOwner", "public")
      *   .setInput({ regularType: "address" }, "_owner" );
      *   .setOutput({ regularType: "address" });
-     *   .setModifiers("onlyOwner");
+     *   .setModifier("onlyOwner");
      *   //[...]
      * ```
      *
