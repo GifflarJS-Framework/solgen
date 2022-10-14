@@ -35,7 +35,7 @@ export interface IGifflarContract extends IContract {
      * @example
      * const code = gContract.write()
      *
-     * //or
+     * //Or, if you want to write many contracts at once
      *
      * const code = gContract.write([gContract, otherContract])
      */
@@ -57,7 +57,7 @@ export interface IGifflarContract extends IContract {
      * @example
      * await gContract.deploy(
      *  {
-     *    args: [], // Arguments for contracts constructor
+     *    args: [], // Arguments for contract constructor
      *    from: "0x123...", // Account that will execute the deploy, if not set before (optional)
      *    gas: 3000000, // Gas willing to spend (optional)
      *    gasPrice: "10000000000", // Gas price (optional)
