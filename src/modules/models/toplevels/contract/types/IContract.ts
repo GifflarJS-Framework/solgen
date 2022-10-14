@@ -48,7 +48,7 @@ export interface IContract extends IContractJson, IContractBody {
    *   .setAssignment("owner", { customExpression: "_owner" });
    *   //[...]
    *
-   * // or you can set the inputs sepparately
+   * // Optionally, you can set the inputs sepparately
    *
    * gContract.createConstructor()
    *   .setInput({ regularType: "address" }, "_owner");
@@ -57,13 +57,15 @@ export interface IContract extends IContractJson, IContractBody {
    *
    * // Example in solidity
    * ```solidity
-   * constructor(address _owner){
+   * constructor(address _owner) public{
    *   require(_owner != address(0), "Invalid address");
    *   owner = _owner;
    * }
    * ```
+   * OBS: The 'public' scope in this case will automatically be set.
    *
    * OBS: For 'string' and 'bytes' inputs, the 'memory' keyword will automatically be set.
+   *
    */
   createConstructor(
     inputs?: Array<ITypeNameInput>,

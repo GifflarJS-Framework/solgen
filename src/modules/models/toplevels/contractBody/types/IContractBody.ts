@@ -208,15 +208,15 @@ export interface IContractBody {
    *   )
    *    // setting function content
    *   .setRequire("_owner != address(0)", "Invalid address")
-   *   .setAssignment("owner", { customExpression: "_owner" });
+   *   .setAssignment("owner", { customExpression: "_owner" })
    *   .setReturn(["owner"]);
    *   //[...]
    *
-   * // or you can set the inputs, outputs and modifiers sepparately
+   * // Optionally, you can set the inputs, outputs and modifiers sepparately
    *
    * gContract.createFunction("setOwner", "public")
-   *   .setInput({ regularType: "address" }, "_owner" );
-   *   .setOutput({ regularType: "address" });
+   *   .setInput({ regularType: "address" }, "_owner" )
+   *   .setOutput({ regularType: "address" })
    *   .setModifier("onlyOwner");
    *   //[...]
    * ```
@@ -224,7 +224,7 @@ export interface IContractBody {
    * // Example in solidity
    *
    * ```solidity
-   * function setOwner(address _owner) public onyOwner returns (address){
+   * function setOwner(address _owner) public onlyOwner returns (address){
    *   require(_owner != address(0), "Invalid address");
    *   owner = _owner;
    *   return (owner);
