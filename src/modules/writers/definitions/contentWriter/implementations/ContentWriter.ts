@@ -19,6 +19,7 @@ import { ICatchWriter } from "@writers/statements/catchWriter/types/ICatchWriter
 import { IContinueWriter } from "@writers/statements/continueWriter/types/IContinueWriter";
 import { IExpressionWriter } from "@writers/statements/expressionWriter/types/IExpressionWriter";
 import { INewContractWriter } from "@writers/statements/newContractWriter/types/INewContractWriter";
+import { ICustomCodeWriter } from "@modules/writers/custom/customCodeWriter/types/ICustomCodeWriter";
 
 @injectable()
 class ContentWriter implements IContentWriter {
@@ -58,7 +59,9 @@ class ContentWriter implements IContentWriter {
     @inject("ExpressionWriter")
     private expressionWriter: IExpressionWriter,
     @inject("NewContractWriter")
-    private newContractWriter: INewContractWriter
+    private newContractWriter: INewContractWriter,
+    @inject("CustomCodeWriter")
+    private customCodeWriter: ICustomCodeWriter
   ) {
     // Avoiding infinite dependency injection
     ifWriter._init(this);
@@ -88,10 +91,11 @@ class ContentWriter implements IContentWriter {
     continue: this.continueWriter,
     expression: this.expressionWriter,
     newContract: this.newContractWriter,
+    customCode: this.customCodeWriter,
   };
 
   // All statement control that doesn't need the ; in the end
-  controls = ["if", "for", "while", "doWhile", "try", "catch"];
+  controls = ["if", "for", "while", "doWhile", "try", "catch", "customCode"];
 
   write(content: Array<IContents>): string {
     let text = "";

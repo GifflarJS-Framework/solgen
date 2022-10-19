@@ -19,9 +19,33 @@ import { ITypeNameOutput } from "@modules/types/ITypeNameOutput";
 import { IExpressionValue } from "@modules/models/statements/expression/types/IExpressionValue";
 import { IVariableStateMutabilityType } from "@modules/types/IVariableStateMutabilityType";
 import { IModifierInvocation } from "@modules/models/definitions/function/types/IModifierInvocation";
+import { ICustomCode } from "@modules/models/custom/customCode/types/ICustomCode";
 
 export interface IContractBody {
   body: IContractBodyItem;
+
+  /**
+   * Defines a contract custom directive code. You can use this method if you want to add your own personalized code inside the contract scope.
+   * @param {string} code The customized code to include in the contract scope
+   * @example
+   * ```ts
+   * gContract.createCustomCode(`
+   * modifier onlyOwner() {
+   * require(msg.sender != owner, "Invalid address");
+   * _;
+   * }
+   * `);
+   * ```
+   *
+   * // Example in solidiy
+   * ```solidity
+   * modifier onlyOwner() {
+   * require(msg.sender != owner, "Invalid address");
+   * _;
+   * }
+   * ```
+   */
+  createCustomCode(code: string): ICustomCode;
 
   /**
    * Defines a contract 'using' directive.

@@ -1,4 +1,5 @@
 import { IContractBodyItem } from "@models/toplevels/contractBody/types/IContractBodyItem";
+import { ICustomCodeWriter } from "@modules/writers/custom/customCodeWriter/types/ICustomCodeWriter";
 import { IEnumWriter } from "@writers/definitions/enumWriter/types/IEnumWriter";
 import { IEventWriter } from "@writers/definitions/eventWriter/types/IEventWriter";
 import { IFunctionWriter } from "@writers/definitions/functionWriter/types/IFunctionWriter";
@@ -25,7 +26,9 @@ class ContractBodyWriter implements IContractBodyWriter {
     @inject("UsingWriter")
     private usingWriter: IUsingWriter,
     @inject("EnumWriter")
-    private enumWriter: IEnumWriter
+    private enumWriter: IEnumWriter,
+    @inject("CustomCodeWriter")
+    private customCodeWriter: ICustomCodeWriter
   ) {}
 
   write(bodyItem: IContractBodyItem): string {
@@ -49,6 +52,11 @@ class ContractBodyWriter implements IContractBodyWriter {
     // Modifiers
     const txt_modifiers = this.modifierWriter.write(bodyItem.modifiers || []);
 
+    // Custom Codes
+    const txt_custom_codes = this.customCodeWriter.write(
+      bodyItem.customCodes || []
+    );
+
     // Custom Errors
     // *Custom errors are only available starting from v0.8.4 solidity version
     // const txt_custom_errors = this.customErrorWriter.write(
@@ -65,6 +73,7 @@ class ContractBodyWriter implements IContractBodyWriter {
       txt_mappings +
       txt_events +
       txt_modifiers +
+      txt_custom_codes +
       txt_functions
     }`;
 

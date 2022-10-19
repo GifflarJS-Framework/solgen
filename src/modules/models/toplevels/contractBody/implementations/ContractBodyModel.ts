@@ -31,6 +31,8 @@ import { ITypeNameOutput } from "@modules/types/ITypeNameOutput";
 import { IExpressionValue } from "@modules/models/statements/expression/types/IExpressionValue";
 import { IVariableStateMutabilityType } from "@modules/types/IVariableStateMutabilityType";
 import { IModifierInvocation } from "@modules/models/definitions/function/types/IModifierInvocation";
+import { ICustomCodeModel } from "@modules/models/custom/customCode/types/ICustomCodeModel";
+import { ICustomCode } from "@modules/models/custom/customCode/types/ICustomCode";
 
 @injectable()
 class ContractBodyModel implements IContractBodyModel {
@@ -50,7 +52,9 @@ class ContractBodyModel implements IContractBodyModel {
     @inject("EnumModel")
     private enumModel: IEnumModel,
     @inject("StructModel")
-    private structModel: IStructModel
+    private structModel: IStructModel,
+    @inject("CustomCodeModel")
+    private customCodeModel: ICustomCodeModel
   ) {}
 
   execute(): IContractBody {
@@ -62,6 +66,16 @@ class ContractBodyModel implements IContractBodyModel {
       events: [],
       modifiers: [],
       functions: [],
+    };
+
+    const createCustomCode = (code: string): ICustomCode => {
+      const customCode = this.customCodeModel.execute({
+        code,
+      });
+      if (!body.usings) body.usings = [];
+      if (!body.customCodes) body.customCodes = [];
+      body.customCodes.push(customCode);
+      return customCode;
     };
 
     const createUsing = (identifier: string, type: ITypeName): IUsing => {
@@ -216,6 +230,7 @@ class ContractBodyModel implements IContractBodyModel {
     const _assignFunctions = (): IContractBody => {
       const _obj: IContractBody = {
         body,
+        createCustomCode,
         createUsing,
         createEvent,
         createVariable,
