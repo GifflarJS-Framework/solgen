@@ -12,11 +12,11 @@
     "docs": "jsdoc -c jsdoc-config.json"
   },
   "bin": {
-    "@gifflar/solgen": "./bin/index.js"
+    "solgen": "./bin/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GifflarJS-Framework/gifflar-library.git"
+    "url": "git+https://github.com/GifflarJS-Framework/solgen.git"
   },
   "keywords": [
     "blockchain",
@@ -29,12 +29,12 @@
   "author": "Levy Santiago",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/GifflarJS-Framework/gifflar-library/issues"
+    "url": "https://github.com/GifflarJS-Framework/solgen/issues"
   },
   "engines": {
     "node": "14"
   },
-  "homepage": "https://github.com/GifflarJS-Framework/gifflar-library#readme",
+  "homepage": "https://github.com/GifflarJS-Framework/solgen#readme",
   "devDependencies": {
     "@smartdec/smartcheck": "^2.0.1",
     "@types/jest": "26.0.16",

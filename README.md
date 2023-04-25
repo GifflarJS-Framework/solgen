@@ -2,7 +2,7 @@
     <img src="https://i.imgur.com/mwbuYqE.png" alt="gifflar banner"/>
 </div>
 
-[![Node.js CI](https://github.com/GifflarJS-Framework/gifflar-library/actions/workflows/tests.yml/badge.svg)](https://github.com/GifflarJS-Framework/gifflar-library/actions/workflows/tests.yml)
+[![Node.js CI](https://github.com/GifflarJS-Framework/solgen/actions/workflows/tests.yml/badge.svg)](https://github.com/GifflarJS-Framework/solgen/actions/workflows/tests.yml)
 
 # Gifflar.js
 
