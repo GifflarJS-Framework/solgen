@@ -6,6 +6,7 @@ import { IStateMapping } from "../../../definitions/stateMapping/types/IStateMap
 import { IStateVariable } from "../../../definitions/stateVariable/types/IStateVariable";
 import { IStruct } from "../../../definitions/struct/types/IStruct";
 import { IUsing } from "../../../definitions/using/types/IUsing";
+import { ICustomCode } from "../../../custom/customCode/types/ICustomCode";
 export interface IContractBodyItem {
     usings?: Array<IUsing>;
     structs?: Array<IStruct>;
@@ -14,5 +15,6 @@ export interface IContractBodyItem {
     mappings?: Array<IStateMapping>;
     events?: Array<IEvent>;
     modifiers?: Array<IModifier>;
+    customCodes?: Array<ICustomCode>;
     functions?: Array<IFunction>;
 }

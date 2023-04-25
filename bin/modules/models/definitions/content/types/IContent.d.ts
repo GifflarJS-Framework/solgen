@@ -272,6 +272,31 @@ export interface IContent extends IStackItem {
      */
     setRevert(errorMessage: string): IContent;
     /**
+     * Defines a custom content code. You can use this method if you want to add your own personalized code inside the content scope.
+     * @param {string} code The customized code to include to content scope
+     * @example
+     * ```ts
+     * gContract.setCustomCode(`
+     * require(msg.sender != owner, "Invalid address");
+     * `);
+     *
+     * gContract.setCustomCode(`
+     * assembly {
+     *     o_sum := add(o_sum, mload(add(add(_data, 0x20), mul(i, 0x20))))
+     * }
+     * `);
+     * ```
+     *
+     * // Example in solidiy
+     * ```solidity
+     * require(msg.sender != owner, "Invalid address");
+     * assembly {
+     *     o_sum := add(o_sum, mload(add(add(_data, 0x20), mul(i, 0x20))))
+     * }
+     * ```
+     */
+    setCustomCode(code: string): IContent;
+    /**
      * Defines the begining of a 'if' statement. Remember to use the "endIf" function when finishing "if" content definition,
      * or else all the conditions made will have any effect.
      * @param condition The condition to enter the 'if'
@@ -294,7 +319,7 @@ export interface IContent extends IStackItem {
      * }
      * // [...]
      * ```
-     **/
+     * */
     beginIf(condition: string): IContent;
     /**
      * Defines the begining of a 'else if' statement. Remember to use the "endElseIf" function when finishing "else if" content definition,
@@ -319,7 +344,7 @@ export interface IContent extends IStackItem {
      * }
      * // [...]
      * ```
-     **/
+     * */
     beginElseIf(condition: string): IContent;
     /**
      * Defines the begining of a 'else' statement. Remember to use the "endElse" function when finishing "else" content definition,
@@ -343,7 +368,7 @@ export interface IContent extends IStackItem {
      * }
      * // [...]
      * ```
-     **/
+     * */
     beginElse(): IContent;
     /**
      * Defines the begining of a 'do while' statement. Remember to use the "endDoWhile" function when finishing "do while" content definition,
@@ -368,7 +393,7 @@ export interface IContent extends IStackItem {
      * } while(a == b);
      * // [...]
      * ```
-     **/
+     * */
     beginDoWhile(condition: string): IContent;
     /**
      * Defines the begining of a 'while' statement. Remember to use the "endWhile" function when finishing "while" content definition,
@@ -393,7 +418,7 @@ export interface IContent extends IStackItem {
      * }
      * // [...]
      * ```
-     **/
+     * */
     beginWhile(condition: string): IContent;
     /**
      * Defines the begining of a 'for' statement. Remember to use the "endFor" function when finishing "for" content definition,
@@ -427,7 +452,7 @@ export interface IContent extends IStackItem {
      * }
      * // [...]
      * ```
-     **/
+     * */
     beginFor(variable: {
         type: ITypeName;
         name: string;

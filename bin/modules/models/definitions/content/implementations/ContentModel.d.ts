@@ -16,6 +16,7 @@ import { IRequireModel } from "../../../statements/require/types/IRequireModel";
 import { IRevertModel } from "../../../statements/revert/types/IRevertModel";
 import { ITryModel } from "../../../statements/try/types/ITryModel";
 import { IWhileModel } from "../../../statements/while/types/IWhileModel";
+import { ICustomCodeModel } from "../../../custom/customCode/types/ICustomCodeModel";
 declare class ContentModel {
     private assertModel;
     private breakModel;
@@ -33,7 +34,8 @@ declare class ContentModel {
     private revertModel;
     private tryModel;
     private whileModel;
-    constructor(assertModel: IAssertModel, breakModel: IBreakModel, catchModel: ICatchModel, assignmnetModel: IAssignmentModel, variableModel: IVariableModel, ifModel: IIfModel, methodCallModel: IMethodCallModel, eventCallModel: IEventCallModel, continueModel: IContinueModel, doWhileModel: IDoWhileModel, returnModel: IReturnModel, forModel: IForModel, requireModel: IRequireModel, revertModel: IRevertModel, tryModel: ITryModel, whileModel: IWhileModel);
+    private customCodeModel;
+    constructor(assertModel: IAssertModel, breakModel: IBreakModel, catchModel: ICatchModel, assignmnetModel: IAssignmentModel, variableModel: IVariableModel, ifModel: IIfModel, methodCallModel: IMethodCallModel, eventCallModel: IEventCallModel, continueModel: IContinueModel, doWhileModel: IDoWhileModel, returnModel: IReturnModel, forModel: IForModel, requireModel: IRequireModel, revertModel: IRevertModel, tryModel: ITryModel, whileModel: IWhileModel, customCodeModel: ICustomCodeModel);
     execute({ stateVars }: ICreateContentDTO): IContent;
 }
 export default ContentModel;

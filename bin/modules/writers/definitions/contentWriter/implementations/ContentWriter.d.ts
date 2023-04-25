@@ -18,6 +18,7 @@ import { ICatchWriter } from "../../../statements/catchWriter/types/ICatchWriter
 import { IContinueWriter } from "../../../statements/continueWriter/types/IContinueWriter";
 import { IExpressionWriter } from "../../../statements/expressionWriter/types/IExpressionWriter";
 import { INewContractWriter } from "../../../statements/newContractWriter/types/INewContractWriter";
+import { ICustomCodeWriter } from "../../../custom/customCodeWriter/types/ICustomCodeWriter";
 declare class ContentWriter implements IContentWriter {
     private assertWriter;
     private assignmentWriter;
@@ -37,7 +38,8 @@ declare class ContentWriter implements IContentWriter {
     private continueWriter;
     private expressionWriter;
     private newContractWriter;
-    constructor(assertWriter: IAssert, assignmentWriter: IAssignmentWriter, ifWriter: IIfWriter, forWriter: IForWriter, eventCallWriter: IEventCallWriter, variableWriter: IVariableWriter, methodCallWriter: IMethodCallWriter, requireWriter: IRequireWriter, revertWriter: IRevertWriter, breakWriter: IBreakWriter, whileWriter: IWhileWriter, doWhileWriter: IDoWhileWriter, returnWriter: IReturnWriter, tryWriter: ITryWriter, catchWriter: ICatchWriter, continueWriter: IContinueWriter, expressionWriter: IExpressionWriter, newContractWriter: INewContractWriter);
+    private customCodeWriter;
+    constructor(assertWriter: IAssert, assignmentWriter: IAssignmentWriter, ifWriter: IIfWriter, forWriter: IForWriter, eventCallWriter: IEventCallWriter, variableWriter: IVariableWriter, methodCallWriter: IMethodCallWriter, requireWriter: IRequireWriter, revertWriter: IRevertWriter, breakWriter: IBreakWriter, whileWriter: IWhileWriter, doWhileWriter: IDoWhileWriter, returnWriter: IReturnWriter, tryWriter: ITryWriter, catchWriter: ICatchWriter, continueWriter: IContinueWriter, expressionWriter: IExpressionWriter, newContractWriter: INewContractWriter, customCodeWriter: ICustomCodeWriter);
     statements: {
         assert: IAssert;
         assignment: IAssignmentWriter;
@@ -57,6 +59,7 @@ declare class ContentWriter implements IContentWriter {
         continue: IContinueWriter;
         expression: IExpressionWriter;
         newContract: INewContractWriter;
+        customCode: ICustomCodeWriter;
     };
     controls: string[];
     write(content: Array<IContents>): string;

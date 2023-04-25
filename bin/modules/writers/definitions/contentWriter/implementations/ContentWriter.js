@@ -14,7 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var tsyringe_1 = require("tsyringe");
 var ContentWriter = /** @class */ (function () {
-    function ContentWriter(assertWriter, assignmentWriter, ifWriter, forWriter, eventCallWriter, variableWriter, methodCallWriter, requireWriter, revertWriter, breakWriter, whileWriter, doWhileWriter, returnWriter, tryWriter, catchWriter, continueWriter, expressionWriter, newContractWriter) {
+    function ContentWriter(assertWriter, assignmentWriter, ifWriter, forWriter, eventCallWriter, variableWriter, methodCallWriter, requireWriter, revertWriter, breakWriter, whileWriter, doWhileWriter, returnWriter, tryWriter, catchWriter, continueWriter, expressionWriter, newContractWriter, customCodeWriter) {
         this.assertWriter = assertWriter;
         this.assignmentWriter = assignmentWriter;
         this.ifWriter = ifWriter;
@@ -33,6 +33,7 @@ var ContentWriter = /** @class */ (function () {
         this.continueWriter = continueWriter;
         this.expressionWriter = expressionWriter;
         this.newContractWriter = newContractWriter;
+        this.customCodeWriter = customCodeWriter;
         this.statements = {
             assert: this.assertWriter,
             assignment: this.assignmentWriter,
@@ -52,9 +53,10 @@ var ContentWriter = /** @class */ (function () {
             continue: this.continueWriter,
             expression: this.expressionWriter,
             newContract: this.newContractWriter,
+            customCode: this.customCodeWriter,
         };
         // All statement control that doesn't need the ; in the end
-        this.controls = ["if", "for", "while", "doWhile", "try", "catch"];
+        this.controls = ["if", "for", "while", "doWhile", "try", "catch", "customCode"];
         // Avoiding infinite dependency injection
         ifWriter._init(this);
         forWriter._init(this);
@@ -100,7 +102,8 @@ var ContentWriter = /** @class */ (function () {
         __param(15, (0, tsyringe_1.inject)("ContinueWriter")),
         __param(16, (0, tsyringe_1.inject)("ExpressionWriter")),
         __param(17, (0, tsyringe_1.inject)("NewContractWriter")),
-        __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object])
+        __param(18, (0, tsyringe_1.inject)("CustomCodeWriter")),
+        __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object])
     ], ContentWriter);
     return ContentWriter;
 }());

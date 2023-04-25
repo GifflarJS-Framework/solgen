@@ -18,7 +18,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var helpers_1 = __importDefault(require("../../../../../utils/helpers"));
 var tsyringe_1 = require("tsyringe");
 var ContractBodyModel = /** @class */ (function () {
-    function ContractBodyModel(stateVariableModel, functionModel, eventModel, usingModel, modifierModel, stateMappingModel, enumModel, structModel) {
+    function ContractBodyModel(stateVariableModel, functionModel, eventModel, usingModel, modifierModel, stateMappingModel, enumModel, structModel, customCodeModel) {
         this.stateVariableModel = stateVariableModel;
         this.functionModel = functionModel;
         this.eventModel = eventModel;
@@ -27,6 +27,7 @@ var ContractBodyModel = /** @class */ (function () {
         this.stateMappingModel = stateMappingModel;
         this.enumModel = enumModel;
         this.structModel = structModel;
+        this.customCodeModel = customCodeModel;
     }
     ContractBodyModel.prototype.execute = function () {
         var _this = this;
@@ -38,6 +39,17 @@ var ContractBodyModel = /** @class */ (function () {
             events: [],
             modifiers: [],
             functions: [],
+        };
+        var createCustomCode = function (code) {
+            var customCode = _this.customCodeModel.execute({
+                code: code,
+            });
+            if (!body.usings)
+                body.usings = [];
+            if (!body.customCodes)
+                body.customCodes = [];
+            body.customCodes.push(customCode);
+            return customCode;
         };
         var createUsing = function (identifier, type) {
             var using = _this.usingModel.execute({
@@ -154,6 +166,7 @@ var ContractBodyModel = /** @class */ (function () {
         var _assignFunctions = function () {
             var _obj = {
                 body: body,
+                createCustomCode: createCustomCode,
                 createUsing: createUsing,
                 createEvent: createEvent,
                 createVariable: createVariable,
@@ -178,7 +191,8 @@ var ContractBodyModel = /** @class */ (function () {
         __param(5, (0, tsyringe_1.inject)("StateMappingModel")),
         __param(6, (0, tsyringe_1.inject)("EnumModel")),
         __param(7, (0, tsyringe_1.inject)("StructModel")),
-        __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object])
+        __param(8, (0, tsyringe_1.inject)("CustomCodeModel")),
+        __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object, Object])
     ], ContractBodyModel);
     return ContractBodyModel;
 }());

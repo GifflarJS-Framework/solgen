@@ -9,7 +9,7 @@ var tsyringe_1 = require("tsyringe");
  * @param name The name of the smart contract.
  * @returns A new Gifflar Contract
  * @example
- * import { createGifflarContract } from "gifflar-library";
+ * import { createGifflarContract } from "@gifflar/solgen";
  *
  * const gContract = createGifflarContract("MyContract");
  */
@@ -23,7 +23,7 @@ exports.createGifflarContract = createGifflarContract;
  * @param name The name of the smart contract library.
  * @returns A new Gifflar Library
  * @example
- * import { createGifflarLibrary } from "gifflar-library";
+ * import { createGifflarLibrary } from "@gifflar/solgen";
  *
  * const gLibrary = createGifflarLibrary("MyLibrary");
  */
@@ -37,7 +37,7 @@ exports.createGifflarLibrary = createGifflarLibrary;
  * @param name The name of the smart contract interface.
  * @returns A new Gifflar Interface
  * @example
- * import { createGifflarInterface } from "gifflar-library";
+ * import { createGifflarInterface } from "@gifflar/solgen";
  *
  * const gInterface = createGifflarInterface("MyInterface");
  */
@@ -50,7 +50,7 @@ exports.createGifflarInterface = createGifflarInterface;
  * Creates a new Gifflar Manager to manage many Gifflar Components (Contracts, Libraries and Interfaces).
  * @returns A new Gifflar Manager
  * @example
- * import { createGifflarManager } from "gifflar-library";
+ * import { createGifflarManager } from "@gifflar/solgen";
  *
  * const gManager = createGifflarManager();
  */

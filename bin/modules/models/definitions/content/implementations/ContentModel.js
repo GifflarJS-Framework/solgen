@@ -29,7 +29,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var helpers_1 = __importDefault(require("../../../../../utils/helpers"));
 var tsyringe_1 = require("tsyringe");
 var ContentModel = /** @class */ (function () {
-    function ContentModel(assertModel, breakModel, catchModel, assignmnetModel, variableModel, ifModel, methodCallModel, eventCallModel, continueModel, doWhileModel, returnModel, forModel, requireModel, revertModel, tryModel, whileModel) {
+    function ContentModel(assertModel, breakModel, catchModel, assignmnetModel, variableModel, ifModel, methodCallModel, eventCallModel, continueModel, doWhileModel, returnModel, forModel, requireModel, revertModel, tryModel, whileModel, customCodeModel) {
         this.assertModel = assertModel;
         this.breakModel = breakModel;
         this.catchModel = catchModel;
@@ -46,6 +46,7 @@ var ContentModel = /** @class */ (function () {
         this.revertModel = revertModel;
         this.tryModel = tryModel;
         this.whileModel = whileModel;
+        this.customCodeModel = customCodeModel;
     }
     ContentModel.prototype.execute = function (_a) {
         var _this = this;
@@ -159,6 +160,14 @@ var ContentModel = /** @class */ (function () {
             var contentItem = _assignFunctions(stack[top]);
             return contentItem;
         };
+        var setCustomCode = function (code) {
+            var _customCode = _this.customCodeModel.execute({
+                code: code,
+            });
+            stack[top].content.push(_customCode);
+            var contentItem = _assignFunctions(stack[top]);
+            return contentItem;
+        };
         // Decision and loop structures
         var beginFor = function (variable, condition, expression) {
             var newFor = _this.forModel.execute({
@@ -223,7 +232,7 @@ var ContentModel = /** @class */ (function () {
         };
         var _c = Array(6).fill(_endContentStructure), endTry = _c[0], endCatch = _c[1], endIf = _c[2], endElse = _c[3], endElseIf = _c[4], endDoWhile = _c[5], endWhile = _c[6], endFor = _c[7];
         var _assignFunctions = function (obj) {
-            var _obj = __assign(__assign({}, obj), { beginTry: beginTry, beginCatch: beginCatch, beginIf: beginIf, beginElse: beginElse, beginElseIf: beginElseIf, beginDoWhile: beginDoWhile, beginFor: beginFor, endTry: endTry, endCatch: endCatch, endIf: endIf, endElseIf: endElseIf, endElse: endElse, endDoWhile: endDoWhile, endFor: endFor, endWhile: endWhile, setEventCall: setEventCall, setAssignment: setAssignment, setVariable: setVariable, setMethodCall: setMethodCall, setContinue: setContinue, setReturn: setReturn, setAssert: setAssert, setBreak: setBreak, setRequire: setRequire, setRevert: setRevert, beginWhile: beginWhile });
+            var _obj = __assign(__assign({}, obj), { beginTry: beginTry, beginCatch: beginCatch, beginIf: beginIf, beginElse: beginElse, beginElseIf: beginElseIf, beginDoWhile: beginDoWhile, beginFor: beginFor, endTry: endTry, endCatch: endCatch, endIf: endIf, endElseIf: endElseIf, endElse: endElse, endDoWhile: endDoWhile, endFor: endFor, endWhile: endWhile, setEventCall: setEventCall, setAssignment: setAssignment, setVariable: setVariable, setMethodCall: setMethodCall, setContinue: setContinue, setReturn: setReturn, setAssert: setAssert, setBreak: setBreak, setRequire: setRequire, setRevert: setRevert, setCustomCode: setCustomCode, beginWhile: beginWhile });
             return _obj;
         };
         var json = _assignFunctions(stack[top]);
@@ -247,7 +256,8 @@ var ContentModel = /** @class */ (function () {
         __param(13, (0, tsyringe_1.inject)("RevertModel")),
         __param(14, (0, tsyringe_1.inject)("TryModel")),
         __param(15, (0, tsyringe_1.inject)("WhileModel")),
-        __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object])
+        __param(16, (0, tsyringe_1.inject)("CustomCodeModel")),
+        __metadata("design:paramtypes", [Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object])
     ], ContentModel);
     return ContentModel;
 }());

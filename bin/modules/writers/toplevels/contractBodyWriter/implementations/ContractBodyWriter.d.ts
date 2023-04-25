@@ -1,4 +1,5 @@
 import { IContractBodyItem } from "../../../../models/toplevels/contractBody/types/IContractBodyItem";
+import { ICustomCodeWriter } from "../../../custom/customCodeWriter/types/ICustomCodeWriter";
 import { IEnumWriter } from "../../../definitions/enumWriter/types/IEnumWriter";
 import { IEventWriter } from "../../../definitions/eventWriter/types/IEventWriter";
 import { IFunctionWriter } from "../../../definitions/functionWriter/types/IFunctionWriter";
@@ -15,7 +16,8 @@ declare class ContractBodyWriter implements IContractBodyWriter {
     private stateMappingWriter;
     private usingWriter;
     private enumWriter;
-    constructor(eventWriter: IEventWriter, functionWriter: IFunctionWriter, stateVariableWriter: IStateVariableWriter, modifierWriter: IModifierWriter, stateMappingWriter: IStateMappingWriter, usingWriter: IUsingWriter, enumWriter: IEnumWriter);
+    private customCodeWriter;
+    constructor(eventWriter: IEventWriter, functionWriter: IFunctionWriter, stateVariableWriter: IStateVariableWriter, modifierWriter: IModifierWriter, stateMappingWriter: IStateMappingWriter, usingWriter: IUsingWriter, enumWriter: IEnumWriter, customCodeWriter: ICustomCodeWriter);
     write(bodyItem: IContractBodyItem): string;
 }
 export default ContractBodyWriter;

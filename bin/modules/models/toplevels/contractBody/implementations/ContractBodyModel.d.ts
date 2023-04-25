@@ -8,6 +8,7 @@ import { IStructModel } from "../../../definitions/struct/types/IStructModel";
 import { IUsingModel } from "../../../definitions/using/types/IUsingModel";
 import { IContractBody } from "../types/IContractBody";
 import { IContractBodyModel } from "../types/IContractBodyModel";
+import { ICustomCodeModel } from "../../../custom/customCode/types/ICustomCodeModel";
 declare class ContractBodyModel implements IContractBodyModel {
     private stateVariableModel;
     private functionModel;
@@ -17,7 +18,8 @@ declare class ContractBodyModel implements IContractBodyModel {
     private stateMappingModel;
     private enumModel;
     private structModel;
-    constructor(stateVariableModel: IStateVariableModel, functionModel: IFunctionModel, eventModel: IEventModel, usingModel: IUsingModel, modifierModel: IModifierModel, stateMappingModel: IStateMappingModel, enumModel: IEnumModel, structModel: IStructModel);
+    private customCodeModel;
+    constructor(stateVariableModel: IStateVariableModel, functionModel: IFunctionModel, eventModel: IEventModel, usingModel: IUsingModel, modifierModel: IModifierModel, stateMappingModel: IStateMappingModel, enumModel: IEnumModel, structModel: IStructModel, customCodeModel: ICustomCodeModel);
     execute(): IContractBody;
 }
 export default ContractBodyModel;
