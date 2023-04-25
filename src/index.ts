@@ -26,9 +26,9 @@ const createGifflarContract = (name: string): IGifflarContract => {
 };
 
 /**
- * Creates a new Gifflar Library
+ * Creates a new Solifity Library
  * @param name The name of the smart contract library.
- * @returns A new Gifflar Library
+ * @returns A new Solidity Library
  * @example
  * import { createGifflarLibrary } from "@gifflar/solgen";
  *
