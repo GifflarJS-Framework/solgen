@@ -1,12 +1,10 @@
-<div align="center">
-    <img src="https://i.imgur.com/mwbuYqE.png" alt="gifflar banner"/>
-</div>
+(Powered by [Gifflar](https://github.com/GifflarJS-Framework))
 
 [![Node.js CI](https://github.com/GifflarJS-Framework/solgen/actions/workflows/tests.yml/badge.svg)](https://github.com/GifflarJS-Framework/solgen/actions/workflows/tests.yml)
 
-# Gifflar.js
+# Solgen
 
-A framework that allows to generate, compile and deploy smart contracts on the fly.
+A Gifflar library that allows to generate, compile and deploy smart contracts in Solidity on the fly.
 
 ## Project Status
 

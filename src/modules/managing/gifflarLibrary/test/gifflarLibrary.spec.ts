@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { container } from "tsyringe";
-import { IGifflarLibraryModel } from "../types/IGifflarLibraryModel";
 import fs from "fs";
-const writing_path = __dirname + "/../../../../test/examples/writing/";
+import { IGifflarLibraryModel } from "../types/IGifflarLibraryModel";
+
+const writing_path = `${__dirname}/../../../../test/examples/writing/`;
 
 const example_library_1 = require("@test/examples/modeling/library-1.json");
 
@@ -17,7 +19,7 @@ describe("GifflarLibrary", () => {
     // Expected model
     const expected_model = JSON.stringify(example_library_1);
     // Expected writing result
-    const expected = fs.readFileSync(writing_path + "library-1.txt", {
+    const expected = fs.readFileSync(`${writing_path}library-1.txt`, {
       encoding: "utf8",
     });
 

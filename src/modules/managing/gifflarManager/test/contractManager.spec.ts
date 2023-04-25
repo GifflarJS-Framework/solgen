@@ -199,9 +199,8 @@ describe("Contract Manager Writer", () => {
     } catch (e: any) {
       expect(e.message).toEqual(
         `Controller is already deployed at address '${
-          gContractManager.getContract("Controller").json.contracts.jsons[
-            "Controller"
-          ].networks[0].address
+          gContractManager.getContract("Controller").json.contracts.jsons
+            .Controller.networks[0].address
         }'`
       );
     }
