@@ -1,5 +1,5 @@
 {
-  "name": "gifflar-library",
+  "name": "@gifflar/solgen",
   "version": "1.0.0-alpha",
   "description": "A smart contract generator library.",
   "main": "bin/index.js",
@@ -12,7 +12,7 @@
     "docs": "jsdoc -c jsdoc-config.json"
   },
   "bin": {
-    "gifflar-library": "./bin/index.js"
+    "@gifflar/solgen": "./bin/index.js"
   },
   "repository": {
     "type": "git",

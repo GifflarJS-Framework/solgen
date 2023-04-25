@@ -347,7 +347,7 @@ export interface IContent extends IStackItem {
    * }
    * // [...]
    * ```
-   **/
+   * */
   beginIf(condition: string): IContent;
 
   /**
@@ -373,7 +373,7 @@ export interface IContent extends IStackItem {
    * }
    * // [...]
    * ```
-   **/
+   * */
   beginElseIf(condition: string): IContent;
 
   /**
@@ -398,7 +398,7 @@ export interface IContent extends IStackItem {
    * }
    * // [...]
    * ```
-   **/
+   * */
   beginElse(): IContent;
 
   /**
@@ -424,7 +424,7 @@ export interface IContent extends IStackItem {
    * } while(a == b);
    * // [...]
    * ```
-   **/
+   * */
   beginDoWhile(condition: string): IContent;
 
   /**
@@ -450,7 +450,7 @@ export interface IContent extends IStackItem {
    * }
    * // [...]
    * ```
-   **/
+   * */
   beginWhile(condition: string): IContent;
 
   /**
@@ -485,7 +485,7 @@ export interface IContent extends IStackItem {
    * }
    * // [...]
    * ```
-   **/
+   * */
   beginFor(
     variable: {
       type: ITypeName;
