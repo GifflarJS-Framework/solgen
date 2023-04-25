@@ -299,6 +299,32 @@ export interface IContent extends IStackItem {
   setRevert(errorMessage: string): IContent;
 
   /**
+   * Defines a custom content code. You can use this method if you want to add your own personalized code inside the content scope.
+   * @param {string} code The customized code to include to content scope
+   * @example
+   * ```ts
+   * gContract.setCustomCode(`
+   * require(msg.sender != owner, "Invalid address");
+   * `);
+   *
+   * gContract.setCustomCode(`
+   * assembly {
+   *     o_sum := add(o_sum, mload(add(add(_data, 0x20), mul(i, 0x20))))
+   * }
+   * `);
+   * ```
+   *
+   * // Example in solidiy
+   * ```solidity
+   * require(msg.sender != owner, "Invalid address");
+   * assembly {
+   *     o_sum := add(o_sum, mload(add(add(_data, 0x20), mul(i, 0x20))))
+   * }
+   * ```
+   */
+  setCustomCode(code: string): IContent;
+
+  /**
    * Defines the begining of a 'if' statement. Remember to use the "endIf" function when finishing "if" content definition,
    * or else all the conditions made will have any effect.
    * @param condition The condition to enter the 'if'
@@ -321,7 +347,7 @@ export interface IContent extends IStackItem {
    * }
    * // [...]
    * ```
-   **/
+   * */
   beginIf(condition: string): IContent;
 
   /**
@@ -347,7 +373,7 @@ export interface IContent extends IStackItem {
    * }
    * // [...]
    * ```
-   **/
+   * */
   beginElseIf(condition: string): IContent;
 
   /**
@@ -372,7 +398,7 @@ export interface IContent extends IStackItem {
    * }
    * // [...]
    * ```
-   **/
+   * */
   beginElse(): IContent;
 
   /**
@@ -398,7 +424,7 @@ export interface IContent extends IStackItem {
    * } while(a == b);
    * // [...]
    * ```
-   **/
+   * */
   beginDoWhile(condition: string): IContent;
 
   /**
@@ -424,7 +450,7 @@ export interface IContent extends IStackItem {
    * }
    * // [...]
    * ```
-   **/
+   * */
   beginWhile(condition: string): IContent;
 
   /**
@@ -459,7 +485,7 @@ export interface IContent extends IStackItem {
    * }
    * // [...]
    * ```
-   **/
+   * */
   beginFor(
     variable: {
       type: ITypeName;

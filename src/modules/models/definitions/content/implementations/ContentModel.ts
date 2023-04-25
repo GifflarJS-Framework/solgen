@@ -31,6 +31,7 @@ import { IExpressionValue } from "@modules/models/statements/expression/types/IE
 import { IVariableDataLocation } from "@modules/types/IVariableDataLocation";
 import { ITry } from "@modules/models/statements/try/types/ITry";
 import { ICatch } from "@modules/models/statements/catch/types/ICatch";
+import { ICustomCodeModel } from "@modules/models/custom/customCode/types/ICustomCodeModel";
 
 interface ITryContent extends ITry, IContent {}
 interface ICatchContent extends ICatch, IContent {}
@@ -73,7 +74,9 @@ class ContentModel {
     @inject("TryModel")
     private tryModel: ITryModel,
     @inject("WhileModel")
-    private whileModel: IWhileModel
+    private whileModel: IWhileModel,
+    @inject("CustomCodeModel")
+    private customCodeModel: ICustomCodeModel
   ) {}
 
   execute({ stateVars = [] }: ICreateContentDTO): IContent {
@@ -109,7 +112,7 @@ class ContentModel {
         parameters: _parameters,
         expression,
       });
-      const newTryContent: IContent = _assignFunctions(_try);
+      const newTryContent: ITryContent = _assignFunctions(_try);
       stack.push(newTryContent);
       top += 1;
       return newTryContent;
@@ -125,7 +128,7 @@ class ContentModel {
         parameters: _parameters,
         identifier,
       });
-      const newCatchContent: IContent = _assignFunctions(_catch);
+      const newCatchContent: ICatchContent = _assignFunctions(_catch);
       stack.push(newCatchContent);
       top += 1;
       return newCatchContent;
@@ -218,6 +221,15 @@ class ContentModel {
         message: errorMessage,
       });
       stack[top].content.push(_revert);
+      const contentItem: IContent = _assignFunctions(stack[top]);
+      return contentItem;
+    };
+
+    const setCustomCode = (code: string): IContent => {
+      const _customCode = this.customCodeModel.execute({
+        code,
+      });
+      stack[top].content.push(_customCode);
       const contentItem: IContent = _assignFunctions(stack[top]);
       return contentItem;
     };
@@ -341,6 +353,7 @@ class ContentModel {
         setBreak,
         setRequire,
         setRevert,
+        setCustomCode,
         beginWhile,
       };
 
