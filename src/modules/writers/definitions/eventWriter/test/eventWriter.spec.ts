@@ -19,8 +19,7 @@ describe("Event Writer", () => {
       ],
     };
 
-    const expected =
-      "//EVENTS\nevent myEvent(string memory name, string memory surname);";
+    const expected = "//EVENTS\nevent myEvent(string name, string surname);";
     const result = eventWriter.write([event]);
 
     expect(result).toMatch(expected);

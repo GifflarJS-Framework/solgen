@@ -25,9 +25,7 @@ describe("For Writer", () => {
         },
       },
       condition: "i < 100",
-      expressionValue: {
-        customExpression: "i++",
-      },
+      expression: "i++",
       content: [],
     };
 
@@ -44,9 +42,7 @@ describe("For Writer", () => {
     const myfor: IFor = {
       statement: "for",
       condition: "i < 100",
-      expressionValue: {
-        customExpression: "i++",
-      },
+      expression: "i++",
       content: [],
     };
 
@@ -70,9 +66,7 @@ describe("For Writer", () => {
           customExpression: "0",
         },
       },
-      expressionValue: {
-        customExpression: "i++",
-      },
+      expression: "i++",
       content: [],
     };
 

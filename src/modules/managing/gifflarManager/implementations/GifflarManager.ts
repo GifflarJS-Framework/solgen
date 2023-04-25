@@ -169,7 +169,19 @@ class GifflarManager implements IGifflarManager {
       const json = this.json.contracts.jsons[gContract.getName()];
       if (json) {
         // eslint-disable-next-line no-param-reassign
-        gContract.json = json;
+        gContract.json = { contracts: { jsons: {} } };
+        gContract.json.contracts.jsons[gContract.getName()] = json;
+
+        // Inserting contract name in compiled json
+        gContract.json.contracts.jsons[gContract.getName()] = {
+          contractName: gContract.getName(),
+          ...gContract.json.contracts.jsons[gContract.getName()],
+        };
+        // Inserting contract networks in compiled json
+        gContract.json.contracts.jsons[gContract.getName()]["networks"] = {};
+
+        this.json.contracts.jsons[gContract.getName()] =
+          gContract.json.contracts.jsons[gContract.getName()];
       }
       return json;
     });
@@ -177,7 +189,7 @@ class GifflarManager implements IGifflarManager {
     return this.json;
   }
 
-  compile(componentName: string, callback: (errors: Array<any>) => void): any {
+  compile(componentName: string, callback?: (errors: any[]) => void): any {
     // Filtering the component by component name
     const component = this.topLevelModels.filter((gTopLevel) => {
       return gTopLevel.getName() === componentName;
@@ -190,17 +202,29 @@ class GifflarManager implements IGifflarManager {
       typeof component.compile === "function"
     ) {
       // Compiling component
-      const json = component.compile((errors) => {
-        callback(errors);
-      });
-      if (json.errors && callback) {
-        callback(json.errors);
+      const json = component.compile(callback);
+      if (!json.contracts) {
+        return {};
+      }
+
+      // Inserting contract name in compiled json
+      component.json.contracts.jsons[component.getName()] = {
+        contractName: component.getName(),
+        ...component.json.contracts.jsons[component.getName()],
+      };
+      // Inserting contract networks in compiled json
+      component.json.contracts.jsons[component.getName()]["networks"] = {};
+
+      if (!this.json.contracts) {
+        const jsons: any = {};
+        jsons[component.getName()] =
+          component.json.contracts.jsons[component.getName()];
+        this.json.contracts = { jsons };
       }
 
       return json;
     }
 
-    callback([]);
     throw new Error("Unable to compile contract");
   }
 
@@ -221,8 +245,19 @@ class GifflarManager implements IGifflarManager {
   async deploy(
     contractName: string,
     inputs: IManagerDeployDTO,
-    accountPrivateKey?: string
+    options?: { force?: boolean }
   ): Promise<Contract> {
+    const gContract = this.getContract(contractName);
+
+    // Avoiding contract to be deployed more than once. But can still be forced
+    if (gContract.deployed() && !options?.force) {
+      throw new Error(
+        `${gContract.getName()} is already deployed at address '${
+          gContract.deployed()?.options.address
+        }'`
+      );
+    }
+
     // Obtaining the contract JSON
     const json = this.json.contracts.jsons[contractName];
     if (!json) {
@@ -237,22 +272,33 @@ class GifflarManager implements IGifflarManager {
       gasPrice: inputs.gasPrice,
       nonce: inputs.nonce,
     };
-    const contract = await this.deployer.deploy(_inputs, accountPrivateKey);
-    return contract;
+    const instance = await this.deployer.deploy(_inputs);
+    gContract.instance = instance;
+
+    // Inserting contract address to compilation json
+    const networkConfig = this.deployer.getNetworkConfig();
+    if (networkConfig) {
+      if (!json["networks"][networkConfig.networkId])
+        json["networks"][networkConfig.networkId] = {};
+      json["networks"][networkConfig.networkId] = {
+        address: gContract.instance.options.address,
+      };
+      // console.log(gContract.json);
+    }
+
+    return instance;
   }
 
   deployed(componentName: string): Contract | undefined {
-    if (!componentName) {
-      return this.json;
-    }
-
-    if (this.json) {
-      const gTopLevel = this.topLevelModels.filter((gTopLevel) => {
-        return gTopLevel.getName() === componentName;
-      })[0];
-      if (!gTopLevel) return undefined;
-      return gTopLevel.instance;
-    }
+    if (!componentName) return undefined;
+    // Filtering component
+    const gTopLevel = this.topLevelModels.filter((gTopLevel) => {
+      return gTopLevel.getName() === componentName;
+    })[0];
+    if (!gTopLevel) return undefined;
+    // Returning instance if deployed
+    if (gTopLevel.deployed) return gTopLevel.deployed();
+    return undefined;
   }
 
   setWeb3(newWeb3: IWeb3): IWeb3 {

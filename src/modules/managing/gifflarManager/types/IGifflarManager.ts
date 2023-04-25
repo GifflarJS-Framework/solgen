@@ -25,7 +25,7 @@ export interface IGifflarManager {
   deploy(
     contractName: string,
     inputs: IManagerDeployDTO,
-    accountPrivateKey?: string
+    options?: { force?: boolean }
   ): Promise<Contract>;
   deployed(componentName: string): Contract | undefined;
   setWeb3(newWeb3: IWeb3): IWeb3;

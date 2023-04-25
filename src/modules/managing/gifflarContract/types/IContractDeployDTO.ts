@@ -4,4 +4,5 @@ export interface IContractDeployDTO {
   gas?: number;
   gasPrice?: string;
   nonce?: number;
+  accountPrivateKey?: string;
 }

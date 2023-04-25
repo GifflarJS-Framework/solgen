@@ -29,6 +29,10 @@ import { IContractBodyModel } from "../types/IContractBodyModel";
 import { ITypeNameInput } from "@modules/types/ITypeNameInput";
 import { ITypeNameOutput } from "@modules/types/ITypeNameOutput";
 import { IExpressionValue } from "@modules/models/statements/expression/types/IExpressionValue";
+import { IVariableStateMutabilityType } from "@modules/types/IVariableStateMutabilityType";
+import { IModifierInvocation } from "@modules/models/definitions/function/types/IModifierInvocation";
+import { ICustomCodeModel } from "@modules/models/custom/customCode/types/ICustomCodeModel";
+import { ICustomCode } from "@modules/models/custom/customCode/types/ICustomCode";
 
 @injectable()
 class ContractBodyModel implements IContractBodyModel {
@@ -48,7 +52,9 @@ class ContractBodyModel implements IContractBodyModel {
     @inject("EnumModel")
     private enumModel: IEnumModel,
     @inject("StructModel")
-    private structModel: IStructModel
+    private structModel: IStructModel,
+    @inject("CustomCodeModel")
+    private customCodeModel: ICustomCodeModel
   ) {}
 
   execute(): IContractBody {
@@ -60,6 +66,16 @@ class ContractBodyModel implements IContractBodyModel {
       events: [],
       modifiers: [],
       functions: [],
+    };
+
+    const createCustomCode = (code: string): ICustomCode => {
+      const customCode = this.customCodeModel.execute({
+        code,
+      });
+      if (!body.usings) body.usings = [];
+      if (!body.customCodes) body.customCodes = [];
+      body.customCodes.push(customCode);
+      return customCode;
     };
 
     const createUsing = (identifier: string, type: ITypeName): IUsing => {
@@ -87,13 +103,13 @@ class ContractBodyModel implements IContractBodyModel {
 
     const createStruct = (
       identifier: string,
-      variables: Array<ICreateVariableDTO>,
-      mappings: Array<ICreateMappingDTO>
+      variables?: Array<ICreateVariableDTO>,
+      mappings?: Array<ICreateMappingDTO>
     ): IStruct => {
       const struct = this.structModel.execute({
         identifier,
-        variables,
-        mappings,
+        variables: variables || [],
+        mappings: mappings || [],
       });
       if (!body.structs) body.structs = [];
       body.structs.push(struct);
@@ -146,13 +162,13 @@ class ContractBodyModel implements IContractBodyModel {
     const createModifier = (
       title: string,
       args: Array<ITypeNameInput>,
-      options: { isOverriding?: boolean; isVirtual?: boolean }
+      options?: { isOverriding?: boolean; isVirtual?: boolean }
     ): IModifier => {
       const modifier = this.modifierModel.execute({
         title,
         args: helpers.castITypeNameInputsToInputs(args),
-        isOverriding: options.isOverriding,
-        isVirtual: options.isVirtual,
+        isOverriding: options?.isOverriding,
+        isVirtual: options?.isVirtual,
         stateVars: body.variables,
       });
       if (!body.modifiers) body.modifiers = [];
@@ -164,13 +180,17 @@ class ContractBodyModel implements IContractBodyModel {
       type: ITypeName,
       name: string,
       scope: IVisibility,
-      expression?: IExpressionValue
+      options?: {
+        expressionValue?: IExpressionValue;
+        stateMutability?: IVariableStateMutabilityType;
+      }
     ): IStateVariable => {
       const variable = this.stateVariableModel.execute({
         type: helpers.writeTypeName(type),
         name,
         scope,
-        expressionValue: expression,
+        stateMutability: options?.stateMutability,
+        expressionValue: options?.expressionValue,
       });
       if (!body.variables) body.variables = [];
       body.variables.push(variable);
@@ -179,10 +199,15 @@ class ContractBodyModel implements IContractBodyModel {
 
     const createFunction = (
       name: string,
-      scope: string,
+      scope: IVisibility,
       inputs: Array<ITypeNameInput> = [],
       outputs: Array<ITypeNameOutput> = [],
-      stateMutability?: IFunctionStateMutabilityType
+      options?: {
+        stateMutability?: IFunctionStateMutabilityType;
+        modifiers?: IModifierInvocation[];
+        overrides?: boolean;
+        virtual?: boolean;
+      }
     ): IFunction => {
       const _function = this.functionModel.execute({
         name,
@@ -191,7 +216,10 @@ class ContractBodyModel implements IContractBodyModel {
         outputs: helpers.castITypeNameOutputsToOutputs(outputs),
         isConstructor: false,
         stateVars: body.variables,
-        stateMutability,
+        stateMutability: options?.stateMutability,
+        modifiers: options?.modifiers,
+        overrides: options?.overrides,
+        virtual: options?.virtual,
       });
       if (!body.functions) body.functions = [];
       body.functions.push(_function);
@@ -202,6 +230,7 @@ class ContractBodyModel implements IContractBodyModel {
     const _assignFunctions = (): IContractBody => {
       const _obj: IContractBody = {
         body,
+        createCustomCode,
         createUsing,
         createEvent,
         createVariable,

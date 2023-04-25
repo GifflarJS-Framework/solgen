@@ -1,4 +1,3 @@
-/* eslint-disable no-use-before-define */
 import helpers from "@utils/helpers";
 import { IVariable } from "@models/definitions/stateVariable/types/IVariable";
 import { IContent } from "../types/IContent";
@@ -21,9 +20,6 @@ import { IDoWhile } from "@models/statements/dowhile/types/IDoWhile";
 import { IForModel } from "@models/statements/for/types/IForModel";
 import { IDataLocation } from "@modules/types/IDataLocation";
 import { IFor } from "@models/statements/for/types/IFor";
-import { IMappingModel } from "@models/statements/mapping/types/IMappingModel";
-import { IMappingKeyType } from "@modules/types/IMappingKeyType";
-import { IMappingTypeName } from "@modules/types/IMappingTypeName";
 import { IRequireModel } from "@models/statements/require/types/IRequireModel";
 import { IRevertModel } from "@models/statements/revert/types/IRevertModel";
 import { ITryModel } from "@models/statements/try/types/ITryModel";
@@ -32,7 +28,13 @@ import { IWhileModel } from "@models/statements/while/types/IWhileModel";
 import { IWhile } from "@models/statements/while/types/IWhile";
 import { ITypeNameInput } from "@modules/types/ITypeNameInput";
 import { IExpressionValue } from "@modules/models/statements/expression/types/IExpressionValue";
+import { IVariableDataLocation } from "@modules/types/IVariableDataLocation";
+import { ITry } from "@modules/models/statements/try/types/ITry";
+import { ICatch } from "@modules/models/statements/catch/types/ICatch";
+import { ICustomCodeModel } from "@modules/models/custom/customCode/types/ICustomCodeModel";
 
+interface ITryContent extends ITry, IContent {}
+interface ICatchContent extends ICatch, IContent {}
 interface IIfContent extends IIf, IContent {}
 interface IDoWhileContent extends IDoWhile, IContent {}
 interface IWhileContent extends IWhile, IContent {}
@@ -65,8 +67,6 @@ class ContentModel {
     private returnModel: IReturnModel,
     @inject("ForModel")
     private forModel: IForModel,
-    @inject("MappingModel")
-    private mappingModel: IMappingModel,
     @inject("RequireModel")
     private requireModel: IRequireModel,
     @inject("RevertModel")
@@ -74,7 +74,9 @@ class ContentModel {
     @inject("TryModel")
     private tryModel: ITryModel,
     @inject("WhileModel")
-    private whileModel: IWhileModel
+    private whileModel: IWhileModel,
+    @inject("CustomCodeModel")
+    private customCodeModel: ICustomCodeModel
   ) {}
 
   execute({ stateVars = [] }: ICreateContentDTO): IContent {
@@ -100,45 +102,51 @@ class ContentModel {
       return contentItem;
     };
 
-    const setTry = (
-      parameters: Array<ITypeNameInput>,
-      expression: ITryExpression
+    const beginTry = (
+      expression: ITryExpression,
+      parameters: Array<ITypeNameInput>
     ): IContent => {
       // Casting ITypeNameInput to IInput
       const _parameters = helpers.castITypeNameInputsToInputs(parameters);
-      const _catch = this.tryModel.execute({
+      const _try = this.tryModel.execute({
         parameters: _parameters,
         expression,
       });
-      stack[top].content.push(_catch);
-      const contentItem: IContent = _assignFunctions(stack[top]);
-      return contentItem;
+      const newTryContent: ITryContent = _assignFunctions(_try);
+      stack.push(newTryContent);
+      top += 1;
+      return newTryContent;
     };
 
-    const setCatch = (
+    const beginCatch = (
       parameters: Array<ITypeNameInput>,
       identifier?: string
     ): IContent => {
       // Casting ITypeNameInput to IInput
       const _parameters = helpers.castITypeNameInputsToInputs(parameters);
       const _catch = this.catchModel.execute({
-        identifier,
         parameters: _parameters,
+        identifier,
       });
-      stack[top].content.push(_catch);
-      const contentItem: IContent = _assignFunctions(stack[top]);
-      return contentItem;
+      const newCatchContent: ICatchContent = _assignFunctions(_catch);
+      stack.push(newCatchContent);
+      top += 1;
+      return newCatchContent;
     };
 
     const setVariable = (
       type: ITypeName,
       name: string,
-      expression?: IExpressionValue
+      options?: {
+        expressionValue?: IExpressionValue;
+        dataLocation?: IVariableDataLocation;
+      }
     ): IContent => {
       const newVariable = this.variableModel.execute({
         type: helpers.writeTypeName(type),
         name,
-        expressionValue: expression,
+        expressionValue: options?.expressionValue,
+        dataLocation: options?.dataLocation,
       });
       contentVars.push(newVariable);
       stack[top].content.push(newVariable);
@@ -201,17 +209,6 @@ class ContentModel {
       return contentItem;
     };
 
-    const setMapping = (
-      type: IMappingKeyType,
-      typeName: IMappingTypeName,
-      name: string
-    ): IContent => {
-      const _mapping = this.mappingModel.execute({ type, typeName, name });
-      stack[top].content.push(_mapping);
-      const contentItem: IContent = _assignFunctions(stack[top]);
-      return contentItem;
-    };
-
     const setRequire = (condition: string, errorMessage?: string): IContent => {
       const _require = this.requireModel.execute({ condition, errorMessage });
       stack[top].content.push(_require);
@@ -219,11 +216,20 @@ class ContentModel {
       return contentItem;
     };
 
-    const setRevert = (errorDefinition: { message?: string }): IContent => {
+    const setRevert = (errorMessage: string): IContent => {
       const _revert = this.revertModel.execute({
-        message: errorDefinition.message,
+        message: errorMessage,
       });
       stack[top].content.push(_revert);
+      const contentItem: IContent = _assignFunctions(stack[top]);
+      return contentItem;
+    };
+
+    const setCustomCode = (code: string): IContent => {
+      const _customCode = this.customCodeModel.execute({
+        code,
+      });
+      stack[top].content.push(_customCode);
       const contentItem: IContent = _assignFunctions(stack[top]);
       return contentItem;
     };
@@ -234,22 +240,22 @@ class ContentModel {
       variable: {
         type: ITypeName;
         name: string;
-        expression: IExpressionValue;
+        expressionValue: IExpressionValue;
         dataLocation: IDataLocation;
       },
       condition: string,
-      expressionValue: IExpressionValue
+      expression: string
     ): IContent => {
       const newFor = this.forModel.execute({
         variable: {
           statement: "variable",
           type: helpers.writeTypeName(variable.type),
           name: variable.name,
-          expressionValue: variable.expression,
+          expressionValue: variable.expressionValue,
           dataLocation: variable.dataLocation,
         },
         condition,
-        expressionValue,
+        expression,
       });
       const newForContent: IForContent = _assignFunctions(newFor);
       stack.push(newForContent);
@@ -273,7 +279,7 @@ class ContentModel {
       return newWhileContent;
     };
 
-    const beginIf = (condition: string, onElse?: boolean): IContent => {
+    const _beginIf = (condition: string, onElse: boolean): IContent => {
       const newIf = this.ifModel.execute({ condition, onElse });
       const newIfContent: IIfContent = _assignFunctions(newIf);
       stack.push(newIfContent);
@@ -281,18 +287,22 @@ class ContentModel {
       return newIfContent;
     };
 
+    const beginIf = (condition: string): IContent => {
+      return _beginIf(condition, false);
+    };
+
     const beginElseIf = (condition: string): IContent => {
       if (!condition) {
         throw new Error("Condition cannot be ommited.");
       }
-      return beginIf(condition, true);
+      return _beginIf(condition, true);
     };
 
     const beginElse = (): IContent => {
-      return beginIf("", true);
+      return _beginIf("", true);
     };
 
-    const _endDecisionStructure = (): IContent => {
+    const _endContentStructure = (): IContent => {
       if (stack.length > 1) {
         const json = stack.pop();
         top -= 1;
@@ -304,18 +314,29 @@ class ContentModel {
       return contentItem;
     };
 
-    const [endIf, endElse, endElseIf, endDoWhile, endWhile, endFor] = Array<
-      () => IContent
-    >(6).fill(_endDecisionStructure);
+    const [
+      endTry,
+      endCatch,
+      endIf,
+      endElse,
+      endElseIf,
+      endDoWhile,
+      endWhile,
+      endFor,
+    ] = Array<() => IContent>(6).fill(_endContentStructure);
 
     const _assignFunctions = <T>(obj: any): T => {
       const _obj = {
         ...obj,
+        beginTry,
+        beginCatch,
         beginIf,
         beginElse,
         beginElseIf,
         beginDoWhile,
         beginFor,
+        endTry,
+        endCatch,
         endIf,
         endElseIf,
         endElse,
@@ -330,11 +351,9 @@ class ContentModel {
         setReturn,
         setAssert,
         setBreak,
-        setCatch,
-        setMapping,
         setRequire,
         setRevert,
-        setTry,
+        setCustomCode,
         beginWhile,
       };
 

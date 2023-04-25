@@ -14,12 +14,24 @@ class FallbackModel implements IFallbackModel {
   execute({
     stateVars = [],
     isPayable = false,
+    modifiers,
+    overrides,
+    virtual,
   }: ICreateFallbackDTO): IFallback {
     const content_json = this.contentModel.execute({ stateVars });
 
     const fallback: IFallback = {
       isPayable,
+      modifiers,
+      overrides,
+      virtual,
       ...content_json,
+
+      setModifier(name: string, args?: string[]): IFallback {
+        if (!fallback.modifiers) fallback.modifiers = [];
+        fallback.modifiers.push({ name, args: args || [] });
+        return this;
+      },
     };
 
     return fallback;

@@ -69,18 +69,24 @@ class GifflarContractModel implements IGifflarContractModel {
         return gContract.code;
       },
 
-      compile: (callback: (errors: any) => void): any => {
-        let errors;
+      compile: (callback?: (errors: any) => void): any => {
         if (gContract.code) {
           gContract.json = this.compiler.compile(gContract.code);
         }
-        if (callback) {
-          if (gContract.json.errors) {
-            errors = gContract.json.errors;
-          }
-
-          callback(errors);
+        if (gContract.json.errors) {
+          if (callback) callback(gContract.json.errors);
+          return {};
         }
+
+        // Inserting contract name in compiled json
+        gContract.json.contracts.jsons[gContract.getName()] = {
+          contractName: gContract.getName(),
+          ...gContract.json.contracts.jsons[gContract.getName()],
+        };
+
+        // Inserting contract networks in compiled json
+        gContract.json.contracts.jsons[gContract.getName()]["networks"] = {};
+
         return gContract.json;
       },
 
@@ -105,12 +111,21 @@ class GifflarContractModel implements IGifflarContractModel {
 
       deploy: async (
         inputs: IContractDeployDTO,
-        accountPrivateKey?: string
+        options?: { force?: boolean }
       ): Promise<Contract> => {
-        const json = gContract.json.contracts.jsons[gContract.contract.name];
-        if (!json) {
+        // Avoiding contract to be deployed more than once. But can still be forced
+        if (gContract.deployed() && !options?.force) {
+          throw new Error(
+            `${gContract.getName()} is already deployed at address '${
+              gContract.deployed()?.options.address
+            }'`
+          );
+        }
+
+        if (!gContract.json.contracts) {
           throw new Error("Failed to find compiled contract.");
         }
+        const json = gContract.json.contracts.jsons[gContract.getName()];
         const _inputs = {
           abi: json.abi,
           bytecode: json.evm.bytecode.object,
@@ -120,10 +135,16 @@ class GifflarContractModel implements IGifflarContractModel {
           gasPrice: inputs.gasPrice,
           nonce: inputs.nonce,
         };
-        gContract.instance = await this.deployer.deploy(
-          _inputs,
-          accountPrivateKey
-        );
+        gContract.instance = await this.deployer.deploy(_inputs);
+        // Inserting contract address to compilation json
+        const networkConfig = this.deployer.getNetworkConfig();
+        if (networkConfig) {
+          if (!json["networks"][networkConfig.networkId])
+            json["networks"][networkConfig.networkId] = {};
+          json["networks"][networkConfig.networkId] = {
+            address: gContract.instance.options.address,
+          };
+        }
         return gContract.instance;
       },
       written: (): string | undefined => {
@@ -135,7 +156,36 @@ class GifflarContractModel implements IGifflarContractModel {
       },
 
       deployed: (): Contract | undefined => {
-        return gContract.instance;
+        // If instance in memory, just return
+        if (gContract.instance) return gContract.instance;
+
+        const web3 = this.deployer.getWeb3();
+        const networkConfig = this.deployer.getNetworkConfig();
+        if (!web3 || !networkConfig) return undefined;
+        if (!gContract.json.contracts) return undefined;
+        const networkInfo =
+          gContract.json.contracts.jsons[gContract.getName()].networks[
+            networkConfig.networkId
+          ];
+        if (!networkInfo) return undefined;
+
+        // Obtaining ABI from compiled JSON
+        const abi = gContract.json.contracts.jsons[gContract.getName()].abi;
+        // Obtaining contract address from compiled JSON
+        const address = networkInfo.address;
+        if (!address) return undefined;
+
+        // Recovering instance
+        const instance = new web3.eth.Contract(abi, address);
+        if (!instance) {
+          throw new Error(
+            "Failed to obtain instance. Please verify if the network provider is correct."
+          );
+        }
+        // Defining contract model instance
+        gContract.instance = instance;
+
+        return instance;
       },
     };
 

@@ -9,7 +9,7 @@ import Web3 from "web3";
 
 class Deployer implements IDeployer {
   private web3: IWeb3 | undefined | null;
-  private networkConfig: INetworkConfig;
+  private networkConfig: INetworkConfig | undefined;
 
   setWeb3(newWeb3: IWeb3): IWeb3 {
     this.web3 = newWeb3;
@@ -25,6 +25,10 @@ class Deployer implements IDeployer {
     if (this.web3) {
       this.web3.setProvider(networkConfig.nodeLink);
     }
+  }
+
+  getNetworkConfig(): INetworkConfig | undefined {
+    return this.networkConfig;
   }
 
   createWeb3(): IWeb3 {
@@ -51,19 +55,17 @@ class Deployer implements IDeployer {
     return account;
   }
 
-  async deploy(
-    inputs: IDeployerInputs,
-    accountPrivateKey?: string
-  ): Promise<Contract> {
+  async deploy(inputs: IDeployerInputs): Promise<Contract> {
     if (!this.web3) {
       throw new Error("No web3 object configured.");
     }
     try {
       // Used if there is no account in memory
-      if (accountPrivateKey) {
+      if (inputs.accountPrivateKey) {
         // Creating account from private key
-        const account =
-          this.web3.eth.accounts.privateKeyToAccount(accountPrivateKey);
+        const account = this.web3.eth.accounts.privateKeyToAccount(
+          inputs.accountPrivateKey
+        );
 
         // Adding account to memory wallet
         this.web3.eth.accounts.wallet.add(account);
@@ -77,16 +79,24 @@ class Deployer implements IDeployer {
           data: bytecode,
           arguments: args,
         })
-        .send({
-          gas: gas || this.networkConfig?.gas,
-          gasPrice: gasPrice || this.networkConfig?.gasPrice,
-          from: from || this.web3.eth.accounts.wallet[0].address,
-          nonce,
-        });
-
+        .send(
+          {
+            gas: gas || this.networkConfig?.gas,
+            gasPrice: gasPrice || this.networkConfig?.gasPrice,
+            from: from || this.web3.eth.accounts.wallet[0].address,
+            nonce,
+          },
+          (error, trxHash) => {
+            if (error) {
+              throw new Error(`${error.name}:${error.message}`);
+            }
+          }
+        );
       return contract;
     } catch (e: any) {
-      throw new Error(e);
+      throw new Error(
+        `Error: ${e.message}. Please, verify if the arguments and node link are correct.`
+      );
     }
   }
 
