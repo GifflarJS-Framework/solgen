@@ -6,9 +6,7 @@
 
 A Gifflar library that allows to generate, compile and deploy smart contracts in Solidity on the fly.
 
-## Project Status
-
-**In development**
+`Note: THIS LIBRARY DOES NOT INCLUDE YET SMART CONTRACTS VULNERABILITIES VERIFICATION. THIS FEATURE IS STILL BEING DEVELOPED. SO, IF YOU ARE USING THIS VERSION IN PRODUCTION, USE IT AT YOUR OWN RISK.`
 
 ## Supported properties
 
