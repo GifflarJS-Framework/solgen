@@ -32,6 +32,9 @@
   "bugs": {
     "url": "https://github.com/GifflarJS-Framework/solgen/issues"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "homepage": "https://github.com/GifflarJS-Framework/solgen#readme",
   "devDependencies": {
     "@smartdec/smartcheck": "^2.0.1",
