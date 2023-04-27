@@ -27,3 +27,7 @@ A Gifflar library that allows to generate, compile and deploy smart contracts in
 | Do/While Loops       | :heavy_check_mark: | `do{...}while(a != b);`                               |
 | Inheritance          | :heavy_check_mark: | `contract Dog is Animal{...}`                         |
 | Inline Assembly      |        :x:         | `assembly {...}`                                      |
+
+## Documentation
+
+Have a look at the [Solgen docs](https://github.com/GifflarJS-Framework/solgen/wiki).
